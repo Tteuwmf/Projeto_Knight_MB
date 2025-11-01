@@ -1,6 +1,9 @@
 #include "raylib.h"
 #include "player.h"
 
+#define GRAVITY 20.0
+#define MAX_SPEED_FALL 400.0
+
 //===============================================
 //----------------CREATE-PLAYER------------------
 
@@ -13,6 +16,8 @@ Player createNewPlayer (Vector2 dim, Color cor)
             .dim = dim,
             .cor = cor,
 
+            .collisionRecs = {0},
+
             .status = (PlayerStatus)
             {
                 .life = 5,
@@ -22,6 +27,8 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 .lookingAtR = true,
                 .lookingAtL = false,
             },
+
+            .sword = {0},
 
             .knockbackStatus = (KnockbackStatus)
             {
@@ -72,7 +79,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
 void inputAndUpdatePlayer(Player *player, float delta)
 {
     //============MOVESET============
-    //----MOVIMENTAÇÃO-HORIZONTAL----
+    //-------HORIZONTAL-MOVES--------
 
     if (player->knockbackStatus.knockbackTime<=0) // confere se não está sofrendo um knockback
     {
@@ -101,6 +108,28 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     if (IsKeyPressed(KEY_X) && player->status.lookingAtR && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
     {
+        player->attackStatus.attackRight = true; //inicia o ataque
+        player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
+        player->attackStatus.attacking = true; // esta atacando
+    }
+    else
+    {
+        player->attackStatus.contTimeToNextAttack += delta; //conta tempo
+
+        if( player->attackStatus.contTimeToNextAttack >= player->timeToTheNextFrame) //confere se ja passou o tempo da animação
+        {
+            player->attackStatus.attackRight = false; //encerra o ataque
+        }
+
+        if(player->attackStatus.contTimeToNextAttack >= player->attackStatus.timeToTheNextAttack) // ja pode dar o proximo ataque?
+        {
+            player->attackStatus.attacking = false; //encerra por completo a ação
+            player->attackStatus.contTimeToNextAttack = 0.0f; // zera o contador
+        }
+    }
+
+    if (IsKeyPressed(KEY_X) && player->status.lookingAtL && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    {
         player->attackStatus.attackRight = true;
         player->attackStatus.contTimeToNextAttack = 0.0f;
         player->attackStatus.attacking = true;
@@ -120,4 +149,134 @@ void inputAndUpdatePlayer(Player *player, float delta)
             player->attackStatus.contTimeToNextAttack = 0.0f;
         }
     }
+
+    //----------VERTICAL-MOVES----------
+
+    //---------GRAVITY---------
+
+    player->speed.y+=GRAVITY; //soma sempre a gravidade na velocidade
+
+    if (player->speed.y>MAX_SPEED_FALL) // define uma velocidade max para o player n passar pelo chão
+        player->speed.y = MAX_SPEED_FALL;
+
+    //---------JUUMPSET--------
+
+    if(player->status.onFloor) // se o jogador esta no chão
+    {
+        player->jumpStatus.canJump=true; // pode pular
+        player->jumpStatus.isJumping = false; // nao esta pulando
+    }
+    else
+        player->jumpStatus.canJump=false; //se não, não pode pular
+
+    if (IsKeyPressed(KEY_SPACE)&&player->jumpStatus.canJump) //se pode pular e a tecla for acionada
+    {
+        player->speed.y += -player->jumpStatus.defaultJumpForce; // realiza o pulo
+        player->jumpStatus.isJumping = true; //  pulando
+        player->jumpStatus.canJump = false; // e não pode pular enquanto esta pulando
+        //player->status.onFloor = false;
+    }
+
+    if(IsKeyDown(KEY_SPACE)&& player->jumpStatus.isJumping) //se esta pulamndo e atecla continua pressionada
+    {
+        player->jumpStatus.jumpTime += delta; // conta um tempo max do bonus
+
+        if(player->jumpStatus.jumpTime<player->jumpStatus.jumpTimeMax) //se esta dentro do tempo
+        {
+            player->speed.y += -player->jumpStatus.jumpBoostForce; //soma o bonus ao pulo
+        }
+    }
+
+    if(IsKeyReleased(KEY_SPACE))// Se a tecla for solta
+    {
+        player->jumpStatus.isJumping=false;  //não esta mais pulando
+        player->jumpStatus.jumpTime =  0.0f; //zera o timer
+    }
+
+//------------------------------------------------------------
+//============================================================
+//---------------------UPDATE-POSITION------------------------
+
+    player->pos.x += player->speed.x * delta; // atualiza a posição de acordo com a velocidade (usa o delta para normalizar de acordo com o FPS)
+
+    player->pos.y += player->speed.y * delta;
+
 }
+
+//------------------------------------------------------------
+//============================================================
+//-----------------------KNOCKBACK----------------------------
+
+void applyKnockbackToPlayer(Player *player)
+{
+    if (player->knockbackStatus.knockbackL) //confere o tipo e direção
+    {
+        player->speed.x = -500.0; //aplica as forças
+        player->speed.y = -200.0;
+        player->knockbackStatus.knockbackTime = 0.5; // inicia o contador
+    }
+    if (player->knockbackStatus.knockbackR)
+    {
+        player->speed.x = 500.0;
+        player->speed.y = -200.0;
+        player->knockbackStatus.knockbackTime = 0.5;
+    }
+    if (player->knockbackStatus.knockbackUn)
+    {
+        if(player->status.lookingAtL)
+        {
+            player->speed.x = 200.0;
+        }
+        if(player->status.lookingAtR)
+        {
+            player->speed.x = -200.0;
+        }
+        player->speed.y = 300.0;
+        player->knockbackStatus.knockbackTime = 0.5;
+    }
+     if (player->knockbackStatus.knockbackUp)
+    {
+        if(player->status.lookingAtL)
+        {
+            player->speed.x = 200.0;
+        }
+        if(player->status.lookingAtR)
+        {
+            player->speed.x = -200.0;
+        }
+        player->speed.y = -300.0;
+        player->knockbackStatus.knockbackTime = 0.5;
+    }
+    if (player->knockbackStatus.swordKnockbackL)
+    {
+        player->speed.x = -300.0;
+        player->speed.y = -200.0;
+        player->knockbackStatus.knockbackTime = 0.5;
+    }
+    if (player->knockbackStatus.swordKnockbackR)
+    {
+        player->speed.x = 300.0;
+        player->speed.y = -200.0;
+        player->knockbackStatus.knockbackTime = 0.5;
+    }
+
+    //após aplicar qualquer knockback zera os status
+    player->knockbackStatus.knockbackL = false;
+    player->knockbackStatus.knockbackR = false;
+    player->knockbackStatus.knockbackUn = false;
+    player->knockbackStatus.knockbackUp = false;
+    player->knockbackStatus.swordKnockbackL = false;
+    player->knockbackStatus.swordKnockbackR = false;
+
+}
+
+//-------------------------------------------------------
+//=======================================================
+//---------------------DRAW-PLAYER-----------------------
+
+void drawPlayer(Player *player)
+{
+    DrawRectangleV(player->pos,player->dim,player->cor);
+}
+
+

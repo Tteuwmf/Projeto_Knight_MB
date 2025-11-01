@@ -52,6 +52,49 @@ typedef struct AttackStatus
 
 }AttackStatus;
 
+//-----------COLLISION-STRUCT----------
+
+typedef struct PlayerCollisionRec
+{
+    Rectangle upper;
+    Rectangle under;
+    Rectangle left;
+    Rectangle right;
+
+} PlayerCollisionRec;
+
+typedef struct PlayerSwordCollisionRec
+{
+    Rectangle upper;
+    Rectangle under;
+    Rectangle left;
+    Rectangle right;
+
+}PlayerSwordCollisionRec;
+
+//-------------------------------------
+
+typedef struct PlayerSword
+{
+    Vector2 pos;
+    Vector2 dim;
+    Color cor;
+
+    PlayerSwordCollisionRec collisionRecs;
+
+    bool up;
+    bool down;
+    bool left;
+    bool right;
+
+    int currentFrame;
+    int numberOfFrames;
+    float contTime;
+    float timeToTheNextFrame;
+
+}PlayerSword;
+
+
 typedef struct Player
 {
     Vector2 pos;
@@ -59,7 +102,11 @@ typedef struct Player
     Vector2 speed;
     Color cor;
 
+    PlayerCollisionRec collisionRecs;
+
     PlayerStatus status;
+
+    PlayerSword sword;
 
     KnockbackStatus knockbackStatus;
 
