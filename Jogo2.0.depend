@@ -3,3 +3,47 @@
 	<stdio.h>
 	<stdlib.h>
 
+1761926826 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1761947865 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.c
+	"raylib.h"
+	"player.h"
+
+1761947609 c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.h
+	"raylib.h"
+
+1762002796 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\blocks.c
+	"raylib.h"
+	"blocks.h"
+
+1762002503 c:\users\facci\onedrive\documents\github\projeto_knight_mb\blocks.h
+	"raylib.h"
+
+1762005033 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\weapons.c
+	"raylib.h"
+	"weapons.h"
+
+1762004388 c:\users\facci\onedrive\documents\github\projeto_knight_mb\weapons.h
+	"raylib.h"
+	"player.h"
+
+1762023364 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.c
+	"raylib.h"
+	"enemies.h"
+
+1762019293 c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.h
+	"raylib.h"
+
+1762020670 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\collisions.c
+	"raylib.h"
+	"collisions.h"
+
+1762020659 c:\users\facci\onedrive\documents\github\projeto_knight_mb\collisions.h
+	"raylib.h"
+	"player.h"
+	"blocks.h"
+	"weapons.h"
+	"enemies.h"
+
