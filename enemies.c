@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "enemies.h"
+#include "collisions.h"
 
 #define GRAVITY 20.0
 #define MAX_SPEED_FALL 400.0
@@ -58,6 +59,10 @@ void updateBasicEnemies(BasicEnemy *enemy1, float delta)
 
     enemy1->pos.x += enemy1->speed.x * delta;
     enemy1->pos.y += enemy1->speed.y * delta;
+
+    //=============UPDATE=HEAT=BOX================
+
+    enemy1->collisionRecs  = createAndUpdateBasicEnemiesCollisionsRec(enemy1);
 }
 
 void updateEnemies (Enemies *enemies, float delta)

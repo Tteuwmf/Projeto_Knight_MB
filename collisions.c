@@ -37,8 +37,15 @@ PlayerCollisionRec updatePlayerCollisionRecs(Player *player)
                         }
     };
 }
+
+void DrawPlayerRecCollisionUnder(PlayerCollisionRec *recCollision)
+{
+    DrawRectangleRec(recCollision->under, WHITE);
+}
+
+
     //============PLAYER-SWORD===============
-PlayerSwordCollisionRec createAndUpdatePlayerSwordCollisionsRec(Player *player)
+PlayerSwordCollisionRec createAndUpdatePlayerSwordCollisionRecs(Player *player)
 {
     PlayerSwordCollisionRec updatedPlayersSwordRecsCollision = (PlayerSwordCollisionRec){
                 .upper = (Rectangle){
@@ -129,7 +136,7 @@ bool checkBasicEnemiesPlayerSwordCollision_Left(BasicEnemyCollisionRec *collisio
     return CheckCollisionRecs(collisionRec->left,(Rectangle){.x = playerSword->pos.x, .y = playerSword->pos.y, .width = playerSword->dim.x, .height = playerSword->dim.y});
 }
 
-bool checkEnemiesPlayerSwordCollision_Right(BasicEnemyCollisionRec *collisionRec, PlayerSword *playerSword)
+bool checkBasicEnemiesPlayerSwordCollision_Right(BasicEnemyCollisionRec *collisionRec, PlayerSword *playerSword)
 {
     return CheckCollisionRecs(collisionRec->right,(Rectangle){.x = playerSword->pos.x, .y = playerSword->pos.y, .width = playerSword->dim.x, .height = playerSword->dim.y});
 }

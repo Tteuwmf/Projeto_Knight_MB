@@ -35,7 +35,7 @@ typedef struct JumpStatus
     float defaultJumpForce;
     float jumpBoostForce;
     bool isJumping;
-    bool jumpTime;
+    float jumpTime;
     float jumpTimeMax;
 
 }JumpStatus;
@@ -43,14 +43,33 @@ typedef struct JumpStatus
 typedef struct AttackStatus
 {
     bool attacking;
-    bool timeToTheNextAttack;
-    bool contTimeToNextAttack;
+    float timeToTheNextAttack;
+    float contTimeToNextAttack;
     bool attackRight;
     bool attackLeft;
     bool attackUp;
     bool attackDown;
 
 }AttackStatus;
+
+typedef struct PlayerWeapons
+{
+    bool defaultSword;
+
+}PlayerWeapons;
+
+typedef struct PlayerCharms
+{
+
+
+}PlayerCharms;
+
+typedef struct PlayerInventory
+{
+    PlayerCharms equippedCharms;
+    PlayerWeapons equippedWeapons;
+
+}PlayerInventory;
 
 //-----------COLLISION-STRUCT----------
 
@@ -105,6 +124,8 @@ typedef struct Player
     PlayerCollisionRec collisionRecs;
 
     PlayerStatus status;
+
+    PlayerInventory inventory;
 
     PlayerSword sword;
 

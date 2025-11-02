@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "gameWorld.h"
 
+
 #define GRAVIDADE 20.0
 #define VEL_MAX_FALL 400.0
 
@@ -17,7 +18,7 @@ GameWorld* createGameWorld()
     gw->numberOfBlocks = 0;
     gw->numberOfEnemies = 0;
 
-    //loadMap(gw,"maps/map1.txt");
+    loadMap(gw,"maps/map1.txt");
 
     gw->camera = (Camera2D)
     {
@@ -36,14 +37,15 @@ GameWorld* createGameWorld()
 
 void loadMap(GameWorld *gw, const char* arquivo)
 {
-   char *dados = LoadFileText(arquivo); // leio o arquivo e coloco em um array chamado dados
-   char *atual = dados; // um ponteiro para o dado da posição do arraty
+    char *dados = LoadFileText(arquivo); // leio o arquivo e coloco em um array chamado dados
+    char *atual = dados; // um ponteiro para o dado da posição do arraty
 
-   int contLines = 0;
-   int contColumn = 0;
-   int contBasicEnemies = 0;
-   int contBlocks = 0;
+    int contLines = 0;
+    int contColumn = 0;
+    int contBasicEnemies = 0;
+    int contBlocks = 0;
 
+    gw->enemies = (Enemies*) calloc(1, sizeof(Enemies));
 
    while(*atual != '\0')
    {
@@ -58,69 +60,324 @@ void loadMap(GameWorld *gw, const char* arquivo)
         atual++;
    }
 
-   gw->numberOfEnemies = gw->enemies->numberOfBasicEnemies;
+    gw->numberOfEnemies = gw->enemies->numberOfBasicEnemies;
 
-   gw->blocks = (Block*) malloc(gw->numberOfBlocks * sizeof(Block));
+    if(gw->numberOfBlocks>0)
+        gw->blocks = (Block*) malloc(gw->numberOfBlocks * sizeof(Block));
+    else
+        gw->blocks=NULL;
 
-   gw->enemies = (Enemies*) malloc (gw->numberOfEnemies * sizeof (Enemies));
+    if(gw->enemies->numberOfBasicEnemies>0)
         gw->enemies->enemy1 = (BasicEnemy*) malloc (gw->enemies->numberOfBasicEnemies * sizeof (BasicEnemy));
+    else
+        gw->enemies->enemy1 = NULL;
 
 
+    atual = dados; //reset do contadorc
+    while (*atual != '\0')
+    {
+        switch (*atual)
+        {
+            case '\n':
+                contLines++;
+                contColumn=0;
+                break;
 
-   atual = dados; //reset do contadorc
-   while (*atual != '\0')
-   {
-       switch (*atual)
-       {
-        case '\n':
-            contLines++;
-            contColumn=0;
-            break;
+            case 'j':
+                gw->player.pos = (Vector2) {contColumn*32,contLines*32};
+                contColumn++;
+                break;
 
-        case 'j':
-            gw->player.pos = (Vector2) {contColumn*32,contLines*32};
-            contColumn++;
-            break;
+            case 'i': //BASIC ENEMY
+                gw->enemies->enemy1[contBasicEnemies] = createBasicEnemies(
+                    (Vector2){contColumn*32, contLines*32}
+                );
+                contColumn++;
+                gw->enemies->enemy1[contBasicEnemies].collisionRecs = createAndUpdateBasicEnemiesCollisionsRec(&gw->enemies->enemy1[contBasicEnemies]);
+                contBasicEnemies++;
+                break;
 
-        case 'i': //BASIC ENEMY
-            gw->enemies->enemy1[contBasicEnemies] = createBasicEnemies(
-                (Vector2){contColumn*32, contLines*32}
-            );
-            contColumn++;
-            gw->enemies->enemy1->collisionRecs = createAndUpdateBasicEnemiesCollisionsRec(&gw->enemies->enemy1[contBasicEnemies]);
-            contBasicEnemies++;
-            break;
+            case 'p': //PAREDES E CHÃO
+                gw->blocks[contBlocks] = createBlock(
+                    (Vector2){contColumn*32, contLines*32}
+                );
+                contColumn++;
+                contBlocks++;
+                break;
 
-        case 'p': //PAREDES E CHÃO
-            gw->blocks[contBlocks] = createBlock(
-                (Vector2){contColumn*32, contLines*32}
-            );
-            contColumn++;
-            contBlocks++;
-            break;
+            default:
+                contColumn++;
+                break;
+        }
+        atual++;
+    }
 
-        default:
-            contColumn++;
-            break;
-       }
-       atual++;
-   }
+    UnloadFileText(dados);
 }
 
 //-------------------------------------------------------
 //=======================================================
-//---------------IMPUTS-AND-UPDATES----------------------
+//----------------IMPUTS-AND-UPDATES---------------------
+
+void inputAndUpdateGameWorld(GameWorld *gw)
+{
 
 //--------------------------------//
-//  float delta = GetFrameTime(); //  SET THE DELTA OF FRAME TIME
+  float delta = GetFrameTime();   //  SET THE DELTA OF FRAME TIME
 //--------------------------------//
 
+    applyKnockbackToPlayer(&gw->player);
+
+//---------------MAIN-FUNCTION-----------------
+    inputAndUpdatePlayer(&gw->player, delta);
+
+    updateEnemies (gw->enemies,delta);
+//---------------------------------------------
+
+    makeCollisionPlayerBlock (gw);
+
+    makeCollisionEnemiesBlock (gw);
+
+    makeCollisionEnemiesWeapons(gw);
+
+    if (gw->player.knockbackStatus.knockbackTime<=0)
+        makeCollisionEnemiesPlayer(gw);
+
+    updateCamera(&gw->camera, &gw->player);
+}
+
+//-------------------------------------------------------
+//=======================================================
+//-----------------MAKE-COLLISION-IN-GW------------------
+
+void makeCollisionPlayerBlock (GameWorld *gw)
+{
+    Player *player = &gw->player;
+    PlayerCollisionRec *collisionRec = &gw->player.collisionRecs;
+
+    for(int i =0; i<gw->numberOfBlocks; i++)
+    {
+        Block *block = &gw->blocks[i];
+
+            //colisão por cima
+
+            if(checkPlayerBlockCollision_Under(collisionRec ,block))
+            {
+                player->pos.y = block->pos.y-player->dim.y;
+                player->status.onFloor = true;
+                player->speed.y = 0.0f;
+            }
+            else if ( player->speed.y>0.0f)
+                player->status.onFloor = false;
 
 
+            if(checkPlayerBlockCollision_Upper(collisionRec ,block))
+            {
+                player->pos.y = block->pos.y + block->dim.y;
+                player->speed.y = 0.0f;
+            }
+
+            if(checkPlayerBlockCollision_Right(collisionRec ,block))
+            {
+                player->pos.x = block->pos.x-player->dim.x;
+            }
+
+            if(checkPlayerBlockCollision_Left(collisionRec ,block))
+            {
+                player->pos.x=block->pos.x+block->dim.x;
+            }
+    }
+
+}
+
+void makeCollisionEnemiesBlock (GameWorld *gw)
+{
+    //============BASIC=ENIMIES============
+
+    for (int i =0 ; i<gw->enemies->numberOfBasicEnemies; i++)
+    {
+        BasicEnemy *enemy = &gw->enemies->enemy1[i];
+        BasicEnemyCollisionRec *collisionRec = &enemy->collisionRecs;
+
+        for(int i =0; i<gw->numberOfBlocks; i++)
+        {
+            Block *block = &gw->blocks[i];
+
+                if(checkBasicEnemiesBlockCollision_Under(collisionRec ,block))
+                {
+                    enemy->pos.y = block->pos.y-enemy->dim.y;
+                    enemy->onFloor = true;
+                    enemy->speed.y = 0.0f;
+                }
+                else if ( enemy->speed.y>0.0f)
+                    enemy->onFloor = false;
 
 
+                if(checkBasicEnemiesBlockCollision_Upper(collisionRec ,block))
+                {
+                    enemy->pos.y = block->pos.y + block->dim.y;
+                    enemy->speed.y = 0.0f;
+                }
+
+                if(checkBasicEnemiesBlockCollision_Right(collisionRec ,block))
+                {
+                    enemy->pos.x = block->pos.x-enemy->dim.x;
+                    enemy->defaultSpeed = -enemy->defaultSpeed;
+                }
+
+                if(checkBasicEnemiesBlockCollision_Left(collisionRec ,block))
+                {
+                    enemy->pos.x=block->pos.x+block->dim.x;
+                    enemy->defaultSpeed = -enemy->defaultSpeed;
+                }
+        }
+    }
+
+}
+
+void makeCollisionEnemiesWeapons(GameWorld *gw)
+{
+    if(gw->player.inventory.equippedWeapons.defaultSword)
+    {
+        PlayerSword *defaultSword = &gw->player.sword;
+        Player *player = &gw->player;
+
+        //----------BASIC-ENEMIES---------
+
+        for(int i = 0; i<gw->enemies->numberOfBasicEnemies;i++)
+        {
+            BasicEnemy *enemy = &gw->enemies->enemy1[i];
+            BasicEnemyCollisionRec *collisionRec = &enemy->collisionRecs;
 
 
+            if(enemy->dead==false)
+            {
+                if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword))
+                {
+                    enemy->dead = true;
+                    player->knockbackStatus.swordKnockbackL = true;
+                }
+                if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword))
+                {
+                    enemy->dead = true;
+                    player->knockbackStatus.swordKnockbackR = true;
+                }
+            }
+        }
+    }
+}
+
+void makeCollisionEnemiesPlayer(GameWorld *gw)
+{
+    Player *player = &gw->player;
+    PlayerCollisionRec *collisionRec = &gw->player.collisionRecs;
+
+    //-----------BASIC-ENEMY-----------
+
+    for(int i = 0; i<gw->enemies->numberOfBasicEnemies;i++)
+    {
+        BasicEnemy *enemy = &gw->enemies->enemy1[i];
+
+        if(enemy->dead==false)
+        {
+            if (checkPlayerBasicEnemiesCollision_Right(collisionRec, enemy))
+            {
+                player->knockbackStatus.knockbackL = true;
+            }
+            if (checkPlayerBasicEnemiesCollision_Left(collisionRec, enemy))
+            {
+                player->knockbackStatus.knockbackR = true;
+            }
+            if (checkPlayerBasicEnemiesCollision_Upper(collisionRec, enemy))
+            {
+                player->knockbackStatus.knockbackUp= true;
+            }
+            if (checkPlayerBasicEnemiesCollision_Under(collisionRec, enemy))
+            {
+                player->knockbackStatus.knockbackUn = true;
+            }
+        }
+    }
+}
+
+
+//--------------------------------------------
+//============================================
+//-------------CAMERA2D-AND-DRAW--------------
+
+void updateCamera(Camera2D *camera, Player *player)
+{
+
+    if (player->pos.x <= 390 && player->pos.y >= 200)
+    {
+        camera->target= (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+        camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+        camera->rotation = 0.0f;
+        camera->zoom = 1.0f;
+    }
+    else if(player->pos.y >= 200)
+    {
+        camera->target= (Vector2) {player->pos.x+(player->dim.x/2),GetScreenHeight()/2};
+        camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+        camera->rotation = 0.0f;
+        camera->zoom = 1.0f;
+    }
+    else if (player->pos.x <= 390)
+    {
+        camera->target= (Vector2) {GetScreenWidth()/2,player->pos.y+(player->dim.y/2)};
+        camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+        camera->rotation = 0.0f;
+        camera->zoom = 1.0f;
+    }
+    else
+    {
+        camera->target= (Vector2) {player->pos.x+(player->dim.x/2),player->pos.y+(player->dim.y/2)};
+        camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+        camera->rotation = 0.0f;
+        camera->zoom = 1.0f;
+    }
+}
+
+void drawGameWorld (GameWorld *gw)
+{
+
+
+    BeginDrawing();
+
+    ClearBackground (GRAY);
+
+    BeginMode2D(gw->camera);
+
+    drawPlayer(&gw->player);
+
+    drawEnemies(gw->enemies);
+
+    for (int i =0; i<gw->numberOfBlocks; i++)
+    {
+        drawBlock(&gw->blocks[i]);
+    }
+
+    EndMode2D();
+    EndDrawing();
+}
+
+//------------------------------------------------
+//================================================
+//-------------------DESTROYS---------------------
+
+void destroysGameWorld(GameWorld *gw)
+{
+    if(!gw) return;
+
+    if(gw->enemies)
+    {
+        free(gw->enemies->enemy1);
+        free(gw->enemies);
+    }
+
+    free(gw->blocks);
+    free(gw);
+}
 
 
 

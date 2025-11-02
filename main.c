@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "raylib.h"
+#include "gameWindow.h"
+
 
 int main()
 {
-    printf("Hello world!\n");
+    GameWindow *gameWindow = createGameWindow (800, 450);
+
+    initGameWindow(gameWindow);
+
     return 0;
 }

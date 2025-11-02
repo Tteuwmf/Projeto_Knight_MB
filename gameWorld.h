@@ -44,6 +44,8 @@ void inputAndUpdateGameWorld (GameWorld *gw);
 
 void makeCollisionPlayerBlock (GameWorld *gw);
 
+void makeCollisionEnemiesBlock (GameWorld *gw);
+
 void makeCollisionEnemiesPlayer (GameWorld *gw);
 
 void makeCollisionEnemiesWeapons (GameWorld *gw);
