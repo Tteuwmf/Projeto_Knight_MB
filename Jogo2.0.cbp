@@ -43,6 +43,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="enemies.h" />
+		<Unit filename="gameWindow.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="gameWindow.h" />
 		<Unit filename="gameWorld.c">
 			<Option compilerVar="CC" />
 		</Unit>

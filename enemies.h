@@ -47,7 +47,7 @@ typedef struct Enemies
 
 BasicEnemy createBasicEnemies (Vector2 pos);
 
-void updadeEnemies (Enemies *enemies, float delta);
+void updateEnemies (Enemies *enemies, float delta);
 
 void updateBasicEnemies(BasicEnemy *enemy1, float delta);
 

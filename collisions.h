@@ -12,6 +12,8 @@
 
 PlayerCollisionRec updatePlayerCollisionRecs(Player *player);
 
+void DrawPlayerRecCollisionUnder(PlayerCollisionRec *recCollision);
+
 //------CHECK-COLLISION-TYPES-----
 
 bool checkPlayerBlockCollision_Upper(PlayerCollisionRec *collisionRec, Block *block);
