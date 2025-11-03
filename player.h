@@ -82,15 +82,6 @@ typedef struct PlayerCollisionRec
 
 } PlayerCollisionRec;
 
-typedef struct PlayerSwordCollisionRec
-{
-    Rectangle upper;
-    Rectangle under;
-    Rectangle left;
-    Rectangle right;
-
-}PlayerSwordCollisionRec;
-
 //-------------------------------------
 
 typedef struct PlayerSword
@@ -99,7 +90,7 @@ typedef struct PlayerSword
     Vector2 dim;
     Color cor;
 
-    PlayerSwordCollisionRec collisionRecs;
+    Rectangle swordCollisionRec;
 
     bool up;
     bool down;

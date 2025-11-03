@@ -92,6 +92,9 @@ Player createNewPlayer (Vector2 dim, Color cor)
 
 void inputAndUpdatePlayer(Player *player, float delta)
 {
+
+    bool attacked = false;
+
     //============MOVESET============
     //-------HORIZONTAL-MOVES--------
 
@@ -125,6 +128,8 @@ void inputAndUpdatePlayer(Player *player, float delta)
         player->attackStatus.attackRight = true; //inicia o ataque
         player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
         player->attackStatus.attacking = true; // esta atacando
+
+        attacked = true;
     }
     else
     {
@@ -140,6 +145,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
             player->attackStatus.attacking = false; //encerra por completo a ação
             player->attackStatus.contTimeToNextAttack = 0.0f; // zera o contador
         }
+
     }
 
     if (IsKeyPressed(KEY_X) && player->status.lookingAtL && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
@@ -147,6 +153,8 @@ void inputAndUpdatePlayer(Player *player, float delta)
         player->attackStatus.attackLeft = true;
         player->attackStatus.contTimeToNextAttack = 0.0f;
         player->attackStatus.attacking = true;
+
+        attacked = true;
     }
     else
     {
@@ -162,7 +170,9 @@ void inputAndUpdatePlayer(Player *player, float delta)
             player->attackStatus.attacking = false;
             player->attackStatus.contTimeToNextAttack = 0.0f;
         }
+
     }
+
 
     //----------VERTICAL-MOVES----------
 
@@ -223,7 +233,14 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     updatePlayerSword(player);
 
-    player->sword.collisionRecs = createAndUpdatePlayerSwordCollisionRecs(player);
+    if(attacked)
+    {
+        player->sword.swordCollisionRec = createAndUpdatePlayerSwordCollisionRec(player);
+    }
+    else
+        player->sword.swordCollisionRec = deletePlayerSwordCollisionRec(player);
+
+    attacked =false;
 }
 
 //------------------------------------------------------------

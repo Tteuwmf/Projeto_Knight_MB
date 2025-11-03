@@ -45,36 +45,15 @@ void DrawPlayerRecCollisionUnder(PlayerCollisionRec *recCollision)
 
 
     //============PLAYER-SWORD===============
-PlayerSwordCollisionRec createAndUpdatePlayerSwordCollisionRecs(Player *player)
-{
-    PlayerSwordCollisionRec updatedPlayersSwordRecsCollision = (PlayerSwordCollisionRec){
-                .upper = (Rectangle){
-                        .x = player->sword.pos.x+(player->sword.dim.x/2)-3,
-                        .y = player->sword.pos.y,
-                        .width = 6,
-                        .height = 6
-                        },
-                .under = (Rectangle){
-                        .x = player->sword.pos.x+(player->sword.dim.x/2)-3,
-                        .y = player->sword.pos.y+player->sword.dim.y-6,
-                        .width = 6,
-                        .height = 6
-                        },
-                .left = (Rectangle){
-                        .x = player->sword.pos.x,
-                        .y = player->sword.pos.y+(player->sword.dim.y/2)-3,
-                        .width = 6,
-                        .height = 6
-                        },
-                .right = (Rectangle){
-                        .x = player->sword.pos.x+player->sword.dim.x-6,
-                        .y = player->sword.pos.y+(player->sword.dim.y/2)-3,
-                        .width = 6,
-                        .height = 6
-                        }
 
-    };
-    return updatedPlayersSwordRecsCollision;
+Rectangle createAndUpdatePlayerSwordCollisionRec(Player *player)
+{
+    return (Rectangle){.x = player->sword.pos.x, .y = player->sword.pos.y, .width = player->sword.dim.x, .height = player->sword.dim.y};
+}
+
+Rectangle deletePlayerSwordCollisionRec(Player *player)
+{
+    return (Rectangle){.x = player->pos.x+(player->dim.x/2), .y = player->pos.y-(player->dim.y/2), .width = 0, .height =0};
 }
 
 //--------------------------------------------//
@@ -139,6 +118,11 @@ bool checkBasicEnemiesPlayerSwordCollision_Left(BasicEnemyCollisionRec *collisio
 bool checkBasicEnemiesPlayerSwordCollision_Right(BasicEnemyCollisionRec *collisionRec, PlayerSword *playerSword)
 {
     return CheckCollisionRecs(collisionRec->right,(Rectangle){.x = playerSword->pos.x, .y = playerSword->pos.y, .width = playerSword->dim.x, .height = playerSword->dim.y});
+}
+
+bool checkPlayerSwordBlocksCollision(Rectangle swordCollisionRec, Rectangle block)
+{
+    return CheckCollisionRecs(swordCollisionRec, block);
 }
 
 
