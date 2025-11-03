@@ -30,10 +30,12 @@ void updatePlayerSword (Player *player) // atualiza a posição da espada ao ataca
     {
         player->sword.pos = (Vector2){player->pos.x+player->dim.x,player->pos.y+player->dim.y/2};
     }
+
     if (player->attackStatus.attackLeft)
     {
         player->sword.pos = (Vector2) {player->pos.x-player->dim.x,player->pos.y+player->dim.y/2};
     }
+
 }
 
 void drawPlayerSword(Player *player) // desenhaa espada durante o ataque

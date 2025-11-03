@@ -136,6 +136,8 @@ void inputAndUpdateGameWorld(GameWorld *gw)
 
     makeCollisionPlayerBlock (gw);
 
+    makeCllisionBlockWeapons(gw);
+
     makeCollisionEnemiesBlock (gw);
 
     makeCollisionEnemiesWeapons(gw);
@@ -186,6 +188,42 @@ void makeCollisionPlayerBlock (GameWorld *gw)
             {
                 player->pos.x=block->pos.x+block->dim.x;
             }
+    }
+
+}
+
+void makeCllisionBlockWeapons(GameWorld *gw)
+{
+    Player *player = &gw->player;
+
+
+    for(int i =0; i<gw->numberOfBlocks; i++)
+    {
+        Block *blocks = &gw->blocks[i];
+
+        Rectangle block = (Rectangle)
+        {
+            .x = blocks->pos.x,
+            .y = blocks->pos.y,
+            .width = blocks->dim.x,
+            .height = blocks->dim.y,
+        };
+
+        if(player->inventory.equippedWeapons.defaultSword)
+        {
+
+            Rectangle swordCollisionRec = player->sword.swordCollisionRec;
+
+            if (checkPlayerSwordBlocksCollision(swordCollisionRec,block)&& player->status.lookingAtL)
+            {
+                 player->knockbackStatus.swordKnockbackL = true;
+            }
+
+            if (checkPlayerSwordBlocksCollision(swordCollisionRec,block)&& player->status.lookingAtR)
+            {
+                 player->knockbackStatus.swordKnockbackR = true;
+            }
+        }
     }
 
 }
