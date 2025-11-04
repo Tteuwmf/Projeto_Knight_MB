@@ -128,6 +128,8 @@ void inputAndUpdateGameWorld(GameWorld *gw)
 
     applyKnockbackToPlayer(&gw->player);
 
+    applyKnockbackToEnemies(gw->enemies);
+
 //---------------MAIN-FUNCTION-----------------
     inputAndUpdatePlayer(&gw->player, delta);
 
@@ -142,7 +144,7 @@ void inputAndUpdateGameWorld(GameWorld *gw)
 
     makeCollisionEnemiesWeapons(gw);
 
-    if (gw->player.knockbackStatus.knockbackTime<=0)
+    if (gw->player.knockbackStatus.knockbackTime<=0 && gw->player.status.invulnerable==false)
         makeCollisionEnemiesPlayer(gw);
 
     updateCamera(&gw->camera, &gw->player);
@@ -209,7 +211,7 @@ void makeCllisionBlockWeapons(GameWorld *gw)
             .height = blocks->dim.y,
         };
 
-        if(player->inventory.equippedWeapons.defaultSword)
+        if(player->inventory.equippedWeapons.defaultSword && (player->attackStatus.attackLeft || player->attackStatus.attackRight) && player->sword.activated)
         {
 
             Rectangle swordCollisionRec = player->sword.swordCollisionRec;
@@ -217,12 +219,16 @@ void makeCllisionBlockWeapons(GameWorld *gw)
             if (checkPlayerSwordBlocksCollision(swordCollisionRec,block)&& player->status.lookingAtL)
             {
                  player->knockbackStatus.swordKnockbackL = true;
+                 player->sword.activated = false;
             }
 
             if (checkPlayerSwordBlocksCollision(swordCollisionRec,block)&& player->status.lookingAtR)
             {
                  player->knockbackStatus.swordKnockbackR = true;
+                 player->sword.activated = false;
             }
+
+
         }
     }
 
@@ -288,20 +294,26 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
             BasicEnemyCollisionRec *collisionRec = &enemy->collisionRecs;
 
 
-            if(enemy->dead==false)
+            if(enemy->dead==false && (player->attackStatus.attackLeft || player->attackStatus.attackRight)&& player->sword.activated)
             {
                 if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword))
                 {
-                    enemy->dead = true;
+                    enemy->life-= 1;
+                    enemy->knockbackStatus.knockbackR=true;
                     player->knockbackStatus.swordKnockbackL = true;
+                    player->sword.activated = false;
                 }
-                if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword))
+                else if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword))
                 {
-                    enemy->dead = true;
+                    enemy->life-= 1;
+                    enemy->knockbackStatus.knockbackL=true;
                     player->knockbackStatus.swordKnockbackR = true;
+                    player->sword.activated = false;
                 }
+
             }
         }
+
     }
 }
 
@@ -321,18 +333,26 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
             if (checkPlayerBasicEnemiesCollision_Right(collisionRec, enemy))
             {
                 player->knockbackStatus.knockbackL = true;
+                player->status.invulnerable=true;
+                player->status.life--;
             }
-            if (checkPlayerBasicEnemiesCollision_Left(collisionRec, enemy))
+            else if (checkPlayerBasicEnemiesCollision_Left(collisionRec, enemy))
             {
                 player->knockbackStatus.knockbackR = true;
+                player->status.invulnerable=true;
+                player->status.life--;
             }
-            if (checkPlayerBasicEnemiesCollision_Upper(collisionRec, enemy))
+            else if (checkPlayerBasicEnemiesCollision_Upper(collisionRec, enemy))
             {
                 player->knockbackStatus.knockbackUp= true;
+                player->status.invulnerable=true;
+                player->status.life--;
             }
-            if (checkPlayerBasicEnemiesCollision_Under(collisionRec, enemy))
+            else if (checkPlayerBasicEnemiesCollision_Under(collisionRec, enemy))
             {
                 player->knockbackStatus.knockbackUn = true;
+                player->status.invulnerable=true;
+                player->status.life--;
             }
         }
     }

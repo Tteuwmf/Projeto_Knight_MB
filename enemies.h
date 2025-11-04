@@ -15,6 +15,17 @@ typedef struct BasicEnemyCollisionRec
 
 }BasicEnemyCollisionRec;
 
+typedef struct BasicEnemyKnockbackStatus
+{
+    bool knockbackR;
+    bool knockbackL;
+    bool knockbackUp;
+    bool knockbackUn;
+    float knockbackTime;
+
+}BasicEnemyKnockbackStatus;
+
+
 typedef struct BasicEnemy
 {
     Vector2 pos;
@@ -22,6 +33,8 @@ typedef struct BasicEnemy
     Vector2 dim;
 
     BasicEnemyCollisionRec collisionRecs;
+
+    BasicEnemyKnockbackStatus knockbackStatus;
 
     int life;
     bool dead;
@@ -50,6 +63,10 @@ BasicEnemy createBasicEnemies (Vector2 pos);
 void updateEnemies (Enemies *enemies, float delta);
 
 void updateBasicEnemies(BasicEnemy *enemy1, float delta);
+
+void applyKnockbackToEnemies (Enemies *enemies);
+
+void applyKnockbackToBasicEnemies (BasicEnemy *enemy);
 
 void drawEnemies (Enemies *enemies);
 
