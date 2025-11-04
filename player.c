@@ -28,6 +28,10 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 .onFloor = false,
                 .lookingAtR = true,
                 .lookingAtL = false,
+                .invulnerable = false,
+                .invulnerableTime = 2.0f,
+                .contInvulnerableTime = 0.0f,
+
             },
 
             .inventory = (PlayerInventory)
@@ -72,6 +76,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 .attackLeft = false,
                 .attackUp = false,
                 .attackDown = false,
+                .attackTime = 0.35f,
                 .timeToTheNextAttack = 1.0f,
                 .contTimeToNextAttack = 0.0f,
             },
@@ -92,8 +97,6 @@ Player createNewPlayer (Vector2 dim, Color cor)
 
 void inputAndUpdatePlayer(Player *player, float delta)
 {
-
-    bool attacked = false;
 
     //============MOVESET============
     //-------HORIZONTAL-MOVES--------
@@ -129,15 +132,16 @@ void inputAndUpdatePlayer(Player *player, float delta)
         player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
         player->attackStatus.attacking = true; // esta atacando
 
-        attacked = true;
+        player->sword.activated =true;
     }
     else
     {
         player->attackStatus.contTimeToNextAttack += delta; //conta tempo
 
-        if( player->attackStatus.contTimeToNextAttack >= player->timeToTheNextFrame) //confere se ja passou o tempo da animação
+        if( player->attackStatus.contTimeToNextAttack >= player->attackStatus.attackTime) //confere se ja passou o tempo da animação
         {
             player->attackStatus.attackRight = false; //encerra o ataque
+            player->sword.activated =false;
         }
 
         if(player->attackStatus.contTimeToNextAttack >= player->attackStatus.timeToTheNextAttack) // ja pode dar o proximo ataque?
@@ -154,15 +158,16 @@ void inputAndUpdatePlayer(Player *player, float delta)
         player->attackStatus.contTimeToNextAttack = 0.0f;
         player->attackStatus.attacking = true;
 
-        attacked = true;
+        player->sword.activated =true;
     }
     else
     {
         player->attackStatus.contTimeToNextAttack += delta;
 
-        if( player->attackStatus.contTimeToNextAttack >= player->timeToTheNextFrame)
+        if( player->attackStatus.contTimeToNextAttack >= player->attackStatus.attackTime)
         {
             player->attackStatus.attackLeft = false;
+            player->sword.activated =false;
         }
 
         if(player->attackStatus.contTimeToNextAttack >= player->attackStatus.timeToTheNextAttack)
@@ -175,6 +180,36 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
 
     //----------VERTICAL-MOVES----------
+
+    if(IsKeyDown(KEY_S))
+        player->status.lookingDown=true;
+
+    //---------ATTACKS---------
+
+    /*if (IsKeyPressed(KEY_X) && player->status.lookingDown && player->status.onFloor==false && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    {
+        player->attackStatus.attackDown = true; //inicia o ataque
+        player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
+        player->attackStatus.attacking = true; // esta atacando
+
+        player->sword.activated =true;
+    }
+    else
+    {
+        player->attackStatus.contTimeToNextAttack += delta; //conta tempo
+
+        if( player->attackStatus.contTimeToNextAttack >= player->attackStatus.attackTime) //confere se ja passou o tempo da animação
+        {
+            player->attackStatus.attackDown = false; //encerra o ataque
+            player->sword.activated =false;
+        }
+
+        if(player->attackStatus.contTimeToNextAttack >= player->attackStatus.timeToTheNextAttack) // ja pode dar o proximo ataque?
+        {
+            player->attackStatus.attacking = false; //encerra por completo a ação
+            player->attackStatus.contTimeToNextAttack = 0.0f; // zera o contador
+        }*/
+
 
     //---------GRAVITY---------
 
@@ -233,14 +268,25 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     updatePlayerSword(player);
 
-    if(attacked)
+    if(player->sword.activated)
     {
         player->sword.swordCollisionRec = createAndUpdatePlayerSwordCollisionRec(player);
     }
     else
         player->sword.swordCollisionRec = deletePlayerSwordCollisionRec(player);
 
-    attacked =false;
+    if(player->status.invulnerable)
+    {
+        player->status.contInvulnerableTime +=delta;
+
+        if(player->status.contInvulnerableTime>=player->status.invulnerableTime)
+        {
+            player->status.invulnerable = false;
+            player->status.contInvulnerableTime = 0.0f;
+        }
+    }
+
+
 }
 
 //------------------------------------------------------------

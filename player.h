@@ -14,6 +14,11 @@ typedef struct PlayerStatus
     bool onFloor;
     bool lookingAtR;
     bool lookingAtL;
+    bool lookingDown;
+    bool lookingUp;
+    bool invulnerable;
+    float invulnerableTime;
+    float contInvulnerableTime;
 
 }PlayerStatus;
 
@@ -43,6 +48,7 @@ typedef struct JumpStatus
 typedef struct AttackStatus
 {
     bool attacking;
+    float attackTime;
     float timeToTheNextAttack;
     float contTimeToNextAttack;
     bool attackRight;
@@ -96,6 +102,8 @@ typedef struct PlayerSword
     bool down;
     bool left;
     bool right;
+
+    bool activated;
 
     int currentFrame;
     int numberOfFrames;

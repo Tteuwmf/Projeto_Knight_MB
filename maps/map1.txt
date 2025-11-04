@@ -1,12 +1,14 @@
-p
-p
-p
-p
-p    j                                   i
-p
-p                          ppp      ppppppppppppppppp
-pppppppppp
-p                                
-p        i         p
-p               ppp             i
-pppppppppppppppppppppppppppppppppppppppppppppppppppppppp
+ppppppp     ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp
+ppppppp  j  p
+ppppppp     p 
+ppp         p    i              i             i 
+ppp         ppppppppppppppppppppppppppppppppppppppppppppp
+ppp
+ppp                                                 i       
+pp                                       pppppppppppppppppppppppppp
+pp
+pp                                                                  pppppp
+pp       i            i                           
+ppppppppppppppppppppppppppppppppppp                   pppppppppp
+ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp
+ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp

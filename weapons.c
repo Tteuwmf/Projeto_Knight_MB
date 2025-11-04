@@ -16,6 +16,8 @@ PlayerSword createPlayerSword () //inicia a espada
         .left = true,
         .right = true,
 
+        .activated = false,
+
         //contagem de frames para os png depois
         .currentFrame = 0,
         .numberOfFrames =2,

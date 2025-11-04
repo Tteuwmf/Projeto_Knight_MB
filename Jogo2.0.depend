@@ -151,7 +151,7 @@
 1762128604 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\blocks.h
 	"raylib.h"
 
-1762132269 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\collisions.c
+1762212721 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\collisions.c
 	"raylib.h"
 	"collisions.h"
 
@@ -162,17 +162,17 @@
 	"weapons.h"
 	"enemies.h"
 
-1762131853 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\player.h
+1762219485 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\player.h
 	"raylib.h"
 
-1762128605 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\weapons.h
+1762210396 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\weapons.h
 	"raylib.h"
 	"player.h"
 
-1762128604 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\enemies.h
+1762173084 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\enemies.h
 	"raylib.h"
 
-1762128604 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\enemies.c
+1762210208 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\enemies.c
 	"raylib.h"
 	"enemies.h"
 	"collisions.h"
@@ -194,7 +194,7 @@
 	"blocks.h"
 	"collisions.h"
 
-1762132637 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gameworld.c
+1762216338 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gameworld.c
 	<stdlib.h>
 	"raylib.h"
 	"gameWorld.h"
@@ -205,13 +205,13 @@
 	"raylib.h"
 	"gameWindow.h"
 
-1762133122 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\player.c
+1762216187 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\player.c
 	"raylib.h"
 	"player.h"
 	"weapons.h"
 	"collisions.h"
 
-1762130946 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\weapons.c
+1762212158 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\weapons.c
 	"raylib.h"
 	"weapons.h"
 

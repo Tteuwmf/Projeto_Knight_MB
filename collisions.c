@@ -53,7 +53,7 @@ Rectangle createAndUpdatePlayerSwordCollisionRec(Player *player)
 
 Rectangle deletePlayerSwordCollisionRec(Player *player)
 {
-    return (Rectangle){.x = player->pos.x+(player->dim.x/2), .y = player->pos.y-(player->dim.y/2), .width = 0, .height =0};
+    return (Rectangle){.x = player->pos.x+(player->dim.x/2), .y = player->pos.y+(player->dim.y/2), .width = 0, .height =0};
 }
 
 //--------------------------------------------//
