@@ -34,6 +34,7 @@ Rectangle deletePlayerSwordCollisionRec(Player *player);
 
 bool checkBasicEnemiesPlayerSwordCollision_Left(BasicEnemyCollisionRec *collisionRec, PlayerSword *playerSword);
 bool checkBasicEnemiesPlayerSwordCollision_Right(BasicEnemyCollisionRec *collisionRec, PlayerSword *playerSword);
+bool checkBasicEnemiesPlayerSwordCollision_Up(BasicEnemyCollisionRec *collisionRec, PlayerSword *playerSword);
 
 bool checkPlayerSwordBlocksCollision(Rectangle sword, Rectangle block);
 

@@ -9,7 +9,7 @@ PlayerSword createPlayerSword () //inicia a espada
     return (PlayerSword)
     {
         .pos = {0}, //deixa a posição zerada por enquanto
-        .dim = (Vector2){32,8}, //tamanho
+        .dim = (Vector2){0,0}, //tamanho
         .cor = WHITE, //cor
         .up = true, //booleanos que podem ser usados para determinar as direções possiveis do ataque
         .down = true,
@@ -31,18 +31,29 @@ void updatePlayerSword (Player *player) // atualiza a posição da espada ao ataca
     if (player->attackStatus.attackRight)
     {
         player->sword.pos = (Vector2){player->pos.x+player->dim.x,player->pos.y+player->dim.y/2};
+        player->sword.dim = (Vector2){32,8};
     }
-
-    if (player->attackStatus.attackLeft)
+    else if (player->attackStatus.attackLeft)
     {
         player->sword.pos = (Vector2) {player->pos.x-player->dim.x,player->pos.y+player->dim.y/2};
+        player->sword.dim = (Vector2){32,8};
+    }
+    else if (player->attackStatus.attackUp)
+    {
+        player->sword.pos = (Vector2){player->pos.x+(player->dim.x/2), player->pos.y-32};
+        player->sword.dim = (Vector2){8,32};
+    }
+    else if (player->attackStatus.attackDown)
+    {
+        player->sword.pos = (Vector2){player->pos.x+(player->dim.x/2), player->pos.y+player->dim.y};
+        player->sword.dim = (Vector2){8,32};
     }
 
 }
 
 void drawPlayerSword(Player *player) // desenhaa espada durante o ataque
 {
-    if (player->attackStatus.attackRight || player->attackStatus.attackLeft)
+    if (player->attackStatus.attackRight || player->attackStatus.attackLeft || player->attackStatus.attackUp || player->attackStatus.attackDown)
     {
         DrawRectangleV(player->sword.pos, player->sword.dim, player->sword.cor);
     }
