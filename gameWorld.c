@@ -3,6 +3,7 @@
 #include "gameWorld.h"
 
 
+
 #define GRAVIDADE 20.0
 #define VEL_MAX_FALL 400.0
 
@@ -294,7 +295,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
             BasicEnemyCollisionRec *collisionRec = &enemy->collisionRecs;
 
 
-            if(enemy->dead==false && (player->attackStatus.attackLeft || player->attackStatus.attackRight)&& player->sword.activated)
+            if(enemy->dead==false && (player->attackStatus.attackLeft || player->attackStatus.attackRight || player->attackStatus.attackDown || player->attackStatus.attackUp)&& player->sword.activated)
             {
                 if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword))
                 {
@@ -308,6 +309,12 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     enemy->life-= 1;
                     enemy->knockbackStatus.knockbackL=true;
                     player->knockbackStatus.swordKnockbackR = true;
+                    player->sword.activated = false;
+                }
+                else if(checkBasicEnemiesPlayerSwordCollision_Up(collisionRec, defaultSword))
+                {
+                    enemy->life-= 1;
+                    player->knockbackStatus.swordKnockbackUp = true;
                     player->sword.activated = false;
                 }
 

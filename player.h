@@ -26,6 +26,7 @@ typedef struct KnockbackStatus
 {
     bool swordKnockbackR;
     bool swordKnockbackL;
+    bool swordKnockbackUp;
     bool knockbackR;
     bool knockbackL;
     bool knockbackUp;

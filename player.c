@@ -13,8 +13,8 @@ Player createNewPlayer (Vector2 dim, Color cor)
 {
     Player newPlayer = (Player)
         {
-            .pos = {0},
-            .speed = {0},
+            .pos = {{0}},
+            .speed = {{0}},
             .dim = dim,
             .cor = cor,
 
@@ -36,7 +36,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
 
             .inventory = (PlayerInventory)
             {
-                .equippedCharms = {0},
+                .equippedCharms = 0,
                 .equippedWeapons = (PlayerWeapons)
                 {
                     .defaultSword = true,
@@ -52,6 +52,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
             {
                 .swordKnockbackR = false,
                 .swordKnockbackL = false,
+                .swordKnockbackUp = false,
                 .knockbackR = false,
                 .knockbackL = false,
                 .knockbackUp = false,
@@ -126,7 +127,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     //-----------ATTACKS-----------
 
-    if (IsKeyPressed(KEY_X) && player->status.lookingAtR && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    if (IsKeyPressed(KEY_X) && player->status.lookingAtR && player->status.lookingUp==false && player->status.lookingDown==false && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
     {
         player->attackStatus.attackRight = true; //inicia o ataque
         player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
@@ -152,7 +153,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     }
 
-    if (IsKeyPressed(KEY_X) && player->status.lookingAtL && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    if (IsKeyPressed(KEY_X) && player->status.lookingAtL && player->status.lookingUp==false && player->status.lookingDown==false && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
     {
         player->attackStatus.attackLeft = true;
         player->attackStatus.contTimeToNextAttack = 0.0f;
@@ -182,11 +183,51 @@ void inputAndUpdatePlayer(Player *player, float delta)
     //----------VERTICAL-MOVES----------
 
     if(IsKeyDown(KEY_S))
+    {
         player->status.lookingDown=true;
+    }
+    else if(IsKeyDown(KEY_W))
+    {
+        player->status.lookingUp=true;
+    }
+
+    if(IsKeyReleased(KEY_S))
+    {
+        player->status.lookingDown=false;
+    }
+    else if(IsKeyReleased(KEY_W))
+    {
+        player->status.lookingUp=false;
+    }
 
     //---------ATTACKS---------
 
-    /*if (IsKeyPressed(KEY_X) && player->status.lookingDown && player->status.onFloor==false && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    if (IsKeyPressed(KEY_X) && player->status.lookingUp && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    {
+        player->attackStatus.attackUp = true; //inicia o ataque
+        player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
+        player->attackStatus.attacking = true; // esta atacando
+
+        player->sword.activated =true;
+    }
+    else
+    {
+        player->attackStatus.contTimeToNextAttack += delta; //conta tempo
+
+        if( player->attackStatus.contTimeToNextAttack >= player->attackStatus.attackTime) //confere se ja passou o tempo da animação
+        {
+            player->attackStatus.attackUp = false; //encerra o ataque
+            player->sword.activated =false;
+        }
+
+        if(player->attackStatus.contTimeToNextAttack >= player->attackStatus.timeToTheNextAttack) // ja pode dar o proximo ataque?
+        {
+            player->attackStatus.attacking = false; //encerra por completo a ação
+            player->attackStatus.contTimeToNextAttack = 0.0f; // zera o contador
+        }
+    }
+
+    if (IsKeyPressed(KEY_X) && player->status.lookingDown && player->status.onFloor==false && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
     {
         player->attackStatus.attackDown = true; //inicia o ataque
         player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
@@ -208,7 +249,8 @@ void inputAndUpdatePlayer(Player *player, float delta)
         {
             player->attackStatus.attacking = false; //encerra por completo a ação
             player->attackStatus.contTimeToNextAttack = 0.0f; // zera o contador
-        }*/
+        }
+    }
 
 
     //---------GRAVITY---------
@@ -251,6 +293,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
         player->jumpStatus.isJumping=false;  //não esta mais pulando
         player->jumpStatus.jumpTime =  0.0f; //zera o timer
     }
+
 
 //------------------------------------------------------------
 //============================================================
@@ -301,13 +344,13 @@ void applyKnockbackToPlayer(Player *player)
         player->speed.y = -200.0;
         player->knockbackStatus.knockbackTime = 0.5; // inicia o contador
     }
-    if (player->knockbackStatus.knockbackR)
+    else if (player->knockbackStatus.knockbackR)
     {
         player->speed.x = 500.0;
         player->speed.y = -200.0;
         player->knockbackStatus.knockbackTime = 0.5;
     }
-    if (player->knockbackStatus.knockbackUn)
+    else if (player->knockbackStatus.knockbackUn)
     {
         if(player->status.lookingAtL)
         {
@@ -320,7 +363,7 @@ void applyKnockbackToPlayer(Player *player)
         player->speed.y = 300.0;
         player->knockbackStatus.knockbackTime = 0.5;
     }
-     if (player->knockbackStatus.knockbackUp)
+    else if (player->knockbackStatus.knockbackUp)
     {
         if(player->status.lookingAtL)
         {
@@ -333,16 +376,21 @@ void applyKnockbackToPlayer(Player *player)
         player->speed.y = -300.0;
         player->knockbackStatus.knockbackTime = 0.5;
     }
-    if (player->knockbackStatus.swordKnockbackL)
+    else if (player->knockbackStatus.swordKnockbackL)
     {
         player->speed.x = 300.0;
         player->speed.y = -200.0;
         player->knockbackStatus.knockbackTime = 0.5;
     }
-    if (player->knockbackStatus.swordKnockbackR)
+    else if (player->knockbackStatus.swordKnockbackR)
     {
         player->speed.x = -300.0;
         player->speed.y = -200.0;
+        player->knockbackStatus.knockbackTime = 0.5;
+    }
+    else if (player->knockbackStatus.swordKnockbackUp)
+    {
+        player->speed.y = -300.0;
         player->knockbackStatus.knockbackTime = 0.5;
     }
 
@@ -353,18 +401,16 @@ void applyKnockbackToPlayer(Player *player)
     player->knockbackStatus.knockbackUp = false;
     player->knockbackStatus.swordKnockbackL = false;
     player->knockbackStatus.swordKnockbackR = false;
+    player->knockbackStatus.swordKnockbackUp = false;
 
 }
 
 //-------------------------------------------------------
 //=======================================================
 //---------------------DRAW-PLAYER-----------------------
-
 void drawPlayer(Player *player)
 {
     DrawRectangleV(player->pos,player->dim,player->cor);
 
     drawPlayerSword(player);
 }
-
-
