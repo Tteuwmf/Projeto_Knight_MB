@@ -46,6 +46,29 @@ typedef struct JumpStatus
 
 }JumpStatus;
 
+typedef struct HorizontalPower
+{
+    Vector2 pos;
+    Vector2 dim;
+    Vector2 speed;
+    Color cor;
+
+    int currentFrame;
+    int numberOfFrames;
+    float contTime;
+    float attackTime;
+    float timeToTheNextFrame;
+
+}HorizontalPower;
+
+typedef struct SpecialAttacks
+{
+    bool horizontalPowerActive;
+    bool usingHorizontalPower;
+    HorizontalPower horizontalPower;
+
+}SpecialAttacks;
+
 typedef struct AttackStatus
 {
     bool attacking;
@@ -134,6 +157,8 @@ typedef struct Player
     JumpStatus jumpStatus;
 
     AttackStatus attackStatus;
+
+    SpecialAttacks powers;
 
     int currentFrame;
     int numberOfFrames;

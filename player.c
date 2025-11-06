@@ -34,6 +34,24 @@ Player createNewPlayer (Vector2 dim, Color cor)
 
             },
 
+            .powers = (SpecialAttacks)
+            {
+                .horizontalPowerActive = true,
+                .usingHorizontalPower = false,
+                .horizontalPower = (HorizontalPower)
+                {
+                    .pos = {0},
+                    .dim = {0},
+                    .speed = (Vector2){0,0},
+                    .cor = WHITE,
+                    .currentFrame = 0,
+                    .numberOfFrames=0,
+                    .contTime=0,
+                    .attackTime = 4.0,
+                    .timeToTheNextFrame=0,
+                },
+            },
+
             .inventory = (PlayerInventory)
             {
                 .equippedCharms = 0,
@@ -179,6 +197,41 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     }
 
+            //-----ESPECIAL-ATTACKS-----
+
+    if (IsKeyPressed(KEY_C)&& player->powers.horizontalPowerActive && player->powers.usingHorizontalPower==false)
+    {
+        player->powers.usingHorizontalPower=true;
+
+        player->powers.horizontalPower.dim = (Vector2){32,32};
+
+        player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+
+        if (player->status.lookingAtL)
+        {
+            player->powers.horizontalPower.speed.x = -400;
+            player->powers.horizontalPower.pos = (Vector2){player->pos.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+
+        }
+        else
+        {
+            player->powers.horizontalPower.speed.x = 400;
+            player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+        }
+
+    }
+    else
+    {
+        if(player->powers.usingHorizontalPower)
+        {
+            player->powers.horizontalPower.contTime += delta;
+        }
+        if(player->powers.horizontalPower.contTime>=player->powers.horizontalPower.attackTime)
+        {
+            player->powers.usingHorizontalPower= false;
+            player->powers.horizontalPower.contTime = 0.0f;
+        }
+    }
 
     //----------VERTICAL-MOVES----------
 
@@ -329,6 +382,16 @@ void inputAndUpdatePlayer(Player *player, float delta)
         }
     }
 
+    if(player->powers.usingHorizontalPower==true)
+    {
+        player->powers.horizontalPower.pos.x += player->powers.horizontalPower.speed.x * delta;
+    }
+    else
+    {
+        player->powers.horizontalPower.dim = (Vector2){0,0};
+        player->powers.horizontalPower.pos = (Vector2){0,0};
+    }
+
 
 }
 
@@ -410,7 +473,11 @@ void applyKnockbackToPlayer(Player *player)
 //---------------------DRAW-PLAYER-----------------------
 void drawPlayer(Player *player)
 {
+    if(player->powers.usingHorizontalPower)
+        DrawRectangleV(player->powers.horizontalPower.pos, player->powers.horizontalPower.dim, player->powers.horizontalPower.cor);
+
     DrawRectangleV(player->pos,player->dim,player->cor);
 
     drawPlayerSword(player);
+
 }
