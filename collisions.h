@@ -27,7 +27,7 @@ bool checkPlayerBasicEnemiesCollision_Left(PlayerCollisionRec *collisionRec, Bas
 bool checkPlayerBasicEnemiesCollision_Right(PlayerCollisionRec *collisionRec, BasicEnemy *enemy);
 
 //========================================
-//------COLLISIONS-WEAPONS-FUNCTIONS------
+//------COLLISIONS-ATTACKS-FUNCTIONS------
 
 Rectangle createAndUpdatePlayerSwordCollisionRec(Player *player);
 Rectangle deletePlayerSwordCollisionRec(Player *player);
@@ -38,6 +38,11 @@ bool checkBasicEnemiesPlayerSwordCollision_Up(BasicEnemyCollisionRec *collisionR
 bool checkBasicEnemiesPlayerSwordCollision_default(BasicEnemy *enemy, PlayerSword *playerSword);
 
 bool checkPlayerSwordBlocksCollision(Rectangle sword, Rectangle block);
+
+    //--------ESPECIAL----------
+
+bool checkBasicEnemiesHorizontalPowerCollision(BasicEnemy *enemy, HorizontalPower *power);
+
 
 //----------------------------------------
 //========================================

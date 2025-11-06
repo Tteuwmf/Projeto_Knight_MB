@@ -143,6 +143,8 @@ void inputAndUpdateGameWorld(GameWorld *gw)
 
     makeCollisionEnemiesBlock (gw);
 
+    makeCollisionEnemiesPlayerPowers (gw);
+
     makeCollisionEnemiesWeapons(gw);
 
     if (gw->player.knockbackStatus.knockbackTime<=0 && gw->player.status.invulnerable==false)
@@ -373,6 +375,31 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
     }
 }
 
+void makeCollisionEnemiesPlayerPowers (GameWorld *gw)
+{
+    if(gw->player.powers.horizontalPowerActive)
+    {
+        HorizontalPower *power1 = &gw->player.powers.horizontalPower;
+        Player *player = &gw->player;
+
+        //----------BASIC-ENEMIES---------
+
+        for(int i = 0; i<gw->enemies->numberOfBasicEnemies;i++)
+        {
+            BasicEnemy *enemy = &gw->enemies->enemy1[i];
+            BasicEnemyCollisionRec *collisionRec = &enemy->collisionRecs;
+
+            if(enemy->dead==false && power1->contTime<=power1->attackTime)
+            {
+                if(checkBasicEnemiesHorizontalPowerCollision(enemy,power1))
+                {
+                    enemy->life+= -3;
+                }
+            }
+        }
+    }
+}
+
 void makeCollisionEnemiesPlayer(GameWorld *gw)
 {
     Player *player = &gw->player;
@@ -472,6 +499,10 @@ void drawGameWorld (GameWorld *gw)
     }
 
     EndMode2D();
+
+    drawHud(&gw->player);
+
+
     EndDrawing();
 }
 
@@ -492,13 +523,3 @@ void destroysGameWorld(GameWorld *gw)
     free(gw->blocks);
     free(gw);
 }
-
-
-/*
-else if(checkBasicEnemiesPlayerSwordCollision_Up(collisionRec, defaultSword))
-                    {
-                        enemy->life-= 1;
-                        player->knockbackStatus.swordKnockbackUp = true;
-                        player->sword.activated = false;
-                    }*/
-
