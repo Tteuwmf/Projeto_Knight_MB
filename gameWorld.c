@@ -297,25 +297,74 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
 
             if(enemy->dead==false && (player->attackStatus.attackLeft || player->attackStatus.attackRight || player->attackStatus.attackDown || player->attackStatus.attackUp)&& player->sword.activated)
             {
-                if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword))
+                if(player->pos.x-enemy->pos.x>50 )
                 {
-                    enemy->life-= 1;
-                    enemy->knockbackStatus.knockbackR=true;
-                    player->knockbackStatus.swordKnockbackL = true;
-                    player->sword.activated = false;
+                    if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
+                    {
+                        enemy->life-= 1;
+                        enemy->knockbackStatus.knockbackR=true;
+                        player->knockbackStatus.swordKnockbackL = true;
+                        player->sword.activated = false;
+                    }
+                    else if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
+                    {
+                        enemy->life-= 1;
+                        enemy->knockbackStatus.knockbackL=true;
+                        player->knockbackStatus.swordKnockbackR = true;
+                        player->sword.activated = false;
+                    }
+                    else if(checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
+                    {
+                        enemy->life-= 1;
+                        player->knockbackStatus.swordKnockbackUp = true;
+                        player->sword.activated = false;
+                    }
                 }
-                else if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword))
+                else if (enemy->pos.x-player->pos.x>50)
                 {
-                    enemy->life-= 1;
-                    enemy->knockbackStatus.knockbackL=true;
-                    player->knockbackStatus.swordKnockbackR = true;
-                    player->sword.activated = false;
+                     if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
+                    {
+                        enemy->life-= 1;
+                        enemy->knockbackStatus.knockbackR=true;
+                        player->knockbackStatus.swordKnockbackL = true;
+                        player->sword.activated = false;
+                    }
+                    else if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
+                    {
+                        enemy->life-= 1;
+                        enemy->knockbackStatus.knockbackL=true;
+                        player->knockbackStatus.swordKnockbackR = true;
+                        player->sword.activated = false;
+                    }
+                    else if(checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
+                    {
+                        enemy->life-= 1;
+                        player->knockbackStatus.swordKnockbackUp = true;
+                        player->sword.activated = false;
+                    }
                 }
-                else if(checkBasicEnemiesPlayerSwordCollision_Up(collisionRec, defaultSword))
+                else if(enemy->pos.x-player->pos.x<50 || player->pos.x-enemy->pos.x<50 )
                 {
-                    enemy->life-= 1;
-                    player->knockbackStatus.swordKnockbackUp = true;
-                    player->sword.activated = false;
+                    if (checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.x<=enemy->pos.x  && (player->pos.y+player->dim.y<enemy->pos.y)==false)
+                    {
+                        enemy->life-= 1;
+                        enemy->knockbackStatus.knockbackL=true;
+                        player->knockbackStatus.swordKnockbackR = true;
+                        player->sword.activated = false;
+                    }
+                    else if (checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.x>enemy->pos.x && (player->pos.y+player->dim.y<enemy->pos.y)==false)
+                    {
+                        enemy->life-= 1;
+                        enemy->knockbackStatus.knockbackR=true;
+                        player->knockbackStatus.swordKnockbackL = true;
+                        player->sword.activated = false;
+                    }
+                    else if(checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
+                    {
+                        enemy->life-= 1;
+                        player->knockbackStatus.swordKnockbackUp = true;
+                        player->sword.activated = false;
+                    }
                 }
 
             }
@@ -445,5 +494,11 @@ void destroysGameWorld(GameWorld *gw)
 }
 
 
-
+/*
+else if(checkBasicEnemiesPlayerSwordCollision_Up(collisionRec, defaultSword))
+                    {
+                        enemy->life-= 1;
+                        player->knockbackStatus.swordKnockbackUp = true;
+                        player->sword.activated = false;
+                    }*/
 
