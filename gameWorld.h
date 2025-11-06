@@ -38,7 +38,7 @@ void loadMap (GameWorld *gw, const char* arquivo);
 
     //---------MAIN-FUNCTION---------
 
-void inputAndUpdateGameWorld (GameWorld *gw);
+void inputAndUpdateGameWorld (GameWorld *gw, bool isFullscreen);
 
     //--------COLLISIONS---------
 
@@ -58,6 +58,6 @@ void makeCllisionBlockWeapons (GameWorld *gw);
 
 void drawGameWorld (GameWorld *gw);
 
-void updateCamera (Camera2D *camera, Player *player);
+void updateCamera (Camera2D *camera, Player *player, bool isFullscreen);
 
 #endif // GAMEWORLD_H

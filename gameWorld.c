@@ -50,11 +50,11 @@ void loadMap(GameWorld *gw, const char* arquivo)
 
    while(*atual != '\0')
    {
-        if (*atual=='p'){
+        if (*atual=='p'||*atual=='P'){
             gw->numberOfBlocks++;
         }
 
-        if(*atual=='i'){
+        if(*atual=='i'||*atual=='M'){
             gw->enemies->numberOfBasicEnemies++;
         }
 
@@ -84,11 +84,13 @@ void loadMap(GameWorld *gw, const char* arquivo)
                 contColumn=0;
                 break;
 
+            case 'J':
             case 'j':
                 gw->player.pos = (Vector2) {contColumn*32,contLines*32};
                 contColumn++;
                 break;
 
+            case 'M':
             case 'i': //BASIC ENEMY
                 gw->enemies->enemy1[contBasicEnemies] = createBasicEnemies(
                     (Vector2){contColumn*32, contLines*32}
@@ -98,6 +100,7 @@ void loadMap(GameWorld *gw, const char* arquivo)
                 contBasicEnemies++;
                 break;
 
+            case 'P':
             case 'p': //PAREDES E CHÃO
                 gw->blocks[contBlocks] = createBlock(
                     (Vector2){contColumn*32, contLines*32}
@@ -120,7 +123,7 @@ void loadMap(GameWorld *gw, const char* arquivo)
 //=======================================================
 //----------------IMPUTS-AND-UPDATES---------------------
 
-void inputAndUpdateGameWorld(GameWorld *gw)
+void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
 {
 
 //--------------------------------//
@@ -150,7 +153,7 @@ void inputAndUpdateGameWorld(GameWorld *gw)
     if (gw->player.knockbackStatus.knockbackTime<=0 && gw->player.status.invulnerable==false)
         makeCollisionEnemiesPlayer(gw);
 
-    updateCamera(&gw->camera, &gw->player);
+    updateCamera(&gw->camera, &gw->player, isFullscreen);
 }
 
 //-------------------------------------------------------
@@ -304,6 +307,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
                         enemy->life-= 1;
+                        player->status.aura++;
                         enemy->knockbackStatus.knockbackR=true;
                         player->knockbackStatus.swordKnockbackL = true;
                         player->sword.activated = false;
@@ -311,6 +315,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     else if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
                         enemy->life-= 1;
+                        player->status.aura++;
                         enemy->knockbackStatus.knockbackL=true;
                         player->knockbackStatus.swordKnockbackR = true;
                         player->sword.activated = false;
@@ -318,6 +323,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     else if(checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
                     {
                         enemy->life-= 1;
+                        player->status.aura++;
                         player->knockbackStatus.swordKnockbackUp = true;
                         player->sword.activated = false;
                     }
@@ -327,6 +333,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                      if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
                         enemy->life-= 1;
+                        player->status.aura++;
                         enemy->knockbackStatus.knockbackR=true;
                         player->knockbackStatus.swordKnockbackL = true;
                         player->sword.activated = false;
@@ -334,6 +341,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     else if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
                         enemy->life-= 1;
+                        player->status.aura++;
                         enemy->knockbackStatus.knockbackL=true;
                         player->knockbackStatus.swordKnockbackR = true;
                         player->sword.activated = false;
@@ -341,6 +349,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     else if(checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
                     {
                         enemy->life-= 1;
+                        player->status.aura++;
                         player->knockbackStatus.swordKnockbackUp = true;
                         player->sword.activated = false;
                     }
@@ -350,6 +359,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     if (checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.x<=enemy->pos.x  && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
                         enemy->life-= 1;
+                        player->status.aura++;
                         enemy->knockbackStatus.knockbackL=true;
                         player->knockbackStatus.swordKnockbackR = true;
                         player->sword.activated = false;
@@ -357,6 +367,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     else if (checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.x>enemy->pos.x && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
                         enemy->life-= 1;
+                        player->status.aura++;
                         enemy->knockbackStatus.knockbackR=true;
                         player->knockbackStatus.swordKnockbackL = true;
                         player->sword.activated = false;
@@ -364,6 +375,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     else if(checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
                     {
                         enemy->life-= 1;
+                        player->status.aura++;
                         player->knockbackStatus.swordKnockbackUp = true;
                         player->sword.activated = false;
                     }
@@ -446,37 +458,47 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
 //============================================
 //-------------CAMERA2D-AND-DRAW--------------
 
-void updateCamera(Camera2D *camera, Player *player)
+void updateCamera(Camera2D *camera, Player *player, bool isFullscreen)
 {
-
-    if (player->pos.x <= 390 && player->pos.y >= 200)
+    if(isFullscreen==false)
     {
-        camera->target= (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-        camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-        camera->rotation = 0.0f;
-        camera->zoom = 1.0f;
-    }
-    else if(player->pos.y >= 200)
-    {
-        camera->target= (Vector2) {player->pos.x+(player->dim.x/2),GetScreenHeight()/2};
-        camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-        camera->rotation = 0.0f;
-        camera->zoom = 1.0f;
-    }
-    else if (player->pos.x <= 390)
-    {
-        camera->target= (Vector2) {GetScreenWidth()/2,player->pos.y+(player->dim.y/2)};
-        camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-        camera->rotation = 0.0f;
-        camera->zoom = 1.0f;
+        if (player->pos.x <= 390 && player->pos.y >= 200)
+        {
+            camera->target= (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+            camera->rotation = 0.0f;
+            camera->zoom = 1.0f;
+        }
+        else if(player->pos.y >= 200)
+        {
+            camera->target= (Vector2) {player->pos.x+(player->dim.x/2),GetScreenHeight()/2};
+            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+            camera->rotation = 0.0f;
+            camera->zoom = 1.0f;
+        }
+        else if (player->pos.x <= 390)
+        {
+            camera->target= (Vector2) {GetScreenWidth()/2,player->pos.y+(player->dim.y/2)};
+            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+            camera->rotation = 0.0f;
+            camera->zoom = 1.0f;
+        }
+        else
+        {
+            camera->target= (Vector2) {player->pos.x+(player->dim.x/2),player->pos.y+(player->dim.y/2)};
+            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+            camera->rotation = 0.0f;
+            camera->zoom = 1.0f;
+        }
     }
     else
     {
-        camera->target= (Vector2) {player->pos.x+(player->dim.x/2),player->pos.y+(player->dim.y/2)};
+        camera->target= (Vector2) {player->pos.x+(player->dim.x/2),player->pos.y+(player->dim.y/2)-64};
         camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
         camera->rotation = 0.0f;
-        camera->zoom = 1.0f;
+        camera->zoom = 3.0f;
     }
+
 }
 
 void drawGameWorld (GameWorld *gw)

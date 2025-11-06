@@ -3,74 +3,74 @@
 	<stdio.h>
 	<stdlib.h>
 
-1762173792 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\main.c
+1762451125 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\main.c
 	<stdio.h>
 	<stdlib.h>
 	"raylib.h"
 	"gameWindow.h"
 
-1762440371 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.c
+1762448533 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.c
 	"raylib.h"
 	"player.h"
 	"weapons.h"
 	"collisions.h"
 
-1762440371 c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.h
+1762448523 c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.h
 	"raylib.h"
 
-1762173792 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\blocks.c
+1762447289 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\blocks.c
 	"raylib.h"
 	"blocks.h"
 
-1762173792 c:\users\facci\onedrive\documents\github\projeto_knight_mb\blocks.h
+1762447289 c:\users\facci\onedrive\documents\github\projeto_knight_mb\blocks.h
 	"raylib.h"
 
-1762272403 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\weapons.c
+1762447296 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\weapons.c
 	"raylib.h"
 	"weapons.h"
 
-1762173792 c:\users\facci\onedrive\documents\github\projeto_knight_mb\weapons.h
+1762447289 c:\users\facci\onedrive\documents\github\projeto_knight_mb\weapons.h
 	"raylib.h"
 	"player.h"
 
-1762438574 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.c
+1762447296 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.c
 	"raylib.h"
 	"enemies.h"
 	"collisions.h"
 
-1762261997 c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.h
+1762447296 c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.h
 	"raylib.h"
 
-1762438433 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\collisions.c
+1762447296 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\collisions.c
 	"raylib.h"
 	"collisions.h"
 
-1762438433 c:\users\facci\onedrive\documents\github\projeto_knight_mb\collisions.h
+1762447296 c:\users\facci\onedrive\documents\github\projeto_knight_mb\collisions.h
 	"raylib.h"
 	"player.h"
 	"blocks.h"
 	"weapons.h"
 	"enemies.h"
 
-1762440504 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.c
+1762450589 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.c
 	<stdlib.h>
 	"raylib.h"
 	"gameWorld.h"
 
-1762440371 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.h
+1762450539 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.h
 	"raylib.h"
 	"player.h"
 	"enemies.h"
 	"blocks.h"
 	"collisions.h"
 
-1762173792 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamewindow.c
+1762451125 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamewindow.c
 	<stdlib.h>
 	<stdio.h>
 	"raylib.h"
 	"gameWindow.h"
 
-1762173792 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamewindow.h
+1762447289 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamewindow.h
 	"raylib.h"
 	"gameWorld.h"
 

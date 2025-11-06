@@ -10,5 +10,7 @@ int main()
 
     initGameWindow(gameWindow);
 
+    free(gameWindow);
+
     return 0;
 }
