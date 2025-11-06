@@ -146,7 +146,7 @@ void applyKnockbackToEnemies(Enemies *enemies)
     {
         BasicEnemy *enemy1 = &enemies->enemy1[i];
 
-        if (enemy1->dead==false)
+        if (enemy1->dead==false && enemy1->knockbackStatus.knockbackTime<=0)
         {
             applyKnockbackToBasicEnemies(enemy1);
         }

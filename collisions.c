@@ -125,6 +125,11 @@ bool checkBasicEnemiesPlayerSwordCollision_Up(BasicEnemyCollisionRec *collisionR
     return CheckCollisionRecs(collisionRec->upper,(Rectangle){.x = playerSword->pos.x, .y = playerSword->pos.y, .width = playerSword->dim.x, .height = playerSword->dim.y});
 }
 
+bool checkBasicEnemiesPlayerSwordCollision_default(BasicEnemy *enemy, PlayerSword *playerSword)
+{
+    return CheckCollisionRecs((Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y },(Rectangle){.x = playerSword->pos.x, .y = playerSword->pos.y, .width = playerSword->dim.x, .height = playerSword->dim.y});
+}
+
 bool checkPlayerSwordBlocksCollision(Rectangle swordCollisionRec, Rectangle block)
 {
     return CheckCollisionRecs(swordCollisionRec, block);
