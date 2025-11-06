@@ -21,6 +21,16 @@ void initGameWindow(GameWindow *gameWindow)
     {
         gameWindow->initiate = true;
 
+        //======FULL-SCREEN-CONFIG======
+
+        int monitor = GetCurrentMonitor();
+        int monitorWidth = GetMonitorWidth(monitor);
+        int monitorHeight = GetMonitorHeight(monitor);
+
+        bool isFullScreen = false;
+
+        //-------------------------------
+
         InitWindow (gameWindow->width, gameWindow->height, "JOGO2.0");
 
         gameWindow->gw = createGameWorld();
@@ -29,7 +39,31 @@ void initGameWindow(GameWindow *gameWindow)
 
         while (!WindowShouldClose())
         {
-            inputAndUpdateGameWorld(gameWindow->gw);
+            //----FULL-SCREEN-CONFIG----
+
+            if(IsKeyPressed(KEY_F))
+            {
+                isFullScreen = !isFullScreen;
+
+                if(isFullScreen)
+                {
+                    SetWindowSize(1920,1080);
+                    ToggleFullscreen();
+                }
+                else
+                {
+                    ToggleFullscreen();
+                    SetWindowSize(gameWindow->width, gameWindow->height);
+                    SetWindowPosition(
+                        (1920-gameWindow->width)/2,
+                        (1080-gameWindow->height)/2
+                    );
+                }
+            }
+
+            //-----------------------------
+
+            inputAndUpdateGameWorld(gameWindow->gw, isFullScreen);
 
             drawGameWorld(gameWindow->gw);
         }
@@ -37,7 +71,6 @@ void initGameWindow(GameWindow *gameWindow)
 
         CloseWindow();
         destroysGameWorld(gameWindow->gw);
-
 
     }
 }

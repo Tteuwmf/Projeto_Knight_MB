@@ -11,6 +11,7 @@ typedef struct PlayerStatus
     int life;
     bool dead;
     int aura;
+    int ticketsRU;
     float defaultSpeed;
     bool onFloor;
     bool lookingAtR;
