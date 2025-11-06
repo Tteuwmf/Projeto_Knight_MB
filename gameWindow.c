@@ -6,6 +6,7 @@
 GameWindow* createGameWindow(int width, int height)
 {
     GameWindow *gameWindow = (GameWindow*) malloc(sizeof(GameWindow));
+    if (!gameWindow){return NULL;}
 
     gameWindow->width = width;
     gameWindow->height = height;
@@ -17,6 +18,8 @@ GameWindow* createGameWindow(int width, int height)
 
 void initGameWindow(GameWindow *gameWindow)
 {
+    if(!gameWindow){return;} //checa para não dar crashs
+
     if(!gameWindow->initiate)
     {
         gameWindow->initiate = true;
@@ -48,11 +51,10 @@ void initGameWindow(GameWindow *gameWindow)
                 if(isFullScreen)
                 {
                     SetWindowSize(1920,1080);
-                    ToggleFullscreen();
+                    SetWindowPosition(0,0);
                 }
                 else
                 {
-                    ToggleFullscreen();
                     SetWindowSize(gameWindow->width, gameWindow->height);
                     SetWindowPosition(
                         (1920-gameWindow->width)/2,

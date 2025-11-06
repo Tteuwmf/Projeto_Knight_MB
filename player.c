@@ -319,36 +319,39 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     //---------JUUMPSET--------
 
-    if(player->status.onFloor) // se o jogador esta no chão
+    if (player->knockbackStatus.knockbackTime<=0)
     {
-        player->jumpStatus.canJump=true; // pode pular
-        player->jumpStatus.isJumping = false; // nao esta pulando
-    }
-    else
-        player->jumpStatus.canJump=false; //se não, não pode pular
-
-    if (IsKeyPressed(KEY_SPACE)&&player->jumpStatus.canJump) //se pode pular e a tecla for acionada
-    {
-        player->speed.y += -player->jumpStatus.defaultJumpForce; // realiza o pulo
-        player->jumpStatus.isJumping = true; //  pulando
-        player->jumpStatus.canJump = false; // e não pode pular enquanto esta pulando
-        player->status.onFloor = false;
-    }
-
-    if(IsKeyDown(KEY_SPACE)&& player->jumpStatus.isJumping) //se esta pulamndo e atecla continua pressionada
-    {
-        player->jumpStatus.jumpTime += delta; // conta um tempo max do bonus
-
-        if(player->jumpStatus.jumpTime<player->jumpStatus.jumpTimeMax) //se esta dentro do tempo
+        if(player->status.onFloor) // se o jogador esta no chão
         {
-            player->speed.y += -player->jumpStatus.jumpBoostForce; //soma o bonus ao pulo
+            player->jumpStatus.canJump=true; // pode pular
+            player->jumpStatus.isJumping = false; // nao esta pulando
         }
-    }
+        else
+            player->jumpStatus.canJump=false; //se não, não pode pular
 
-    if(IsKeyReleased(KEY_SPACE))// Se a tecla for solta
-    {
-        player->jumpStatus.isJumping=false;  //não esta mais pulando
-        player->jumpStatus.jumpTime =  0.0f; //zera o timer
+        if (IsKeyPressed(KEY_SPACE)&&player->jumpStatus.canJump) //se pode pular e a tecla for acionada
+        {
+            player->speed.y += -player->jumpStatus.defaultJumpForce; // realiza o pulo
+            player->jumpStatus.isJumping = true; //  pulando
+            player->jumpStatus.canJump = false; // e não pode pular enquanto esta pulando
+            player->status.onFloor = false;
+        }
+
+        if(IsKeyDown(KEY_SPACE)&& player->jumpStatus.isJumping) //se esta pulamndo e atecla continua pressionada
+        {
+            player->jumpStatus.jumpTime += delta; // conta um tempo max do bonus
+
+            if(player->jumpStatus.jumpTime<player->jumpStatus.jumpTimeMax) //se esta dentro do tempo
+            {
+                player->speed.y += -player->jumpStatus.jumpBoostForce; //soma o bonus ao pulo
+            }
+        }
+
+        if(IsKeyReleased(KEY_SPACE))// Se a tecla for solta
+        {
+            player->jumpStatus.isJumping=false;  //não esta mais pulando
+            player->jumpStatus.jumpTime =  0.0f; //zera o timer
+        }
     }
 
 
