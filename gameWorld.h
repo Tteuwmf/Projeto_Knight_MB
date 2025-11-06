@@ -52,7 +52,7 @@ void makeCollisionEnemiesWeapons (GameWorld *gw);
 
 void makeCollisionEnemiesPlayerPowers (GameWorld *gw);
 
-void makeCllisionBlockWeapons (GameWorld *gw);
+void makeCllisionBlockWeaponsAndPowers (GameWorld *gw);
 
     //-------DRAW-AND-CAMERA-------
 

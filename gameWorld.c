@@ -13,6 +13,7 @@
 GameWorld* createGameWorld()
 {
     GameWorld *gw = (GameWorld*) calloc(1,sizeof (GameWorld));
+    if (!gw){return NULL;}
 
     gw->player = createNewPlayer((Vector2){32,32},BLUE);
 
@@ -39,6 +40,8 @@ GameWorld* createGameWorld()
 void loadMap(GameWorld *gw, const char* arquivo)
 {
     char *dados = LoadFileText(arquivo); // leio o arquivo e coloco em um array chamado dados
+    if(!dados){return;}
+
     char *atual = dados; // um ponteiro para o dado da posição do arraty
 
     int contLines = 0;
@@ -47,6 +50,7 @@ void loadMap(GameWorld *gw, const char* arquivo)
     int contBlocks = 0;
 
     gw->enemies = (Enemies*) calloc(1, sizeof(Enemies));
+    if (!gw->enemies){free(gw->enemies); return;}
 
    while(*atual != '\0')
    {
@@ -64,12 +68,18 @@ void loadMap(GameWorld *gw, const char* arquivo)
     gw->numberOfEnemies = gw->enemies->numberOfBasicEnemies;
 
     if(gw->numberOfBlocks>0)
+    {
         gw->blocks = (Block*) malloc(gw->numberOfBlocks * sizeof(Block));
+        if(!gw->blocks){free(gw->blocks); return;}
+    }
     else
         gw->blocks=NULL;
 
     if(gw->enemies->numberOfBasicEnemies>0)
+    {
         gw->enemies->enemy1 = (BasicEnemy*) malloc (gw->enemies->numberOfBasicEnemies * sizeof (BasicEnemy));
+        if(!gw->enemies->enemy1){free(gw->enemies->enemy1); return;};
+    }
     else
         gw->enemies->enemy1 = NULL;
 
@@ -142,7 +152,7 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
 
     makeCollisionPlayerBlock (gw);
 
-    makeCllisionBlockWeapons(gw);
+    makeCllisionBlockWeaponsAndPowers(gw);
 
     makeCollisionEnemiesBlock (gw);
 
@@ -200,7 +210,7 @@ void makeCollisionPlayerBlock (GameWorld *gw)
 
 }
 
-void makeCllisionBlockWeapons(GameWorld *gw)
+void makeCllisionBlockWeaponsAndPowers(GameWorld *gw)
 {
     Player *player = &gw->player;
 
@@ -216,6 +226,8 @@ void makeCllisionBlockWeapons(GameWorld *gw)
             .width = blocks->dim.x,
             .height = blocks->dim.y,
         };
+
+        //------DEFAULT-SWORD-------
 
         if(player->inventory.equippedWeapons.defaultSword && (player->attackStatus.attackLeft || player->attackStatus.attackRight) && player->sword.activated)
         {
@@ -233,8 +245,18 @@ void makeCllisionBlockWeapons(GameWorld *gw)
                  player->knockbackStatus.swordKnockbackR = true;
                  player->sword.activated = false;
             }
+        }
 
+        //-------HORIZONTAL-POWER-------
 
+        if(player->powers.usingHorizontalPower)
+        {
+            HorizontalPower *power = &player->powers.horizontalPower;
+
+            if(checkBlocksHorizontalPowerCollision(block, power))
+            {
+                power->contTime+=5.0;
+            }
         }
     }
 
@@ -409,6 +431,7 @@ void makeCollisionEnemiesPlayerPowers (GameWorld *gw)
                 }
             }
         }
+
     }
 }
 
@@ -496,7 +519,7 @@ void updateCamera(Camera2D *camera, Player *player, bool isFullscreen)
         camera->target= (Vector2) {player->pos.x+(player->dim.x/2),player->pos.y+(player->dim.y/2)-64};
         camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
         camera->rotation = 0.0f;
-        camera->zoom = 3.0f;
+        camera->zoom = 2.5f;
     }
 
 }
@@ -539,9 +562,14 @@ void destroysGameWorld(GameWorld *gw)
     if(gw->enemies)
     {
         free(gw->enemies->enemy1);
+        gw->enemies->enemy1=NULL;
         free(gw->enemies);
+        gw->enemies=NULL;
     }
 
     free(gw->blocks);
+    gw->blocks=NULL;
+
     free(gw);
+    gw=NULL;
 }

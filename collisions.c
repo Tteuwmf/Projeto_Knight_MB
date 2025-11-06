@@ -142,6 +142,11 @@ bool checkBasicEnemiesHorizontalPowerCollision(BasicEnemy *enemy, HorizontalPowe
     return CheckCollisionRecs((Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y },(Rectangle){.x = power->pos.x, .y = power->pos.y, .width = power->dim.x, .height = power->dim.y});
 }
 
+bool checkBlocksHorizontalPowerCollision(Rectangle block, HorizontalPower *power)
+{
+    return CheckCollisionRecs(block,(Rectangle){.x = power->pos.x, .y = power->pos.y, .width = power->dim.x, .height = power->dim.y});
+}
+
 //----------------------------------------------------
 //====================================================
 //-----------ENEMIES-COLLISIONS-FUNCTIONS-------------

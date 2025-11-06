@@ -42,6 +42,7 @@ bool checkPlayerSwordBlocksCollision(Rectangle sword, Rectangle block);
     //--------ESPECIAL----------
 
 bool checkBasicEnemiesHorizontalPowerCollision(BasicEnemy *enemy, HorizontalPower *power);
+bool checkBlocksHorizontalPowerCollision(Rectangle block, HorizontalPower *power);
 
 
 //----------------------------------------
