@@ -50,6 +50,8 @@ void makeCollisionEnemiesPlayer (GameWorld *gw);
 
 void makeCollisionEnemiesWeapons (GameWorld *gw);
 
+void makeCollisionEnemiesPlayerPowers (GameWorld *gw);
+
 void makeCllisionBlockWeapons (GameWorld *gw);
 
     //-------DRAW-AND-CAMERA-------

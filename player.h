@@ -10,6 +10,7 @@ typedef struct PlayerStatus
 {
     int life;
     bool dead;
+    int aura;
     float defaultSpeed;
     bool onFloor;
     bool lookingAtR;
@@ -178,5 +179,7 @@ void inputAndUpdatePlayer (Player *player, float delta);
 void applyKnockbackToPlayer (Player *player);
 
 void drawPlayer (Player *player);
+
+void drawHud (Player *player);
 
 #endif // PLAYER_H

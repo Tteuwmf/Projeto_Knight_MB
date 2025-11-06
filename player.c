@@ -24,6 +24,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
             {
                 .life = 5,
                 .dead = false,
+                .aura = 0,
                 .defaultSpeed = 200.0,
                 .onFloor = false,
                 .lookingAtR = true,
@@ -480,4 +481,12 @@ void drawPlayer(Player *player)
 
     drawPlayerSword(player);
 
+}
+
+
+void drawHud (Player *player)
+{
+    DrawText(TextFormat("Lives: %02i", player->status.life), 20,20,20, GREEN);
+    DrawText(TextFormat("Aura: %02i", player->status.aura), 20,50,20, GREEN);
+    DrawText(TextFormat("Amuletos: "), 20,80,20, GREEN);
 }

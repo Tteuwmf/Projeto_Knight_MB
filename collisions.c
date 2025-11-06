@@ -135,6 +135,12 @@ bool checkPlayerSwordBlocksCollision(Rectangle swordCollisionRec, Rectangle bloc
     return CheckCollisionRecs(swordCollisionRec, block);
 }
 
+    //================PLAYER-POWERS===============
+
+bool checkBasicEnemiesHorizontalPowerCollision(BasicEnemy *enemy, HorizontalPower *power)
+{
+    return CheckCollisionRecs((Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y },(Rectangle){.x = power->pos.x, .y = power->pos.y, .width = power->dim.x, .height = power->dim.y});
+}
 
 //----------------------------------------------------
 //====================================================

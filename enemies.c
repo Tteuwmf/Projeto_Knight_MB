@@ -46,16 +46,21 @@ void updateBasicEnemies(BasicEnemy *enemy1, float delta)
         if (enemy1->onFloor)
         {
             enemy1->speed.x = enemy1->defaultSpeed;
+            enemy1->speed.y = 0.0f;
         }
-        else if (enemy1->speed.x>0 && enemy1->onFloor==false)
+
+        if(enemy1->speed.y<40.0)
         {
-            enemy1->pos.x = enemy1->pos.x-(enemy1->dim.x/2);
-            enemy1->defaultSpeed = -enemy1->defaultSpeed;
-        }
-        else if (enemy1->speed.x<0 && enemy1->onFloor==false)
-        {
-            enemy1->pos.x = enemy1->pos.x+(enemy1->dim.x/2);
-            enemy1->defaultSpeed = -enemy1->defaultSpeed;
+            if (enemy1->speed.x>0 && enemy1->onFloor==false)
+            {
+                enemy1->pos.x = enemy1->pos.x-(enemy1->dim.x/2);
+                enemy1->defaultSpeed = -enemy1->defaultSpeed;
+            }
+            else if (enemy1->speed.x<0 && enemy1->onFloor==false)
+            {
+                enemy1->pos.x = enemy1->pos.x+(enemy1->dim.x/2);
+                enemy1->defaultSpeed = -enemy1->defaultSpeed;
+            }
         }
     }
     else
