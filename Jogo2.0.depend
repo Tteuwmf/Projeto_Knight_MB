@@ -9,13 +9,13 @@
 	"raylib.h"
 	"gameWindow.h"
 
-1762304882 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.c
+1762305045 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.c
 	"raylib.h"
 	"player.h"
 	"weapons.h"
 	"collisions.h"
 
-1762274901 c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.h
+1762363616 c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.h
 	"raylib.h"
 
 1762173792 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\blocks.c
