@@ -6,6 +6,7 @@
 #include "enemies.h"
 #include "blocks.h"
 #include "collisions.h"
+#include "coins.h"
 
 //============================================
 //-----------------STRUCTS--------------------
@@ -16,6 +17,9 @@ typedef struct GameWorld
 
     Enemies *enemies;
     int numberOfEnemies;
+
+    Coins ticketsRU[800];
+    int numberOfCoins;
 
     Block *blocks;
     int numberOfBlocks;
@@ -53,6 +57,11 @@ void makeCollisionEnemiesWeapons (GameWorld *gw);
 void makeCollisionEnemiesPlayerPowers (GameWorld *gw);
 
 void makeCllisionBlockWeaponsAndPowers (GameWorld *gw);
+
+    //-------COINS-------
+
+void updateCoins(GameWorld *gw, float delta);
+
 
     //-------DRAW-AND-CAMERA-------
 
