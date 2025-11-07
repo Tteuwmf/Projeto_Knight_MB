@@ -239,7 +239,10 @@ bool checkCoinsBlocksCollision(Coins *coin, Block *block)
     return CheckCollisionRecs((Rectangle){.x = coin->pos.x, .y = coin->pos.y, .width = coin->dim.x, .height = coin->dim.y}, (Rectangle){.x = block->pos.x, .y = block->pos.y, .width = block->dim.x, .height = block->dim.y});
 }
 
-
+bool checkCoinsPlayerCollision(Coins *coin, Player *player)
+{
+    return CheckCollisionRecs((Rectangle){.x = coin->pos.x, .y = coin->pos.y, .width = coin->dim.x, .height = coin->dim.y}, (Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y});
+}
 
 
 

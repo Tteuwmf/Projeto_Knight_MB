@@ -65,7 +65,7 @@ bool checkBasicEnemiesBlockCollision_Right(BasicEnemyCollisionRec *collisionRecs
 
 bool checkCoinsBlocksCollision(Coins *coin, Block *block);
 
-
+bool checkCoinsPlayerCollision(Coins *coin, Player *player);
 
 
 

@@ -25,10 +25,10 @@ void initGameWindow(GameWindow *gameWindow)
         gameWindow->initiate = true;
 
         //======FULL-SCREEN-CONFIG======
-
+        /*
         int monitor = GetCurrentMonitor();
         int monitorWidth = GetMonitorWidth(monitor);
-        int monitorHeight = GetMonitorHeight(monitor);
+        int monitorHeight = GetMonitorHeight(monitor);*/
 
         bool isFullScreen = false;
 

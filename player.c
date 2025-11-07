@@ -13,12 +13,12 @@ Player createNewPlayer (Vector2 dim, Color cor)
 {
     Player newPlayer = (Player)
         {
-            .pos = {{0}},
-            .speed = {{0}},
+            .pos = {0},
+            .speed = {0},
             .dim = dim,
             .cor = cor,
 
-            .collisionRecs = {0},
+            .collisionRecs = {{0}},
 
             .status = (PlayerStatus)
             {
@@ -56,7 +56,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
 
             .inventory = (PlayerInventory)
             {
-                .equippedCharms = 0,
+                //.equippedCharms = {0},
                 .equippedWeapons = (PlayerWeapons)
                 {
                     .defaultSword = true,
