@@ -23,8 +23,12 @@ Player createNewPlayer (Vector2 dim, Color cor)
             .status = (PlayerStatus)
             {
                 .life = 5,
+                .maxLife = 5,
                 .dead = false,
                 .aura = 0,
+                .healing = false,
+                .healingTime = 1.5f,
+                .contHealingTime = 0.0,
                 .ticketsRU = 0,
                 .defaultSpeed = 200.0,
                 .onFloor = false,
@@ -122,7 +126,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
     //============MOVESET============
     //-------HORIZONTAL-MOVES--------
 
-    if (player->knockbackStatus.knockbackTime<=0) // confere se não está sofrendo um knockback
+    if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false) // confere se não está sofrendo um knockback
     {
         if(IsKeyDown(KEY_D)) //indo para a direita
         {
@@ -147,7 +151,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     //-----------ATTACKS-----------
 
-    if (IsKeyPressed(KEY_X) && player->status.lookingAtR && player->status.lookingUp==false && player->status.lookingDown==false && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    if (IsKeyPressed(KEY_X) && player->status.lookingAtR && player->status.lookingUp==false && player->status.lookingDown==false && player->attackStatus.attacking==false && player->status.healing==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
     {
         player->attackStatus.attackRight = true; //inicia o ataque
         player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
@@ -173,7 +177,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     }
 
-    if (IsKeyPressed(KEY_X) && player->status.lookingAtL && player->status.lookingUp==false && player->status.lookingDown==false && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    if (IsKeyPressed(KEY_X) && player->status.lookingAtL && player->status.lookingUp==false && player->status.lookingDown==false && player->attackStatus.attacking==false && player->status.healing==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
     {
         player->attackStatus.attackLeft = true;
         player->attackStatus.contTimeToNextAttack = 0.0f;
@@ -201,7 +205,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
             //-----ESPECIAL-ATTACKS-----
 
-    if (IsKeyPressed(KEY_C)&& player->powers.horizontalPowerActive && player->powers.usingHorizontalPower==false && player->status.aura>=3)
+    if (IsKeyPressed(KEY_C)&& player->powers.horizontalPowerActive && player->powers.usingHorizontalPower==false && player->status.aura>=3 && player->status.healing==false)
     {
         player->powers.usingHorizontalPower=true;
 
@@ -237,6 +241,40 @@ void inputAndUpdatePlayer(Player *player, float delta)
         }
     }
 
+    //--------------SKILLS--------------
+
+    if(player->status.onFloor && player->status.aura>=6 && IsKeyPressed(KEY_Q))
+    {
+        player->status.healing = true;
+    }
+
+    if(player->status.healing && IsKeyDown(KEY_Q) && player->status.aura>=3)
+    {
+        player->status.contHealingTime += delta;
+
+        if(player->status.contHealingTime>=player->status.healingTime)
+        {
+                if(player->status.life<player->status.maxLife)
+                    player->status.life++;
+
+                player->status.aura-=3;
+                player->status.contHealingTime=0.0;
+        }
+
+    }
+
+    if (IsKeyReleased(KEY_Q)&& player->status.healing)
+    {
+        player->status.healing = false;
+        player->status.contHealingTime = 0.0f;
+    }
+
+
+
+
+
+
+
     //----------VERTICAL-MOVES----------
 
     if(IsKeyDown(KEY_S))
@@ -259,7 +297,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     //---------ATTACKS---------
 
-    if (IsKeyPressed(KEY_X) && player->status.lookingUp && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    if (IsKeyPressed(KEY_X) && player->status.lookingUp && player->attackStatus.attacking==false && player->status.healing==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
     {
         player->attackStatus.attackUp = true; //inicia o ataque
         player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
@@ -284,7 +322,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
         }
     }
 
-    if (IsKeyPressed(KEY_X) && player->status.lookingDown && player->status.onFloor==false && player->attackStatus.attacking==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    if (IsKeyPressed(KEY_X) && player->status.lookingDown && player->status.onFloor==false && player->attackStatus.attacking==false && player->status.healing==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
     {
         player->attackStatus.attackDown = true; //inicia o ataque
         player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
@@ -319,7 +357,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     //---------JUUMPSET--------
 
-    if (player->knockbackStatus.knockbackTime<=0)
+    if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false)
     {
         if(player->status.onFloor) // se o jogador esta no chão
         {
