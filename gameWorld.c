@@ -135,7 +135,7 @@ void loadMap(GameWorld *gw, const char* arquivo)
             case 'A':
             case 'c': //charms
                 gw->charms[contCharms] = createCharm(
-                    (Vector2){contColumn*32, contLines*32}, contCharms
+                    (Vector2){contColumn*32, contLines*32+22}, contCharms
                 );
                 contColumn++;
                 contCharms++;
@@ -144,7 +144,7 @@ void loadMap(GameWorld *gw, const char* arquivo)
             case 'H':
             case 's': //skills
                 gw->skills[contSkills] = createSkill(
-                    (Vector2){contColumn*32, contLines*32}, contSkills
+                    (Vector2){contColumn*32+8, contLines*32+8}, contSkills
                 );
                 contColumn++;
                 contSkills++;
@@ -193,7 +193,7 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
 
     updateCoins(gw, delta);
 
-    makeCollisionPlayerCoins(gw);
+    makeCollisionPlayerCoinsSkillsAndCharms(gw);
 
     if (gw->player.knockbackStatus.knockbackTime<=0 && gw->player.status.invulnerable==false)
         makeCollisionEnemiesPlayer(gw);
@@ -245,7 +245,7 @@ void makeCollisionPlayerBlock (GameWorld *gw)
 
 }
 
-void makeCollisionPlayerCoins(GameWorld *gw)
+void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
 {
     Player *player = &gw->player;
 
@@ -258,7 +258,56 @@ void makeCollisionPlayerCoins(GameWorld *gw)
             if(checkCoinsPlayerCollision(coin, player))
             {
                 coin->available=false;
-                player->status.ticketsRU++;
+
+                if(player->inventory.equippedCharms.goldTickets==false)
+                    player->status.ticketsRU++;
+                else
+                    player->status.ticketsRU+=3;
+            }
+        }
+    }
+
+    for(int s=0;s<gw->numberOfSkills;s++)
+    {
+        Skill *skill = &gw->skills[s];
+
+        if(skill->available)
+        {
+            int number = skill->skilNumber;
+
+            if(checkSkillsPlayer(skill, player))
+            {
+                switch(number)
+                {
+                    case 0:
+                        player->powers.horizontalPowerActive = true;
+                        break;
+                }
+
+                skill->available=false;
+            }
+        }
+    }
+
+
+    for(int h=0;h<gw->numberOfSkills;h++)
+    {
+        Charm *charm = &gw->charms[h];
+
+        if(charm->available)
+        {
+            int number = charm->charmNumber;
+
+            if(checkCharmsPlayer(charm, player))
+            {
+                switch(number)
+                {
+                    case 0:
+                        player->inventory.equippedCharms.goldTickets = true;
+                        break;
+                }
+
+                charm->available=false;
             }
         }
     }
@@ -582,6 +631,11 @@ void updateCoins(GameWorld *gw, float delta)
                         coin->speed.y = -coin->speed.y;
                         coin->pos.y = block->pos.y-coin->dim.y;
                     }
+                    if(coin->pos.x<block->pos.x)
+                    {
+                        coin->speed.x = -coin->speed.x;
+                        coin->pos.x = block->pos.x-coin->dim.x;
+                    }
                 }
             }
         }
@@ -665,7 +719,7 @@ void drawGameWorld (GameWorld *gw)
         drawCharms(&gw->charms[h]);
     }
 
-    for(int s=0;s<gw->numberOfCharms;s++)
+    for(int s=0;s<gw->numberOfSkills;s++)
     {
         drawSkills(&gw->skills[s]);
     }

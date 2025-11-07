@@ -96,7 +96,7 @@ typedef struct PlayerWeapons
 
 typedef struct PlayerCharms
 {
-
+    bool goldTickets;
 
 }PlayerCharms;
 
@@ -104,6 +104,9 @@ typedef struct PlayerInventory
 {
     PlayerCharms equippedCharms;
     PlayerWeapons equippedWeapons;
+
+    bool doubleJump;
+    bool chiclete;
 
 }PlayerInventory;
 

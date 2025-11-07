@@ -45,6 +45,8 @@ bool checkPlayerSwordBlocksCollision(Rectangle sword, Rectangle block);
 bool checkBasicEnemiesHorizontalPowerCollision(BasicEnemy *enemy, HorizontalPower *power);
 bool checkBlocksHorizontalPowerCollision(Rectangle block, HorizontalPower *power);
 
+bool checkSkillsPlayer(Skill *skill, Player *player);
+bool checkCharmsPlayer(Charm *charms, Player *player);
 
 //----------------------------------------
 //========================================

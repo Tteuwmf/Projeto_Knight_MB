@@ -54,7 +54,7 @@ void inputAndUpdateGameWorld (GameWorld *gw, bool isFullscreen);
 
 void makeCollisionPlayerBlock (GameWorld *gw);
 
-void makeCollisionPlayerCoins (GameWorld *gw);
+void makeCollisionPlayerCoinsSkillsAndCharms (GameWorld *gw);
 
 void makeCollisionEnemiesBlock (GameWorld *gw);
 
