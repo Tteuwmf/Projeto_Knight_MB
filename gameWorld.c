@@ -20,8 +20,10 @@ GameWorld* createGameWorld()
     gw->numberOfBlocks = 0;
     gw->numberOfEnemies = 0;
     gw->numberOfCoins = 0;
+    gw->numberOfCharms = 0;
+    gw->numberOfSkills = 0;
 
-    loadMap(gw,"maps/mapEx.txt");
+    loadMap(gw,"maps/map1.txt");
 
     gw->camera = (Camera2D)
     {
@@ -49,6 +51,8 @@ void loadMap(GameWorld *gw, const char* arquivo)
     int contColumn = 0;
     int contBasicEnemies = 0;
     int contBlocks = 0;
+    int contCharms = 0;
+    int contSkills = 0;
 
     gw->enemies = (Enemies*) calloc(1, sizeof(Enemies));
     if (!gw->enemies){free(gw->enemies); return;}
@@ -61,6 +65,14 @@ void loadMap(GameWorld *gw, const char* arquivo)
 
         if(*atual=='i'||*atual=='M'){
             gw->enemies->numberOfBasicEnemies++;
+        }
+
+        if(*atual=='A'|| *atual=='c'){
+            gw->numberOfCharms++;
+        }
+
+        if(*atual=='H'|| *atual=='s'){
+            gw->numberOfSkills++;
         }
 
         atual++;
@@ -118,6 +130,24 @@ void loadMap(GameWorld *gw, const char* arquivo)
                 );
                 contColumn++;
                 contBlocks++;
+                break;
+
+            case 'A':
+            case 'c': //charms
+                gw->charms[contCharms] = createCharm(
+                    (Vector2){contColumn*32, contLines*32}, contCharms
+                );
+                contColumn++;
+                contCharms++;
+                break;
+
+            case 'H':
+            case 's': //skills
+                gw->skills[contSkills] = createSkill(
+                    (Vector2){contColumn*32, contLines*32}, contSkills
+                );
+                contColumn++;
+                contSkills++;
                 break;
 
             default:
@@ -628,6 +658,16 @@ void drawGameWorld (GameWorld *gw)
     for(int c=0;c<gw->numberOfCoins;c++)
     {
         drawCoins(&gw->ticketsRU[c]);
+    }
+
+    for(int h=0;h<gw->numberOfCharms;h++)
+    {
+        drawCharms(&gw->charms[h]);
+    }
+
+    for(int s=0;s<gw->numberOfCharms;s++)
+    {
+        drawSkills(&gw->skills[s]);
     }
 
     EndMode2D();
