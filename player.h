@@ -9,8 +9,12 @@
 typedef struct PlayerStatus
 {
     int life;
+    int maxLife;
     bool dead;
     int aura;
+    bool healing;
+    float healingTime;
+    float contHealingTime;
     int ticketsRU;
     float defaultSpeed;
     bool onFloor;

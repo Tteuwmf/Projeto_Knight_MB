@@ -21,7 +21,7 @@ GameWorld* createGameWorld()
     gw->numberOfEnemies = 0;
     gw->numberOfCoins = 0;
 
-    loadMap(gw,"maps/map1.txt");
+    loadMap(gw,"maps/mapEx.txt");
 
     gw->camera = (Camera2D)
     {
