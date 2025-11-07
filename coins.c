@@ -23,5 +23,6 @@ Coins summonCoins(BasicEnemy *enemy, int number)
 
 void drawCoins(Coins *coin)
 {
-    DrawRectangleV(coin->pos, coin->dim,coin->cor);
+    if(coin->available)
+        DrawRectangleV(coin->pos, coin->dim,coin->cor);
 }

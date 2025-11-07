@@ -18,7 +18,7 @@ BasicEnemy createBasicEnemies(Vector2 pos)
 
         .cor = RED,
 
-        .collisionRecs = {0},
+        .collisionRecs = {{0}},
 
         .knockbackStatus = (BasicEnemyKnockbackStatus)
         {

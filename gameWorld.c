@@ -163,6 +163,8 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
 
     updateCoins(gw, delta);
 
+    makeCollisionPlayerCoins(gw);
+
     if (gw->player.knockbackStatus.knockbackTime<=0 && gw->player.status.invulnerable==false)
         makeCollisionEnemiesPlayer(gw);
 
@@ -212,6 +214,27 @@ void makeCollisionPlayerBlock (GameWorld *gw)
     }
 
 }
+
+void makeCollisionPlayerCoins(GameWorld *gw)
+{
+    Player *player = &gw->player;
+
+    for(int i =0;i<gw->numberOfCoins;i++)
+    {
+        Coins *coin = &gw->ticketsRU[i];
+
+        if(coin->available)
+        {
+            if(checkCoinsPlayerCollision(coin, player))
+            {
+                coin->available=false;
+                player->status.ticketsRU++;
+            }
+        }
+    }
+
+}
+
 
 void makeCllisionBlockWeaponsAndPowers(GameWorld *gw)
 {
@@ -417,14 +440,12 @@ void makeCollisionEnemiesPlayerPowers (GameWorld *gw)
     if(gw->player.powers.horizontalPowerActive)
     {
         HorizontalPower *power1 = &gw->player.powers.horizontalPower;
-        Player *player = &gw->player;
 
         //----------BASIC-ENEMIES---------
 
         for(int i = 0; i<gw->enemies->numberOfBasicEnemies;i++)
         {
             BasicEnemy *enemy = &gw->enemies->enemy1[i];
-            BasicEnemyCollisionRec *collisionRec = &enemy->collisionRecs;
 
             if(enemy->dead==false && power1->contTime<=power1->attackTime)
             {
