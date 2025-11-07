@@ -21,6 +21,12 @@ typedef struct GameWorld
     Coins ticketsRU[800];
     int numberOfCoins;
 
+    Skill skills[5];
+    int numberOfSkills;
+
+    Charm charms[5];
+    int numberOfCharms;
+
     Block *blocks;
     int numberOfBlocks;
 

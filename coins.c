@@ -4,7 +4,44 @@
 #include "coins.h"
 
 
+Skill createSkill(Vector2 pos, int number)
+{
+    return (Skill)
+    {
+        .pos = pos,
+        .dim = (Vector2){16,16},
+        .cor = PINK,
+        .skilNumber = number,
+        .available = true,
+    };
+}
 
+Charm createCharm(Vector2 pos, int number)
+{
+    return (Charm)
+    {
+        .pos = pos,
+        .dim = (Vector2){10,10},
+        .cor = VIOLET,
+        .charmNumber = number,
+        .available = true,
+    };
+}
+
+void drawSkills(Skill *skill)
+{
+    if(skill->available)
+        DrawRectangleV(skill->pos, skill->dim,skill->cor);
+}
+
+void drawCharms(Charm *charm)
+{
+    if(charm->available)
+        DrawRectangleV(charm->pos, charm->dim,charm->cor);
+}
+
+//=====================================
+//-------------TICKETSRU---------------
 
 Coins summonCoins(BasicEnemy *enemy, int number)
 {
