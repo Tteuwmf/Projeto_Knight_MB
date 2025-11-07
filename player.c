@@ -42,7 +42,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
 
             .powers = (SpecialAttacks)
             {
-                .horizontalPowerActive = true,
+                .horizontalPowerActive = false,
                 .usingHorizontalPower = false,
                 .horizontalPower = (HorizontalPower)
                 {
@@ -60,7 +60,10 @@ Player createNewPlayer (Vector2 dim, Color cor)
 
             .inventory = (PlayerInventory)
             {
-                //.equippedCharms = {0},
+                .equippedCharms = (PlayerCharms)
+                {
+                    .goldTickets = false,
+                },
                 .equippedWeapons = (PlayerWeapons)
                 {
                     .defaultSword = true,

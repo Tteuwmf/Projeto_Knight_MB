@@ -147,6 +147,7 @@ bool checkBlocksHorizontalPowerCollision(Rectangle block, HorizontalPower *power
     return CheckCollisionRecs(block,(Rectangle){.x = power->pos.x, .y = power->pos.y, .width = power->dim.x, .height = power->dim.y});
 }
 
+
 //----------------------------------------------------
 //====================================================
 //-----------ENEMIES-COLLISIONS-FUNCTIONS-------------
@@ -242,6 +243,21 @@ bool checkCoinsBlocksCollision(Coins *coin, Block *block)
 bool checkCoinsPlayerCollision(Coins *coin, Player *player)
 {
     return CheckCollisionRecs((Rectangle){.x = coin->pos.x, .y = coin->pos.y, .width = coin->dim.x, .height = coin->dim.y}, (Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y});
+}
+
+//-------------------------------------------------
+//=================================================
+//-----------------SKILLS-AND-CHARMS---------------
+
+bool checkSkillsPlayer(Skill *skill, Player *player)
+{
+    return CheckCollisionRecs((Rectangle){.x = skill->pos.x, .y = skill->pos.y, .width = skill->dim.x, .height = skill->dim.y},(Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y} );
+}
+
+
+bool checkCharmsPlayer(Charm *charms, Player *player)
+{
+    return CheckCollisionRecs((Rectangle){.x = charms->pos.x, .y = charms->pos.y, .width = charms->dim.x, .height = charms->dim.y},(Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y} );
 }
 
 
