@@ -31,6 +31,7 @@ BasicEnemy createBasicEnemies(Vector2 pos)
 
         .life = 3,
         .dead = false,
+        .haveCoins = true,
 
         .defaultSpeed = 100.0,
 

@@ -38,6 +38,7 @@ typedef struct BasicEnemy
 
     int life;
     bool dead;
+    bool haveCoins;
 
     Color cor;
 

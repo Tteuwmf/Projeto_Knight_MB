@@ -5,7 +5,7 @@
 
 
 #define GRAVIDADE 20.0
-#define VEL_MAX_FALL 400.0
+#define MAX_SPEED_FALL 400.0
 
 //================================================
 //------------CREATE-DEFAULT-GAMEWORLD------------
@@ -19,6 +19,7 @@ GameWorld* createGameWorld()
 
     gw->numberOfBlocks = 0;
     gw->numberOfEnemies = 0;
+    gw->numberOfCoins = 0;
 
     loadMap(gw,"maps/map1.txt");
 
@@ -159,6 +160,8 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
     makeCollisionEnemiesPlayerPowers (gw);
 
     makeCollisionEnemiesWeapons(gw);
+
+    updateCoins(gw, delta);
 
     if (gw->player.knockbackStatus.knockbackTime<=0 && gw->player.status.invulnerable==false)
         makeCollisionEnemiesPlayer(gw);
@@ -476,6 +479,64 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
     }
 }
 
+//--------------------------------------------
+//============================================
+//--------------------COINS-------------------
+
+void updateCoins(GameWorld *gw, float delta)
+{
+    for(int e = 0; e<gw->enemies->numberOfBasicEnemies;e++)
+    {
+        BasicEnemy *enemy = &gw->enemies->enemy1[e];
+
+        if(enemy->dead && enemy->haveCoins)
+        {
+            enemy->haveCoins=false;
+
+            gw->ticketsRU[gw->numberOfCoins]=summonCoins(enemy, -3);
+            gw->numberOfCoins++;
+
+            gw->ticketsRU[gw->numberOfCoins]=summonCoins(enemy, 0);
+            gw->numberOfCoins++;
+
+            gw->ticketsRU[gw->numberOfCoins]=summonCoins(enemy, 2);
+            gw->numberOfCoins++;
+
+        }
+    }
+
+    //--------------------------------------------
+
+    for(int i =0;i<gw->numberOfCoins;i++)
+    {
+        Coins *coin = &gw->ticketsRU[i];
+
+        if(coin->available)
+        {
+
+            coin->speed.y = (coin->speed.y*coin->friction)+GRAVIDADE;
+            coin->speed.x = coin->speed.x*coin->friction;
+
+            coin->pos.x += coin->speed.x * delta;
+            coin->pos.y += coin->speed.y * delta;
+
+            for(int k=0;k<gw->numberOfBlocks;k++)
+            {
+                Block *block = &gw->blocks[k];
+
+                if(checkCoinsBlocksCollision(coin,block))
+                {
+                    if(coin->pos.y<block->pos.y)
+                    {
+                        coin->speed.y = -coin->speed.y;
+                        coin->pos.y = block->pos.y-coin->dim.y;
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 //--------------------------------------------
 //============================================
@@ -541,6 +602,11 @@ void drawGameWorld (GameWorld *gw)
     for (int i =0; i<gw->numberOfBlocks; i++)
     {
         drawBlock(&gw->blocks[i]);
+    }
+
+    for(int c=0;c<gw->numberOfCoins;c++)
+    {
+        drawCoins(&gw->ticketsRU[c]);
     }
 
     EndMode2D();

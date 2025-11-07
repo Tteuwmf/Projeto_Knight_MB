@@ -6,6 +6,7 @@
 #include "blocks.h"
 #include "weapons.h"
 #include "enemies.h"
+#include "coins.h"
 
 //=======================================
 //------COLLISIONS-PLAYER-FUNCITONS------
@@ -57,6 +58,16 @@ bool checkBasicEnemiesBlockCollision_Upper(BasicEnemyCollisionRec *collisionRecs
 bool checkBasicEnemiesBlockCollision_Under(BasicEnemyCollisionRec *collisionRecs, Block *block);
 bool checkBasicEnemiesBlockCollision_Left(BasicEnemyCollisionRec *collisionRecs, Block *block);
 bool checkBasicEnemiesBlockCollision_Right(BasicEnemyCollisionRec *collisionRecs, Block *block);
+
+//----------------------------------------------
+//==============================================
+//--------------COINS-COLLISION-----------------
+
+bool checkCoinsBlocksCollision(Coins *coin, Block *block);
+
+
+
+
 
 
 #endif // COLLISIONS_H
