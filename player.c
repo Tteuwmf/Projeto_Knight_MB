@@ -533,8 +533,11 @@ void drawPlayer(Player *player)
 
 void drawHud (Player *player)
 {
+    int fps = GetFPS();
+
     DrawText(TextFormat("Lives: %02i", player->status.life), 20,20,20, GREEN);
     DrawText(TextFormat("Aura: %02i", player->status.aura), 20,50,20, GREEN);
     DrawText(TextFormat("Amuletos: "), 20,80,20, GREEN);
     DrawText(TextFormat("TicketsRU: %02i", player->status.ticketsRU), 20,110,20, GREEN);
+    DrawText(TextFormat("FPS: %03i",fps),20,140,20,GREEN);
 }

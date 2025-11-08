@@ -6,6 +6,9 @@
 //========================================
 //-----------------STRUCTS----------------
 
+
+    //------BASIC-ENEMY------
+
 typedef struct BasicEnemyCollisionRec
 {
     Rectangle upper;
@@ -48,9 +51,36 @@ typedef struct BasicEnemy
 
 }BasicEnemy;
 
+    //-------AIR-BASIC-ENEMY-------
+
+typedef struct AirBasicEnemy
+{
+    Vector2 pos;
+    Vector2 firstPos;
+    Vector2 speed;
+    Vector2 dim;
+
+    BasicEnemyCollisionRec collisionRecs;
+
+    BasicEnemyKnockbackStatus knockbackStatus;
+
+    int life;
+    bool dead;
+    bool haveCoins;
+
+    Color cor;
+
+    float defaultSpeed;
+
+}AirBasicEnemy;
+
+
 typedef struct Enemies
 {
     BasicEnemy *enemy1;
+    AirBasicEnemy enemy2[10];
+
+    int numberOfAirBasicEnemies;
     int numberOfBasicEnemies;
 
 }Enemies;
@@ -61,17 +91,25 @@ typedef struct Enemies
 
 BasicEnemy createBasicEnemies (Vector2 pos);
 
+AirBasicEnemy createAirBasicEnemies(Vector2 pos, int number);
+
 void updateEnemies (Enemies *enemies, float delta);
 
 void updateBasicEnemies(BasicEnemy *enemy1, float delta);
+
+void updateAirBasicEnemies(AirBasicEnemy *enemy2, float delta);
 
 void applyKnockbackToEnemies (Enemies *enemies);
 
 void applyKnockbackToBasicEnemies (BasicEnemy *enemy);
 
+void applyKnockbackToAirBasicEnemies (AirBasicEnemy *enemy);
+
 void drawEnemies (Enemies *enemies);
 
 void drawBasicEnemies (BasicEnemy *enemy1);
+
+void drawAirBasicEnemies (AirBasicEnemy *enemy2);
 
 
 

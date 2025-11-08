@@ -23,7 +23,7 @@ GameWorld* createGameWorld()
     gw->numberOfCharms = 0;
     gw->numberOfSkills = 0;
 
-    loadMap(gw,"maps/map1.txt");
+    loadMap(gw,"maps/mapEx.txt");
 
     gw->camera = (Camera2D)
     {
@@ -50,6 +50,8 @@ void loadMap(GameWorld *gw, const char* arquivo)
     int contLines = 0;
     int contColumn = 0;
     int contBasicEnemies = 0;
+    int contAirBasicEnemies = 0;
+    int basicEnemySelector = 0;
     int contBlocks = 0;
     int contCharms = 0;
     int contSkills = 0;
@@ -64,7 +66,17 @@ void loadMap(GameWorld *gw, const char* arquivo)
         }
 
         if(*atual=='i'||*atual=='M'){
-            gw->enemies->numberOfBasicEnemies++;
+
+            if(basicEnemySelector==0)
+            {
+                gw->enemies->numberOfBasicEnemies++;
+                basicEnemySelector++;
+            }
+            else
+            {
+                gw->enemies->numberOfAirBasicEnemies++;
+                basicEnemySelector--;
+            }
         }
 
         if(*atual=='A'|| *atual=='c'){
@@ -98,6 +110,9 @@ void loadMap(GameWorld *gw, const char* arquivo)
 
 
     atual = dados; //reset do contadorc
+
+    basicEnemySelector=0; //reset do seletor
+
     while (*atual != '\0')
     {
         switch (*atual)
@@ -115,12 +130,27 @@ void loadMap(GameWorld *gw, const char* arquivo)
 
             case 'M':
             case 'i': //BASIC ENEMY
-                gw->enemies->enemy1[contBasicEnemies] = createBasicEnemies(
-                    (Vector2){contColumn*32, contLines*32}
-                );
-                contColumn++;
-                gw->enemies->enemy1[contBasicEnemies].collisionRecs = createAndUpdateBasicEnemiesCollisionsRec(&gw->enemies->enemy1[contBasicEnemies]);
-                contBasicEnemies++;
+                if(basicEnemySelector==0)
+                {
+                    gw->enemies->enemy1[contBasicEnemies] = createBasicEnemies(
+                        (Vector2){contColumn*32, contLines*32}
+                    );
+                    contColumn++;
+                    gw->enemies->enemy1[contBasicEnemies].collisionRecs = createAndUpdateBasicEnemiesCollisionsRec(&gw->enemies->enemy1[contBasicEnemies]);
+                    contBasicEnemies++;
+                    basicEnemySelector++;
+
+                }
+                else
+                {
+                     gw->enemies->enemy2[contAirBasicEnemies] = createAirBasicEnemies(
+                        (Vector2){contColumn*32, contLines*32}, contAirBasicEnemies
+                    );
+                    contColumn++;
+                    gw->enemies->enemy2[contAirBasicEnemies].collisionRecs = createAndUpdateAirBasicEnemiesCollisionsRec(&gw->enemies->enemy2[contAirBasicEnemies]);
+                    contAirBasicEnemies++;
+                    basicEnemySelector--;
+                }
                 break;
 
             case 'P':
@@ -406,6 +436,42 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
                 {
                     enemy->pos.x=block->pos.x+block->dim.x;
                     enemy->defaultSpeed = -enemy->defaultSpeed;
+                }
+        }
+    }
+
+    //=============AIR-BASIC-ENEMIES=============
+
+    for (int a =0 ; a<gw->enemies->numberOfAirBasicEnemies; a++)
+    {
+        AirBasicEnemy *enemy = &gw->enemies->enemy2[a];
+        BasicEnemyCollisionRec *collisionRec = &enemy->collisionRecs;
+
+        for(int b =0; b<gw->numberOfBlocks; b++)
+        {
+            Block *block = &gw->blocks[b];
+
+                if(checkBasicEnemiesBlockCollision_Under(collisionRec ,block))
+                {
+                    enemy->pos.y = block->pos.y-enemy->dim.y;
+                    enemy->speed.y = -enemy->speed.y;
+                }
+                if(checkBasicEnemiesBlockCollision_Upper(collisionRec ,block))
+                {
+                    enemy->pos.y = block->pos.y + block->dim.y;
+                    enemy->speed.y = -enemy->speed.y;
+                }
+
+                if(checkBasicEnemiesBlockCollision_Right(collisionRec ,block))
+                {
+                    enemy->pos.x = block->pos.x-enemy->dim.x;
+                    enemy->speed.x = -enemy->speed.x;
+                }
+
+                if(checkBasicEnemiesBlockCollision_Left(collisionRec ,block))
+                {
+                    enemy->pos.x=block->pos.x+block->dim.x;
+                    enemy->speed.x = -enemy->speed.x;
                 }
         }
     }

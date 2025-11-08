@@ -93,6 +93,97 @@ void updateBasicEnemies(BasicEnemy *enemy1, float delta)
 
 }
 
+AirBasicEnemy createAirBasicEnemies(Vector2 pos, int number)
+{
+    float defineSpeedDirection;
+
+    if(number%2==0)
+        {
+            defineSpeedDirection = 100.0*-1;
+        }
+        else
+            defineSpeedDirection = 100.0;
+
+
+
+    return (AirBasicEnemy)
+    {
+        .pos = pos,
+        .firstPos = pos,
+        .speed = (Vector2) {0,0},
+        .dim = (Vector2) {20,20},
+
+        .cor = GREEN,
+
+        .collisionRecs = {{0}},
+
+        .knockbackStatus = (BasicEnemyKnockbackStatus)
+        {
+            .knockbackR = false,
+            .knockbackL = false,
+            .knockbackUp = false,
+            .knockbackUn = false,
+            .knockbackTime = 0.0f,
+        },
+
+        .life = 3,
+        .dead = false,
+        .haveCoins = true,
+
+        .defaultSpeed = defineSpeedDirection,
+
+    };
+}
+
+
+void updateAirBasicEnemies(AirBasicEnemy *enemy2, float delta)
+{
+    int xMin = enemy2->firstPos.x-200;
+    int xMax = enemy2->firstPos.x+200;
+
+    int yMin = enemy2->firstPos.y-300;
+    int yMax = enemy2->firstPos.y+100;
+
+    if(enemy2->speed.x == 0 )
+        enemy2->speed.x = enemy2->defaultSpeed;
+    if(enemy2->speed.y ==0 )
+        enemy2->speed.y = enemy2->defaultSpeed;
+
+    if (enemy2->knockbackStatus.knockbackTime<=0)
+    {
+        if(enemy2->pos.x<=xMin)
+            enemy2->speed.x = -enemy2->speed.x;
+        if(enemy2->pos.x>=xMax)
+            enemy2->speed.x = -enemy2->speed.x;
+
+        if(enemy2->pos.y<=yMin)
+            enemy2->speed.y = -enemy2->speed.y;
+        if(enemy2->pos.y>=yMax)
+            enemy2->speed.y = -enemy2->speed.y;
+
+    }
+    else
+    {
+        enemy2->knockbackStatus.knockbackTime -= delta; // conta o tempo
+        enemy2->speed.x *= 0.9; // reduz a velocidade até o fim do tempo
+    }
+
+
+    //=============UPDATE=POSITION================
+
+    enemy2->pos.x += enemy2->speed.x * delta;
+    enemy2->pos.y += enemy2->speed.y * delta;
+
+    //=============UPDATE=HEAT=BOX================
+
+    enemy2->collisionRecs  = createAndUpdateAirBasicEnemiesCollisionsRec(enemy2);
+
+    //===============UPDATE=STATS=================
+
+    if(enemy2->life<=0){enemy2->dead=true;}
+}
+
+
 //---------------------------------------------------
 //===================================================
 //----------------KNOCKBACK-FUNCTIOS-----------------
@@ -144,6 +235,55 @@ void applyKnockbackToBasicEnemies(BasicEnemy *enemy)
     enemy->knockbackStatus.knockbackUp = false;
 }
 
+void applyKnockbackToAirBasicEnemies(AirBasicEnemy *enemy)
+{
+    if (enemy->knockbackStatus.knockbackR) //confere o tipo e direção
+    {
+        enemy->speed.x = -250.0; //aplica as forças
+        enemy->speed.y = -100.0;
+        enemy->knockbackStatus.knockbackTime = 0.5; // inicia o contador
+    }
+    if (enemy->knockbackStatus.knockbackL)
+    {
+        enemy->speed.x = 250.0;
+        enemy->speed.y = -100.0;
+        enemy->knockbackStatus.knockbackTime = 0.5;
+    }
+    if (enemy->knockbackStatus.knockbackUn)
+    {
+        if(enemy->speed.x<0)
+        {
+            enemy->speed.x = 100.0;
+        }
+        if(enemy->speed.x>0)
+        {
+            enemy->speed.x = -100.0;
+        }
+        enemy->speed.y = 150.0;
+        enemy->knockbackStatus.knockbackTime = 0.5;
+    }
+     if (enemy->knockbackStatus.knockbackUp)
+    {
+        if(enemy->speed.x<0)
+        {
+            enemy->speed.x = 100.0;
+        }
+        if(enemy->speed.x>0)
+        {
+            enemy->speed.x = -100.0;
+        }
+        enemy->speed.y = -150.0;
+        enemy->knockbackStatus.knockbackTime = 0.5;
+    }
+
+    enemy->knockbackStatus.knockbackL = false;
+    enemy->knockbackStatus.knockbackR = false;
+    enemy->knockbackStatus.knockbackUn = false;
+    enemy->knockbackStatus.knockbackUp = false;
+}
+
+
+
 void applyKnockbackToEnemies(Enemies *enemies)
 {
     //===========BASIC=ENEMIES==========
@@ -157,13 +297,21 @@ void applyKnockbackToEnemies(Enemies *enemies)
             applyKnockbackToBasicEnemies(enemy1);
         }
     }
+
+    for(int a=0;a<enemies->numberOfAirBasicEnemies;a++)
+    {
+        AirBasicEnemy *enemy2 = &enemies->enemy2[a];
+
+        if (enemy2->dead==false && enemy2->knockbackStatus.knockbackTime<=0)
+        {
+            applyKnockbackToAirBasicEnemies(enemy2);
+        }
+    }
 }
 
-
-
-
-
-
+//-----------------------------------------------------
+//=====================================================
+//------------------MAIN-FUNCTION----------------------
 
 void updateEnemies (Enemies *enemies, float delta)
 {
@@ -179,12 +327,32 @@ void updateEnemies (Enemies *enemies, float delta)
         }
     }
 
+    for(int a=0;a<enemies->numberOfAirBasicEnemies;a++)
+    {
+        AirBasicEnemy *enemy2 = &enemies->enemy2[a];
+
+        if (enemy2->dead==false)
+        {
+            updateAirBasicEnemies(enemy2, delta);
+        }
+    }
+
 }
+
+//----------------------------------------------------------
+//==========================================================
+//-------------------DRAW-FUNCTIONS-------------------------
 
 void drawBasicEnemies(BasicEnemy *enemy1)
 {
     DrawRectangleV(enemy1->pos, enemy1->dim, enemy1->cor);
 }
+
+void drawAirBasicEnemies (AirBasicEnemy *enemy2)
+{
+    DrawRectangleV(enemy2->pos,enemy2->dim,enemy2->cor);
+}
+
 
 void drawEnemies(Enemies *enemies)
 {
@@ -197,6 +365,17 @@ void drawEnemies(Enemies *enemies)
         if (enemy1->dead==false)
         {
             drawBasicEnemies(enemy1);
+        }
+    }
+        //--------AIR-BASIC-ENEMIES------
+
+    for (int a=0; a<enemies->numberOfAirBasicEnemies;a++)
+    {
+        AirBasicEnemy *enemy2 = &enemies->enemy2[a];
+
+        if (enemy2->dead==false)
+        {
+            drawAirBasicEnemies(enemy2);
         }
     }
 }

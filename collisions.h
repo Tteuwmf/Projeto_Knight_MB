@@ -56,6 +56,8 @@ void createAndUpdateEnemiesCollisionRecs(Enemies *enemies);
 
 BasicEnemyCollisionRec createAndUpdateBasicEnemiesCollisionsRec(BasicEnemy *enemy);
 
+BasicEnemyCollisionRec createAndUpdateAirBasicEnemiesCollisionsRec(AirBasicEnemy *enemy);
+
 bool checkBasicEnemiesBlockCollision_Upper(BasicEnemyCollisionRec *collisionRecs, Block *block);
 bool checkBasicEnemiesBlockCollision_Under(BasicEnemyCollisionRec *collisionRecs, Block *block);
 bool checkBasicEnemiesBlockCollision_Left(BasicEnemyCollisionRec *collisionRecs, Block *block);
