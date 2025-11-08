@@ -147,6 +147,24 @@ bool checkBlocksHorizontalPowerCollision(Rectangle block, HorizontalPower *power
     return CheckCollisionRecs(block,(Rectangle){.x = power->pos.x, .y = power->pos.y, .width = power->dim.x, .height = power->dim.y});
 }
 
+//-------------------------------------------------
+//=================================================
+//-----------------SKILLS-AND-CHARMS---------------
+
+bool checkSkillsPlayer(Skill *skill, Player *player)
+{
+    return CheckCollisionRecs((Rectangle){.x = skill->pos.x, .y = skill->pos.y, .width = skill->dim.x, .height = skill->dim.y},(Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y} );
+}
+
+
+bool checkCharmsPlayer(Charm *charms, Player *player)
+{
+    return CheckCollisionRecs((Rectangle){.x = charms->pos.x, .y = charms->pos.y, .width = charms->dim.x, .height = charms->dim.y},(Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y} );
+}
+
+
+
+
 
 //----------------------------------------------------
 //====================================================
@@ -188,6 +206,37 @@ BasicEnemyCollisionRec createAndUpdateBasicEnemiesCollisionsRec(BasicEnemy *enem
     };
 }
 
+
+BasicEnemyCollisionRec createAndUpdateAirBasicEnemiesCollisionsRec(AirBasicEnemy *enemy)
+{
+    return (BasicEnemyCollisionRec){
+                .upper = (Rectangle){
+                        .x = enemy->pos.x+(enemy->dim.x/2)-3,
+                        .y = enemy->pos.y,
+                        .width = 6,
+                        .height = 6
+                        },
+                .under = (Rectangle){
+                        .x = enemy->pos.x+(enemy->dim.x/2)-3,
+                        .y = enemy->pos.y+enemy->dim.y-6,
+                        .width = 6,
+                        .height = 6
+                        },
+                .left = (Rectangle){
+                        .x = enemy->pos.x,
+                        .y = enemy->pos.y+(enemy->dim.y/2)-3,
+                        .width = 6,
+                        .height = 6
+                        },
+                .right = (Rectangle){
+                        .x = enemy->pos.x+enemy->dim.x-6,
+                        .y = enemy->pos.y+(enemy->dim.y/2)-3,
+                        .width = 6,
+                        .height = 6
+                        }
+    };
+}
+
     //------MAIN-FUNCTION-FOR-ENEMIES------
 
 void createAndUpdateEnemiesCollisionRecs(Enemies *enemies)
@@ -199,6 +248,16 @@ void createAndUpdateEnemiesCollisionRecs(Enemies *enemies)
         if (enemy1->dead==false)
         {
             createAndUpdateBasicEnemiesCollisionsRec(enemy1);
+        }
+    }
+
+    for (int a=0; a<enemies->numberOfBasicEnemies;a++)
+    {
+        AirBasicEnemy *enemy2 = &enemies->enemy2[a];
+
+        if (enemy2->dead==false)
+        {
+            createAndUpdateAirBasicEnemiesCollisionsRec(enemy2);
         }
     }
 }
@@ -243,21 +302,6 @@ bool checkCoinsBlocksCollision(Coins *coin, Block *block)
 bool checkCoinsPlayerCollision(Coins *coin, Player *player)
 {
     return CheckCollisionRecs((Rectangle){.x = coin->pos.x, .y = coin->pos.y, .width = coin->dim.x, .height = coin->dim.y}, (Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y});
-}
-
-//-------------------------------------------------
-//=================================================
-//-----------------SKILLS-AND-CHARMS---------------
-
-bool checkSkillsPlayer(Skill *skill, Player *player)
-{
-    return CheckCollisionRecs((Rectangle){.x = skill->pos.x, .y = skill->pos.y, .width = skill->dim.x, .height = skill->dim.y},(Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y} );
-}
-
-
-bool checkCharmsPlayer(Charm *charms, Player *player)
-{
-    return CheckCollisionRecs((Rectangle){.x = charms->pos.x, .y = charms->pos.y, .width = charms->dim.x, .height = charms->dim.y},(Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y} );
 }
 
 
