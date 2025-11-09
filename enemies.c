@@ -99,10 +99,10 @@ AirBasicEnemy createAirBasicEnemies(Vector2 pos, int number)
 
     if(number%2==0)
         {
-            defineSpeedDirection = 100.0*-1;
+            defineSpeedDirection = 75.0*-1;
         }
         else
-            defineSpeedDirection = 100.0;
+            defineSpeedDirection = 75.0;
 
 
 

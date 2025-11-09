@@ -577,6 +577,98 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
             }
         }
 
+        //------AIR-BASIC-ENEMIES-----
+
+        for(int a = 0; a<gw->enemies->numberOfAirBasicEnemies;a++)
+        {
+            AirBasicEnemy *enemy = &gw->enemies->enemy2[a];
+            BasicEnemyCollisionRec *collisionRec = &enemy->collisionRecs;
+
+
+            if(enemy->dead==false && (player->attackStatus.attackLeft || player->attackStatus.attackRight || player->attackStatus.attackDown || player->attackStatus.attackUp)&& player->sword.activated)
+            {
+                if(player->pos.x-enemy->pos.x>50 )
+                {
+                    if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
+                    {
+                        enemy->life-= 1;
+                        player->status.aura++;
+                        enemy->knockbackStatus.knockbackR=true;
+                        player->knockbackStatus.swordKnockbackL = true;
+                        player->sword.activated = false;
+                    }
+                    else if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
+                    {
+                        enemy->life-= 1;
+                        player->status.aura++;
+                        enemy->knockbackStatus.knockbackL=true;
+                        player->knockbackStatus.swordKnockbackR = true;
+                        player->sword.activated = false;
+                    }
+                    else if(checkAirBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
+                    {
+                        enemy->life-= 1;
+                        player->status.aura++;
+                        player->knockbackStatus.swordKnockbackUp = true;
+                        player->sword.activated = false;
+                    }
+                }
+                else if (enemy->pos.x-player->pos.x>50)
+                {
+                     if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
+                    {
+                        enemy->life-= 1;
+                        player->status.aura++;
+                        enemy->knockbackStatus.knockbackR=true;
+                        player->knockbackStatus.swordKnockbackL = true;
+                        player->sword.activated = false;
+                    }
+                    else if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
+                    {
+                        enemy->life-= 1;
+                        player->status.aura++;
+                        enemy->knockbackStatus.knockbackL=true;
+                        player->knockbackStatus.swordKnockbackR = true;
+                        player->sword.activated = false;
+                    }
+                    else if(checkAirBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
+                    {
+                        enemy->life-= 1;
+                        player->status.aura++;
+                        player->knockbackStatus.swordKnockbackUp = true;
+                        player->sword.activated = false;
+                    }
+                }
+                else if(enemy->pos.x-player->pos.x<50 || player->pos.x-enemy->pos.x<50 )
+                {
+                    if (checkAirBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.x<=enemy->pos.x  && (player->pos.y+player->dim.y<enemy->pos.y)==false)
+                    {
+                        enemy->life-= 1;
+                        player->status.aura++;
+                        enemy->knockbackStatus.knockbackL=true;
+                        player->knockbackStatus.swordKnockbackR = true;
+                        player->sword.activated = false;
+                    }
+                    else if (checkAirBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.x>enemy->pos.x && (player->pos.y+player->dim.y<enemy->pos.y)==false)
+                    {
+                        enemy->life-= 1;
+                        player->status.aura++;
+                        enemy->knockbackStatus.knockbackR=true;
+                        player->knockbackStatus.swordKnockbackL = true;
+                        player->sword.activated = false;
+                    }
+                    else if(checkAirBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
+                    {
+                        enemy->life-= 1;
+                        player->status.aura++;
+                        player->knockbackStatus.swordKnockbackUp = true;
+                        player->sword.activated = false;
+                    }
+                }
+
+            }
+        }
+
     }
 }
 
@@ -643,6 +735,41 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
             }
         }
     }
+
+    //------AIR-BASIC-ENEMIES------
+
+    for(int a = 0; a<gw->enemies->numberOfAirBasicEnemies;a++)
+    {
+        AirBasicEnemy *enemy = &gw->enemies->enemy2[a];
+
+        if(enemy->dead==false)
+        {
+            if (checkPlayerAirBasicEnemiesCollision_Right(collisionRec, enemy))
+            {
+                player->knockbackStatus.knockbackL = true;
+                player->status.invulnerable=true;
+                player->status.life--;
+            }
+            else if (checkPlayerAirBasicEnemiesCollision_Left(collisionRec, enemy))
+            {
+                player->knockbackStatus.knockbackR = true;
+                player->status.invulnerable=true;
+                player->status.life--;
+            }
+            else if (checkPlayerAirBasicEnemiesCollision_Upper(collisionRec, enemy))
+            {
+                player->knockbackStatus.knockbackUp= true;
+                player->status.invulnerable=true;
+                player->status.life--;
+            }
+            else if (checkPlayerAirBasicEnemiesCollision_Under(collisionRec, enemy))
+            {
+                player->knockbackStatus.knockbackUn = true;
+                player->status.invulnerable=true;
+                player->status.life--;
+            }
+        }
+    }
 }
 
 //--------------------------------------------
@@ -651,6 +778,8 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
 
 void updateCoins(GameWorld *gw, float delta)
 {
+        //---BASIC-ENEMIES---
+
     for(int e = 0; e<gw->enemies->numberOfBasicEnemies;e++)
     {
         BasicEnemy *enemy = &gw->enemies->enemy1[e];
@@ -659,17 +788,40 @@ void updateCoins(GameWorld *gw, float delta)
         {
             enemy->haveCoins=false;
 
-            gw->ticketsRU[gw->numberOfCoins]=summonCoins(enemy, -3);
+            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForBasicEnemies(enemy, -3);
             gw->numberOfCoins++;
 
-            gw->ticketsRU[gw->numberOfCoins]=summonCoins(enemy, 0);
+            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForBasicEnemies(enemy, 0);
             gw->numberOfCoins++;
 
-            gw->ticketsRU[gw->numberOfCoins]=summonCoins(enemy, 2);
+            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForBasicEnemies(enemy, 2);
             gw->numberOfCoins++;
 
         }
     }
+
+        //---AIR-BASIC-ENEMIES---
+
+    for(int a = 0; a<gw->enemies->numberOfAirBasicEnemies;a++)
+    {
+        AirBasicEnemy *enemy = &gw->enemies->enemy2[a];
+
+        if(enemy->dead && enemy->haveCoins)
+        {
+            enemy->haveCoins=false;
+
+            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForAirBasicEnemies(enemy, -1);
+            gw->numberOfCoins++;
+
+            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForAirBasicEnemies(enemy, 0);
+            gw->numberOfCoins++;
+
+            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForAirBasicEnemies(enemy, 1);
+            gw->numberOfCoins++;
+
+        }
+    }
+
 
     //--------------------------------------------
 
@@ -697,10 +849,20 @@ void updateCoins(GameWorld *gw, float delta)
                         coin->speed.y = -coin->speed.y;
                         coin->pos.y = block->pos.y-coin->dim.y;
                     }
+                    if(coin->pos.y>=block->pos.y)
+                    {
+                        coin->speed.y = 0.0f;
+                        coin->pos.y = block->pos.y+block->dim.y;
+                    }
                     if(coin->pos.x<block->pos.x)
                     {
                         coin->speed.x = -coin->speed.x;
                         coin->pos.x = block->pos.x-coin->dim.x;
+                    }
+                    if(coin->pos.x>=block->pos.x+block->dim.x)
+                    {
+                        coin->speed.x = -coin->speed.x;
+                        coin->pos.x = block->pos.x+block->dim.x;
                     }
                 }
             }

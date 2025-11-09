@@ -27,6 +27,11 @@ bool checkPlayerBasicEnemiesCollision_Under(PlayerCollisionRec *collisionRec, Ba
 bool checkPlayerBasicEnemiesCollision_Left(PlayerCollisionRec *collisionRec, BasicEnemy *enemy);
 bool checkPlayerBasicEnemiesCollision_Right(PlayerCollisionRec *collisionRec, BasicEnemy *enemy);
 
+bool checkPlayerAirBasicEnemiesCollision_Upper(PlayerCollisionRec *collisionRec, AirBasicEnemy *enemy);
+bool checkPlayerAirBasicEnemiesCollision_Under(PlayerCollisionRec *collisionRec, AirBasicEnemy *enemy);
+bool checkPlayerAirBasicEnemiesCollision_Left(PlayerCollisionRec *collisionRec, AirBasicEnemy *enemy);
+bool checkPlayerAirBasicEnemiesCollision_Right(PlayerCollisionRec *collisionRec, AirBasicEnemy *enemy);
+
 //========================================
 //------COLLISIONS-ATTACKS-FUNCTIONS------
 
@@ -37,6 +42,7 @@ bool checkBasicEnemiesPlayerSwordCollision_Left(BasicEnemyCollisionRec *collisio
 bool checkBasicEnemiesPlayerSwordCollision_Right(BasicEnemyCollisionRec *collisionRec, PlayerSword *playerSword);
 bool checkBasicEnemiesPlayerSwordCollision_Up(BasicEnemyCollisionRec *collisionRec, PlayerSword *playerSword);
 bool checkBasicEnemiesPlayerSwordCollision_default(BasicEnemy *enemy, PlayerSword *playerSword);
+bool checkAirBasicEnemiesPlayerSwordCollision_default(AirBasicEnemy *enemy, PlayerSword *playerSword);
 
 bool checkPlayerSwordBlocksCollision(Rectangle sword, Rectangle block);
 
