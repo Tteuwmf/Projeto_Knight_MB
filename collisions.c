@@ -107,6 +107,31 @@ bool checkPlayerBasicEnemiesCollision_Right(PlayerCollisionRec *collisionRec, Ba
     return CheckCollisionRecs(collisionRec->right,(Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y});
 }
 
+    //-----AIR-BASIC-ENEMIES-----
+
+ bool checkPlayerAirBasicEnemiesCollision_Upper(PlayerCollisionRec *collisionRec, AirBasicEnemy *enemy)
+{
+    return CheckCollisionRecs(collisionRec->upper,(Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y});
+}
+//------------COLISÃO POR BAIXO-------------
+bool checkPlayerAirBasicEnemiesCollision_Under(PlayerCollisionRec *collisionRec, AirBasicEnemy *enemy)
+{
+    return CheckCollisionRecs(collisionRec->under,(Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y});
+}
+
+bool checkPlayerAirBasicEnemiesCollision_Left(PlayerCollisionRec *collisionRec, AirBasicEnemy *enemy)
+{
+    return CheckCollisionRecs(collisionRec->left,(Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y});
+}
+
+bool checkPlayerAirBasicEnemiesCollision_Right(PlayerCollisionRec *collisionRec, AirBasicEnemy *enemy)
+{
+    return CheckCollisionRecs(collisionRec->right,(Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y});
+}
+
+
+
+
 
     //=============PLAYER-SWORD===============
 
@@ -125,10 +150,21 @@ bool checkBasicEnemiesPlayerSwordCollision_Up(BasicEnemyCollisionRec *collisionR
     return CheckCollisionRecs(collisionRec->upper,(Rectangle){.x = playerSword->pos.x, .y = playerSword->pos.y, .width = playerSword->dim.x, .height = playerSword->dim.y});
 }
 
+        //---BASIC-ENEMY---
+
 bool checkBasicEnemiesPlayerSwordCollision_default(BasicEnemy *enemy, PlayerSword *playerSword)
 {
     return CheckCollisionRecs((Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y },(Rectangle){.x = playerSword->pos.x, .y = playerSword->pos.y, .width = playerSword->dim.x, .height = playerSword->dim.y});
 }
+
+        //---AIR-BASIC-ENEMY---
+
+ bool checkAirBasicEnemiesPlayerSwordCollision_default(AirBasicEnemy *enemy, PlayerSword *playerSword)
+{
+    return CheckCollisionRecs((Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y },(Rectangle){.x = playerSword->pos.x, .y = playerSword->pos.y, .width = playerSword->dim.x, .height = playerSword->dim.y});
+}
+
+        //---BLOCKS---
 
 bool checkPlayerSwordBlocksCollision(Rectangle swordCollisionRec, Rectangle block)
 {

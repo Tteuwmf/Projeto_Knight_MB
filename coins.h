@@ -45,7 +45,9 @@ typedef struct Coins
     bool available;
 }Coins;
 
-Coins summonCoins(BasicEnemy *enemy, int number);
+Coins summonCoinsForBasicEnemies(BasicEnemy *enemy, int number);
+
+Coins summonCoinsForAirBasicEnemies(AirBasicEnemy *enemy, int number);
 
 void drawCoins(Coins *coin);
 
