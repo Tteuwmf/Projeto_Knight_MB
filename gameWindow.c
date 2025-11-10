@@ -11,6 +11,7 @@ GameWindow* createGameWindow(int width, int height)
     gameWindow->width = width;
     gameWindow->height = height;
     gameWindow->gw = NULL;
+    gameWindow->gameWorldInitiate = false;
     gameWindow->initiate = false;
 
     return gameWindow;
@@ -36,9 +37,13 @@ void initGameWindow(GameWindow *gameWindow)
 
         InitWindow (gameWindow->width, gameWindow->height, "JOGO2.0");
 
-        gameWindow->gw = createGameWorld();
+        gameWindow->gl = createGameLobby();
+
+        //gameWindow->gw = createGameWorld();
 
         SetTargetFPS(60);
+
+        int lobbyOrWorld = 0;
 
         while (!WindowShouldClose())
         {
@@ -65,9 +70,36 @@ void initGameWindow(GameWindow *gameWindow)
 
             //-----------------------------
 
-            inputAndUpdateGameWorld(gameWindow->gw, isFullScreen);
 
-            drawGameWorld(gameWindow->gw);
+            switch(lobbyOrWorld)
+            {
+                case 0:
+
+                if(IsKeyPressed(KEY_ENTER))
+                    lobbyOrWorld++;
+
+                inputAndUpdateGameLobby(&gameWindow->gl, isFullScreen);
+
+                drawGameLobby(&gameWindow->gl);
+                break;
+
+                case 1:
+
+                if(IsKeyPressed(KEY_ENTER))
+                    lobbyOrWorld--;
+
+                if(gameWindow->gameWorldInitiate==false)
+                {
+                    gameWindow->gw = createGameWorld();
+                    gameWindow->gameWorldInitiate = true;
+                }
+
+                inputAndUpdateGameWorld(gameWindow->gw, isFullScreen);
+
+                drawGameWorld(gameWindow->gw);
+                break;
+            }
+
         }
 
 
