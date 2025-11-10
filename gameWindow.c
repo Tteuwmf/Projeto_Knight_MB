@@ -73,10 +73,22 @@ void initGameWindow(GameWindow *gameWindow)
 
             switch(lobbyOrWorld)
             {
+                int salvaPosX=0;
+                int salvaPosY=0;
+
                 case 0:
 
                 if(IsKeyPressed(KEY_ENTER))
+                {
                     lobbyOrWorld++;
+
+                    if(salvaPosX!=0 || salvaPosY!=0)
+                    {
+                        gameWindow->gw->player.pos.x = salvaPosX;
+                        gameWindow->gw->player.pos.y = salvaPosY;
+                    }
+                }
+
 
                 inputAndUpdateGameLobby(&gameWindow->gl, isFullScreen);
 
@@ -91,6 +103,10 @@ void initGameWindow(GameWindow *gameWindow)
                 if(gameWindow->gameWorldInitiate==false)
                 {
                     gameWindow->gw = createGameWorld();
+
+                            salvaPosX = gameWindow->gw->player.pos.x;
+                            salvaPosY = gameWindow->gw->player.pos.y;
+
                     gameWindow->gameWorldInitiate = true;
                 }
 

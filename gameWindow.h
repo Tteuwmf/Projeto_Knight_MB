@@ -17,6 +17,8 @@ typedef struct GameWindow
 
     bool initiate;
 
+    bool endFase;
+
 }GameWindow;
 
 GameWindow* createGameWindow(int width, int height);

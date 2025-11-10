@@ -229,6 +229,7 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
         makeCollisionEnemiesPlayer(gw);
 
     updateCamera(&gw->camera, &gw->player, isFullscreen);
+
 }
 
 //-------------------------------------------------------
