@@ -53,7 +53,7 @@
 	"enemies.h"
 	"coins.h"
 
-1762704968 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.c
+1762705804 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.c
 	<stdlib.h>
 	"raylib.h"
 	"gameWorld.h"
@@ -66,15 +66,16 @@
 	"collisions.h"
 	"coins.h"
 
-1762519934 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamewindow.c
+1762743975 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamewindow.c
 	<stdlib.h>
 	<stdio.h>
 	"raylib.h"
 	"gameWindow.h"
 
-1762447289 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamewindow.h
+1762743816 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamewindow.h
 	"raylib.h"
 	"gameWorld.h"
+	"gameLobby.h"
 
 1762002796 source:c:\users\facci\onedrive\Área de trabalho\desbugandoaaa\blocks.c
 	"raylib.h"
@@ -239,4 +240,16 @@
 1762542287 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\coins.h
 	"raylib.h"
 	"enemies.h"
+
+1762744043 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamelobby.c
+	"raylib.h"
+	"gameLobby.h"
+	"blocks.h"
+	"collisions.h"
+	"gameWindow.h"
+
+1762742487 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamelobby.h
+	"raylib.h"
+	"player.h"
+	"blocks.h"
 
