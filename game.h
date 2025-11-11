@@ -8,7 +8,7 @@
 
 typedef enum GameStatus
 {
-    MENU,
+    MENU = 0,
     PAUSE,
     GAMELOBBY,
     GAMEWORLD,
@@ -19,17 +19,21 @@ typedef struct Game
 {
     GameStatus status;
 
-    Player *player;
+    Player player;
 
     GameLobby gl;
+    Vector2 playerLobbyFirstPos;
 
     GameWorld *gw;
+    Vector2 playerGameWorldFirstPos;
+
     bool gameWorldInitiate;
+
 }Game;
 
 Game createGame();
 
-void initGame();
+void initGame(Game *game, bool isFullScreen);
 
 
 #endif // GAME_H

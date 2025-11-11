@@ -7,7 +7,7 @@
 
 typedef struct GameLobby
 {
-    Player player;
+    Player *player;
 
     Block blocks[1000];
     int numberOfBlocks;
@@ -16,7 +16,7 @@ typedef struct GameLobby
 
 }GameLobby;
 
-GameLobby createGameLobby();
+GameLobby createGameLobby(Player *player);
 
 void loadLobby (GameLobby *gl, const char* arquivo);
 
