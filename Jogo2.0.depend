@@ -3,49 +3,49 @@
 	<stdio.h>
 	<stdlib.h>
 
-1762462444 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\main.c
+1762866631 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\main.c
 	<stdio.h>
 	<stdlib.h>
 	"raylib.h"
 	"gameWindow.h"
 
-1762613440 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.c
+1762866631 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.c
 	"raylib.h"
 	"player.h"
 	"weapons.h"
 	"collisions.h"
 
-1762551127 c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.h
+1762866631 c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.h
 	"raylib.h"
 
-1762447289 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\blocks.c
+1762866631 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\blocks.c
 	"raylib.h"
 	"blocks.h"
 
-1762447289 c:\users\facci\onedrive\documents\github\projeto_knight_mb\blocks.h
+1762866631 c:\users\facci\onedrive\documents\github\projeto_knight_mb\blocks.h
 	"raylib.h"
 
-1762462444 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\weapons.c
+1762866631 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\weapons.c
 	"raylib.h"
 	"weapons.h"
 
-1762447289 c:\users\facci\onedrive\documents\github\projeto_knight_mb\weapons.h
+1762866631 c:\users\facci\onedrive\documents\github\projeto_knight_mb\weapons.h
 	"raylib.h"
 	"player.h"
 
-1762703324 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.c
+1762866631 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.c
 	"raylib.h"
 	"enemies.h"
 	"collisions.h"
 
-1762612927 c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.h
+1762866631 c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.h
 	"raylib.h"
 
-1762704256 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\collisions.c
+1762866631 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\collisions.c
 	"raylib.h"
 	"collisions.h"
 
-1762704256 c:\users\facci\onedrive\documents\github\projeto_knight_mb\collisions.h
+1762866631 c:\users\facci\onedrive\documents\github\projeto_knight_mb\collisions.h
 	"raylib.h"
 	"player.h"
 	"blocks.h"
@@ -53,12 +53,12 @@
 	"enemies.h"
 	"coins.h"
 
-1762791841 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.c
+1762866631 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.c
 	<stdlib.h>
 	"raylib.h"
 	"gameWorld.h"
 
-1762791320 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.h
+1762866631 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.h
 	"raylib.h"
 	"player.h"
 	"enemies.h"
@@ -66,85 +66,90 @@
 	"collisions.h"
 	"coins.h"
 
-1762791826 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamewindow.c
+1762871171 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamewindow.c
 	<stdlib.h>
 	<stdio.h>
 	"raylib.h"
 	"gameWindow.h"
 
-1762790971 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamewindow.h
+1762871171 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamewindow.h
 	"raylib.h"
 	"gameWorld.h"
 	"gameLobby.h"
+	"game.h"
 
-1762002796 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\blocks.c
+1762866631 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\blocks.c
 	"raylib.h"
 	"blocks.h"
 
-1762002503 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\blocks.h
+1762866631 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\blocks.h
 	"raylib.h"
 
-1762054205 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\collisions.c
+1762866631 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\collisions.c
 	"raylib.h"
 	"collisions.h"
 
-1762046324 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\collisions.h
+1762866631 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\collisions.h
 	"raylib.h"
 	"player.h"
 	"blocks.h"
 	"weapons.h"
 	"enemies.h"
+	"coins.h"
 
-1762052801 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\player.h
+1762866631 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\player.h
 	"raylib.h"
 
-1762004388 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\weapons.h
+1762866631 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\weapons.h
 	"raylib.h"
 	"player.h"
 
-1762033742 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\enemies.h
+1762866631 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\enemies.h
 	"raylib.h"
 
-1762049430 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\enemies.c
+1762866631 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\enemies.c
 	"raylib.h"
 	"enemies.h"
 	"collisions.h"
 
-1762056141 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\gamewindow.c
+1762871171 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\gamewindow.c
 	<stdlib.h>
 	<stdio.h>
 	"raylib.h"
 	"gameWindow.h"
 
-1762029472 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\gamewindow.h
+1762871171 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\gamewindow.h
 	"raylib.h"
 	"gameWorld.h"
+	"gameLobby.h"
+	"game.h"
 
-1762048127 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\gameworld.h
+1762866631 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\gameworld.h
 	"raylib.h"
 	"player.h"
 	"enemies.h"
 	"blocks.h"
 	"collisions.h"
+	"coins.h"
 
-1762055647 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\gameworld.c
+1762866631 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\gameworld.c
 	<stdlib.h>
 	"raylib.h"
 	"gameWorld.h"
 
-1762029955 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\main.c
+1762866631 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\main.c
 	<stdio.h>
 	<stdlib.h>
 	"raylib.h"
 	"gameWindow.h"
 
-1762054288 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\player.c
+1762866631 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\player.c
 	"raylib.h"
 	"player.h"
 	"weapons.h"
 	"collisions.h"
 
-1762005033 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\weapons.c
+1762866631 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\weapons.c
 	"raylib.h"
 	"weapons.h"
 
@@ -222,11 +227,11 @@
 	"raylib.h"
 	"weapons.h"
 
-1762704968 c:\users\facci\onedrive\documents\github\projeto_knight_mb\coins.h
+1762866631 c:\users\facci\onedrive\documents\github\projeto_knight_mb\coins.h
 	"raylib.h"
 	"enemies.h"
 
-1762705499 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\coins.c
+1762866631 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\coins.c
 	<stdlib.h>
 	<time.h>
 	"raylib.h"
@@ -242,14 +247,14 @@
 	"raylib.h"
 	"enemies.h"
 
-1762744043 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamelobby.c
+1762869278 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamelobby.c
 	"raylib.h"
 	"gameLobby.h"
 	"blocks.h"
 	"collisions.h"
 	"gameWindow.h"
 
-1762742487 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamelobby.h
+1762869072 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamelobby.h
 	"raylib.h"
 	"player.h"
 	"blocks.h"
@@ -265,4 +270,48 @@
 	"raylib.h"
 	"player.h"
 	"blocks.h"
+
+1762870997 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\game.c
+	"raylib.h"
+	"game.h"
+	"player.h"
+
+1762870921 c:\users\facci\onedrive\documents\github\projeto_knight_mb\game.h
+	"raylib.h"
+	"player.h"
+	"gameLobby.h"
+	"gameWorld.h"
+
+1762866631 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\coins.c
+	<stdlib.h>
+	<time.h>
+	"raylib.h"
+	"coins.h"
+
+1762866631 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\coins.h
+	"raylib.h"
+	"enemies.h"
+
+1762870997 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\game.c
+	"raylib.h"
+	"game.h"
+	"player.h"
+
+1762870921 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\game.h
+	"raylib.h"
+	"player.h"
+	"gameLobby.h"
+	"gameWorld.h"
+
+1762869072 c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\gamelobby.h
+	"raylib.h"
+	"player.h"
+	"blocks.h"
+
+1762869278 source:c:\users\facci\onedrive\햞ea de trabalho\desbugandoaaa\gamelobby.c
+	"raylib.h"
+	"gameLobby.h"
+	"blocks.h"
+	"collisions.h"
+	"gameWindow.h"
 

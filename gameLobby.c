@@ -4,11 +4,11 @@
 #include "collisions.h"
 #include "gameWindow.h"
 
-GameLobby createGameLobby()
+GameLobby createGameLobby(Player *player)
 {
     GameLobby gl = (GameLobby)
     {
-        .player = createNewPlayer((Vector2){32,32},BLUE),
+        .player = player,
         .numberOfBlocks= 0,
         .camera = (Camera2D)
         {
@@ -47,7 +47,7 @@ void loadLobby(GameLobby *gl, const char* arquivo)
 
             case 'J':
             case 'j':
-                gl->player.pos = (Vector2){contColumn*32,contLines*32};
+                gl->player->pos = (Vector2){contColumn*32,contLines*32};
                 contColumn++;
                 break;
 
@@ -79,17 +79,17 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
     float delta = GetFrameTime();
     //-------------------------//
 
-    inputAndUpdatePlayer(&gl->player, delta);
+    inputAndUpdatePlayer(gl->player, delta);
 
     makeLobbyCollisionPlayerBlock(gl);
 
-    updateCamera(&gl->camera, &gl->player, isFullscreen);
+    updateCamera(&gl->camera, gl->player, isFullscreen);
 }
 
 void makeLobbyCollisionPlayerBlock(GameLobby *gl)
 {
-    Player *player = &gl->player;
-    PlayerCollisionRec *collisionRec = &gl->player.collisionRecs;
+    Player *player = gl->player;
+    PlayerCollisionRec *collisionRec = &gl->player->collisionRecs;
 
     for(int i =0; i<gl->numberOfBlocks; i++)
     {
@@ -128,7 +128,7 @@ void makeLobbyCollisionPlayerBlock(GameLobby *gl)
 
 void makeLobbyCollisionBlocksPowersAndWeapons(GameLobby *gl)
 {
-    Player *player = &gl->player;
+    Player *player = gl->player;
 
 
     for(int i =0; i<gl->numberOfBlocks; i++)
@@ -192,7 +192,7 @@ void drawGameLobby (GameLobby *gl)
 
     BeginMode2D(gl->camera);
 
-    drawPlayer(&gl->player);
+    drawPlayer(gl->player);
 
     for (int i =0; i<gl->numberOfBlocks; i++)
     {
@@ -201,7 +201,7 @@ void drawGameLobby (GameLobby *gl)
 
     EndMode2D();
 
-    drawHud(&gl->player);
+    drawHud(gl->player);
 
     EndDrawing();
 }
