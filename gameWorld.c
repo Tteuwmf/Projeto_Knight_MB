@@ -10,12 +10,13 @@
 //================================================
 //------------CREATE-DEFAULT-GAMEWORLD------------
 
-GameWorld* createGameWorld()
+GameWorld* createGameWorld(Player *player)
 {
     GameWorld *gw = (GameWorld*) calloc(1,sizeof (GameWorld));
     if (!gw){return NULL;}
 
-    gw->player = createNewPlayer((Vector2){32,32},BLUE);
+    //gw->player = createNewPlayer((Vector2){32,32},BLUE);
+    gw->player = player;
 
     gw->numberOfBlocks = 0;
     gw->numberOfEnemies = 0;
@@ -124,7 +125,7 @@ void loadMap(GameWorld *gw, const char* arquivo)
 
             case 'J':
             case 'j':
-                gw->player.pos = (Vector2) {contColumn*32,contLines*32};
+                gw->player->pos = (Vector2) {contColumn*32,contLines*32};
                 contColumn++;
                 break;
 
@@ -201,12 +202,12 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
   float delta = GetFrameTime();   //  SET THE DELTA OF FRAME TIME
 //--------------------------------//
 
-    applyKnockbackToPlayer(&gw->player);
+    applyKnockbackToPlayer(gw->player);
 
     applyKnockbackToEnemies(gw->enemies);
 
 //---------------MAIN-FUNCTION-----------------
-    inputAndUpdatePlayer(&gw->player, delta);
+    inputAndUpdatePlayer(gw->player, delta);
 
     updateEnemies (gw->enemies,delta);
 //---------------------------------------------
@@ -225,10 +226,10 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
 
     makeCollisionPlayerCoinsSkillsAndCharms(gw);
 
-    if (gw->player.knockbackStatus.knockbackTime<=0 && gw->player.status.invulnerable==false)
+    if (gw->player->knockbackStatus.knockbackTime<=0 && gw->player->status.invulnerable==false)
         makeCollisionEnemiesPlayer(gw);
 
-    updateCamera(&gw->camera, &gw->player, isFullscreen);
+    updateCamera(&gw->camera, gw->player, isFullscreen);
 
 }
 
@@ -238,8 +239,8 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
 
 void makeCollisionPlayerBlock (GameWorld *gw)
 {
-    Player *player = &gw->player;
-    PlayerCollisionRec *collisionRec = &gw->player.collisionRecs;
+    Player *player = gw->player;
+    PlayerCollisionRec *collisionRec = &gw->player->collisionRecs;
 
     for(int i =0; i<gw->numberOfBlocks; i++)
     {
@@ -278,7 +279,7 @@ void makeCollisionPlayerBlock (GameWorld *gw)
 
 void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
 {
-    Player *player = &gw->player;
+    Player *player = gw->player;
 
     for(int i =0;i<gw->numberOfCoins;i++)
     {
@@ -348,7 +349,7 @@ void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
 
 void makeCllisionBlockWeaponsAndPowers(GameWorld *gw)
 {
-    Player *player = &gw->player;
+    Player *player = gw->player;
 
 
     for(int i =0; i<gw->numberOfBlocks; i++)
@@ -481,10 +482,10 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
 
 void makeCollisionEnemiesWeapons(GameWorld *gw)
 {
-    if(gw->player.inventory.equippedWeapons.defaultSword)
+    if(gw->player->inventory.equippedWeapons.defaultSword)
     {
-        PlayerSword *defaultSword = &gw->player.sword;
-        Player *player = &gw->player;
+        PlayerSword *defaultSword = &gw->player->sword;
+        Player *player = gw->player;
 
         //----------BASIC-ENEMIES---------
 
@@ -675,9 +676,9 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
 
 void makeCollisionEnemiesPlayerPowers (GameWorld *gw)
 {
-    if(gw->player.powers.horizontalPowerActive)
+    if(gw->player->powers.horizontalPowerActive)
     {
-        HorizontalPower *power1 = &gw->player.powers.horizontalPower;
+        HorizontalPower *power1 = &gw->player->powers.horizontalPower;
 
         //----------BASIC-ENEMIES---------
 
@@ -699,8 +700,8 @@ void makeCollisionEnemiesPlayerPowers (GameWorld *gw)
 
 void makeCollisionEnemiesPlayer(GameWorld *gw)
 {
-    Player *player = &gw->player;
-    PlayerCollisionRec *collisionRec = &gw->player.collisionRecs;
+    Player *player = gw->player;
+    PlayerCollisionRec *collisionRec = &gw->player->collisionRecs;
 
     //-----------BASIC-ENEMY-----------
 
@@ -929,7 +930,7 @@ void drawGameWorld (GameWorld *gw)
 
     BeginMode2D(gw->camera);
 
-    drawPlayer(&gw->player);
+    drawPlayer(gw->player);
 
     drawEnemies(gw->enemies);
 
@@ -955,7 +956,7 @@ void drawGameWorld (GameWorld *gw)
 
     EndMode2D();
 
-    drawHud(&gw->player);
+    drawHud(gw->player);
 
 
     EndDrawing();

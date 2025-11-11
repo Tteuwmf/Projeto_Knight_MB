@@ -39,6 +39,8 @@ void initGameWindow(GameWindow *gameWindow)
 
         gameWindow->gl = createGameLobby();
 
+        Vector2 playerLobbyfirstPos = gameWindow->gl.player.pos;
+
         //gameWindow->gw = createGameWorld();
 
         SetTargetFPS(60);
@@ -70,50 +72,52 @@ void initGameWindow(GameWindow *gameWindow)
 
             //-----------------------------
 
+            int salvaPosX=0;
+            int salvaPosY=0;
 
             switch(lobbyOrWorld)
             {
-                int salvaPosX=0;
-                int salvaPosY=0;
 
                 case 0:
 
-                if(IsKeyPressed(KEY_ENTER))
-                {
-                    lobbyOrWorld++;
-
-                    if(salvaPosX!=0 || salvaPosY!=0)
+                    if(IsKeyPressed(KEY_ENTER))
                     {
-                        gameWindow->gw->player.pos.x = salvaPosX;
-                        gameWindow->gw->player.pos.y = salvaPosY;
+                        lobbyOrWorld++;
+
+                        if(gameWindow->gameWorldInitiate)
+                        {
+                            gameWindow->gw->player->pos.x = salvaPosX;
+                            gameWindow->gw->player->pos.y = salvaPosY;
+                        }
                     }
-                }
 
+                    inputAndUpdateGameLobby(&gameWindow->gl, isFullScreen);
 
-                inputAndUpdateGameLobby(&gameWindow->gl, isFullScreen);
-
-                drawGameLobby(&gameWindow->gl);
-                break;
+                    drawGameLobby(&gameWindow->gl);
+                    break;
 
                 case 1:
 
-                if(IsKeyPressed(KEY_ENTER))
-                    lobbyOrWorld--;
+                    if(IsKeyPressed(KEY_ENTER))
+                    {
+                        lobbyOrWorld--;
+                        gameWindow->gl.player.pos = playerLobbyfirstPos;
+                    }
 
-                if(gameWindow->gameWorldInitiate==false)
-                {
-                    gameWindow->gw = createGameWorld();
+                    if(gameWindow->gameWorldInitiate==false)
+                    {
+                        gameWindow->gw = createGameWorld(&gameWindow->gl.player);
 
-                            salvaPosX = gameWindow->gw->player.pos.x;
-                            salvaPosY = gameWindow->gw->player.pos.y;
+                                salvaPosX = gameWindow->gw->player->pos.x;
+                                salvaPosY = gameWindow->gw->player->pos.y;
 
-                    gameWindow->gameWorldInitiate = true;
-                }
+                        gameWindow->gameWorldInitiate = true;
+                    }
 
-                inputAndUpdateGameWorld(gameWindow->gw, isFullScreen);
+                    inputAndUpdateGameWorld(gameWindow->gw, isFullScreen);
 
-                drawGameWorld(gameWindow->gw);
-                break;
+                    drawGameWorld(gameWindow->gw);
+                    break;
             }
 
         }
