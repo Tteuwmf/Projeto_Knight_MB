@@ -13,7 +13,7 @@
 
 typedef struct GameWorld
 {
-    Player player;
+    Player *player;
 
     Enemies *enemies;
     int numberOfEnemies;
@@ -40,7 +40,7 @@ typedef struct GameWorld
 
     //-------CREATE-DESTROYS------
 
-GameWorld* createGameWorld();
+GameWorld* createGameWorld(Player *player);
 
 void destroysGameWorld (GameWorld *gw);
 
