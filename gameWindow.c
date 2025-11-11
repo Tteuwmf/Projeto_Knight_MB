@@ -26,10 +26,6 @@ void initGameWindow(GameWindow *gameWindow)
         gameWindow->initiate = true;
 
         //======FULL-SCREEN-CONFIG======
-        /*
-        int monitor = GetCurrentMonitor();
-        int monitorWidth = GetMonitorWidth(monitor);
-        int monitorHeight = GetMonitorHeight(monitor);*/
 
         bool isFullScreen = false;
 
@@ -41,7 +37,7 @@ void initGameWindow(GameWindow *gameWindow)
 
         Vector2 playerLobbyfirstPos = gameWindow->gl.player.pos;
 
-        //gameWindow->gw = createGameWorld();
+        Vector2 playerGameWorldfirstPos;
 
         SetTargetFPS(60);
 
@@ -72,9 +68,6 @@ void initGameWindow(GameWindow *gameWindow)
 
             //-----------------------------
 
-            int salvaPosX=0;
-            int salvaPosY=0;
-
             switch(lobbyOrWorld)
             {
 
@@ -86,8 +79,7 @@ void initGameWindow(GameWindow *gameWindow)
 
                         if(gameWindow->gameWorldInitiate)
                         {
-                            gameWindow->gw->player->pos.x = salvaPosX;
-                            gameWindow->gw->player->pos.y = salvaPosY;
+                            gameWindow->gw->player->pos = playerGameWorldfirstPos;
                         }
                     }
 
@@ -108,11 +100,13 @@ void initGameWindow(GameWindow *gameWindow)
                     {
                         gameWindow->gw = createGameWorld(&gameWindow->gl.player);
 
-                                salvaPosX = gameWindow->gw->player->pos.x;
-                                salvaPosY = gameWindow->gw->player->pos.y;
-
                         gameWindow->gameWorldInitiate = true;
                     }
+
+                    if (playerGameWorldfirstPos.x==0 && playerGameWorldfirstPos.y ==0)
+                        {
+                            playerGameWorldfirstPos = gameWindow->gw->player->pos;
+                        }
 
                     inputAndUpdateGameWorld(gameWindow->gw, isFullScreen);
 
