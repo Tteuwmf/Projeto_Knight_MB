@@ -13,6 +13,7 @@ typedef enum GameStatus
     HELP,
     PAUSE,
     LEAVE,
+    CONFIRM,
     GAMELOBBY,
     GAMEWORLD,
 
