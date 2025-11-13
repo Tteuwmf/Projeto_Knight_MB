@@ -71,6 +71,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
                     .defaultSword = true,
                 },
                 .teclaTab = true,
+                .doubleJump = true,
             },
 
 
@@ -93,6 +94,8 @@ Player createNewPlayer (Vector2 dim, Color cor)
             .jumpStatus = (JumpStatus)
             {
                 .canJump = false,
+                .wasOnFloor = false,
+                .canDoubleJump = false,
                 .defaultJumpForce = 400.0f,
                 .jumpBoostForce = 20.0f,
                 .isJumping = false,
@@ -139,7 +142,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
     //============MOVESET============
     //-------HORIZONTAL-MOVES--------
 
-    if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false && ((player->dashStatus.dashTime-0.5)<=0)) // confere se não está sofrendo um knockback
+    if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false && ((player->dashStatus.dashTime-0.25)<=0)) // confere se não está sofrendo um knockback
     {
         if(IsKeyDown(KEY_D)) //indo para a direita
         {
@@ -168,6 +171,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
         {
             player->dashStatus.canDash =false;
             player->speed.x += -player->dashStatus.dashSpeed;
+            player->speed.y = 0.0;
             player->dashStatus.dashTime = 0.75f;
         }
 
@@ -175,13 +179,14 @@ void inputAndUpdatePlayer(Player *player, float delta)
         {
             player->dashStatus.canDash =false;
             player->speed.x += player->dashStatus.dashSpeed;
+            player->speed.y = 0.0;
             player->dashStatus.dashTime = 0.75f;
         }
     }
     else
     {
         player->dashStatus.dashTime -= delta;
-        if(player->dashStatus.dashTime<=0)
+        if(player->dashStatus.dashTime<=0 && player->status.onFloor)
             player->dashStatus.canDash = true;
     }
 
@@ -386,7 +391,8 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     //---------GRAVITY---------
 
-    player->speed.y+=GRAVITY; //soma sempre a gravidade na velocidade
+    if(player->dashStatus.dashTime-0.25<=0)
+        player->speed.y+=GRAVITY; //soma sempre a gravidade na velocidade
 
     if (player->speed.y>MAX_SPEED_FALL) // define uma velocidade max para o player n passar pelo chão
         player->speed.y = MAX_SPEED_FALL;
@@ -399,16 +405,43 @@ void inputAndUpdatePlayer(Player *player, float delta)
         {
             player->jumpStatus.canJump=true; // pode pular
             player->jumpStatus.isJumping = false; // nao esta pulando
+            player->jumpStatus.canDoubleJump = false;
+            player->jumpStatus.wasOnFloor = true;
         }
         else
+        {
             player->jumpStatus.canJump=false; //se não, não pode pular
+            if(player->jumpStatus.wasOnFloor)
+            {
+                player->jumpStatus.canDoubleJump = true;
+                player->jumpStatus.wasOnFloor = false;
+            }
+        }
+
+        if (IsKeyPressed(KEY_SPACE)&&player->jumpStatus.canDoubleJump) //se pode pular e a tecla for acionada
+        {
+            player->speed.y = -player->jumpStatus.defaultJumpForce; // realiza o pulo
+            player->jumpStatus.isJumping = true;
+            player->jumpStatus.jumpTime = 0.0f; //  pulando
+            player->jumpStatus.canDoubleJump = false; // e não pode pular enquanto esta pulando
+            player->status.onFloor = false;
+            player->jumpStatus.wasOnFloor = false;
+        }
 
         if (IsKeyPressed(KEY_SPACE)&&player->jumpStatus.canJump) //se pode pular e a tecla for acionada
         {
             player->speed.y += -player->jumpStatus.defaultJumpForce; // realiza o pulo
             player->jumpStatus.isJumping = true; //  pulando
+            player->jumpStatus.jumpTime = 0.0f;
             player->jumpStatus.canJump = false; // e não pode pular enquanto esta pulando
             player->status.onFloor = false;
+            player->jumpStatus.canDoubleJump = true;
+            player->jumpStatus.wasOnFloor = false;
+
+            if(player->inventory.doubleJump)
+            {
+                player->jumpStatus.canDoubleJump = true;
+            }
         }
 
         if(IsKeyDown(KEY_SPACE)&& player->jumpStatus.isJumping) //se esta pulamndo e atecla continua pressionada

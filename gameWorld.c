@@ -951,7 +951,7 @@ void drawGameWorld (GameWorld *gw)
 
     BeginDrawing();
 
-    ClearBackground (GRAY);
+    ClearBackground (BLACK);
 
     BeginMode2D(gw->camera);
 
