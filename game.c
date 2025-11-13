@@ -44,6 +44,9 @@ void initGame(Game *game, bool isFullScreen)
         case PAUSE:
             break;
 
+        case CONFIRM:
+            break;
+
         case GAMELOBBY:
 
             if(IsKeyPressed(KEY_ENTER))
