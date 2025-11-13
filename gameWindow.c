@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "raylib.h"
 #include "gameWindow.h"
+#include "resourceManager.h"
 
 GameWindow* createGameWindow(int width, int height)
 {
@@ -65,6 +66,7 @@ void initGameWindow(GameWindow *gameWindow)
         }
 
         CloseWindow();
+        unloadResouces();
         destroysGameWorld(gameWindow->game.gw);
 
     }
