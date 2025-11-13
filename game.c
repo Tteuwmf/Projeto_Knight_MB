@@ -3,12 +3,14 @@
 #include "player.h"
 #include "resourceManager.h"
 #include "menu.h"
+#include "pause.h"
 
 Game createGame()
 {
     Game newGame = (Game)
     {
         .status = MENU,
+        .lastStatus = MENU,
         .player = createNewPlayer((Vector2){32,32}, BLUE),
         .gameWorldInitiate = false,
     };
@@ -29,6 +31,8 @@ Game createGame()
 void initGame(Game *game, bool isFullScreen)
 {
 
+
+
     switch(game->status)
     {
         case MENU:
@@ -42,9 +46,11 @@ void initGame(Game *game, bool isFullScreen)
             break;
 
         case PAUSE:
+            inputUpdateAndDrawPause(game);
             break;
 
         case CONFIRM:
+            inputUpdateAndDrawConfirm(game);
             break;
 
         case GAMELOBBY:
@@ -59,12 +65,20 @@ void initGame(Game *game, bool isFullScreen)
                 }
             }
 
+            if(IsKeyPressed(KEY_I))
+            {
+                game->lastStatus = game->status;
+                game->status = PAUSE;
+            }
+
             inputAndUpdateGameLobby(&game->gl, isFullScreen);
 
             drawGameLobby(&game->gl);
             break;
 
         case GAMEWORLD:
+
+
 
             if(IsKeyPressed(KEY_ENTER))
             {
@@ -83,6 +97,12 @@ void initGame(Game *game, bool isFullScreen)
             if (game->playerGameWorldFirstPos.x==0 && game->playerGameWorldFirstPos.y ==0 && game->gameWorldInitiate)
             {
                 game->playerGameWorldFirstPos = game->gw->player->pos;
+            }
+
+            if(IsKeyPressed(KEY_I))
+            {
+                game->lastStatus = game->status;
+                game->status = PAUSE;
             }
 
             inputAndUpdateGameWorld(game->gw, isFullScreen);

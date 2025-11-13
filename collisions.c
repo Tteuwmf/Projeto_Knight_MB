@@ -178,6 +178,11 @@ bool checkBasicEnemiesHorizontalPowerCollision(BasicEnemy *enemy, HorizontalPowe
     return CheckCollisionRecs((Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y },(Rectangle){.x = power->pos.x, .y = power->pos.y, .width = power->dim.x, .height = power->dim.y});
 }
 
+bool checkAirBasicEnemiesHorizontalPowerCollision(AirBasicEnemy *enemy, HorizontalPower *power)
+{
+    return CheckCollisionRecs((Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y },(Rectangle){.x = power->pos.x, .y = power->pos.y, .width = power->dim.x, .height = power->dim.y});
+}
+
 bool checkBlocksHorizontalPowerCollision(Rectangle block, HorizontalPower *power)
 {
     return CheckCollisionRecs(block,(Rectangle){.x = power->pos.x, .y = power->pos.y, .width = power->dim.x, .height = power->dim.y});
@@ -199,6 +204,16 @@ bool checkCharmsPlayer(Charm *charms, Player *player)
 }
 
 
+bool checkSkillsPlayerClose(Skill *skill, Player *player)
+{
+    return CheckCollisionRecs((Rectangle){.x = skill->pos.x - 32, .y = skill->pos.y - 32, .width = skill->dim.x + 32, .height = skill->dim.y + 32},(Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y} );
+}
+
+
+bool checkCharmsPlayerClose(Charm *charms, Player *player)
+{
+    return CheckCollisionRecs((Rectangle){.x = charms->pos.x - 32, .y = charms->pos.y - 32, .width = charms->dim.x + 32, .height = charms->dim.y + 32},(Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y} );
+}
 
 
 

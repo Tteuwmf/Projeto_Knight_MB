@@ -307,7 +307,11 @@ void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
         {
             int number = skill->skilNumber;
 
-            if(checkSkillsPlayer(skill, player))
+            if(checkSkillsPlayerClose(skill, player))
+                skill->playerNext = true;
+            else skill->playerNext = false;
+
+            if(checkSkillsPlayer(skill, player)&& IsKeyPressed(KEY_W))
             {
                 switch(number)
                 {
@@ -330,7 +334,11 @@ void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
         {
             int number = charm->charmNumber;
 
-            if(checkCharmsPlayer(charm, player))
+            if(checkCharmsPlayerClose(charm, player))
+                charm->playerNext = true;
+            else charm->playerNext = false;
+
+            if(checkCharmsPlayer(charm, player)&& IsKeyPressed(KEY_W))
             {
                 switch(number)
                 {
@@ -695,6 +703,22 @@ void makeCollisionEnemiesPlayerPowers (GameWorld *gw)
             }
         }
 
+        //---------AIR-BASIC-ENEMIES--------
+
+        for(int a = 0; a<gw->enemies->numberOfAirBasicEnemies;a++)
+        {
+            AirBasicEnemy *enemy = &gw->enemies->enemy2[a];
+
+            if(enemy->dead==false && power1->contTime<=power1->attackTime)
+            {
+                if(checkAirBasicEnemiesHorizontalPowerCollision(enemy,power1))
+                {
+                    enemy->life+= -3;
+                }
+            }
+        }
+
+
     }
 }
 
@@ -846,6 +870,7 @@ void updateCoins(GameWorld *gw, float delta)
 
                 if(checkCoinsBlocksCollision(coin,block))
                 {
+
                     if(coin->pos.y<block->pos.y)
                     {
                         coin->speed.y = -coin->speed.y;

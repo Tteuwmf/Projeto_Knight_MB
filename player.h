@@ -20,6 +20,8 @@ typedef struct PlayerStatus
     bool onFloor;
     bool lookingAtR;
     bool lookingAtL;
+    bool nextToCharm;
+    bool nextToSkill;
     bool lookingDown;
     bool lookingUp;
     bool invulnerable;
@@ -40,6 +42,14 @@ typedef struct KnockbackStatus
     float knockbackTime;
 
 }KnockbackStatus;
+
+typedef struct DashStatus
+{
+    bool canDash;
+    float dashSpeed;
+    float dashTime;
+
+}DashStatus;
 
 typedef struct JumpStatus
 {
@@ -107,6 +117,7 @@ typedef struct PlayerInventory
 
     bool doubleJump;
     bool chiclete;
+    bool teclaTab;
 
 }PlayerInventory;
 
@@ -164,6 +175,8 @@ typedef struct Player
     KnockbackStatus knockbackStatus;
 
     JumpStatus jumpStatus;
+
+    DashStatus dashStatus;
 
     AttackStatus attackStatus;
 

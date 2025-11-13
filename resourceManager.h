@@ -36,10 +36,17 @@ typedef struct PauseTextures
 
 }PauseTextures;
 
+typedef struct GameWorldTextures
+{
+    Texture2D defaultTile;
+
+}GameWorldTextures;
+
 typedef struct ResourceManager
 {
     MenuTextures menu;
     PauseTextures pause;
+    GameWorldTextures gw;
 
 }ResourceManager;
 

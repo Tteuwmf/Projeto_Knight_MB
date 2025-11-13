@@ -6,9 +6,8 @@ const int Y_RETURN_BUTTON = 175;
 const int Y_SAVE_BUTTON = 230;
 const int Y_LEAVE_BUTTON = 285;
 
-void inputUpdateAndDrawPause(Game *game, GameStatus lastStatus)
+void inputUpdateAndDrawPause(Game *game)
 {
-
     Vector2 mousePosition = GetMousePosition();
 
     Rectangle returnArea = {X_PAUSE_BUTTON, Y_RETURN_BUTTON, (int) rm.pause.normalReturnButton.width, (int) rm.pause.normalReturnButton.height};
@@ -20,7 +19,7 @@ void inputUpdateAndDrawPause(Game *game, GameStatus lastStatus)
     bool mouseOnLeaveButton = CheckCollisionPointRec(mousePosition, leaveArea);
 
     if(mouseOnReturnButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-        game->status = lastStatus;
+        game->status = game->lastStatus;
 
     if(mouseOnLeaveButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         game->status = CONFIRM;

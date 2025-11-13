@@ -11,6 +11,7 @@ typedef struct Skill
     Color cor;
     int skilNumber;
     bool available;
+    bool playerNext;
 
 }Skill;
 
@@ -23,6 +24,7 @@ typedef struct Charm
     Color cor;
     int charmNumber;
     bool available;
+    bool playerNext;
 
 }Charm;
 

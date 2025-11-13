@@ -34,6 +34,8 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 .onFloor = false,
                 .lookingAtR = true,
                 .lookingAtL = false,
+                .nextToCharm = false,
+                .nextToSkill = false,
                 .invulnerable = false,
                 .invulnerableTime = 2.0f,
                 .contInvulnerableTime = 0.0f,
@@ -68,6 +70,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 {
                     .defaultSword = true,
                 },
+                .teclaTab = true,
             },
 
 
@@ -95,6 +98,13 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 .isJumping = false,
                 .jumpTime = 0.0f,
                 .jumpTimeMax = 0.25f,
+            },
+
+            .dashStatus = (DashStatus)
+            {
+                .canDash = true,
+                .dashSpeed = 1000.0,
+                .dashTime = 0.0f,
             },
 
             .attackStatus = (AttackStatus)
@@ -129,7 +139,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
     //============MOVESET============
     //-------HORIZONTAL-MOVES--------
 
-    if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false) // confere se não está sofrendo um knockback
+    if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false && ((player->dashStatus.dashTime-0.5)<=0)) // confere se não está sofrendo um knockback
     {
         if(IsKeyDown(KEY_D)) //indo para a direita
         {
@@ -143,13 +153,36 @@ void inputAndUpdatePlayer(Player *player, float delta)
             player->status.lookingAtR = false; // não esta olhando para a direita
             player->status.lookingAtL = true; // esta olhando para a esquerda
         }
-        else
+        else if(player->dashStatus.canDash)
             player->speed.x=0.0f; // se não esta se movendo velocidade é zero
     }
     else // caso esteja sofrendo um knockback
     {
         player->knockbackStatus.knockbackTime -= delta; // conta o tempo
         player->speed.x *= 0.9; // reduz a velocidade até o fim do tempo
+    }
+
+    if(player->dashStatus.canDash)
+    {
+        if(IsKeyPressed(KEY_LEFT_SHIFT) && player->status.lookingAtL)
+        {
+            player->dashStatus.canDash =false;
+            player->speed.x += -player->dashStatus.dashSpeed;
+            player->dashStatus.dashTime = 0.75f;
+        }
+
+        if(IsKeyPressed(KEY_LEFT_SHIFT) && player->status.lookingAtR)
+        {
+            player->dashStatus.canDash =false;
+            player->speed.x += player->dashStatus.dashSpeed;
+            player->dashStatus.dashTime = 0.75f;
+        }
+    }
+    else
+    {
+        player->dashStatus.dashTime -= delta;
+        if(player->dashStatus.dashTime<=0)
+            player->dashStatus.canDash = true;
     }
 
     //-----------ATTACKS-----------
