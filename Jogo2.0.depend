@@ -187,16 +187,18 @@
 	"enemies.h"
 	"collisions.h"
 
-1762822876 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamewindow.c
+1762993148 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamewindow.c
 	<stdlib.h>
 	<stdio.h>
 	"raylib.h"
 	"gameWindow.h"
+	"resourceManager.h"
 
-1762822876 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamewindow.h
+1762991414 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamewindow.h
 	"raylib.h"
 	"gameWorld.h"
 	"gameLobby.h"
+	"game.h"
 
 1762822876 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gameworld.h
 	"raylib.h"
@@ -259,14 +261,14 @@
 	"player.h"
 	"blocks.h"
 
-1762822876 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamelobby.c
+1762991414 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamelobby.c
 	"raylib.h"
 	"gameLobby.h"
 	"blocks.h"
 	"collisions.h"
 	"gameWindow.h"
 
-1762822876 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamelobby.h
+1762991414 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamelobby.h
 	"raylib.h"
 	"player.h"
 	"blocks.h"
@@ -314,4 +316,23 @@
 	"blocks.h"
 	"collisions.h"
 	"gameWindow.h"
+
+1762993096 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\game.c
+	"raylib.h"
+	"game.h"
+	"player.h"
+	"resourceManager.h"
+
+1762991414 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\game.h
+	"raylib.h"
+	"player.h"
+	"gameLobby.h"
+	"gameWorld.h"
+
+1762993096 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\resourcemanager.c
+	"raylib.h"
+	"resourceManager.h"
+
+1762992417 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\resourcemanager.h
+	"raylib.h"
 

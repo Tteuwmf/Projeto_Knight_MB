@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "game.h"
 #include "player.h"
+#include "resourceManager.h"
 
 Game createGame()
 {
@@ -16,6 +17,8 @@ Game createGame()
     newGame.playerLobbyFirstPos = newGame.player.pos;
 
     newGame.playerGameWorldFirstPos = (Vector2){0,0};
+
+    loadResources();
 
     return newGame;
 
