@@ -54,6 +54,8 @@ typedef struct DashStatus
 typedef struct JumpStatus
 {
     bool canJump;
+    bool wasOnFloor;
+    bool canDoubleJump;
     float defaultJumpForce;
     float jumpBoostForce;
     bool isJumping;
