@@ -23,6 +23,8 @@ typedef struct Game
 {
     GameStatus status;
 
+    GameStatus lastStatus;
+
     Player player;
 
     GameLobby gl;

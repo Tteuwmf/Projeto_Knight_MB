@@ -14,7 +14,7 @@ void loadResources()
     rm.menu.clickLoadButton = LoadTexture("Assets/Textures/BotaoCarregarClicado.png");
 
     rm.menu.normalHelpButton = LoadTexture("Assets/Textures/BotaoAjudaNormal.png");
-    rm.menu.mouseHelpButton = LoadTexture("Assets/Textures/BotaoAjudaMause.png");
+    rm.menu.mouseHelpButton = LoadTexture("Assets/Textures/BotaoAjudaMouse.png");
     rm.menu.clickHelpButton = LoadTexture("Assets/Textures/BotaoAjudaClick.png");
 
     rm.menu.normalCloseButton = LoadTexture("Assets/Textures/BotaoFecharNormal.png");
@@ -30,6 +30,8 @@ void loadResources()
 
     rm.pause.normalLeaveButton = LoadTexture("Assets/Textures/BotaoSairNormal.png");
     rm.pause.mouseLeaveButton = LoadTexture("Assets/Textures/BotaoSairMouse.png");
+
+    rm.gw.defaultTile = LoadTexture("Assets/Textures/DefaultTile.png");
 }
 
 void unloadResouces()
@@ -59,4 +61,6 @@ void unloadResouces()
 
     UnloadTexture(rm.pause.normalLeaveButton);
     UnloadTexture(rm.pause.mouseLeaveButton);
+
+    UnloadTexture(rm.gw.defaultTile);
 }

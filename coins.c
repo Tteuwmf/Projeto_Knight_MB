@@ -13,6 +13,7 @@ Skill createSkill(Vector2 pos, int number)
         .cor = PINK,
         .skilNumber = number,
         .available = true,
+        .playerNext = false,
     };
 }
 
@@ -25,19 +26,32 @@ Charm createCharm(Vector2 pos, int number)
         .cor = VIOLET,
         .charmNumber = number,
         .available = true,
+        .playerNext = false,
     };
 }
 
 void drawSkills(Skill *skill)
 {
     if(skill->available)
+    {
         DrawRectangleV(skill->pos, skill->dim,skill->cor);
+        if (skill->playerNext)
+        {
+            DrawText(TextFormat("PEGAR: W"), skill->pos.x-16,skill->pos.y-16,5, GREEN);
+        }
+    }
 }
 
 void drawCharms(Charm *charm)
 {
     if(charm->available)
+    {
         DrawRectangleV(charm->pos, charm->dim,charm->cor);
+        if (charm->playerNext)
+        {
+            DrawText(TextFormat("PEGAR: W"), charm->pos.x-16,charm->pos.y-16,5, GREEN);
+        }
+    }
 }
 
 //=====================================

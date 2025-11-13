@@ -24,7 +24,10 @@ void inputUpdateAndDrawMenu(Game *game)
     bool mouseOnCloseButton = CheckCollisionPointRec(mousePosition, closeArea);
 
     if(mouseOnStartButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
         game->status = GAMELOBBY;
+        game->gl.player->pos = game->playerLobbyFirstPos;
+    }
 
     else if(mouseOnLoadButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         game->status = LOAD;

@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "blocks.h"
+#include "resourceManager.h"
 
 Block createBlock (Vector2 pos)
 {
@@ -12,5 +13,5 @@ Block createBlock (Vector2 pos)
 
 void drawBlock(Block *block)
 {
-    DrawRectangleV(block->pos, block->dim,block->cor);
+    DrawTextureV(rm.gw.defaultTile,block->pos,WHITE);
 }

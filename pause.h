@@ -5,7 +5,7 @@
 #include "resourceManager.h"
 #include "game.h"
 
-void inputUpdateAndDrawPause(Game *game, GameStatus lastStatus);
+void inputUpdateAndDrawPause(Game *game);
 
 void inputUpdateAndDrawConfirm(Game *game);
 
