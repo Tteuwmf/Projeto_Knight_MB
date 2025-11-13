@@ -2,12 +2,13 @@
 #include "game.h"
 #include "player.h"
 #include "resourceManager.h"
+#include "menu.h"
 
 Game createGame()
 {
     Game newGame = (Game)
     {
-        .status = GAMELOBBY,
+        .status = MENU,
         .player = createNewPlayer((Vector2){32,32}, BLUE),
         .gameWorldInitiate = false,
     };
@@ -30,6 +31,19 @@ void initGame(Game *game, bool isFullScreen)
 
     switch(game->status)
     {
+        case MENU:
+            inputUpdateAndDrawMenu(game);
+            break;
+
+        case LOAD:
+            break;
+
+        case HELP:
+            break;
+
+        case PAUSE:
+            break;
+
         case GAMELOBBY:
 
             if(IsKeyPressed(KEY_ENTER))
@@ -72,5 +86,9 @@ void initGame(Game *game, bool isFullScreen)
 
             drawGameWorld(game->gw);
             break;
-            }
+
+
+        case LEAVE:
+            break;
+    }
 }
