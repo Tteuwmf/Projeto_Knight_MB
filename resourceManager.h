@@ -43,6 +43,8 @@ typedef struct ResourceManager
 
 }ResourceManager;
 
+extern ResourceManager rm;
+
 void loadResources();
 
 void unloadResouces();

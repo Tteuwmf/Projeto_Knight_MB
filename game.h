@@ -9,7 +9,10 @@
 typedef enum GameStatus
 {
     MENU = 0,
+    LOAD,
+    HELP,
     PAUSE,
+    LEAVE,
     GAMELOBBY,
     GAMEWORLD,
 
