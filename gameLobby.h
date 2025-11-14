@@ -12,6 +12,10 @@ typedef struct GameLobby
     Block blocks[1000];
     int numberOfBlocks;
 
+    Rectangle Banch;
+    Rectangle Store;
+    Rectangle Room;
+
     Camera2D camera;
 
 }GameLobby;
@@ -27,6 +31,8 @@ void makeLobbyCollisionPlayerBlock (GameLobby *gl);
 void makeLobbyCollisionBlocksPowersAndWeapons (GameLobby *gl);
 
 void drawGameLobby (GameLobby *gl);
+
+void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen);
 
 
 

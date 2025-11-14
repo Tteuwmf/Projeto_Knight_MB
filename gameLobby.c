@@ -19,7 +19,7 @@ GameLobby createGameLobby(Player *player)
         },
     };
 
-    loadLobby(&gl,"maps/map1.txt");
+    loadLobby(&gl,"maps/mapLobby.txt");
 
     return gl;
 
@@ -61,6 +61,39 @@ void loadLobby(GameLobby *gl, const char* arquivo)
                 gl->numberOfBlocks++;
                 break;
 
+            case 'B':
+                gl->Banch = (Rectangle)
+                {
+                    .x = contColumn*32,
+                    .y = contLines*32,
+                    .width = 32,
+                    .height = 32,
+                };
+                contColumn++;
+                break;
+
+            case 'L':
+                gl->Store = (Rectangle)
+                {
+                    .x = contColumn*32,
+                    .y = contLines*32,
+                    .width = 32,
+                    .height = 32,
+                };
+                contColumn++;
+                break;
+
+            case 'S':
+                gl->Room = (Rectangle)
+                {
+                    .x = contColumn*32,
+                    .y = contLines*32,
+                    .width = 32,
+                    .height = 32,
+                };
+                contColumn++;
+                break;
+
             default:
                 contColumn++;
                 break;
@@ -83,7 +116,7 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 
     makeLobbyCollisionPlayerBlock(gl);
 
-    updateCamera(&gl->camera, gl->player, isFullscreen);
+    updateLobbyCamera(&gl->camera, gl->player, isFullscreen);
 }
 
 void makeLobbyCollisionPlayerBlock(GameLobby *gl)
@@ -178,7 +211,58 @@ void makeLobbyCollisionBlocksPowersAndWeapons(GameLobby *gl)
 
 }
 
+void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen)
+{
+    if(isFullscreen==false)
+    {
+        if (player->pos.x <= 704 && player->pos.y <= 372)
+        {
+            camera->target= (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+            camera->rotation = 0.0f;
+            camera->zoom = 1.0f;
+        }
+        else if (player->pos.x >= 448 && player->pos.x < 896 && player->pos.y > 384 && player->pos.y <= 800)
+        {
+            camera->target= (Vector2) {592,player->pos.y+(player->dim.y/2)-100};
+            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+            camera->rotation = 0.0f;
+            camera->zoom = 1.5f;
+        }
+        else
+        {
+            if(player->pos.x <= 1152)
+            {
+                camera->target= (Vector2) {1152,player->pos.y+(player->dim.y/2)-128};
+                camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+                camera->rotation = 0.0f;
+                camera->zoom = 1.3f;
+            }
+            else if(player->pos.x >= 2624-32)
+            {
+                camera->target= (Vector2) {2624-32,player->pos.y+(player->dim.y/2)-128};
+                camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+                camera->rotation = 0.0f;
+                camera->zoom = 1.3f;
+            }
+            else
+            {
+                camera->target= (Vector2) {player->pos.x+(player->dim.x/2),player->pos.y+(player->dim.y/2)-128};
+                camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+                camera->rotation = 0.0f;
+                camera->zoom = 1.3f;
+            }
+        }
+    }
+    else
+    {
+        camera->target= (Vector2) {player->pos.x+(player->dim.x/2),player->pos.y+(player->dim.y/2)-64};
+        camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+        camera->rotation = 0.0f;
+        camera->zoom = 2.5f;
+    }
 
+}
 
 
 
@@ -188,9 +272,13 @@ void drawGameLobby (GameLobby *gl)
 
     BeginDrawing();
 
-    ClearBackground (GRAY);
+    ClearBackground (DARKGRAY);
 
     BeginMode2D(gl->camera);
+
+    DrawRectangleRec(gl->Banch, WHITE);
+    DrawRectangleRec(gl->Store, WHITE);
+    DrawRectangleRec(gl->Room, WHITE);
 
     drawPlayer(gl->player);
 

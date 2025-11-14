@@ -2,6 +2,7 @@
 #include <time.h>
 #include "raylib.h"
 #include "coins.h"
+#include "resourceManager.h"
 
 
 Skill createSkill(Vector2 pos, int number)
@@ -90,5 +91,5 @@ Coins summonCoinsForAirBasicEnemies(AirBasicEnemy *enemy, int number)
 void drawCoins(Coins *coin)
 {
     if(coin->available)
-        DrawRectangleV(coin->pos, coin->dim,coin->cor);
+        DrawTextureV(rm.gw.ticketRU,coin->pos,coin->cor);
 }
