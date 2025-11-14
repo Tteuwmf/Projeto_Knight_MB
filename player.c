@@ -73,6 +73,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 },
                 .teclaTab = true,
                 .doubleJump = true,
+                .chiclete = true,
             },
 
 
@@ -466,6 +467,53 @@ void inputAndUpdatePlayer(Player *player, float delta)
         {
             player->jumpStatus.isJumping=false;  //não esta mais pulando
             player->jumpStatus.jumpTime =  0.0f; //zera o timer
+        }
+    }
+
+    if(player->inventory.chiclete)
+    {
+        if(player->status.onFloor==false)
+        {
+            if(player->chiclete.leftWall)
+            {
+                if(player->chiclete.canUseChiclete)
+                    player->chiclete.contChicleteTime = 0.0f;
+
+                if(IsKeyDown(KEY_A)&& player->chiclete.contChicleteTime<=0.5)
+                {
+                    player->speed.y = 0.0f;
+                    player->chiclete.contChicleteTime += delta;
+                    player->chiclete.canUseChiclete = false;
+                    player->chiclete.usingChiclete = true;
+                }
+
+                if(player->chiclete.contChicleteTime<=0.5)
+                    player->chiclete.usingChiclete = false;
+
+                player->chiclete.leftWall = false;
+
+            }
+            else
+                player->chiclete.canUseChiclete = true;
+        }
+        else
+            player->chiclete.canUseChiclete = true;
+
+        if(player->chiclete.usingChiclete && IsKeyPressed(KEY_SPACE))
+        {
+            if(player->chiclete.leftWall)
+            {
+                player->pos.x += 10;
+                player->speed.x = player->jumpStatus.defaultJumpForce*0.8;
+            }
+
+
+            player->speed.y = -player->jumpStatus.defaultJumpForce;
+
+
+            player->jumpStatus.isJumping=true;
+            player->chiclete.leftWall = false;
+
         }
     }
 
