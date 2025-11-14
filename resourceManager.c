@@ -31,7 +31,13 @@ void loadResources()
     rm.pause.normalLeaveButton = LoadTexture("Assets/Textures/BotaoSairNormal.png");
     rm.pause.mouseLeaveButton = LoadTexture("Assets/Textures/BotaoSairMouse.png");
 
+
     rm.gw.defaultTile = LoadTexture("Assets/Textures/DefaultTile.png");
+
+    rm.gw.horizontalPowerA = LoadTexture("Assets/Textures/HorizontalPowerA.png");
+    rm.gw.horizontalPowerB = LoadTexture("Assets/Textures/HorizontalPowerB.png");
+
+    rm.gw.ticketRU= LoadTexture("Assets/Textures/TicketRU.png");
 }
 
 void unloadResouces()
@@ -62,5 +68,12 @@ void unloadResouces()
     UnloadTexture(rm.pause.normalLeaveButton);
     UnloadTexture(rm.pause.mouseLeaveButton);
 
+
     UnloadTexture(rm.gw.defaultTile);
+
+    UnloadTexture(rm.gw.horizontalPowerA);
+    UnloadTexture(rm.gw.horizontalPowerB);
+
+    UnloadTexture(rm.gw.ticketRU);
+
 }

@@ -2,8 +2,9 @@
 #include "player.h"
 #include "weapons.h"
 #include "collisions.h"
+#include "resourceManager.h"
 
-#define GRAVITY 20.0
+#define GRAVITY 1500.0
 #define MAX_SPEED_FALL 400.0
 
 //===============================================
@@ -106,7 +107,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
             .dashStatus = (DashStatus)
             {
                 .canDash = true,
-                .dashSpeed = 1000.0,
+                .dashSpeed = 400.0,
                 .dashTime = 0.0f,
             },
 
@@ -142,22 +143,29 @@ void inputAndUpdatePlayer(Player *player, float delta)
     //============MOVESET============
     //-------HORIZONTAL-MOVES--------
 
-    if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false && ((player->dashStatus.dashTime-0.25)<=0)) // confere se não está sofrendo um knockback
+    if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false) // confere se não está sofrendo um knockback
     {
-        if(IsKeyDown(KEY_D)) //indo para a direita
+        if(player->dashStatus.dashTime<=0)
         {
-            player->speed.x = player->status.defaultSpeed; //começa o movimento
-            player->status.lookingAtR = true; //esta olhando para a direita
-            player->status.lookingAtL = false; // não esta olhando para a esquerda
+            if(IsKeyDown(KEY_D)) //indo para a direita
+            {
+                player->speed.x = player->status.defaultSpeed; //começa o movimento
+                player->status.lookingAtR = true; //esta olhando para a direita
+                player->status.lookingAtL = false; // não esta olhando para a esquerda
+            }
+            else if (IsKeyDown(KEY_A))// indo para a esquerda
+            {
+                player->speed.x = -player->status.defaultSpeed; //começa o movimento negativo
+                player->status.lookingAtR = false; // não esta olhando para a direita
+                player->status.lookingAtL = true; // esta olhando para a esquerda
+            }
+            else
+            {
+                player->speed.x *= 0.8f;
+                if(player->speed.x<10.0f && player->speed.x>10.0f)
+                    player->speed.x =0.0f; // se não esta se movendo velocidade é zero
+            }
         }
-        else if (IsKeyDown(KEY_A))// indo para a esquerda
-        {
-            player->speed.x = -player->status.defaultSpeed; //começa o movimento negativo
-            player->status.lookingAtR = false; // não esta olhando para a direita
-            player->status.lookingAtL = true; // esta olhando para a esquerda
-        }
-        else if(player->dashStatus.canDash)
-            player->speed.x=0.0f; // se não esta se movendo velocidade é zero
     }
     else // caso esteja sofrendo um knockback
     {
@@ -170,23 +178,23 @@ void inputAndUpdatePlayer(Player *player, float delta)
         if(IsKeyPressed(KEY_LEFT_SHIFT) && player->status.lookingAtL)
         {
             player->dashStatus.canDash =false;
-            player->speed.x += -player->dashStatus.dashSpeed;
+            player->speed.x = -player->dashStatus.dashSpeed;
             player->speed.y = 0.0;
-            player->dashStatus.dashTime = 0.75f;
+            player->dashStatus.dashTime = 0.25f;
         }
 
         if(IsKeyPressed(KEY_LEFT_SHIFT) && player->status.lookingAtR)
         {
             player->dashStatus.canDash =false;
-            player->speed.x += player->dashStatus.dashSpeed;
+            player->speed.x = player->dashStatus.dashSpeed;
             player->speed.y = 0.0;
-            player->dashStatus.dashTime = 0.75f;
+            player->dashStatus.dashTime = 0.25f;
         }
     }
     else
     {
         player->dashStatus.dashTime -= delta;
-        if(player->dashStatus.dashTime<=0 && player->status.onFloor)
+        if(player->dashStatus.dashTime<=-0.5 && player->status.onFloor)
             player->dashStatus.canDash = true;
     }
 
@@ -391,8 +399,8 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     //---------GRAVITY---------
 
-    if(player->dashStatus.dashTime-0.25<=0)
-        player->speed.y+=GRAVITY; //soma sempre a gravidade na velocidade
+    if(player->dashStatus.dashTime<=0)
+        player->speed.y+=GRAVITY*delta; //soma sempre a gravidade na velocidade
 
     if (player->speed.y>MAX_SPEED_FALL) // define uma velocidade max para o player n passar pelo chão
         player->speed.y = MAX_SPEED_FALL;
@@ -466,9 +474,10 @@ void inputAndUpdatePlayer(Player *player, float delta)
 //============================================================
 //---------------------UPDATE-POSITION------------------------
 
-    player->pos.x += player->speed.x * delta; // atualiza a posição de acordo com a velocidade (usa o delta para normalizar de acordo com o FPS)
+    player->pos.x += (player->speed.x * delta); // atualiza a posição de acordo com a velocidade (usa o delta para normalizar de acordo com o FPS)
 
-    player->pos.y += player->speed.y * delta;
+    if(player->dashStatus.dashTime<=0)
+        player->pos.y += (player->speed.y * delta);
 
 //-------------------------------------------------------------
 //=============================================================
@@ -588,7 +597,7 @@ void applyKnockbackToPlayer(Player *player)
 void drawPlayer(Player *player)
 {
     if(player->powers.usingHorizontalPower)
-        DrawRectangleV(player->powers.horizontalPower.pos, player->powers.horizontalPower.dim, player->powers.horizontalPower.cor);
+        DrawTextureV(rm.gw.horizontalPowerA,player->powers.horizontalPower.pos, player->powers.horizontalPower.cor);
 
     DrawRectangleV(player->pos,player->dim,player->cor);
 

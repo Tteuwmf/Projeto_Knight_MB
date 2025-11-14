@@ -904,6 +904,7 @@ void updateCoins(GameWorld *gw, float delta)
 
 void updateCamera(Camera2D *camera, Player *player, bool isFullscreen)
 {
+
     if(isFullscreen==false)
     {
         if (player->pos.x <= 390 && player->pos.y >= 200)
