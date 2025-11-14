@@ -256,12 +256,46 @@ void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen)
     }
     else
     {
-        camera->target= (Vector2) {player->pos.x+(player->dim.x/2),player->pos.y+(player->dim.y/2)-64};
-        camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-        camera->rotation = 0.0f;
-        camera->zoom = 2.5f;
-    }
+       if (player->pos.x <= 704 && player->pos.y <= 372)
+        {
+            camera->target= (Vector2) {435,250};
+            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+            camera->rotation = 0.0f;
+            camera->zoom = 2.2f;
+        }
+        else if (player->pos.x >= 448 && player->pos.x < 896 && player->pos.y > 384 && player->pos.y <= 800)
+        {
+            camera->target= (Vector2) {592,player->pos.y+(player->dim.y/2)-100};
+            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+            camera->rotation = 0.0f;
+            camera->zoom = 3.5f;
+        }
+        else
+        {
+            if(player->pos.x <= 1152)
+            {
+                camera->target= (Vector2) {1152,600};
+                camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+                camera->rotation = 0.0f;
+                camera->zoom = 2.3f;
+            }
+            else if(player->pos.x >= 2500)
+            {
+                camera->target= (Vector2) {2500,600};
+                camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+                camera->rotation = 0.0f;
+                camera->zoom = 2.3f;
+            }
+            else
+            {
+                camera->target= (Vector2) {player->pos.x+(player->dim.x/2),600};
+                camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+                camera->rotation = 0.0f;
+                camera->zoom = 2.3f;
+            }
+        }
 
+    }
 }
 
 
