@@ -267,12 +267,20 @@ void makeCollisionPlayerBlock (GameWorld *gw)
             if(checkPlayerBlockCollision_Right(collisionRec ,block))
             {
                 player->pos.x = block->pos.x-player->dim.x;
+                if(player->status.onFloor==false)
+                    player->chiclete.rightWall = true;
             }
+           // else
+                //player->chiclete.rightWall = false;
 
             if(checkPlayerBlockCollision_Left(collisionRec ,block))
             {
                 player->pos.x=block->pos.x+block->dim.x;
+                if(player->status.onFloor==false)
+                    player->chiclete.leftWall =true;
             }
+            //else
+               //player->chiclete.leftWall =false;
     }
 
 }
