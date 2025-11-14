@@ -64,6 +64,16 @@ typedef struct JumpStatus
 
 }JumpStatus;
 
+typedef struct ChicleteStatus
+{
+    bool leftWall;
+    bool rightWall;
+    bool canUseChiclete;
+    bool usingChiclete;
+    float contChicleteTime;
+
+}ChicleteStatus;
+
 typedef struct HorizontalPower
 {
     Vector2 pos;
@@ -177,6 +187,8 @@ typedef struct Player
     KnockbackStatus knockbackStatus;
 
     JumpStatus jumpStatus;
+
+    ChicleteStatus chiclete;
 
     DashStatus dashStatus;
 
