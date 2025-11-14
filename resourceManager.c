@@ -32,6 +32,9 @@ void loadResources()
     rm.pause.mouseLeaveButton = LoadTexture("Assets/Textures/BotaoSairMouse.png");
 
 
+    rm.gl.bench = LoadTexture("Assets/Textures/Banch.png");
+
+
     rm.gw.defaultTile = LoadTexture("Assets/Textures/DefaultTile.png");
 
     rm.gw.horizontalPowerA = LoadTexture("Assets/Textures/HorizontalPowerA.png");
@@ -67,6 +70,9 @@ void unloadResouces()
 
     UnloadTexture(rm.pause.normalLeaveButton);
     UnloadTexture(rm.pause.mouseLeaveButton);
+
+
+    UnloadTexture(rm.gl.bench);
 
 
     UnloadTexture(rm.gw.defaultTile);

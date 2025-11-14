@@ -3,6 +3,7 @@
 #include "blocks.h"
 #include "collisions.h"
 #include "gameWindow.h"
+#include "resourceManager.h"
 
 GameLobby createGameLobby(Player *player)
 {
@@ -310,7 +311,8 @@ void drawGameLobby (GameLobby *gl)
 
     BeginMode2D(gl->camera);
 
-    DrawRectangleRec(gl->Banch, WHITE);
+    DrawTexture(rm.gl.bench,gl->Banch.x,gl->Banch.y, WHITE);
+    //DrawRectangleRec(gl->Banch, WHITE);
     DrawRectangleRec(gl->Store, WHITE);
     DrawRectangleRec(gl->Room, WHITE);
 
