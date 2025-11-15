@@ -32,6 +32,8 @@ typedef struct GameWorld
 
     Camera2D camera;
 
+    float fadeScreenGW;
+
 }GameWorld;
 
 

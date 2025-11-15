@@ -13,6 +13,7 @@ Game createGame()
         .lastStatus = MENU,
         .player = createNewPlayer((Vector2){32,32}, BLUE),
         .gameWorldInitiate = false,
+        .fadeScreenMenus = 0.0,
     };
 
     newGame.gl = createGameLobby(&newGame.player);

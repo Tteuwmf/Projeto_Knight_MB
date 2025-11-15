@@ -16,6 +16,7 @@ typedef enum GameStatus
     CONFIRM,
     GAMELOBBY,
     GAMEWORLD,
+    DEATH,
 
 } GameStatus;
 
@@ -34,6 +35,8 @@ typedef struct Game
     Vector2 playerGameWorldFirstPos;
 
     bool gameWorldInitiate;
+
+    float fadeScreenMenus;
 
 }Game;
 
