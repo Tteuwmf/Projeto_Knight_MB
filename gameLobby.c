@@ -18,6 +18,8 @@ GameLobby createGameLobby(Player *player)
             .rotation = 0.0f,
             .zoom = 1.0f,
         },
+
+        .nearBanch = false,
     };
 
     loadLobby(&gl,"maps/mapLobby.txt");
@@ -113,7 +115,28 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
     float delta = GetFrameTime();
     //-------------------------//
 
-    inputAndUpdatePlayer(gl->player, delta);
+    if(gl->player->status.resting==false)
+        inputAndUpdatePlayer(gl->player, delta);
+
+
+    if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->Banch))
+        {
+            if(IsKeyPressed(KEY_W) && gl->player->status.resting==false)
+            {
+                gl->player->status.resting = true;
+                gl->player->pos.x = gl->Banch.x+16;
+                gl->player->pos.y += 10;
+            }
+
+            gl->nearBanch = true;
+
+        }
+        else gl->nearBanch = false;
+
+    if(gl->player->status.resting && (IsKeyPressed(KEY_A)||IsKeyPressed(KEY_D)))
+         gl->player->status.resting = false;
+
+
 
     makeLobbyCollisionPlayerBlock(gl);
 
@@ -150,11 +173,13 @@ void makeLobbyCollisionPlayerBlock(GameLobby *gl)
             if(checkPlayerBlockCollision_Right(collisionRec ,block))
             {
                 player->pos.x = block->pos.x-player->dim.x;
+                player->chiclete.rightWall = true;
             }
 
             if(checkPlayerBlockCollision_Left(collisionRec ,block))
             {
                 player->pos.x=block->pos.x+block->dim.x;
+                player->chiclete.leftWall = true;
             }
     }
 
@@ -317,6 +342,9 @@ void drawGameLobby (GameLobby *gl)
     DrawRectangleRec(gl->Room, WHITE);
 
     drawPlayer(gl->player);
+
+    if(gl->nearBanch)
+        DrawText(TextFormat("DESCANSAR: W"), gl->Banch.x,gl->Banch.y-16,15, WHITE);
 
     for (int i =0; i<gl->numberOfBlocks; i++)
     {

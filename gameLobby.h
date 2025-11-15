@@ -13,6 +13,8 @@ typedef struct GameLobby
     int numberOfBlocks;
 
     Rectangle Banch;
+    bool nearBanch;
+
     Rectangle Store;
     Rectangle Room;
 

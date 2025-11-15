@@ -15,6 +15,7 @@ typedef struct PlayerStatus
     bool healing;
     float healingTime;
     float contHealingTime;
+    bool resting;
     int ticketsRU;
     float defaultSpeed;
     bool onFloor;
@@ -69,7 +70,7 @@ typedef struct ChicleteStatus
     bool leftWall;
     bool rightWall;
     bool canUseChiclete;
-    bool usingChiclete;
+    float wallJumpTime;
     float contChicleteTime;
 
 }ChicleteStatus;

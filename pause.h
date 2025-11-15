@@ -9,5 +9,8 @@ void inputUpdateAndDrawPause(Game *game);
 
 void inputUpdateAndDrawConfirm(Game *game);
 
+void inputUpdateDeathScreen(Game *game);
+
+void drawDeathScreen(Game *game);
 
 #endif // PAUSE_H

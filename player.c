@@ -30,6 +30,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 .healing = false,
                 .healingTime = 1.5f,
                 .contHealingTime = 0.0,
+                .resting = false,
                 .ticketsRU = 0,
                 .defaultSpeed = 200.0,
                 .onFloor = false,
@@ -144,7 +145,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
     //============MOVESET============
     //-------HORIZONTAL-MOVES--------
 
-    if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false) // confere se não está sofrendo um knockback
+    if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false ) // confere se não está sofrendo um knockback
     {
         if(player->dashStatus.dashTime<=0)
         {
@@ -174,29 +175,32 @@ void inputAndUpdatePlayer(Player *player, float delta)
         player->speed.x *= 0.9; // reduz a velocidade até o fim do tempo
     }
 
-    if(player->dashStatus.canDash)
+    if(player->inventory.teclaTab)
     {
-        if(IsKeyPressed(KEY_LEFT_SHIFT) && player->status.lookingAtL)
+        if(player->dashStatus.canDash)
         {
-            player->dashStatus.canDash =false;
-            player->speed.x = -player->dashStatus.dashSpeed;
-            player->speed.y = 0.0;
-            player->dashStatus.dashTime = 0.25f;
-        }
+            if(IsKeyPressed(KEY_LEFT_SHIFT) && player->status.lookingAtL)
+            {
+                player->dashStatus.canDash =false;
+                player->speed.x = -player->dashStatus.dashSpeed;
+                player->speed.y = 0.0;
+                player->dashStatus.dashTime = 0.25f;
+            }
 
-        if(IsKeyPressed(KEY_LEFT_SHIFT) && player->status.lookingAtR)
-        {
-            player->dashStatus.canDash =false;
-            player->speed.x = player->dashStatus.dashSpeed;
-            player->speed.y = 0.0;
-            player->dashStatus.dashTime = 0.25f;
+            if(IsKeyPressed(KEY_LEFT_SHIFT) && player->status.lookingAtR)
+            {
+                player->dashStatus.canDash =false;
+                player->speed.x = player->dashStatus.dashSpeed;
+                player->speed.y = 0.0;
+                player->dashStatus.dashTime = 0.25f;
+            }
         }
-    }
-    else
-    {
-        player->dashStatus.dashTime -= delta;
-        if(player->dashStatus.dashTime<=-0.5 && player->status.onFloor)
-            player->dashStatus.canDash = true;
+        else
+        {
+            player->dashStatus.dashTime -= delta;
+            if(player->dashStatus.dashTime<=-0.5 && player->status.onFloor)
+                player->dashStatus.canDash = true;
+        }
     }
 
     //-----------ATTACKS-----------
@@ -422,7 +426,8 @@ void inputAndUpdatePlayer(Player *player, float delta)
             player->jumpStatus.canJump=false; //se não, não pode pular
             if(player->jumpStatus.wasOnFloor)
             {
-                player->jumpStatus.canDoubleJump = true;
+                if(player->inventory.doubleJump)
+                    player->jumpStatus.canDoubleJump = true;
                 player->jumpStatus.wasOnFloor = false;
             }
         }
@@ -444,7 +449,6 @@ void inputAndUpdatePlayer(Player *player, float delta)
             player->jumpStatus.jumpTime = 0.0f;
             player->jumpStatus.canJump = false; // e não pode pular enquanto esta pulando
             player->status.onFloor = false;
-            player->jumpStatus.canDoubleJump = true;
             player->jumpStatus.wasOnFloor = false;
 
             if(player->inventory.doubleJump)
@@ -472,49 +476,59 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     if(player->inventory.chiclete)
     {
-        if(player->status.onFloor==false)
-        {
+        if(player->chiclete.canUseChiclete && (!IsKeyDown(KEY_A)))
+                    player->chiclete.contChicleteTime = 0.0f;
+
             if(player->chiclete.leftWall)
             {
-                if(player->chiclete.canUseChiclete)
-                    player->chiclete.contChicleteTime = 0.0f;
 
                 if(IsKeyDown(KEY_A)&& player->chiclete.contChicleteTime<=0.5)
                 {
                     player->speed.y = 0.0f;
+
+                    //if do amuleto que melhora o chiclete = zera o timer sempre, fica na parede por tempoo ilim itado
+
                     player->chiclete.contChicleteTime += delta;
                     player->chiclete.canUseChiclete = false;
-                    player->chiclete.usingChiclete = true;
+                    player->jumpStatus.wasOnFloor = true;
+
+                }
+                else
+                {
+                    player->chiclete.leftWall = false;
+
                 }
 
-                if(player->chiclete.contChicleteTime<=0.5)
-                    player->chiclete.usingChiclete = false;
-
-                player->chiclete.leftWall = false;
-
             }
-            else
+            else if(player->chiclete.rightWall==false)
                 player->chiclete.canUseChiclete = true;
-        }
-        else
-            player->chiclete.canUseChiclete = true;
 
-        if(player->chiclete.usingChiclete && IsKeyPressed(KEY_SPACE))
-        {
-            if(player->chiclete.leftWall)
+
+
+        if(player->chiclete.rightWall)
             {
-                player->pos.x += 10;
-                player->speed.x = player->jumpStatus.defaultJumpForce*0.8;
+
+                if(IsKeyDown(KEY_D)&& player->chiclete.contChicleteTime<=0.5)
+                {
+                    player->speed.y = 0.0f;
+
+                    //if do amuleto que melhora o chiclete = zera o timer sempre, fica na parede por tempoo ilim itado
+
+                    player->chiclete.contChicleteTime += delta;
+                    player->chiclete.canUseChiclete = false;
+                    player->jumpStatus.wasOnFloor = true;
+
+                }
+                else
+                {
+                    player->chiclete.rightWall = false;
+
+                }
+
             }
+            else if(player->chiclete.leftWall==false)
+                player->chiclete.canUseChiclete = true;
 
-
-            player->speed.y = -player->jumpStatus.defaultJumpForce;
-
-
-            player->jumpStatus.isJumping=true;
-            player->chiclete.leftWall = false;
-
-        }
     }
 
 
@@ -647,7 +661,9 @@ void drawPlayer(Player *player)
     if(player->powers.usingHorizontalPower)
         DrawTextureV(rm.gw.horizontalPowerA,player->powers.horizontalPower.pos, player->powers.horizontalPower.cor);
 
-    DrawRectangleV(player->pos,player->dim,player->cor);
+    if(player->status.resting==false)
+        DrawRectangleV(player->pos,player->dim,player->cor);
+    else DrawRectangleV(player->pos,player->dim,YELLOW);
 
     drawPlayerSword(player);
 

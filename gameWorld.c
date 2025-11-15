@@ -23,6 +23,7 @@ GameWorld* createGameWorld(Player *player)
     gw->numberOfCoins = 0;
     gw->numberOfCharms = 0;
     gw->numberOfSkills = 0;
+    gw->fadeScreenGW = 0.0;
 
     loadMap(gw,"maps/mapEx.txt");
 
@@ -207,9 +208,13 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
     applyKnockbackToEnemies(gw->enemies);
 
 //---------------MAIN-FUNCTION-----------------
-    inputAndUpdatePlayer(gw->player, delta);
 
-    updateEnemies (gw->enemies,delta);
+    if(gw->player->status.dead==false)
+    {
+        inputAndUpdatePlayer(gw->player, delta);
+
+        updateEnemies (gw->enemies,delta);
+    }
 //---------------------------------------------
 
     makeCollisionPlayerBlock (gw);
@@ -228,6 +233,9 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
 
     if (gw->player->knockbackStatus.knockbackTime<=0 && gw->player->status.invulnerable==false)
         makeCollisionEnemiesPlayer(gw);
+
+    if(gw->player->status.life<=0)
+        gw->player->status.dead = true;
 
     updateCamera(&gw->camera, gw->player, isFullscreen);
 
@@ -254,7 +262,7 @@ void makeCollisionPlayerBlock (GameWorld *gw)
                 player->status.onFloor = true;
                 player->speed.y = 0.0f;
             }
-            else if ( player->speed.y>0.0f)
+            else if ( player->speed.y>0.0f && player->chiclete.canUseChiclete==false)
                 player->status.onFloor = false;
 
 
@@ -267,20 +275,18 @@ void makeCollisionPlayerBlock (GameWorld *gw)
             if(checkPlayerBlockCollision_Right(collisionRec ,block))
             {
                 player->pos.x = block->pos.x-player->dim.x;
-                if(player->status.onFloor==false)
-                    player->chiclete.rightWall = true;
+
+                player->chiclete.rightWall = true;
             }
-           // else
-                //player->chiclete.rightWall = false;
+
 
             if(checkPlayerBlockCollision_Left(collisionRec ,block))
             {
                 player->pos.x=block->pos.x+block->dim.x;
-                if(player->status.onFloor==false)
-                    player->chiclete.leftWall =true;
+
+                player->chiclete.leftWall =true;
             }
-            //else
-               //player->chiclete.leftWall =false;
+
     }
 
 }
@@ -915,34 +921,10 @@ void updateCamera(Camera2D *camera, Player *player, bool isFullscreen)
 
     if(isFullscreen==false)
     {
-        if (player->pos.x <= 390 && player->pos.y >= 200)
-        {
-            camera->target= (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-            camera->rotation = 0.0f;
-            camera->zoom = 1.0f;
-        }
-        else if(player->pos.y >= 200)
-        {
-            camera->target= (Vector2) {player->pos.x+(player->dim.x/2),GetScreenHeight()/2};
-            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-            camera->rotation = 0.0f;
-            camera->zoom = 1.0f;
-        }
-        else if (player->pos.x <= 390)
-        {
-            camera->target= (Vector2) {GetScreenWidth()/2,player->pos.y+(player->dim.y/2)};
-            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-            camera->rotation = 0.0f;
-            camera->zoom = 1.0f;
-        }
-        else
-        {
-            camera->target= (Vector2) {player->pos.x+(player->dim.x/2),player->pos.y+(player->dim.y/2)};
-            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-            camera->rotation = 0.0f;
-            camera->zoom = 1.0f;
-        }
+        camera->target= (Vector2) {player->pos.x+(player->dim.x/2),player->pos.y+(player->dim.y/2)-64};
+        camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+        camera->rotation = 0.0f;
+        camera->zoom = 1.0f;
     }
     else
     {
@@ -956,7 +938,6 @@ void updateCamera(Camera2D *camera, Player *player, bool isFullscreen)
 
 void drawGameWorld (GameWorld *gw)
 {
-
 
     BeginDrawing();
 
@@ -990,8 +971,20 @@ void drawGameWorld (GameWorld *gw)
 
     EndMode2D();
 
-    drawHud(gw->player);
+    if(gw->player->status.dead==false)
+    {
+        gw->fadeScreenGW = 0.0f;
+        drawHud(gw->player);
+    }
 
+    if(gw->player->status.dead)
+    {
+
+        gw->fadeScreenGW += 0.5f*GetFrameTime();
+        if(gw->fadeScreenGW>1.0f) gw->fadeScreenGW = 1.0f;
+
+        DrawRectangle(0,0,1920, 1080, (Color){0,0,0,(unsigned char)(gw->fadeScreenGW*150)});
+    }
 
     EndDrawing();
 }
