@@ -680,3 +680,61 @@ void drawHud (Player *player)
     DrawText(TextFormat("TicketsRU: %02i", player->status.ticketsRU), 20,110,20, GREEN);
     DrawText(TextFormat("FPS: %03i",fps),20,140,20,GREEN);
 }
+
+//---------------------------------------------------------
+//=========================================================
+//-------------------PLAYER-DEATH--------------------------
+
+
+void resetPlayer(Player *player)
+{
+    player->pos = (Vector2){0,0};
+    player->speed = (Vector2){0,0};
+    player->status.life = 5;
+    player->status.maxLife = 5;
+    player->status.dead = false;
+    player->status.aura = 0;
+    player->status.healing = false;
+    player->status.healingTime = 0.0;
+    player->status.resting = false;
+    player->status.ticketsRU = 0;
+    player->status.defaultSpeed = 200.0;
+    player->status.onFloor = false;
+    player->status.lookingAtL = false;
+    player->status.lookingAtR = false;
+    player->status.nextToCharm = false;
+    player->status.nextToSkill = false;
+    player->status.invulnerable = false;
+    player->status.invulnerableTime = 2.0f;
+    player->powers.horizontalPowerActive = false;
+    player->powers.usingHorizontalPower = false;
+    player->inventory.chiclete = false;
+    player->inventory.doubleJump = false;
+    player->inventory.teclaTab = false;
+    player->inventory.equippedCharms.goldTickets = false;
+    player->inventory.equippedWeapons.defaultSword = true;
+    player->knockbackStatus.swordKnockbackR = false;
+    player->knockbackStatus.swordKnockbackL = false;
+    player->knockbackStatus.swordKnockbackUp = false;
+    player->knockbackStatus.knockbackR = false;
+    player->knockbackStatus.knockbackL = false;
+    player->knockbackStatus.knockbackUp = false;
+    player->knockbackStatus.knockbackUn = false;
+    player->jumpStatus.canJump = true;
+    player->jumpStatus.canDoubleJump = false;
+    player->jumpStatus.wasOnFloor = false;
+    player->jumpStatus.defaultJumpForce = 400.0f;
+    player->jumpStatus.jumpBoostForce = 20.0f;
+    player->jumpStatus.isJumping = false;
+    player->dashStatus.canDash = true;
+    player->attackStatus.attacking = false;
+    player->attackStatus.attackRight = false;
+    player->attackStatus.attackDown = false;
+    player->attackStatus.attackLeft = false;
+    player->attackStatus.attackUp = false;
+    player->attackStatus.attackTime = 0.35f;
+    player->currentFrame = 0;
+}
+
+
+

@@ -11,6 +11,6 @@ void inputUpdateAndDrawConfirm(Game *game);
 
 void inputUpdateDeathScreen(Game *game);
 
-void drawDeathScreen(Game *game);
+void drawDeathScreen(GameWorld *gw);
 
 #endif // PAUSE_H

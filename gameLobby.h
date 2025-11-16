@@ -9,16 +9,32 @@ typedef struct GameLobby
 {
     Player *player;
 
-    Block blocks[1000];
+    Block blocks[3000];
     int numberOfBlocks;
 
     Rectangle Banch;
     bool nearBanch;
 
     Rectangle Store;
+    bool nearStore;
+    bool storeCamera;
+
+
     Rectangle Room;
+    bool nearRoom;
+    bool roomCamera;
+
+    Rectangle Computer;
+    bool nearComputer;
+
+    Rectangle DoorR;
+    Rectangle DoorS;
+    bool nearStoreDoor;
+    bool nearRoomDoor;
 
     Camera2D camera;
+
+    float fadeScreenGL;
 
 }GameLobby;
 
@@ -34,7 +50,7 @@ void makeLobbyCollisionBlocksPowersAndWeapons (GameLobby *gl);
 
 void drawGameLobby (GameLobby *gl);
 
-void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen);
+void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool roomCamera, bool storeCamera);
 
 
 

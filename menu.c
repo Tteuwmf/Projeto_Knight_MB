@@ -41,7 +41,7 @@ void inputUpdateAndDrawMenu(Game *game)
     //------------------------------------------------------------------
 
     BeginDrawing();
-    ClearBackground(LIGHTGRAY);
+    ClearBackground(BLACK);
 
     if (mouseOnStartButton)
     {

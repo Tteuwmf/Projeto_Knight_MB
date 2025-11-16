@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "raylib.h"
 #include "gameWorld.h"
+#include "pause.h"
 
 
 
@@ -236,6 +237,7 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
 
     if(gw->player->status.life<=0)
         gw->player->status.dead = true;
+    else gw->player->status.dead = false;
 
     updateCamera(&gw->camera, gw->player, isFullscreen);
 
@@ -983,7 +985,11 @@ void drawGameWorld (GameWorld *gw)
         gw->fadeScreenGW += 0.5f*GetFrameTime();
         if(gw->fadeScreenGW>1.0f) gw->fadeScreenGW = 1.0f;
 
-        DrawRectangle(0,0,1920, 1080, (Color){0,0,0,(unsigned char)(gw->fadeScreenGW*150)});
+        DrawRectangle(0,0,1920, 1080, (Color){0,0,0,(unsigned char)(gw->fadeScreenGW*200)});
+
+        DrawText("VOCE MORREU", ((GetScreenWidth()/2) - 240), ((GetScreenHeight()/2) - 34), 64, RED);
+
+
     }
 
     EndDrawing();
