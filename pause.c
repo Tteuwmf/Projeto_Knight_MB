@@ -99,15 +99,20 @@ void inputUpdateDeathScreen(Game *game)
     if (mouseOnYesButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
         game->status = GAMELOBBY;
-        game->player = createNewPlayer((Vector2){32,32}, BLUE);
+        game->player.pos = game->playerLobbyFirstPos;
+        destroysGameWorld(game->gw);
     }
 
 }
 
 
     //-----------------------------------------------
-void drawDeathScreen(Game *game)
+void drawDeathScreen(GameWorld *gw)
 {
+    Rectangle yesAreaDebug = {((GetScreenWidth()/2)-73), ((GetScreenHeight()/2)+15),32,15};
+    DrawRectangleLinesEx(yesAreaDebug, 1, RED); // Desenha a borda da área de clique em vermelho
+
+
     //DrawRectangle(((GetScreenWidth()/2) - 200), ((GetScreenHeight()/2) - 50), 400, 100, BLACK);
     DrawText("VOCÊ MORREU", ((GetScreenWidth()/2) - 62), ((GetScreenHeight()/2) - 34), 64, RED);
     DrawText("Tentar novamente?", ((GetScreenWidth()/2) - 150), ((GetScreenHeight()/2) - 16), 15, WHITE);

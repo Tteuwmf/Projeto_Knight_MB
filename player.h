@@ -218,4 +218,6 @@ void drawPlayer (Player *player);
 
 void drawHud (Player *player);
 
+void resetPlayer(Player *Player);
+
 #endif // PLAYER_H

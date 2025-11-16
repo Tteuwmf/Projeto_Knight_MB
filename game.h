@@ -30,6 +30,7 @@ typedef struct Game
 
     GameLobby gl;
     Vector2 playerLobbyFirstPos;
+    Vector2 playerLobbyReturnPos;
 
     GameWorld *gw;
     Vector2 playerGameWorldFirstPos;

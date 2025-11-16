@@ -1,3 +1,4 @@
+#include <string.h>
 #include "raylib.h"
 #include "game.h"
 #include "player.h"
@@ -19,6 +20,8 @@ Game createGame()
     newGame.gl = createGameLobby(&newGame.player);
 
     newGame.playerLobbyFirstPos = newGame.player.pos;
+
+    newGame.playerLobbyReturnPos = (Vector2) {newGame.gl.Computer.x,newGame.gl.Computer.y };
 
     newGame.playerGameWorldFirstPos = (Vector2){0,0};
 
@@ -72,14 +75,13 @@ void initGame(Game *game, bool isFullScreen)
                 game->status = PAUSE;
             }
 
+
             inputAndUpdateGameLobby(&game->gl, isFullScreen);
 
             drawGameLobby(&game->gl);
             break;
 
         case GAMEWORLD:
-
-
 
             if(IsKeyPressed(KEY_ENTER))
             {
@@ -104,6 +106,12 @@ void initGame(Game *game, bool isFullScreen)
             {
                 game->lastStatus = game->status;
                 game->status = PAUSE;
+            }
+
+            if(game->gw->player->status.dead && GetKeyPressed() && game->gw->fadeScreenGW>=1)
+            {
+                game->status = MENU;
+                resetPlayer(game->gw->player);
             }
 
             inputAndUpdateGameWorld(game->gw, isFullScreen);
