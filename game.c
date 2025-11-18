@@ -88,6 +88,10 @@ void initGame(Game *game, bool isFullScreen)
                 game->status = GAMELOBBY;
 
                 game->gl.player->pos = game->playerLobbyFirstPos;
+
+                destroysGameWorld(game->gw);
+
+                game->gameWorldInitiate = false;
             }
 
             if(game->gameWorldInitiate==false)
