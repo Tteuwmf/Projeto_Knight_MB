@@ -394,6 +394,8 @@ Boss createBoss(Vector2 pos)
        .pos = pos,
        .firstPos = pos,
        .speed = (Vector2){0,0},
+       .atualX = 1,
+       .atualY = 1,
        .dim = (Vector2){64,64},
 
        .collisionRecs = {{0}},
@@ -410,6 +412,17 @@ Boss createBoss(Vector2 pos)
        .attack1 = false,
        .attack2 = false,
        .attack3 = false,
+
+       .attack1Time = 1.0f,
+       .attack2Time = 1.5f,
+       .attack3Time = 5.0f,
+       .contAttackTime = 0.0f,
+       .attackCoolDown = 2.0f,
+       .contAttackCoolDown = 0.0f,
+
+       .playerUnderZone = false,
+       .playerRightZone = false,
+       .playerLeftZone = false,
 
    };
 
@@ -442,6 +455,44 @@ void updateBoss (Boss *boss, float delta)
     }
 
 
+    if(boss->contAttackTime<=0)
+    {
+        boss->attack1 = false;
+        boss->attack2 = false;
+        boss->attack3 = false;
+        boss->contAttackTime = 0.0;
+        boss->contAttackCoolDown -= delta;
+        if(boss->contAttackCoolDown<=0)
+            boss->contAttackCoolDown = 0.0f;
+
+        if(boss->speed.x != boss->defaultSpeed && boss->speed.x != -boss->defaultSpeed )
+        {
+            boss->speed.x = boss->defaultSpeed*boss->atualX;
+        }
+        if(boss->speed.y != boss->defaultSpeed && boss->speed.y != -boss->defaultSpeed )
+        {
+            boss->speed.y = boss->defaultSpeed*boss->atualY;
+        }
+
+
+
+
+    }
+    else
+    {
+        boss->contAttackTime -= delta;
+
+        if(boss->attack1)
+        {
+            boss->speed.x = 0;
+            boss->speed.y = 400;
+        }
+
+    }
+
+
+
+
 
     //=============UPDATE=POSITION================
 
@@ -451,14 +502,78 @@ void updateBoss (Boss *boss, float delta)
     //=============UPDATE=HEAT=BOX================
 
     boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
+    boss->visionRecs = createAndUpdateBossVisionRec(boss);
 
     //===============UPDATE=STATS=================
 
     if(boss->life<=0){boss->dead=true;}
 }
 
+BossVisionRec createAndUpdateBossVisionRec(Boss *boss)
+{
+    return (BossVisionRec)
+    {
+        .under = (Rectangle)
+        {
+            .x =  boss->pos.x,
+            .y = boss->pos.y+boss->dim.y,
+            .width = boss->dim.x,
+            .height = 3*boss->dim.y,
+        },
+        .right = (Rectangle)
+        {
+            .x = boss->pos.x+boss->dim.x,
+            .y = boss->pos.y,
+            .width = 3*boss->dim.x,
+            .height = boss->dim.y,
+        },
+        .left = (Rectangle)
+        {
+            .x = boss->pos.x-3*boss->dim.x,
+            .y = boss->pos.y,
+            .width = 3*boss->dim.x,
+            .height = boss->dim.y,
+        },
+    };
+}
+
+void selectBossAttack(Boss *boss, Player *player)
+{
+    Rectangle playerRec = (Rectangle)
+                        {
+                            .x = player->pos.x,
+                            .y = player->pos.y,
+                            .width = player->dim.x,
+                            .height = player->dim.y,
+                        };
+
+    if(CheckCollisionRecs(boss->visionRecs.under,playerRec))
+    {
+        boss->playerUnderZone = true;
+
+        if(boss->contAttackCoolDown<=0)
+        {
+            boss->contAttackTime = boss->attack1Time;
+            boss->attack1 = true;
+            boss->contAttackCoolDown = boss->attackCoolDown;
+        }
+    }
+    else boss->playerUnderZone = false;
+
+
+}
+
+
 void drawBoss(Boss *boss)
 {
     DrawRectangleV(boss->pos, boss->dim, boss->cor);
+
+    if(boss->playerUnderZone)
+        DrawRectangleRec(boss->visionRecs.under,RED);
+    else
+        DrawRectangleRec(boss->visionRecs.under,ORANGE);
+
+    DrawRectangleRec(boss->visionRecs.left,ORANGE);
+    DrawRectangleRec(boss->visionRecs.right,ORANGE);
 }
 
