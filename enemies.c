@@ -401,7 +401,7 @@ Boss createBoss(Vector2 pos)
        .collisionRecs = {{0}},
        .visionRecs = {{0}},
 
-       .life = 30,
+       .life = 20,
        .dead = false,
        .haveCoins = true,
 
@@ -410,7 +410,8 @@ Boss createBoss(Vector2 pos)
        .defaultSpeed = 100,
 
        .attack1 = false,
-       .attack2 = false,
+       .attack2Left = false,
+       .attack2Right = false,
        .attack3 = false,
 
        .attack1Time = 1.0f,
@@ -430,69 +431,105 @@ Boss createBoss(Vector2 pos)
 
 void updateBoss (Boss *boss, float delta)
 {
-    int xMin = boss->firstPos.x-500;
-    int xMax = boss->firstPos.x+500;
+    int xMin = boss->firstPos.x - 300;
+    int xMax = boss->firstPos.x + 300;
+    int yMin = boss->firstPos.y - 500;
+    int yMax = boss->firstPos.y + 100;
 
-    int yMin = boss->firstPos.y-500;
-    int yMax = boss->firstPos.y+100;
-
-    if(boss->speed.x == 0 )
-        boss->speed.x = boss->defaultSpeed;
-    if(boss->speed.y ==0 )
-        boss->speed.y = boss->defaultSpeed;
-
-    if(boss->attack1==false && boss->attack2==false && boss->attack3==false)
+    if(boss->dead==false)
     {
+        if(boss->contAttackTime<=0)
+        {
+            boss->attack1 = false;
+            boss->attack2Left = false;
+            boss->attack2Right = false;
+            boss->attack3 = false;
+            boss->contAttackTime = 0.0;
+            boss->contAttackCoolDown -= delta;
+            if(boss->contAttackCoolDown<=0)
+                boss->contAttackCoolDown = 0.0f;
+
+        }
+        else
+        {
+            boss->contAttackTime -= delta;
+
+            if(boss->attack1)
+            {
+                boss->speed.x = 0;
+                boss->speed.y = 400;
+            }
+
+            if(boss->attack2Left)
+            {
+                boss->speed.x = -400;
+                boss->speed.y = 0;
+            }
+
+            if(boss->attack2Right)
+            {
+                boss->speed.x = 400;
+                boss->speed.y = 0;
+            }
+        }
+
+
         if(boss->pos.x<=xMin)
-            boss->speed.x = -boss->speed.x;
-        if(boss->pos.x>=xMax)
-            boss->speed.x = -boss->speed.x;
+        {
+            boss->pos.x = xMin;
+            boss->contAttackTime = 0.0f;
+            boss->atualX = 1;
+            boss->speed.x = boss->defaultSpeed * boss->atualX;
+
+        }
+        else if(boss->pos.x>=xMax)
+        {
+            boss->pos.x = xMax;
+            boss->contAttackTime = 0.0f;
+            boss->atualX = -1;
+            boss->speed.x = boss->defaultSpeed * boss->atualX;
+        }
 
         if(boss->pos.y<=yMin)
-            boss->speed.y = -boss->speed.y;
-        if(boss->pos.y>=yMax)
-            boss->speed.y = -boss->speed.y;
-    }
-
-
-    if(boss->contAttackTime<=0)
-    {
-        boss->attack1 = false;
-        boss->attack2 = false;
-        boss->attack3 = false;
-        boss->contAttackTime = 0.0;
-        boss->contAttackCoolDown -= delta;
-        if(boss->contAttackCoolDown<=0)
-            boss->contAttackCoolDown = 0.0f;
-
-        if(boss->speed.x != boss->defaultSpeed && boss->speed.x != -boss->defaultSpeed )
         {
-            boss->speed.x = boss->defaultSpeed*boss->atualX;
+            boss->pos.y = yMin;
+            boss->contAttackTime = 0.0f;
+            boss->atualX = 1;
+            boss->speed.y = boss->defaultSpeed * boss->atualY;
         }
-        if(boss->speed.y != boss->defaultSpeed && boss->speed.y != -boss->defaultSpeed )
+        else if(boss->pos.y>=yMax)
         {
-            boss->speed.y = boss->defaultSpeed*boss->atualY;
+            boss->pos.y = yMax;
+            boss->contAttackTime = 0.0f;
+            boss->atualY = -1;
+            boss->speed.y = boss->defaultSpeed * boss->atualY;
         }
 
+        if(boss->contAttackTime<=0)
+        {
 
+            if(boss->speed.x != boss->defaultSpeed && boss->speed.x != -boss->defaultSpeed )
+            {
+                boss->speed.x = boss->defaultSpeed*boss->atualX;
+            }
+            if(boss->speed.y != boss->defaultSpeed && boss->speed.y != -boss->defaultSpeed )
+            {
+                boss->speed.y = boss->defaultSpeed*boss->atualY;
+            }
+        }
 
-
+        if(boss->life == 20)
+        {
+             boss->speed.x = 0;
+             boss->speed.y = 0;
+        }
     }
     else
     {
-        boss->contAttackTime -= delta;
-
-        if(boss->attack1)
-        {
-            boss->speed.x = 0;
-            boss->speed.y = 400;
-        }
-
+        boss->speed.x *= 0.9;
+        boss->speed.y += 20;
+        if(boss->speed.y>=400) boss->speed.y = 400;
     }
-
-
-
-
 
     //=============UPDATE=POSITION================
 
@@ -502,7 +539,9 @@ void updateBoss (Boss *boss, float delta)
     //=============UPDATE=HEAT=BOX================
 
     boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
-    boss->visionRecs = createAndUpdateBossVisionRec(boss);
+
+    if (boss->dead==false && boss->life != 20)
+        boss->visionRecs = createAndUpdateBossVisionRec(boss);
 
     //===============UPDATE=STATS=================
 
@@ -553,12 +592,53 @@ void selectBossAttack(Boss *boss, Player *player)
 
         if(boss->contAttackCoolDown<=0)
         {
-            boss->contAttackTime = boss->attack1Time;
-            boss->attack1 = true;
+
+            if(GetRandomValue(0,1)==0)
+            {
+                boss->contAttackTime = boss->attack1Time;
+                boss->attack1 = true;
+            }
+
             boss->contAttackCoolDown = boss->attackCoolDown;
         }
     }
     else boss->playerUnderZone = false;
+
+    if(CheckCollisionRecs(boss->visionRecs.left,playerRec))
+    {
+        boss->playerLeftZone = true;
+
+        if(boss->contAttackCoolDown<=0)
+        {
+
+            if(GetRandomValue(0,1)==0)
+            {
+                boss->contAttackTime = boss->attack2Time;
+                boss->attack2Left = true;
+            }
+
+            boss->contAttackCoolDown = boss->attackCoolDown;
+        }
+    }
+    else boss->playerLeftZone = false;
+
+    if(CheckCollisionRecs(boss->visionRecs.right,playerRec))
+    {
+        boss->playerRightZone = true;
+
+        if(boss->contAttackCoolDown<=0)
+        {
+
+            if(GetRandomValue(0,1)==0)
+            {
+                boss->contAttackTime = boss->attack2Time;
+                boss->attack2Right = true;
+            }
+
+            boss->contAttackCoolDown = boss->attackCoolDown;
+        }
+    }
+    else boss->playerRightZone = false;
 
 
 }
@@ -566,14 +646,29 @@ void selectBossAttack(Boss *boss, Player *player)
 
 void drawBoss(Boss *boss)
 {
-    DrawRectangleV(boss->pos, boss->dim, boss->cor);
 
+    if(boss->dead==false)
+        DrawRectangleV(boss->pos, boss->dim, boss->cor);
+    else
+        DrawRectangleV(boss->pos, boss->dim, DARKGRAY);
+
+    /*
     if(boss->playerUnderZone)
         DrawRectangleRec(boss->visionRecs.under,RED);
     else
         DrawRectangleRec(boss->visionRecs.under,ORANGE);
 
-    DrawRectangleRec(boss->visionRecs.left,ORANGE);
-    DrawRectangleRec(boss->visionRecs.right,ORANGE);
+    if(boss->playerLeftZone)
+        DrawRectangleRec(boss->visionRecs.left,RED);
+    else
+        DrawRectangleRec(boss->visionRecs.left,ORANGE);
+
+    if(boss->playerRightZone)
+        DrawRectangleRec(boss->visionRecs.right,RED);
+    else
+        DrawRectangleRec(boss->visionRecs.right,ORANGE);*/
+
+
+
 }
 
