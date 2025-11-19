@@ -223,7 +223,8 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
 
         updateBoss(&gw->boss, delta);
 
-        selectBossAttack(&gw->boss, gw->player);
+        if(gw->boss.dead==false)
+            selectBossAttack(&gw->boss, gw->player);
     }
 //---------------------------------------------
 
@@ -519,47 +520,51 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
     Boss *boss = &gw->boss;
     BossCollisionRec *collisionRec = &gw->boss.collisionRecs;
 
-    for(int p=0;p<gw->numberOfBlocks;p++)
-    {
-        Block *block = &gw->blocks[p];
-
-        if(checkBossBlockCollision_Under(collisionRec ,block))
+        for(int p=0;p<gw->numberOfBlocks;p++)
         {
-            boss->pos.y = block->pos.y-boss->dim.y;
-            boss->speed.y = -boss->speed.y;
-            boss->atualY = -boss->atualY;
-            boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
+            Block *block = &gw->blocks[p];
 
+            if(checkBossBlockCollision_Under(collisionRec ,block))
+            {
+                boss->contAttackTime = 0.0f;
+                boss->pos.y = block->pos.y-boss->dim.y;
+                if(boss->dead==false)
+                    boss->speed.y = -boss->speed.y;
+                else boss->speed.y = 0;
+                boss->atualY = -1;
+                boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
+
+            }
+            else if(checkBossBlockCollision_Upper(collisionRec ,block))
+            {
+                boss->contAttackTime = 0.0f;
+                boss->pos.y = block->pos.y + block->dim.y;
+                if(boss->dead==false)
+                    boss->speed.y = -boss->speed.y;
+                else boss->speed.y = 0;
+                boss->atualY = 1;
+                boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
+
+            }
+
+            if(checkBossBlockCollision_Right(collisionRec ,block))
+            {
+                boss->contAttackTime = 0.0f;
+                boss->pos.x = block->pos.x-boss->dim.x;
+                boss->atualX = -1;
+                boss->speed.x = boss->defaultSpeed * boss->atualX;
+                boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
+
+            }
+            else if(checkBossBlockCollision_Left(collisionRec ,block))
+            {
+                boss->contAttackTime = 0.0f;
+                boss->pos.x=block->pos.x+block->dim.x;
+                boss->atualX = 1;
+                boss->speed.x = boss->defaultSpeed * boss->atualX;
+                boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
+            }
         }
-        else if(checkBossBlockCollision_Upper(collisionRec ,block))
-        {
-            boss->pos.y = block->pos.y + block->dim.y;
-            boss->speed.y = -boss->speed.y;
-             boss->atualY = -boss->atualY;
-            boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
-
-        }
-
-        if(checkBossBlockCollision_Right(collisionRec ,block))
-        {
-            boss->pos.x = block->pos.x-boss->dim.x;
-            boss->speed.x = -boss->speed.x;
-             boss->atualX = -boss->atualX;
-            boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
-
-        }
-        else if(checkBossBlockCollision_Left(collisionRec ,block))
-        {
-            boss->pos.x=block->pos.x+block->dim.x;
-            boss->speed.x = -boss->speed.x;
-            boss->atualX = -boss->atualX;
-            boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
-
-        }
-    }
-
-
-
 }
 
 void makeCollisionEnemiesWeapons(GameWorld *gw)
@@ -752,6 +757,33 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
 
             }
         }
+
+        //=============================================
+        //----------------BOSSSSSSS--------------------
+        //=============================================
+
+        Boss *boss = &gw->boss;
+        Rectangle bossRec = (Rectangle){.x = boss->pos.x, .y = boss->pos.y, .width = boss->dim.x, .height = boss->dim.y};
+        Rectangle defaultSwordRec = (Rectangle){.x = defaultSword->pos.x, .y = defaultSword->pos.y, .width = defaultSword->dim.x, .height = defaultSword->dim.y};
+
+        if(boss->dead==false && (player->attackStatus.attackLeft || player->attackStatus.attackRight || player->attackStatus.attackDown || player->attackStatus.attackUp)&& player->sword.activated)
+        {
+            if(CheckCollisionRecs(bossRec, defaultSwordRec))
+            {
+                if(player->pos.x < boss->pos.x+(boss->dim.x/2) && player->pos.y+player->dim.y > boss->pos.y)
+                    player->knockbackStatus.swordKnockbackR = true;
+                else if(player->pos.x > boss->pos.x+(boss->dim.x/2) && player->pos.y+player->dim.y > boss->pos.y)
+                    player->knockbackStatus.swordKnockbackL = true;
+
+                if(player->pos.y+player->dim.y >= boss->pos.y+(boss->dim.y/2) && player->attackStatus.attackDown)
+                    player->knockbackStatus.swordKnockbackUp = true;
+
+                player->status.aura++;
+                boss->life -= 1;
+            }
+        }
+
+
 
     }
 }

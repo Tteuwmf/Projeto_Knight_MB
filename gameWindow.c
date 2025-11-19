@@ -67,7 +67,8 @@ void initGameWindow(GameWindow *gameWindow)
 
         CloseWindow();
         unloadResouces();
-        destroysGameWorld(gameWindow->game.gw);
+        if(gameWindow->game.gameWorldInitiate)
+            destroysGameWorld(gameWindow->game.gw);
 
     }
 }

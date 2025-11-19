@@ -157,7 +157,8 @@ typedef struct Boss
     float defaultSpeed;
 
     bool attack1;
-    bool attack2;
+    bool attack2Left;
+    bool attack2Right;
     bool attack3;
 
     float attack1Time;
