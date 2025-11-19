@@ -89,7 +89,7 @@ void initGame(Game *game, bool isFullScreen)
 
                 game->gl.player->pos = game->playerLobbyFirstPos;
 
-                destroysGameWorld(game->gw);
+                //destroysGameWorld(game->gw);
 
                 game->gameWorldInitiate = false;
             }
@@ -116,8 +116,11 @@ void initGame(Game *game, bool isFullScreen)
             {
                 game->status = MENU;
                 resetPlayer(game->gw->player);
+                //CRIAR AINDA UMA FUNÇÃO PARA RESETAR O LOBBY
+                destroysGameWorld(game->gw);
+                game->gameWorldInitiate = false;
             }
-
+            else
             inputAndUpdateGameWorld(game->gw, isFullScreen);
 
             drawGameWorld(game->gw);

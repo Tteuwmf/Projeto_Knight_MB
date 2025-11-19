@@ -21,7 +21,7 @@ GameLobby createGameLobby(Player *player)
 
         .nearBanch = false,
         .nearRoom = false,
-        //.nearStore = false,
+        .nearComputer = false,
         .roomCamera = false,
 
         .fadeScreenGL = 1.0f,
@@ -82,17 +82,6 @@ void loadLobby(GameLobby *gl, const char* arquivo)
                 contColumn++;
                 break;
 
-            case 'L':
-                gl->Store = (Rectangle)
-                {
-                    .x = contColumn*32,
-                    .y = contLines*32,
-                    .width = 32,
-                    .height = 32,
-                };
-                contColumn++;
-                break;
-
             case 'S':
                 gl->Room = (Rectangle)
                 {
@@ -126,17 +115,6 @@ void loadLobby(GameLobby *gl, const char* arquivo)
                 contColumn++;
                 break;
 
-            case 'd':
-                gl->DoorS = (Rectangle)
-                {
-                    .x = contColumn*32,
-                    .y = contLines*32,
-                    .width = 32,
-                    .height = 32,
-                };
-                contColumn++;
-                break;
-
             default:
                 contColumn++;
                 break;
@@ -151,6 +129,9 @@ void loadLobby(GameLobby *gl, const char* arquivo)
 
 void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 {
+    int controlTP = 0;
+
+
     //-------------------------//
     float delta = GetFrameTime();
     //-------------------------//
@@ -179,12 +160,13 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 
     if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->Room))
         {
-            if(IsKeyPressed(KEY_W))
+            if(IsKeyPressed(KEY_W) && controlTP==0)
             {
                 gl->player->speed.y = 0.0;
                 gl->player->pos.x = gl->DoorR.x;
                 gl->player->pos.y = gl->DoorR.y;
                 gl->roomCamera = true;
+                controlTP = 1;
             }
 
             gl->nearRoom = true;
@@ -192,9 +174,31 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
         }
         else gl->nearRoom = false;
 
+    if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->DoorR))
+        {
+            if(IsKeyPressed(KEY_W)&& controlTP==0)
+            {
+                gl->player->speed.y = 0.0;
+                gl->player->pos.x = gl->Room.x;
+                gl->player->pos.y = gl->Room.y;
+                gl->roomCamera = false;
+                controlTP = 1;
+            }
+
+            gl->nearRoomDoor = true;
+
+        }
+        else gl->nearRoomDoor = false;
+
+    if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->Computer))
+        {
+            gl->nearComputer = true;
+        }
+        else gl->nearComputer = false;
+
     makeLobbyCollisionPlayerBlock(gl);
 
-    updateLobbyCamera(&gl->camera, gl->player, isFullscreen, gl->roomCamera, gl->storeCamera);
+    updateLobbyCamera(&gl->camera, gl->player, isFullscreen, gl->roomCamera);
 }
 
 void makeLobbyCollisionPlayerBlock(GameLobby *gl)
@@ -291,11 +295,11 @@ void makeLobbyCollisionBlocksPowersAndWeapons(GameLobby *gl)
 
 }
 
-void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool roomCamera, bool storeCamera)
+void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool roomCamera)
 {
     if(isFullscreen==false)
     {
-        if(roomCamera==false && storeCamera==false)
+        if(roomCamera==false)
         {
             if (player->pos.x <= 704 && player->pos.y <= 372)
             {
@@ -315,21 +319,21 @@ void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool
             {
                 if(player->pos.x <= 1152)
                 {
-                    camera->target= (Vector2) {1152,player->pos.y+(player->dim.y/2)-128};
+                    camera->target= (Vector2) {1152,660};
                     camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
                     camera->rotation = 0.0f;
                     camera->zoom = 1.3f;
                 }
                 else if(player->pos.x >= 2624-32)
                 {
-                    camera->target= (Vector2) {2624-32,player->pos.y+(player->dim.y/2)-128};
+                    camera->target= (Vector2) {2624-32,660};
                     camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
                     camera->rotation = 0.0f;
                     camera->zoom = 1.3f;
                 }
                 else
                 {
-                    camera->target= (Vector2) {player->pos.x+(player->dim.x/2),player->pos.y+(player->dim.y/2)-128};
+                    camera->target= (Vector2) {player->pos.x+(player->dim.x/2),660};
                     camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
                     camera->rotation = 0.0f;
                     camera->zoom = 1.3f;
@@ -343,55 +347,57 @@ void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool
             camera->rotation = 0.0f;
             camera->zoom = 1.3f;
         }
-        else if(storeCamera)
-        {
-            camera->target= (Vector2) {player->pos.x+(player->dim.x/2),player->pos.y+(player->dim.y/2)-64};
-            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-            camera->rotation = 0.0f;
-            camera->zoom = 1.3f;
-        }
     }
     else
     {
-       if (player->pos.x <= 704 && player->pos.y <= 372)
+       if(roomCamera==false)
         {
-            camera->target= (Vector2) {435,250};
-            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-            camera->rotation = 0.0f;
-            camera->zoom = 2.2f;
-        }
-        else if (player->pos.x >= 448 && player->pos.x < 896 && player->pos.y > 384 && player->pos.y <= 800)
-        {
-            camera->target= (Vector2) {592,player->pos.y+(player->dim.y/2)-100};
-            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-            camera->rotation = 0.0f;
-            camera->zoom = 3.5f;
-        }
-        else
-        {
-            if(player->pos.x <= 1152)
+            if (player->pos.x <= 704 && player->pos.y <= 372)
             {
-                camera->target= (Vector2) {1152,600};
+                camera->target= (Vector2) {400,200};
                 camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
                 camera->rotation = 0.0f;
-                camera->zoom = 2.3f;
+                camera->zoom = 2.5f;
             }
-            else if(player->pos.x >= 2500)
+            else if (player->pos.x >= 448 && player->pos.x < 896 && player->pos.y > 384 && player->pos.y <= 800)
             {
-                camera->target= (Vector2) {2500,600};
+                camera->target= (Vector2) {592,player->pos.y+(player->dim.y/2)-100};
                 camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
                 camera->rotation = 0.0f;
-                camera->zoom = 2.3f;
+                camera->zoom = 3.5f;
             }
             else
             {
-                camera->target= (Vector2) {player->pos.x+(player->dim.x/2),600};
-                camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
-                camera->rotation = 0.0f;
-                camera->zoom = 2.3f;
+                if(player->pos.x <= 1300)
+                {
+                    camera->target= (Vector2) {1150,680};
+                    camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+                    camera->rotation = 0.0f;
+                    camera->zoom = 3.3f;
+                }
+                else if(player->pos.x >= 2480)
+                {
+                    camera->target= (Vector2) {2480,612};
+                    camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+                    camera->rotation = 0.0f;
+                    camera->zoom = 2.3f;
+                }
+                else
+                {
+                    camera->target= (Vector2) {player->pos.x+(player->dim.x/2),612};
+                    camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+                    camera->rotation = 0.0f;
+                    camera->zoom = 2.3f;
+                }
             }
         }
-
+        else if(roomCamera)
+        {
+            camera->target= (Vector2) {3632,598};
+            camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
+            camera->rotation = 0.0f;
+            camera->zoom = 2.5f;
+        }
     }
 }
 
@@ -409,10 +415,9 @@ void drawGameLobby (GameLobby *gl)
 
     DrawTexture(rm.gl.bench,gl->Banch.x,gl->Banch.y, WHITE);
     //DrawRectangleRec(gl->Banch, WHITE);
-    DrawRectangleRec(gl->Store, WHITE);
     DrawRectangleRec(gl->Room, WHITE);
     DrawRectangleRec(gl->DoorR, WHITE);
-    DrawRectangleRec(gl->DoorS, WHITE);
+    DrawRectangleRec(gl->Computer, BLACK);
 
     drawPlayer(gl->player);
 
@@ -420,10 +425,13 @@ void drawGameLobby (GameLobby *gl)
         DrawText(TextFormat("DESCANSAR: W"), gl->Banch.x,gl->Banch.y-16,15, WHITE);
 
     if(gl->nearRoom)
-        DrawText(TextFormat("ENTRAR NA SALA: W"), gl->Room.x,gl->Room.y-16,15, WHITE);
+        DrawText(TextFormat("ENTRAR: W"), gl->Room.x,gl->Room.y-16,15, WHITE);
 
-    if(gl->nearStore)
-        DrawText(TextFormat("ENTRAR NA LOJA: W"), gl->Store.x,gl->Store.y-16,15, WHITE);
+    if(gl->nearRoomDoor)
+        DrawText(TextFormat("SAIR: W"), gl->DoorR.x,gl->DoorR.y-16,15, WHITE);
+
+    if(gl->nearComputer)
+        DrawText(TextFormat("CODAR: ENTER"), gl->Computer.x,gl->Computer.y-16,15, GREEN);
 
     for (int i =0; i<gl->numberOfBlocks; i++)
     {

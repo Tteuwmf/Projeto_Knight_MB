@@ -111,6 +111,59 @@ void drawBasicEnemies (BasicEnemy *enemy1);
 
 void drawAirBasicEnemies (AirBasicEnemy *enemy2);
 
+//----------------------------------------------
+//==============================================
+//--------------------BOSS----------------------
+
+    //======================================
+    //---------------STRUCTS----------------
+
+typedef struct BossCollisionRec
+{
+    Rectangle upper;
+    Rectangle under;
+    Rectangle right;
+    Rectangle left;
+
+}BossCollisionRec;
+
+typedef struct BossVisionRec
+{
+    Rectangle under;
+    Rectangle right;
+    Rectangle left;
+
+}BossVisionRec;
+
+typedef struct Boss
+{
+    Vector2 pos;
+    Vector2 firstPos;
+    Vector2 speed;
+    Vector2 dim;
+
+    BossCollisionRec collisionRecs;
+    BossVisionRec visionRecs;
+
+    int life;
+    bool dead;
+    bool haveCoins;
+
+    Color cor;
+
+    float defaultSpeed;
+
+    bool attack1;
+    bool attack2;
+    bool attack3;
+
+}Boss;
+
+Boss createBoss (Vector2 pos);
+
+void updateBoss (Boss *boss, float delta);
+
+void drawBoss(Boss *boss);
 
 
 #endif // ENEMIES_H

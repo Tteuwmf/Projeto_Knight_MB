@@ -340,6 +340,61 @@ bool checkBasicEnemiesBlockCollision_Right(BasicEnemyCollisionRec *collisionRec,
     return CheckCollisionRecs(collisionRec->right,(Rectangle){.x = block->pos.x, .y = block->pos.y, .width = block->dim.x, .height = block->dim.y});
 }
 
+//----------------------------------------
+//========================================
+//------COLLISIONS-BOSS-FUNCTIONS---------
+
+BossCollisionRec createAndUpdateBossCollisionRec(Boss *boss)
+{
+    return (BossCollisionRec)
+            {
+                .upper = (Rectangle){
+                        .x = boss->pos.x+(boss->dim.x/2)-24,
+                        .y = boss->pos.y,
+                        .width = 48,
+                        .height = 6
+                        },
+                .under = (Rectangle){
+                        .x = boss->pos.x+(boss->dim.x/2)-24,
+                        .y = boss->pos.y+boss->dim.y-6,
+                        .width = 48,
+                        .height = 6
+                        },
+                .left = (Rectangle){
+                        .x = boss->pos.x,
+                        .y = boss->pos.y+(boss->dim.y/2)-24,
+                        .width = 6,
+                        .height = 48
+                        },
+                .right = (Rectangle){
+                        .x = boss->pos.x+boss->dim.x-6,
+                        .y = boss->pos.y+(boss->dim.y/2)-24,
+                        .width = 6,
+                        .height = 48
+                        }
+            };
+}
+
+bool checkBossBlockCollision_Upper(BossCollisionRec *collisionRec, Block *block)
+{
+   return CheckCollisionRecs(collisionRec->upper,(Rectangle){.x = block->pos.x, .y = block->pos.y, .width = block->dim.x, .height = block->dim.y});
+}
+
+bool checkBossBlockCollision_Under(BossCollisionRec *collisionRec, Block *block)
+{
+    return CheckCollisionRecs(collisionRec->under,(Rectangle){.x = block->pos.x, .y = block->pos.y, .width = block->dim.x, .height = block->dim.y});
+}
+
+bool checkBossBlockCollision_Left(BossCollisionRec *collisionRec, Block *block)
+{
+    return CheckCollisionRecs(collisionRec->left,(Rectangle){.x = block->pos.x, .y = block->pos.y, .width = block->dim.x, .height = block->dim.y});
+}
+
+bool checkBossBlockCollision_Right(BossCollisionRec *collisionRec, Block *block)
+{
+    return CheckCollisionRecs(collisionRec->right,(Rectangle){.x = block->pos.x, .y = block->pos.y, .width = block->dim.x, .height = block->dim.y});
+}
+
 
 //----------------------------------------------
 //==============================================

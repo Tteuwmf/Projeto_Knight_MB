@@ -18,6 +18,8 @@ typedef struct GameWorld
     Enemies *enemies;
     int numberOfEnemies;
 
+    Boss boss;
+
     Coins ticketsRU[800];
     int numberOfCoins;
 
