@@ -15,11 +15,6 @@ typedef struct GameLobby
     Rectangle Banch;
     bool nearBanch;
 
-    Rectangle Store;
-    bool nearStore;
-    bool storeCamera;
-
-
     Rectangle Room;
     bool nearRoom;
     bool roomCamera;
@@ -28,8 +23,6 @@ typedef struct GameLobby
     bool nearComputer;
 
     Rectangle DoorR;
-    Rectangle DoorS;
-    bool nearStoreDoor;
     bool nearRoomDoor;
 
     Camera2D camera;
@@ -50,7 +43,7 @@ void makeLobbyCollisionBlocksPowersAndWeapons (GameLobby *gl);
 
 void drawGameLobby (GameLobby *gl);
 
-void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool roomCamera, bool storeCamera);
+void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool roomCamera);
 
 
 

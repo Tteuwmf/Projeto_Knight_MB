@@ -73,6 +73,18 @@ bool checkBasicEnemiesBlockCollision_Under(BasicEnemyCollisionRec *collisionRecs
 bool checkBasicEnemiesBlockCollision_Left(BasicEnemyCollisionRec *collisionRecs, Block *block);
 bool checkBasicEnemiesBlockCollision_Right(BasicEnemyCollisionRec *collisionRecs, Block *block);
 
+//----------------------------------------
+//========================================
+//------COLLISIONS-BOSS-FUNCTIONS------
+
+BossCollisionRec createAndUpdateBossCollisionRec(Boss *boss);
+
+bool checkBossBlockCollision_Upper(BossCollisionRec *collisionRecs, Block *block);
+bool checkBossBlockCollision_Under(BossCollisionRec *collisionRecs, Block *block);
+bool checkBossBlockCollision_Left(BossCollisionRec *collisionRecs, Block *block);
+bool checkBossBlockCollision_Right(BossCollisionRec *collisionRecs, Block *block);
+
+
 //----------------------------------------------
 //==============================================
 //--------------COINS-COLLISION-----------------

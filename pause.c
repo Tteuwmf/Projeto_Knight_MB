@@ -19,7 +19,9 @@ void inputUpdateAndDrawPause(Game *game)
     bool mouseOnLeaveButton = CheckCollisionPointRec(mousePosition, leaveArea);
 
     if(mouseOnReturnButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
         game->status = game->lastStatus;
+    }
 
     if(mouseOnLeaveButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         game->status = CONFIRM;
@@ -67,7 +69,12 @@ void inputUpdateAndDrawConfirm(Game *game)
         game->status = PAUSE;
 
     if (mouseOnYesButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
         game->status = MENU;
+        destroysGameWorld(game->gw);
+        game->gameWorldInitiate = false;
+    }
+
 
     //-----------------------------------------------
 

@@ -183,6 +183,11 @@ void loadMap(GameWorld *gw, const char* arquivo)
                 contSkills++;
                 break;
 
+            case 'C':
+                gw->boss = createBoss((Vector2) {contColumn*32,contLines*32});
+                contColumn++;
+                break;
+
             default:
                 contColumn++;
                 break;
@@ -215,6 +220,8 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
         inputAndUpdatePlayer(gw->player, delta);
 
         updateEnemies (gw->enemies,delta);
+
+        updateBoss(&gw->boss, delta);
     }
 //---------------------------------------------
 
@@ -501,6 +508,42 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
                 }
         }
     }
+
+    //=============================================
+    //----------------BOSSSSSSS--------------------
+    //=============================================
+
+
+    Boss *boss = &gw->boss;
+    BossCollisionRec *collisionRec = &gw->boss.collisionRecs;
+
+    for(int p=0;p<gw->numberOfBlocks;p++)
+    {
+        Block *block = &gw->blocks[p];
+
+        if(checkBossBlockCollision_Under(collisionRec ,block))
+        {
+            boss->pos.y = block->pos.y-boss->dim.y;
+            boss->speed.y = -boss->speed.y;
+        }
+        else if(checkBossBlockCollision_Upper(collisionRec ,block))
+        {
+            boss->pos.y = block->pos.y + block->dim.y;
+            boss->speed.y = -boss->speed.y;
+        }
+        else if(checkBossBlockCollision_Right(collisionRec ,block))
+        {
+            boss->pos.x = block->pos.x-boss->dim.x;
+            boss->speed.x = -boss->speed.x;
+        }
+        else if(checkBossBlockCollision_Left(collisionRec ,block))
+        {
+            boss->pos.x=block->pos.x+block->dim.x;
+            boss->speed.x = -boss->speed.x;
+        }
+    }
+
+
 
 }
 
@@ -830,14 +873,15 @@ void updateCoins(GameWorld *gw, float delta)
         {
             enemy->haveCoins=false;
 
-            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForBasicEnemies(enemy, -3);
-            gw->numberOfCoins++;
+            int coinsMax = GetRandomValue(3,6);
 
-            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForBasicEnemies(enemy, 0);
-            gw->numberOfCoins++;
+            for(int i =0; i<coinsMax;i++)
+            {
+                int direction = GetRandomValue(-3,3);
 
-            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForBasicEnemies(enemy, 2);
-            gw->numberOfCoins++;
+                gw->ticketsRU[gw->numberOfCoins]=summonCoinsForBasicEnemies(enemy, direction);
+                gw->numberOfCoins++;
+            }
 
         }
     }
@@ -852,14 +896,15 @@ void updateCoins(GameWorld *gw, float delta)
         {
             enemy->haveCoins=false;
 
-            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForAirBasicEnemies(enemy, -1);
-            gw->numberOfCoins++;
+           int coinsMax2 = GetRandomValue(3,6);
 
-            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForAirBasicEnemies(enemy, 0);
-            gw->numberOfCoins++;
+            for(int k =0; k<coinsMax2;k++)
+            {
+                int direction2 = GetRandomValue(-1,1);
 
-            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForAirBasicEnemies(enemy, 1);
-            gw->numberOfCoins++;
+                gw->ticketsRU[gw->numberOfCoins]=summonCoinsForAirBasicEnemies(enemy, direction2);
+                gw->numberOfCoins++;
+            }
 
         }
     }
@@ -950,6 +995,8 @@ void drawGameWorld (GameWorld *gw)
     drawPlayer(gw->player);
 
     drawEnemies(gw->enemies);
+
+    drawBoss(&gw->boss);
 
     for (int i =0; i<gw->numberOfBlocks; i++)
     {

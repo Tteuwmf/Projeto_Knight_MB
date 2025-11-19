@@ -379,3 +379,86 @@ void drawEnemies(Enemies *enemies)
         }
     }
 }
+
+//----------------------------------------------
+//==============================================
+//--------------------BOSS----------------------
+
+    //======================================
+    //---------------CREATE-----------------
+
+Boss createBoss(Vector2 pos)
+{
+   return (Boss)
+   {
+       .pos = pos,
+       .firstPos = pos,
+       .speed = (Vector2){0,0},
+       .dim = (Vector2){64,64},
+
+       .collisionRecs = {{0}},
+       .visionRecs = {{0}},
+
+       .life = 30,
+       .dead = false,
+       .haveCoins = true,
+
+       .cor = WHITE,
+
+       .defaultSpeed = 100,
+
+       .attack1 = false,
+       .attack2 = false,
+       .attack3 = false,
+
+   };
+
+}
+
+void updateBoss (Boss *boss, float delta)
+{
+    int xMin = boss->firstPos.x-500;
+    int xMax = boss->firstPos.x+500;
+
+    int yMin = boss->firstPos.y-500;
+    int yMax = boss->firstPos.y+100;
+
+    if(boss->speed.x == 0 )
+        boss->speed.x = boss->defaultSpeed;
+    if(boss->speed.y ==0 )
+        boss->speed.y = boss->defaultSpeed;
+
+    if(boss->attack1==false && boss->attack2==false && boss->attack3==false)
+    {
+        if(boss->pos.x<=xMin)
+            boss->speed.x = -boss->speed.x;
+        if(boss->pos.x>=xMax)
+            boss->speed.x = -boss->speed.x;
+
+        if(boss->pos.y<=yMin)
+            boss->speed.y = -boss->speed.y;
+        if(boss->pos.y>=yMax)
+            boss->speed.y = -boss->speed.y;
+    }
+
+
+
+    //=============UPDATE=POSITION================
+
+    boss->pos.x += boss->speed.x * delta;
+    boss->pos.y += boss->speed.y * delta;
+
+    //=============UPDATE=HEAT=BOX================
+
+    boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
+
+    //===============UPDATE=STATS=================
+
+    if(boss->life<=0){boss->dead=true;}
+}
+
+void drawBoss(Boss *boss)
+{
+    DrawRectangleV(boss->pos, boss->dim, boss->cor);
+}
+

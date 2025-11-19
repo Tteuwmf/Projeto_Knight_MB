@@ -12,16 +12,16 @@ P   J                PPPPPPPPPPPPPPPPPP                                         
 PPPPPPPPPPPPPP       PPPPPPPPPPPP                                                         P          C                       C
 PPPPPPPPPPPPPP       PPPPPP                                                               P          C                       C
            PPP       PPPPPP                                                               P          C                       C
-           PPP       PPPPPP                                                               P          C    d                  C
+           PPP       PPPPPP                                                               P          C                       C
            PPP       PPPPPP                                                               P          CCCCCCCCCCCCCCCC      CCC
            PPP       PPPPPPPPPPPPPPPPPPPPPPPPPP                                           P          C                       C
            PPP       PPPPPPPPPPPPPPPPPPPPPPPP                                             P          C                       C
            PPP        PPPPPPPPPPPPPPPPPP                                                  P          C                       C
-           PPP          PPPPPPPPPPPP                                                      P          C                       C      OOOOOOOOOOOO
-           PPP            P                                                               P          C                       C      O          O
-           PPP            P                                                               P          C                       C      O          O
-           PPP            P                                                               P          C                       C      O          O
-           PPPPP                                                                S         P          C     D           M     C      O      I   O
-           PPPPPPPPP                       B         L               PPPPPPPPPPPPPPPPPPPPPP          CCCCCCCCCCCCCCCCCCCCCCCCC      OOOOOOOOOOOO
+           PPP          PPPPPPPPPPPP                                                      P          C                       C   
+           PPP            P                                                               P          C                       C      
+           PPP            P                                                            M  P          C                       C      
+           PPP            P                                                         PPPPPPP          C                       C      
+           PPPPP                                                S           PPPPPPPPPPPPPPP          C     D            s    C      
+           PPPPPPPPP                       B         PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP          CCCCCCCCCCCCCCCCCCCCCCCCC      
            PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 
