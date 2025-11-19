@@ -2,6 +2,7 @@
 #define ENEMIES_H
 
 #include "raylib.h"
+#include "player.h"
 
 //========================================
 //-----------------STRUCTS----------------
@@ -140,6 +141,8 @@ typedef struct Boss
     Vector2 pos;
     Vector2 firstPos;
     Vector2 speed;
+    int atualX;
+    int atualY;
     Vector2 dim;
 
     BossCollisionRec collisionRecs;
@@ -157,11 +160,26 @@ typedef struct Boss
     bool attack2;
     bool attack3;
 
+    float attack1Time;
+    float attack2Time;
+    float attack3Time;
+    float attackCoolDown;
+    float contAttackTime;
+    float contAttackCoolDown;
+
+    bool playerUnderZone;
+    bool playerRightZone;
+    bool playerLeftZone;
+
 }Boss;
 
 Boss createBoss (Vector2 pos);
 
 void updateBoss (Boss *boss, float delta);
+
+BossVisionRec createAndUpdateBossVisionRec(Boss *boss);
+
+void selectBossAttack(Boss *boss, Player *player);
 
 void drawBoss(Boss *boss);
 

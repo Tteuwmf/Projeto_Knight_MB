@@ -222,6 +222,8 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
         updateEnemies (gw->enemies,delta);
 
         updateBoss(&gw->boss, delta);
+
+        selectBossAttack(&gw->boss, gw->player);
     }
 //---------------------------------------------
 
@@ -525,21 +527,34 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
         {
             boss->pos.y = block->pos.y-boss->dim.y;
             boss->speed.y = -boss->speed.y;
+            boss->atualY = -boss->atualY;
+            boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
+
         }
         else if(checkBossBlockCollision_Upper(collisionRec ,block))
         {
             boss->pos.y = block->pos.y + block->dim.y;
             boss->speed.y = -boss->speed.y;
+             boss->atualY = -boss->atualY;
+            boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
+
         }
-        else if(checkBossBlockCollision_Right(collisionRec ,block))
+
+        if(checkBossBlockCollision_Right(collisionRec ,block))
         {
             boss->pos.x = block->pos.x-boss->dim.x;
             boss->speed.x = -boss->speed.x;
+             boss->atualX = -boss->atualX;
+            boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
+
         }
         else if(checkBossBlockCollision_Left(collisionRec ,block))
         {
             boss->pos.x=block->pos.x+block->dim.x;
             boss->speed.x = -boss->speed.x;
+            boss->atualX = -boss->atualX;
+            boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
+
         }
     }
 
@@ -992,11 +1007,11 @@ void drawGameWorld (GameWorld *gw)
 
     BeginMode2D(gw->camera);
 
-    drawPlayer(gw->player);
-
     drawEnemies(gw->enemies);
 
     drawBoss(&gw->boss);
+
+    drawPlayer(gw->player);
 
     for (int i =0; i<gw->numberOfBlocks; i++)
     {
