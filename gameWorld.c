@@ -540,7 +540,9 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
 
             if(checkBossBlockCollision_Under(collisionRec ,block))
             {
-                boss->contAttackTime = 0.0f;
+                if(boss->attack3==false)
+                    boss->contAttackTime = 0.0f;
+
                 boss->pos.y = block->pos.y-boss->dim.y;
                 if(boss->dead==false)
                     boss->speed.y = -boss->speed.y;
@@ -551,7 +553,9 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
             }
             else if(checkBossBlockCollision_Upper(collisionRec ,block))
             {
-                boss->contAttackTime = 0.0f;
+                if(boss->attack3==false)
+                    boss->contAttackTime = 0.0f;
+
                 boss->pos.y = block->pos.y + block->dim.y;
                 if(boss->dead==false)
                     boss->speed.y = -boss->speed.y;
@@ -563,7 +567,9 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
 
             if(checkBossBlockCollision_Right(collisionRec ,block))
             {
-                boss->contAttackTime = 0.0f;
+                if(boss->attack3==false)
+                    boss->contAttackTime = 0.0f;
+
                 boss->pos.x = block->pos.x-boss->dim.x;
                 boss->atualX = -1;
                 boss->speed.x = boss->defaultSpeed * boss->atualX;
@@ -572,7 +578,9 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
             }
             else if(checkBossBlockCollision_Left(collisionRec ,block))
             {
-                boss->contAttackTime = 0.0f;
+                if(boss->attack3==false)
+                    boss->contAttackTime = 0.0f;
+
                 boss->pos.x=block->pos.x+block->dim.x;
                 boss->atualX = 1;
                 boss->speed.x = boss->defaultSpeed * boss->atualX;
@@ -782,7 +790,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
 
         if(boss->dead==false && (player->attackStatus.attackLeft || player->attackStatus.attackRight || player->attackStatus.attackDown || player->attackStatus.attackUp)&& player->sword.activated)
         {
-            if(CheckCollisionRecs(bossRec, defaultSwordRec))
+            if(CheckCollisionRecs(bossRec, defaultSwordRec) && boss->sufferingDamege==false)
             {
                 if(player->pos.x < boss->pos.x+(boss->dim.x/2) && player->pos.y+player->dim.y > boss->pos.y)
                     player->knockbackStatus.swordKnockbackR = true;
@@ -794,10 +802,18 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
 
                 player->status.aura++;
                 boss->life -= 1;
+                boss->sufferingDamege = true;
+                boss->contDamegeTime = boss->limitDamegeTime;
             }
         }
 
+        if(boss->sufferingDamege)
+        {
+            boss->contDamegeTime -= GetFrameTime();
 
+            if(boss->contDamegeTime<=0 && boss->sufferingDamege)
+                boss->sufferingDamege = false;
+        }
 
     }
 }

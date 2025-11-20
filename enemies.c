@@ -416,10 +416,14 @@ Boss createBoss(Vector2 pos)
 
        .attack1Time = 1.0f,
        .attack2Time = 1.5f,
-       .attack3Time = 5.0f,
+       .attack3Time = 10.0f,
        .contAttackTime = 0.0f,
        .attackCoolDown = 2.0f,
        .contAttackCoolDown = 0.0f,
+
+       .sufferingDamege = false,
+       .limitDamegeTime = 0.5,
+       .contDamegeTime = 0.0,
 
        .playerUnderZone = false,
        .playerRightZone = false,
@@ -470,6 +474,20 @@ void updateBoss (Boss *boss, float delta)
             {
                 boss->speed.x = 400;
                 boss->speed.y = 0;
+            }
+
+            if(boss->attack3)
+            {
+                if(boss->atualY==1)
+                    boss->speed.y = 400;
+                if(boss->atualY==-1)
+                    boss->speed.y = -400;
+
+                if(boss->atualX==1)
+                    boss->speed.x = 100;
+                if(boss->atualX==-1)
+                    boss->speed.x = -100;
+
             }
         }
 
@@ -641,6 +659,22 @@ void selectBossAttack(Boss *boss, Player *player)
     else boss->playerRightZone = false;
 
 
+    if(boss->life<=10)
+    {
+        if(boss->contAttackCoolDown<=0)
+        {
+
+            if(GetRandomValue(0,4)==2)
+            {
+                boss->contAttackTime = boss->attack3Time;
+                boss->attack3 = true;
+            }
+
+            boss->contAttackCoolDown = boss->attackCoolDown;
+        }
+    }
+
+
 }
 
 
@@ -648,7 +682,13 @@ void drawBoss(Boss *boss)
 {
 
     if(boss->dead==false)
-        DrawRectangleV(boss->pos, boss->dim, boss->cor);
+    {
+        if(boss->sufferingDamege)
+            DrawRectangleV(boss->pos, boss->dim, ORANGE);
+        else
+            DrawRectangleV(boss->pos, boss->dim, boss->cor);
+    }
+
     else
         DrawRectangleV(boss->pos, boss->dim, DARKGRAY);
 

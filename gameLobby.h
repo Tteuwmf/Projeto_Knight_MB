@@ -21,6 +21,7 @@ typedef struct GameLobby
 
     Rectangle Computer;
     bool nearComputer;
+    Vector2 posComputer;
 
     Rectangle DoorR;
     bool nearRoomDoor;
@@ -45,6 +46,7 @@ void drawGameLobby (GameLobby *gl);
 
 void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool roomCamera);
 
+void resetGameLobby(GameLobby *gl, Vector2 startPos);
 
 
 #endif // GAMELOBBY_H

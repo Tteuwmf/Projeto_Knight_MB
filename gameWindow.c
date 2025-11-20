@@ -34,6 +34,16 @@ void initGameWindow(GameWindow *gameWindow)
 
         gameWindow->game = createGame();
 
+        gameWindow->game.gl = createGameLobby(&gameWindow->game.player);
+
+        gameWindow->game.playerLobbyFirstPos = gameWindow->game.player.pos;
+
+        gameWindow->game.playerLobbyReturnPos = gameWindow->game.gl.posComputer;
+
+        printf("Posicao Retorno (M) -> X: %.2f, Y: %.2f\n",
+               gameWindow->game.playerLobbyReturnPos.x,
+               gameWindow->game.playerLobbyReturnPos.y);
+
         SetTargetFPS(60);
 
         while (!WindowShouldClose())

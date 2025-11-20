@@ -168,6 +168,10 @@ typedef struct Boss
     float contAttackTime;
     float contAttackCoolDown;
 
+    bool sufferingDamege;
+    float limitDamegeTime;
+    float contDamegeTime;
+
     bool playerUnderZone;
     bool playerRightZone;
     bool playerLeftZone;
