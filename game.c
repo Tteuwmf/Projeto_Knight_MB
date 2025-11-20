@@ -83,7 +83,9 @@ void initGame(Game *game, bool isFullScreen)
 
         case GAMEWORLD:
 
-            if(IsKeyPressed(KEY_ENTER))
+            //--------TROCA MUNDO--------
+
+            if(IsKeyPressed(KEY_ENTER)&& game->gw->canLeaveFase)
             {
                 game->status = GAMELOBBY;
 
@@ -94,6 +96,8 @@ void initGame(Game *game, bool isFullScreen)
                 game->gameWorldInitiate = false;
             }
 
+            //---------CRIA MUNDO--------
+
             if(game->gameWorldInitiate==false)
             {
                 game->gw = createGameWorld(game->gl.player);
@@ -101,16 +105,22 @@ void initGame(Game *game, bool isFullScreen)
                 game->gameWorldInitiate = true;
             }
 
+            //---SALVA POSIÇÃO INICIAL---
+
             if (game->playerGameWorldFirstPos.x==0 && game->playerGameWorldFirstPos.y ==0 && game->gameWorldInitiate)
             {
                 game->playerGameWorldFirstPos = game->gw->player->pos;
             }
+
+            //---------PAUSE---------
 
             if(IsKeyPressed(KEY_I))
             {
                 game->lastStatus = game->status;
                 game->status = PAUSE;
             }
+
+            //---------FIM DE JOGO----------
 
             if(game->gw->player->status.dead && GetKeyPressed() && game->gw->fadeScreenGW>=1)
             {
@@ -121,6 +131,9 @@ void initGame(Game *game, bool isFullScreen)
                 game->gameWorldInitiate = false;
             }
             else
+
+            //-----------UPDATE MUNDO--------
+
             inputAndUpdateGameWorld(game->gw, isFullScreen);
 
             drawGameWorld(game->gw);

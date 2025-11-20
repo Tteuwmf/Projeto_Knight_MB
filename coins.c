@@ -86,6 +86,19 @@ Coins summonCoinsForAirBasicEnemies(AirBasicEnemy *enemy, int number)
     };
 }
 
+Coins summonCoinsForBoss(Boss *boss, int number)
+{
+    return (Coins)
+    {
+        .pos = (Vector2){boss->pos.x+(boss->dim.x/2),boss->pos.y+(boss->dim.y/2)},
+        .dim = (Vector2){8,8},
+        .speed = (Vector2){10*number,-500},
+        .friction = 0.95f,
+        .cor = YELLOW,
+        .available = true,
+    };
+}
+
 
 
 void drawCoins(Coins *coin)

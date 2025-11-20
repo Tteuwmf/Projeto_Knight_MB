@@ -15,6 +15,9 @@ typedef struct GameWorld
 {
     Player *player;
 
+    bool nearDeadBoss;
+    bool canLeaveFase;
+
     Enemies *enemies;
     int numberOfEnemies;
 
