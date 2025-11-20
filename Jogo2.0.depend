@@ -166,7 +166,7 @@
 1762518410 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\blocks.h
 	"raylib.h"
 
-1763513383 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\collisions.c
+1763664024 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\collisions.c
 	"raylib.h"
 	"collisions.h"
 
@@ -189,7 +189,7 @@
 	"raylib.h"
 	"player.h"
 
-1763661160 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\enemies.c
+1763661530 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\enemies.c
 	"raylib.h"
 	"enemies.h"
 	"collisions.h"

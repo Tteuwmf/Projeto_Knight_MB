@@ -792,13 +792,22 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
         {
             if(CheckCollisionRecs(bossRec, defaultSwordRec) && boss->sufferingDamege==false)
             {
-                if(player->pos.x < boss->pos.x+(boss->dim.x/2) && player->pos.y+player->dim.y > boss->pos.y)
-                    player->knockbackStatus.swordKnockbackR = true;
-                else if(player->pos.x > boss->pos.x+(boss->dim.x/2) && player->pos.y+player->dim.y > boss->pos.y)
-                    player->knockbackStatus.swordKnockbackL = true;
-
-                if(player->pos.y+player->dim.y >= boss->pos.y+(boss->dim.y/2) && player->attackStatus.attackDown)
+                if(player->attackStatus.attackDown && player->pos.y < boss->pos.y + boss->dim.y)
+                {
                     player->knockbackStatus.swordKnockbackUp = true;
+                    player->speed.y = 0;
+                }
+                else
+                {
+                    if(player->pos.x < boss->pos.x + (boss->dim.x/2))
+                    {
+                        player->knockbackStatus.swordKnockbackR = true;
+                    }
+                    else
+                    {
+                        player->knockbackStatus.swordKnockbackL = true;
+                    }
+                }
 
                 player->status.aura++;
                 boss->life -= 1;
@@ -853,6 +862,21 @@ void makeCollisionEnemiesPlayerPowers (GameWorld *gw)
                 }
             }
         }
+
+        //------------ BOSS ------------
+
+        Boss *boss = &gw->boss;
+        Rectangle bossRec = (Rectangle){.x = boss->pos.x, .y = boss->pos.y, .width = boss->dim.x, .height = boss->dim.y};
+        Rectangle power1Rec = (Rectangle){.x = power1->pos.x, .y = power1->pos.y, .width = power1->dim.x, .height = power1->dim.y};
+
+        if(CheckCollisionRecs(bossRec,power1Rec) && boss->sufferingDamege==false)
+        {
+            boss->life+= -3;
+            boss->sufferingDamege = true;
+            boss->contDamegeTime = boss->limitDamegeTime;
+
+        }
+
 
 
     }
@@ -930,6 +954,36 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
                 player->status.invulnerable=true;
                 player->status.life--;
             }
+        }
+    }
+
+    if(gw->boss.dead==false)
+    {
+        Rectangle bossRec = (Rectangle){.x = gw->boss.pos.x, .y = gw->boss.pos.y, .width = gw->boss.dim.x, .height = gw->boss.dim.y};
+
+        if(CheckCollisionRecs(collisionRec->right, bossRec))
+        {
+            player->knockbackStatus.knockbackL = true;
+            player->status.invulnerable=true;
+            player->status.life--;
+        }
+        else if (CheckCollisionRecs(collisionRec->left, bossRec))
+        {
+            player->knockbackStatus.knockbackR = true;
+            player->status.invulnerable=true;
+            player->status.life--;
+        }
+        else if (CheckCollisionRecs(collisionRec->upper, bossRec))
+        {
+            player->knockbackStatus.knockbackUp= true;
+            player->status.invulnerable=true;
+            player->status.life--;
+        }
+        else if (CheckCollisionRecs(collisionRec->under, bossRec))
+        {
+            player->knockbackStatus.knockbackUn = true;
+            player->status.invulnerable=true;
+            player->status.life--;
         }
     }
 }
