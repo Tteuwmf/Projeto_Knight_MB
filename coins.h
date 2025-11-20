@@ -51,6 +51,8 @@ Coins summonCoinsForBasicEnemies(BasicEnemy *enemy, int number);
 
 Coins summonCoinsForAirBasicEnemies(AirBasicEnemy *enemy, int number);
 
+Coins summonCoinsForBoss(Boss *boss, int number);
+
 void drawCoins(Coins *coin);
 
 #endif // COINS_H

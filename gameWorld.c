@@ -25,6 +25,8 @@ GameWorld* createGameWorld(Player *player)
     gw->numberOfCharms = 0;
     gw->numberOfSkills = 0;
     gw->fadeScreenGW = 0.0;
+    gw->nearDeadBoss = false;
+    gw->canLeaveFase = false;
 
     loadMap(gw,"maps/mapEx.txt");
 
@@ -248,6 +250,18 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
     if(gw->player->status.life<=0)
         gw->player->status.dead = true;
     else gw->player->status.dead = false;
+
+    if(gw->boss.dead)
+    {
+        Rectangle bossRec = (Rectangle){.x = gw->boss.pos.x, .y = gw->boss.pos.y, .width = gw->boss.dim.x, .height = gw->boss.dim.y};
+        Rectangle playerRec = (Rectangle){.x = gw->player->pos.x, .y = gw->player->pos.y, .width = gw->player->dim.x, .height = gw->player->dim.y};
+
+        if(CheckCollisionRecs(bossRec,playerRec))
+        {
+            gw->canLeaveFase = true;
+        }
+        else  gw->canLeaveFase = false;
+    }
 
     updateCamera(&gw->camera, gw->player, isFullscreen);
 
@@ -956,6 +970,24 @@ void updateCoins(GameWorld *gw, float delta)
         }
     }
 
+        //---------BOSS-------
+
+    if(gw->boss.dead && gw->boss.haveCoins)
+    {
+        gw->boss.haveCoins = false;
+
+        int coinsMax3 = GetRandomValue(20,40);
+
+        for(int k =0; k<coinsMax3;k++)
+        {
+            int direction3 = GetRandomValue(-5,5);
+
+            gw->ticketsRU[gw->numberOfCoins]=summonCoinsForBoss(&gw->boss, direction3);
+            gw->numberOfCoins++;
+        }
+
+    }
+
 
     //--------------------------------------------
 
@@ -1064,6 +1096,9 @@ void drawGameWorld (GameWorld *gw)
     {
         drawSkills(&gw->skills[s]);
     }
+
+    if(gw->canLeaveFase)
+        DrawText("VOLTAR: ENTER",gw->boss.pos.x, gw->boss.pos.y - 16, 15, GREEN);
 
     EndMode2D();
 
