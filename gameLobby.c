@@ -101,6 +101,7 @@ void loadLobby(GameLobby *gl, const char* arquivo)
                     .width = 32,
                     .height = 32,
                 };
+                gl->posComputer = (Vector2){contColumn*32,contLines*32};
                 contColumn++;
                 break;
 
@@ -453,6 +454,32 @@ void drawGameLobby (GameLobby *gl)
     EndDrawing();
 }
 
+void resetGameLobby(GameLobby *gl, Vector2 startPos)
+{
+    if(!gl) return;
+
+    // 1. Reseta Posição e Estados do Player no Lobby
+    gl->player->pos = startPos;
+    gl->player->speed = (Vector2){0, 0};
+    gl->player->status.resting = false; // Garante que ele não nasça "sentado"
+    gl->player->status.onFloor = false;
+
+    // 2. Reseta Flags de Interação
+    gl->nearBanch = false;
+    gl->nearRoom = false;
+    gl->nearComputer = false;
+    gl->nearRoomDoor = false;
+
+    // 3. Reseta Câmera e Visualização
+    gl->roomCamera = false; // Garante que sai do modo "quarto"
+    gl->fadeScreenGL = 1.0f; // Reinicia o fade preto para clarear suavemente
+
+    // Reseta valores padrão da câmera
+    gl->camera.zoom = 1.0f;
+    gl->camera.rotation = 0.0f;
+    gl->camera.offset = (Vector2){GetScreenWidth()/2.0f, GetScreenHeight()/2.0f};
+    gl->camera.target = gl->player->pos; // Foca imediatamente no player
+}
 
 
 

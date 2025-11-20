@@ -38,6 +38,8 @@ typedef struct Game
 
     float fadeScreenMenus;
 
+    float timeToCode;
+
 }Game;
 
 Game createGame();

@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdio.h>
 #include "raylib.h"
 #include "game.h"
 #include "player.h"
@@ -15,15 +16,12 @@ Game createGame()
         .player = createNewPlayer((Vector2){32,32}, BLUE),
         .gameWorldInitiate = false,
         .fadeScreenMenus = 0.0,
+        .timeToCode = 0.0,
+
+        .playerLobbyFirstPos = (Vector2){0,0},
+        .playerLobbyReturnPos = (Vector2){0,0},
+        .playerGameWorldFirstPos = (Vector2){0,0}
     };
-
-    newGame.gl = createGameLobby(&newGame.player);
-
-    newGame.playerLobbyFirstPos = newGame.player.pos;
-
-    newGame.playerLobbyReturnPos = (Vector2) {newGame.gl.Computer.x,newGame.gl.Computer.y };
-
-    newGame.playerGameWorldFirstPos = (Vector2){0,0};
 
     loadResources();
 
@@ -35,7 +33,7 @@ Game createGame()
 void initGame(Game *game, bool isFullScreen)
 {
 
-
+    game->gl.player = &game->player;
 
     switch(game->status)
     {
@@ -59,7 +57,11 @@ void initGame(Game *game, bool isFullScreen)
 
         case GAMELOBBY:
 
-            if(IsKeyPressed(KEY_ENTER))
+            game->timeToCode -= GetFrameTime();
+            if(game->timeToCode<=0)
+                game->timeToCode = 0.0;
+
+            if(IsKeyPressed(KEY_ENTER) && game->gl.nearComputer && game->timeToCode==0.0)
             {
                 game->status = GAMEWORLD;
 
@@ -83,24 +85,11 @@ void initGame(Game *game, bool isFullScreen)
 
         case GAMEWORLD:
 
-            //--------TROCA MUNDO--------
-
-            if(IsKeyPressed(KEY_ENTER)&& game->gw->canLeaveFase)
-            {
-                game->status = GAMELOBBY;
-
-                game->gl.player->pos = game->playerLobbyFirstPos;
-
-                //destroysGameWorld(game->gw);
-
-                game->gameWorldInitiate = false;
-            }
-
             //---------CRIA MUNDO--------
 
             if(game->gameWorldInitiate==false)
             {
-                game->gw = createGameWorld(game->gl.player);
+                game->gw = createGameWorld(&game->player);
 
                 game->gameWorldInitiate = true;
             }
@@ -126,7 +115,7 @@ void initGame(Game *game, bool isFullScreen)
             {
                 game->status = MENU;
                 resetPlayer(game->gw->player);
-                //CRIAR AINDA UMA FUNÇÃO PARA RESETAR O LOBBY
+                resetGameLobby(&game->gl, game->playerLobbyFirstPos);
                 destroysGameWorld(game->gw);
                 game->gameWorldInitiate = false;
             }
@@ -136,7 +125,33 @@ void initGame(Game *game, bool isFullScreen)
 
             inputAndUpdateGameWorld(game->gw, isFullScreen);
 
+            //---------DESENHA MUNDO--------
+
             drawGameWorld(game->gw);
+
+            //--------TROCA MUNDO--------
+
+            if(IsKeyPressed(KEY_ENTER))//&& game->gw->canLeaveFase)
+            {
+                game->status = GAMELOBBY;
+
+                if(game->playerLobbyReturnPos.x != 0 || game->playerLobbyReturnPos.y != 0) {
+                    game->gl.player->pos = game->playerLobbyReturnPos;
+                } else {
+                    game->gl.player->pos = game->playerLobbyFirstPos;
+                }
+
+                game->gl.player->speed.y = -200;
+                game->gl.player->speed.x = -100;
+
+                game->timeToCode = 2.0;
+
+                destroysGameWorld(game->gw);
+
+                game->gameWorldInitiate = false;
+
+            }
+
             break;
 
 
