@@ -28,7 +28,10 @@ GameWorld* createGameWorld(Player *player)
     gw->nearDeadBoss = false;
     gw->canLeaveFase = false;
 
-    loadMap(gw,"maps/mapEx.txt");
+    if(player->progress==0)
+        loadMap(gw,"maps/mapEx.txt");
+    else if (player->progress==1)
+        loadMap(gw,"maps/map1.txt");
 
     gw->camera = (Camera2D)
     {

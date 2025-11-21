@@ -26,6 +26,9 @@ typedef struct GameLobby
     Rectangle DoorR;
     bool nearRoomDoor;
 
+    Rectangle Store;
+    bool nearStore;
+
     Camera2D camera;
 
     float fadeScreenGL;

@@ -202,6 +202,8 @@ typedef struct Player
     float contTime;
     float timeToTheNextFrame;
 
+    int progress;
+
 }Player;
 
 //-----------------------------------

@@ -93,6 +93,17 @@ void loadLobby(GameLobby *gl, const char* arquivo)
                 contColumn++;
                 break;
 
+             case 's':
+                gl->Store = (Rectangle)
+                {
+                    .x = contColumn*32,
+                    .y = contLines*32,
+                    .width = 32,
+                    .height = 32,
+                };
+                contColumn++;
+                break;
+
             case 'M':
                 gl->Computer = (Rectangle)
                 {
@@ -417,6 +428,7 @@ void drawGameLobby (GameLobby *gl)
     DrawTexture(rm.gl.bench,gl->Banch.x,gl->Banch.y, WHITE);
     //DrawRectangleRec(gl->Banch, WHITE);
     DrawRectangleRec(gl->Room, WHITE);
+    DrawRectangleRec(gl->Store, RED);
     DrawRectangleRec(gl->DoorR, WHITE);
     DrawRectangleRec(gl->Computer, BLACK);
 
