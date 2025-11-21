@@ -130,6 +130,8 @@ Player createNewPlayer (Vector2 dim, Color cor)
             .contTime = 0.0f,
             .timeToTheNextFrame = 0.5f,
 
+            .progress = 0,
+
         };
 
         return newPlayer;
@@ -695,7 +697,7 @@ void resetPlayer(Player *player)
     player->status.dead = false;
     player->status.aura = 0;
     player->status.healing = false;
-    player->status.healingTime = 0.0;
+    player->status.healingTime = 1.5;
     player->status.resting = false;
     player->status.ticketsRU = 0;
     player->status.defaultSpeed = 200.0;
@@ -734,6 +736,7 @@ void resetPlayer(Player *player)
     player->attackStatus.attackUp = false;
     player->attackStatus.attackTime = 0.35f;
     player->currentFrame = 0;
+    player->progress =0;;
 }
 
 

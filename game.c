@@ -131,7 +131,7 @@ void initGame(Game *game, bool isFullScreen)
 
             //--------TROCA MUNDO--------
 
-            if(IsKeyPressed(KEY_ENTER))//&& game->gw->canLeaveFase)
+            if(IsKeyPressed(KEY_ENTER)&& game->gw->canLeaveFase)
             {
                 game->status = GAMELOBBY;
 
@@ -143,6 +143,7 @@ void initGame(Game *game, bool isFullScreen)
 
                 game->gl.player->speed.y = -200;
                 game->gl.player->speed.x = -100;
+                game->player.progress++;
 
                 game->timeToCode = 2.0;
 
