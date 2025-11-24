@@ -9,7 +9,7 @@
 	"raylib.h"
 	"gameWindow.h"
 
-1763751635 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.c
+1763816502 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.c
 	"raylib.h"
 	"player.h"
 	"weapons.h"
@@ -56,13 +56,13 @@
 	"enemies.h"
 	"coins.h"
 
-1763751569 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.c
+1763817842 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.c
 	<stdlib.h>
 	"raylib.h"
 	"gameWorld.h"
 	"pause.h"
 
-1763734683 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.h
+1763815057 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.h
 	"raylib.h"
 	"player.h"
 	"enemies.h"
@@ -238,11 +238,11 @@
 	"raylib.h"
 	"weapons.h"
 
-1763734683 c:\users\facci\onedrive\documents\github\projeto_knight_mb\coins.h
+1763814461 c:\users\facci\onedrive\documents\github\projeto_knight_mb\coins.h
 	"raylib.h"
 	"enemies.h"
 
-1763734683 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\coins.c
+1763817567 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\coins.c
 	<stdlib.h>
 	<time.h>
 	"raylib.h"

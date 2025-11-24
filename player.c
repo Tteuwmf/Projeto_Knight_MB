@@ -72,9 +72,9 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 {
                     .defaultSword = true,
                 },
-                .teclaTab = true,
-                .doubleJump = true,
-                .chiclete = true,
+                .teclaTab = false,
+                .doubleJump = false,
+                .chiclete = false,
             },
 
 

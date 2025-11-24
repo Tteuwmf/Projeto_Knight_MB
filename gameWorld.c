@@ -24,14 +24,17 @@ GameWorld* createGameWorld(Player *player)
     gw->numberOfCoins = 0;
     gw->numberOfCharms = 0;
     gw->numberOfSkills = 0;
+    gw->itemLevelNumber = 0;
     gw->fadeScreenGW = 0.0;
     gw->nearDeadBoss = false;
     gw->canLeaveFase = false;
 
     if(player->progress==0)
-        loadMap(gw,"maps/mapEx.txt");
+        loadMap(gw,"maps/mapLevel1.txt");
     else if (player->progress==1)
-        loadMap(gw,"maps/map1.txt");
+        loadMap(gw,"maps/mapLevel2.txt");
+    else if (player->progress==2)
+        loadMap(gw,"maps/mapLevel3.txt");
 
     gw->camera = (Camera2D)
     {
@@ -116,6 +119,11 @@ void loadMap(GameWorld *gw, const char* arquivo)
     else
         gw->enemies->enemy1 = NULL;
 
+    //-----------------------------------------//
+    //============== SELECT ITEM ==============//
+    //-- Player  progress is the item number --//
+
+
 
     atual = dados; //reset do contadorc
 
@@ -173,7 +181,7 @@ void loadMap(GameWorld *gw, const char* arquivo)
             case 'A':
             case 'c': //charms
                 gw->charms[contCharms] = createCharm(
-                    (Vector2){contColumn*32, contLines*32+22}, contCharms
+                    (Vector2){contColumn*32, contLines*32+22}, gw->player->progress
                 );
                 contColumn++;
                 contCharms++;
@@ -182,10 +190,18 @@ void loadMap(GameWorld *gw, const char* arquivo)
             case 'H':
             case 's': //skills
                 gw->skills[contSkills] = createSkill(
-                    (Vector2){contColumn*32+8, contLines*32+8}, contSkills
+                    (Vector2){contColumn*32+8, contLines*32+8}, gw->player->progress
                 );
                 contColumn++;
                 contSkills++;
+                break;
+
+            case 't': //CASO A ESPADA APAREÇA
+                gw->item[1] = createLostItens(
+                    (Vector2){contColumn*32+8, contLines*32+8}, 4
+                );
+                contColumn++;
+                gw->itemLevelNumber++;
                 break;
 
             case 'C':
@@ -361,6 +377,8 @@ void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
                     case 0:
                         player->powers.horizontalPowerActive = true;
                         break;
+                    default:
+                        break;
                 }
 
                 skill->available=false;
@@ -369,7 +387,7 @@ void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
     }
 
 
-    for(int h=0;h<gw->numberOfSkills;h++)
+    for(int h=0;h<gw->numberOfCharms;h++)
     {
         Charm *charm = &gw->charms[h];
 
@@ -388,10 +406,46 @@ void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
                     case 0:
                         player->inventory.equippedCharms.goldTickets = true;
                         break;
+                    default:
+                        break;
                 }
 
                 charm->available=false;
             }
+        }
+    }
+
+    Rectangle playerRec = (Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y};
+
+    for(int t=0;  t<=gw->itemLevelNumber; t++)
+    {
+        LostItens *lostItem = &gw->item[t];
+
+        if(lostItem->available)
+        {
+            int number=lostItem->itemNumber;
+
+            if(CheckCollisionRecs(lostItem->posXdim, playerRec))
+                lostItem->playerNext = true;
+            else lostItem->playerNext = false;
+
+            if(CheckCollisionRecs(lostItem->posXdim, playerRec) && IsKeyPressed(KEY_W))
+            {
+                 switch(number)
+                {
+                    case 0:
+                        player->inventory.doubleJump = true;
+                        break;
+                    case 1: player->inventory.teclaTab = true;
+                        break;
+                    case 2:player->inventory.chiclete = true;
+                    default:
+                        break;
+                }
+
+                lostItem->available = false;
+            }
+
         }
     }
 
@@ -1059,6 +1113,16 @@ void updateCoins(GameWorld *gw, float delta)
             gw->numberOfCoins++;
         }
 
+        //--------LOST ITEM---------//
+
+        if(gw->player->progress!=2)
+        gw->item[0] = createLostItens(
+                    (Vector2){gw->boss.pos.x+(gw->boss.dim.x/2),gw->boss.pos.y+(gw->boss.dim.y/2)}, gw->player->progress
+                );
+        else gw->item[0] = createLostItens(
+                    (Vector2){gw->boss.pos.x+(gw->boss.dim.x/2),gw->boss.pos.y+(gw->boss.dim.y/2)}, 3
+                );
+
     }
 
 
@@ -1168,6 +1232,11 @@ void drawGameWorld (GameWorld *gw)
     for(int s=0;s<gw->numberOfSkills;s++)
     {
         drawSkills(&gw->skills[s]);
+    }
+
+    for(int t=0; t<=gw->itemLevelNumber; t++)
+    {
+        drawLostItens(&gw->item[t]);
     }
 
     if(gw->canLeaveFase)
