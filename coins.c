@@ -31,6 +31,24 @@ Charm createCharm(Vector2 pos, int number)
     };
 }
 
+LostItens createLostItens(Vector2 pos, int number)
+{
+    return (LostItens)
+    {
+        .posXdim = (Rectangle)
+        {
+            .x = pos.x,
+            .y = pos.y,
+            .width = 22,
+            .height = 16,
+        },
+        .cor = SKYBLUE,
+        .itemNumber = number,
+        .available = true,
+        .playerNext =  false,
+    };
+}
+
 void drawSkills(Skill *skill)
 {
     if(skill->available)
@@ -54,6 +72,19 @@ void drawCharms(Charm *charm)
         }
     }
 }
+
+void drawLostItens(LostItens *lostItem)
+{
+    if(lostItem->available)
+    {
+        DrawRectangleRec(lostItem->posXdim, lostItem->cor);
+        if(lostItem->playerNext)
+        {
+            DrawText(TextFormat("PEGAR: W"), lostItem->posXdim.x-16,lostItem->posXdim.y-16,5, SKYBLUE);
+        }
+    }
+}
+
 
 //=====================================
 //-------------TICKETSRU---------------

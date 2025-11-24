@@ -30,9 +30,23 @@ typedef struct Charm
 
 Charm createCharm(Vector2 pos, int number);
 
+typedef struct LostItens
+{
+    Rectangle posXdim;
+    Color cor;
+    int itemNumber;
+    bool available;
+    bool playerNext;
+
+}LostItens;
+
+LostItens createLostItens(Vector2 pos, int number);
+
 void drawSkills(Skill *skill);
 
 void drawCharms(Charm *charm);
+
+void drawLostItens (LostItens *lostItem);
 
 //=====================================
 //-------------TICKETSRU---------------

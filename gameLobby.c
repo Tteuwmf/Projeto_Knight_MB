@@ -166,6 +166,14 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
         }
         else gl->nearBanch = false;
 
+    if(gl->player->status.resting)
+    {
+        gl->player->status.life++;
+        if(gl->player->status.life>=5)
+            gl->player->status.life = 5;
+    }
+
+
     if(gl->player->status.resting && (IsKeyPressed(KEY_A)||IsKeyPressed(KEY_D)))
          gl->player->status.resting = false;
 

@@ -32,6 +32,9 @@ typedef struct GameWorld
     Charm charms[5];
     int numberOfCharms;
 
+    LostItens item[2];
+    int itemLevelNumber;
+
     Block *blocks;
     int numberOfBlocks;
 
