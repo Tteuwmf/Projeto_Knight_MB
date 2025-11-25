@@ -21,6 +21,19 @@ typedef struct MenuTextures
     Texture2D mouseCloseButton;
     Texture2D clickCloseButton;
 
+
+    Texture2D bigNormalStartButton;
+    Texture2D bigMouseStartButton;
+
+    Texture2D bigNormalLoadButton;
+    Texture2D bigMouseLoadButton;
+
+    Texture2D bigNormalHelpButton;
+    Texture2D bigMouseHelpButton;
+
+    Texture2D bigNormalCloseButton;
+    Texture2D bigMouseCloseButton;
+
 }MenuTextures;
 
 typedef struct PauseTextures
