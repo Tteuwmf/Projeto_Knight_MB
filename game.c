@@ -71,7 +71,7 @@ void initGame(Game *game, bool isFullScreen)
                 }
             }
 
-            if(IsKeyPressed(KEY_I))
+            if(IsKeyPressed(KEY_ESCAPE))
             {
                 game->lastStatus = game->status;
                 game->status = PAUSE;
@@ -103,7 +103,7 @@ void initGame(Game *game, bool isFullScreen)
 
             //---------PAUSE---------
 
-            if(IsKeyPressed(KEY_I))
+            if(IsKeyPressed(KEY_ESCAPE))
             {
                 game->lastStatus = game->status;
                 game->status = PAUSE;
@@ -157,6 +157,7 @@ void initGame(Game *game, bool isFullScreen)
 
 
         case LEAVE:
+            game->shouldClose = true;
             break;
     }
 }

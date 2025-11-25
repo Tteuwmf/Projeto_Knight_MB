@@ -40,6 +40,8 @@ typedef struct Game
 
     float timeToCode;
 
+    bool shouldClose;
+
 }Game;
 
 Game createGame();

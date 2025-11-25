@@ -12,6 +12,7 @@ GameWindow* createGameWindow(int width, int height)
     gameWindow->width = width;
     gameWindow->height = height;
     gameWindow->initiate = false;
+    //gameWindow->shouldClose = false;
 
     return gameWindow;
 }
@@ -32,6 +33,8 @@ void initGameWindow(GameWindow *gameWindow)
 
         InitWindow (gameWindow->width, gameWindow->height, "JOGO2.0");
 
+        SetExitKey(KEY_NULL);
+
         gameWindow->game = createGame();
 
         gameWindow->game.gl = createGameLobby(&gameWindow->game.player);
@@ -46,7 +49,7 @@ void initGameWindow(GameWindow *gameWindow)
 
         SetTargetFPS(60);
 
-        while (!WindowShouldClose())
+        while (!WindowShouldClose() && gameWindow->game.shouldClose==false)
         {
             //----FULL-SCREEN-CONFIG----
 
