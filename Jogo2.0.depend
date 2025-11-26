@@ -286,7 +286,7 @@
 	"player.h"
 	"blocks.h"
 
-1764089973 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\game.c
+1764120286 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\game.c
 	<string.h>
 	<stdio.h>
 	"raylib.h"
@@ -386,11 +386,11 @@
 	"menu.h"
 	"resourceManager.h"
 
-1764000853 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\pause.c
+1764120454 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\pause.c
 	"raylib.h"
 	"pause.h"
 
-1764000853 c:\users\facci\onedrive\documents\github\projeto_knight_mb\pause.h
+1764119828 c:\users\facci\onedrive\documents\github\projeto_knight_mb\pause.h
 	"raylib.h"
 	"resourceManager.h"
 	"game.h"
