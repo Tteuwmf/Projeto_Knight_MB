@@ -424,7 +424,7 @@ void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool
 
 
 
-void drawGameLobby (GameLobby *gl)
+void drawGameLobby (GameLobby *gl, bool isFullscreen)
 {
 
     BeginDrawing();
@@ -461,7 +461,7 @@ void drawGameLobby (GameLobby *gl)
 
     EndMode2D();
 
-    drawHud(gl->player);
+    drawHud(gl->player, isFullscreen);
 
         gl->fadeScreenGL -= 0.2f*GetFrameTime();
         if(gl->fadeScreenGL<0.0f) gl->fadeScreenGL = 0.0f;

@@ -218,7 +218,7 @@ void applyKnockbackToPlayer (Player *player);
 
 void drawPlayer (Player *player);
 
-void drawHud (Player *player);
+void drawHud (Player *player, bool isFullscreen);
 
 void resetPlayer(Player *Player);
 

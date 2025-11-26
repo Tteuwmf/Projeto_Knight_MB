@@ -672,12 +672,69 @@ void drawPlayer(Player *player)
 }
 
 
-void drawHud (Player *player)
+void drawHud (Player *player, bool isFullscreen)
 {
     int fps = GetFPS();
 
-    DrawText(TextFormat("Lives: %02i", player->status.life), 20,20,20, GREEN);
-    DrawText(TextFormat("Aura: %02i", player->status.aura), 20,50,20, GREEN);
+    //DrawText(TextFormat("Lives: %02i", player->status.life), 20,20,20, GREEN);
+
+    switch(player->status.life)
+    {
+    case 5:
+        DrawTexture(rm.player.fiveHearts, 20,20,WHITE);
+        break;
+    case 4:
+        DrawTexture(rm.player.fourHearts, 20,20,WHITE);
+        break;
+    case 3:
+        DrawTexture(rm.player.treeHearts, 20,20,WHITE);
+        break;
+    case 2:
+        DrawTexture(rm.player.twoHearts, 20,20,WHITE);
+        break;
+    case 1:
+        DrawTexture(rm.player.oneHearts, 20,20,WHITE);
+        break;
+
+    }
+
+    //DrawText(TextFormat("Aura: %02i", player->status.aura), 20,50,20, GREEN);
+
+    if(isFullscreen==false)
+        switch(player->status.aura)
+        {
+        case 0:
+        case 1:
+            DrawTexture(rm.player.zeroAura, 10,60,WHITE);
+            break;
+        case 2:
+        case 3:
+            DrawTexture(rm.player.oneAura, 10,60,WHITE);
+            break;
+        case 4:
+        case 5:
+            DrawTexture(rm.player.twoAura, 10,60,WHITE);
+            break;
+        case 6:
+        case 7:
+            DrawTexture(rm.player.treeAura, 10,60,WHITE);
+            break;
+        case 8:
+        case 9:
+            DrawTexture(rm.player.fourAura, 10,60,WHITE);
+            break;
+        case 10:
+        case 11:
+            DrawTexture(rm.player.fiveAura, 10,60,WHITE);
+            break;
+        case 12:
+        case 13:
+            DrawTexture(rm.player.sixAura, 10,60,WHITE);
+            break;
+        }
+
+
+
     DrawText(TextFormat("Amuletos: "), 20,80,20, GREEN);
     DrawText(TextFormat("TicketsRU: %02i", player->status.ticketsRU), 20,110,20, GREEN);
     DrawText(TextFormat("FPS: %03i",fps),20,140,20,GREEN);

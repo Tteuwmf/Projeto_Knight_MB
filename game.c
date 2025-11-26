@@ -80,7 +80,7 @@ void initGame(Game *game, bool isFullScreen)
 
             inputAndUpdateGameLobby(&game->gl, isFullScreen);
 
-            drawGameLobby(&game->gl);
+            drawGameLobby(&game->gl, isFullScreen);
             break;
 
         case GAMEWORLD:
@@ -127,7 +127,7 @@ void initGame(Game *game, bool isFullScreen)
 
             //---------DESENHA MUNDO--------
 
-            drawGameWorld(game->gw);
+            drawGameWorld(game->gw, isFullScreen);
 
             //--------TROCA MUNDO--------
 

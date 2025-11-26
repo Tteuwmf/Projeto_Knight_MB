@@ -45,7 +45,7 @@ void makeLobbyCollisionPlayerBlock (GameLobby *gl);
 
 void makeLobbyCollisionBlocksPowersAndWeapons (GameLobby *gl);
 
-void drawGameLobby (GameLobby *gl);
+void drawGameLobby (GameLobby *gl, bool isFullscreen);
 
 void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool roomCamera);
 

@@ -54,6 +54,22 @@ void loadResources()
     rm.gw.horizontalPowerB = LoadTexture("Assets/Textures/HorizontalPowerB.png");
 
     rm.gw.ticketRU= LoadTexture("Assets/Textures/TicketRU.png");
+
+
+
+    rm.player.fiveHearts = LoadTexture("Assets/Textures/5corações.png");
+    rm.player.fourHearts = LoadTexture("Assets/Textures/4corações.png");
+    rm.player.treeHearts = LoadTexture("Assets/Textures/3corações.png");
+    rm.player.twoHearts = LoadTexture("Assets/Textures/2corações.png");
+    rm.player.oneHearts = LoadTexture("Assets/Textures/1corações.png");
+
+    rm.player.zeroAura = LoadTexture("Assets/Textures/0aura.png");
+    rm.player.oneAura = LoadTexture("Assets/Textures/1aura.png");
+    rm.player.twoAura = LoadTexture("Assets/Textures/2aura.png");
+    rm.player.treeAura = LoadTexture("Assets/Textures/3aura.png");
+    rm.player.fourAura = LoadTexture("Assets/Textures/4aura.png");
+    rm.player.fiveAura = LoadTexture("Assets/Textures/5aura.png");
+    rm.player.sixAura = LoadTexture("Assets/Textures/6aura.png");
 }
 
 void unloadResouces()
@@ -106,5 +122,22 @@ void unloadResouces()
     UnloadTexture(rm.gw.horizontalPowerB);
 
     UnloadTexture(rm.gw.ticketRU);
+
+
+
+    UnloadTexture(rm.player.fiveHearts );
+    UnloadTexture(rm.player.fourHearts );
+    UnloadTexture(rm.player.treeHearts );
+    UnloadTexture(rm.player.twoHearts );
+    UnloadTexture(rm.player.oneHearts );
+
+    UnloadTexture(rm.player.zeroAura);
+    UnloadTexture(rm.player.oneAura);
+    UnloadTexture(rm.player.twoAura);
+    UnloadTexture(rm.player.treeAura);
+    UnloadTexture(rm.player.fourAura);
+    UnloadTexture(rm.player.fiveAura);
+    UnloadTexture(rm.player.sixAura);
+
 
 }

@@ -66,12 +66,39 @@ typedef struct GameWorldTextures
 
 }GameWorldTextures;
 
+typedef struct PlayerTextures
+{
+    Texture2D fiveHearts;
+    Texture2D fourHearts;
+    Texture2D treeHearts;
+    Texture2D twoHearts;
+    Texture2D oneHearts;
+
+    Texture2D zeroAura;
+    Texture2D oneAura;
+    Texture2D twoAura;
+    Texture2D treeAura;
+    Texture2D fourAura;
+    Texture2D fiveAura;
+    Texture2D sixAura;
+
+    Texture2D zeroAuraG;
+    Texture2D oneAuraG;
+    Texture2D twoAuraG;
+    Texture2D treeAuraG;
+    Texture2D fourAuraG;
+    Texture2D fiveAuraG;
+    Texture2D sixAuraG;
+
+}PlayerTextures;
+
 typedef struct ResourceManager
 {
     MenuTextures menu;
     PauseTextures pause;
     GameLobbyTextures gl;
     GameWorldTextures gw;
+    PlayerTextures player;
 
 }ResourceManager;
 
