@@ -1199,7 +1199,7 @@ void updateCamera(Camera2D *camera, Player *player, bool isFullscreen)
 
 }
 
-void drawGameWorld (GameWorld *gw)
+void drawGameWorld (GameWorld *gw, bool isFullscreen)
 {
 
     BeginDrawing();
@@ -1247,7 +1247,7 @@ void drawGameWorld (GameWorld *gw)
     if(gw->player->status.dead==false)
     {
         gw->fadeScreenGW = 0.0f;
-        drawHud(gw->player);
+        drawHud(gw->player, isFullscreen);
     }
 
     if(gw->player->status.dead)

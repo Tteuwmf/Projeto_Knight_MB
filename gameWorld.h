@@ -83,7 +83,7 @@ void updateCoins(GameWorld *gw, float delta);
 
     //-------DRAW-AND-CAMERA-------
 
-void drawGameWorld (GameWorld *gw);
+void drawGameWorld (GameWorld *gw,bool isFullscreen);
 
 void updateCamera (Camera2D *camera, Player *player, bool isFullscreen);
 

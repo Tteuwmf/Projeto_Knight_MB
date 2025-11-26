@@ -178,7 +178,7 @@
 	"enemies.h"
 	"coins.h"
 
-1763502469 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\player.h
+1764161983 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\player.h
 	"raylib.h"
 
 1762518410 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\weapons.h
@@ -194,20 +194,20 @@
 	"enemies.h"
 	"collisions.h"
 
-1763656480 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamewindow.c
+1764159583 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamewindow.c
 	<stdlib.h>
 	<stdio.h>
 	"raylib.h"
 	"gameWindow.h"
 	"resourceManager.h"
 
-1762991414 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamewindow.h
+1764159583 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamewindow.h
 	"raylib.h"
 	"gameWorld.h"
 	"gameLobby.h"
 	"game.h"
 
-1763592118 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gameworld.h
+1764161983 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gameworld.h
 	"raylib.h"
 	"player.h"
 	"enemies.h"
@@ -215,7 +215,7 @@
 	"collisions.h"
 	"coins.h"
 
-1763661367 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gameworld.c
+1764161984 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gameworld.c
 	<stdlib.h>
 	"raylib.h"
 	"gameWorld.h"
@@ -227,7 +227,7 @@
 	"raylib.h"
 	"gameWindow.h"
 
-1763502469 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\player.c
+1764161398 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\player.c
 	"raylib.h"
 	"player.h"
 	"weapons.h"
@@ -249,14 +249,14 @@
 	"coins.h"
 	"resourceManager.h"
 
-1763596180 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\coins.c
+1764159583 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\coins.c
 	<stdlib.h>
 	<time.h>
 	"raylib.h"
 	"coins.h"
 	"resourceManager.h"
 
-1763595911 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\coins.h
+1764159583 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\coins.h
 	"raylib.h"
 	"enemies.h"
 
@@ -273,7 +273,7 @@
 	"player.h"
 	"blocks.h"
 
-1763657680 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamelobby.c
+1764162058 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamelobby.c
 	"raylib.h"
 	"gameLobby.h"
 	"blocks.h"
@@ -281,7 +281,7 @@
 	"gameWindow.h"
 	"resourceManager.h"
 
-1763657612 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamelobby.h
+1764162058 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamelobby.h
 	"raylib.h"
 	"player.h"
 	"blocks.h"
@@ -335,7 +335,7 @@
 	"collisions.h"
 	"gameWindow.h"
 
-1763657739 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\game.c
+1764162058 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\game.c
 	<string.h>
 	<stdio.h>
 	"raylib.h"
@@ -345,20 +345,20 @@
 	"menu.h"
 	"pause.h"
 
-1763657275 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\game.h
+1764159583 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\game.h
 	"raylib.h"
 	"player.h"
 	"gameLobby.h"
 	"gameWorld.h"
 
-1763502469 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\resourcemanager.c
+1764161558 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\resourcemanager.c
 	"raylib.h"
 	"resourceManager.h"
 
-1763076821 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\resourcemanager.h
+1764162545 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\resourcemanager.h
 	"raylib.h"
 
-1763502468 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\menu.c
+1764159583 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\menu.c
 	"raylib.h"
 	"menu.h"
 	"resourceManager.h"
@@ -366,11 +366,11 @@
 1762998929 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\menu.h
 	"game.h"
 
-1763508041 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\pause.c
+1764159583 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\pause.c
 	"raylib.h"
 	"pause.h"
 
-1763502469 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\pause.h
+1764159583 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\pause.h
 	"raylib.h"
 	"resourceManager.h"
 	"game.h"
