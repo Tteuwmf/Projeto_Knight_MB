@@ -203,6 +203,7 @@ typedef struct Player
     float timeToTheNextFrame;
 
     int progress;
+    bool inLevel;
 
 }Player;
 

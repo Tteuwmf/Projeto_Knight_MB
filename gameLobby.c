@@ -442,7 +442,7 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
 
     drawPlayer(gl->player);
 
-    if(gl->nearBanch)
+    if(gl->nearBanch && gl->player->status.resting==false)
         DrawText(TextFormat("DESCANSAR: W"), gl->Banch.x,gl->Banch.y-16,15, WHITE);
 
     if(gl->nearRoom)

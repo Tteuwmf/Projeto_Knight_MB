@@ -64,6 +64,7 @@ void initGame(Game *game, bool isFullScreen)
             if(IsKeyPressed(KEY_ENTER) && game->gl.nearComputer && game->timeToCode==0.0)
             {
                 game->status = GAMEWORLD;
+                game->player.inLevel = true;
 
                 if(game->gameWorldInitiate)
                 {
@@ -134,6 +135,8 @@ void initGame(Game *game, bool isFullScreen)
             if(IsKeyPressed(KEY_ENTER)&& game->gw->canLeaveFase)
             {
                 game->status = GAMELOBBY;
+                game->player.inLevel = false;
+                game->lastStatus = GAMEWORLD;
 
                 if(game->playerLobbyReturnPos.x != 0 || game->playerLobbyReturnPos.y != 0) {
                     game->gl.player->pos = game->playerLobbyReturnPos;
