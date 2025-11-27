@@ -109,6 +109,9 @@ void loadResources()
     rm.player.playerDoubleJump = LoadTexture("Assets/Textures/playerDoubleJump.png");
     rm.player.playerChiclete = LoadTexture("Assets/Textures/playerChiclete.png");
     rm.player.playerAttack = LoadTexture("Assets/Textures/playerAttacks.png");
+    rm.player.playerAttackUp = LoadTexture("Assets/Textures/playerAttackUp.png");
+    rm.player.playerJumpAttackUp = LoadTexture("Assets/Textures/playerJumpAttackUp.png");
+    rm.player.playerAttackDown = LoadTexture("Assets/Textures/playerAttackDown.png");
 
     rm.player.swordAttack = LoadTexture("Assets/Textures/swordAttack.png");
 
@@ -220,6 +223,9 @@ void unloadResouces()
     UnloadTexture(rm.player.playerDoubleJump );
     UnloadTexture(rm.player.playerChiclete);
     UnloadTexture(rm.player.playerAttack);
+    UnloadTexture(rm.player.playerAttackUp);
+    UnloadTexture(rm.player.playerJumpAttackUp);
+    UnloadTexture(rm.player.playerAttackDown);
 
     UnloadTexture(rm.player.swordAttack);
 }

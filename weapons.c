@@ -31,22 +31,22 @@ void updatePlayerSword (Player *player) // atualiza a posição da espada ao ataca
     if (player->attackStatus.attackRight)
     {
         player->sword.pos = (Vector2){player->pos.x+player->dim.x,player->pos.y+player->dim.y/2};
-        player->sword.dim = (Vector2){32,8};
+        player->sword.dim = (Vector2){40,8};
     }
     else if (player->attackStatus.attackLeft)
     {
-        player->sword.pos = (Vector2) {player->pos.x-player->dim.x,player->pos.y+player->dim.y/2};
-        player->sword.dim = (Vector2){32,8};
+        player->sword.pos = (Vector2) {player->pos.x-player->dim.x-8,player->pos.y+player->dim.y/2};
+        player->sword.dim = (Vector2){40,8};
     }
     else if (player->attackStatus.attackUp)
     {
-        player->sword.pos = (Vector2){player->pos.x+(player->dim.x/2), player->pos.y-32};
-        player->sword.dim = (Vector2){8,32};
+        player->sword.pos = (Vector2){player->pos.x+(player->dim.x/2)-4, player->pos.y-40};
+        player->sword.dim = (Vector2){8,40};
     }
     else if (player->attackStatus.attackDown)
     {
-        player->sword.pos = (Vector2){player->pos.x+(player->dim.x/2), player->pos.y+player->dim.y};
-        player->sword.dim = (Vector2){8,32};
+        player->sword.pos = (Vector2){player->pos.x+(player->dim.x/2)-4, player->pos.y+player->dim.y};
+        player->sword.dim = (Vector2){8,40};
     }
 
 }
