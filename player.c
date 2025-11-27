@@ -482,7 +482,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     if(player->inventory.chiclete)
     {
-        if(player->chiclete.canUseChiclete && (!IsKeyDown(KEY_A)))
+        if(!player->chiclete.leftWall && !player->chiclete.rightWall && !IsKeyDown(KEY_A) && !IsKeyDown(KEY_D))
                     player->chiclete.contChicleteTime = 0.0f;
 
             if(player->chiclete.leftWall)
@@ -503,15 +503,14 @@ void inputAndUpdatePlayer(Player *player, float delta)
                 {
                     player->chiclete.leftWall = false;
 
+                    if(!player->chiclete.leftWall && !IsKeyDown(KEY_A))
+                        player->chiclete.contChicleteTime = 0.0f;
+
                 }
 
             }
-            else if(player->chiclete.rightWall==false)
-                player->chiclete.canUseChiclete = true;
 
-
-
-        if(player->chiclete.rightWall)
+            if(player->chiclete.rightWall)
             {
 
                 if(IsKeyDown(KEY_D)&& player->chiclete.contChicleteTime<=0.5)
@@ -529,11 +528,15 @@ void inputAndUpdatePlayer(Player *player, float delta)
                 {
                     player->chiclete.rightWall = false;
 
+                    if(!player->chiclete.rightWall && !IsKeyDown(KEY_D))
+                        player->chiclete.contChicleteTime = 0.0f;
                 }
-
             }
-            else if(player->chiclete.leftWall==false)
+
+            if(!player->chiclete.leftWall && !player->chiclete.rightWall)
+            {
                 player->chiclete.canUseChiclete = true;
+            }
 
     }
 
@@ -701,7 +704,28 @@ void drawPlayer(Player *player)
         }
     }
 
-    if(player->status.resting==false)
+    if(player->status.healing)
+    {
+        if(player->status.lookingAtR)
+        {
+             DrawTexturePro(rm.player.playerHealing,
+                    (Rectangle){0,0,rm.player.playerHealing.width,rm.player.playerHealing.height},
+                    (Rectangle){player->pos.x,player->pos.y,rm.player.playerHealing.width,rm.player.playerHealing.height},
+                    (Vector2){16,16},
+                     0.0f,
+                     WHITE);
+        }
+        else
+        {
+             DrawTexturePro(rm.player.playerHealing,
+                    (Rectangle){0,0,-rm.player.playerHealing.width,rm.player.playerHealing.height},
+                    (Rectangle){player->pos.x,player->pos.y,rm.player.playerHealing.width,rm.player.playerHealing.height},
+                    (Vector2){16,16},
+                     0.0f,
+                     WHITE);
+        }
+    }
+    else if(player->status.resting==false)
     {
         if(player->speed.x==0 && player->status.onFloor && player->attackStatus.attacking==false)
         {
@@ -1042,13 +1066,34 @@ void drawHud (Player *player, bool isFullscreen)
             }
             break;
         case 3:
-            DrawTexture(rm.player.treeHearts, 20,20,WHITE);
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit4Heart, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.treeHearts, 20,20,WHITE);
+            }
             break;
         case 2:
-            DrawTexture(rm.player.twoHearts, 20,20,WHITE);
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit3Heart, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.twoHearts, 20,20,WHITE);
+            }
             break;
         case 1:
-            DrawTexture(rm.player.oneHearts, 20,20,WHITE);
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit2Heart, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.oneHearts, 20,20,WHITE);
+            }
             break;
         }
 
@@ -1106,16 +1151,44 @@ void drawHud (Player *player, bool isFullscreen)
             DrawTexture(rm.player.fiveHeartsG, 20,20,WHITE);
             break;
         case 4:
-            DrawTexture(rm.player.fourHeartsG, 20,20,WHITE);
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit5HeartG, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.fourHeartsG, 20,20,WHITE);
+            }
             break;
         case 3:
-            DrawTexture(rm.player.treeHeartsG, 20,20,WHITE);
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit4HeartG, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.treeHeartsG, 20,20,WHITE);
+            }
             break;
         case 2:
-            DrawTexture(rm.player.twoHeartsG, 20,20,WHITE);
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit3HeartG, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.twoHeartsG, 20,20,WHITE);
+            }
             break;
         case 1:
-            DrawTexture(rm.player.oneHeartsG, 20,20,WHITE);
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit2HeartG, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.oneHeartsG, 20,20,WHITE);
+            }
             break;
         }
 

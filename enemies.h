@@ -70,6 +70,10 @@ typedef struct AirBasicEnemy
     bool haveCoins;
 
     Color cor;
+    int texture;
+    bool glitching;
+    float glitchTime;
+    float contGlitchTime;
 
     float defaultSpeed;
 
