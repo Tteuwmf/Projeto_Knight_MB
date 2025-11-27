@@ -63,6 +63,9 @@ void loadResources()
     rm.player.twoHearts = LoadTexture("Assets/Textures/2corações.png");
     rm.player.oneHearts = LoadTexture("Assets/Textures/1corações.png");
 
+    rm.player.hit5Heart = LoadTexture("Assets/Textures/hit5heart.png");
+
+
     rm.player.fiveHeartsG = LoadTexture("Assets/Textures/5coraçõesG.png");
     rm.player.fourHeartsG = LoadTexture("Assets/Textures/4coraçõesG.png");
     rm.player.treeHeartsG = LoadTexture("Assets/Textures/3coraçõesG.png");
@@ -85,6 +88,9 @@ void loadResources()
     rm.player.fiveAuraG = LoadTexture("Assets/Textures/5auraGrande.png");
     rm.player.sixAuraG = LoadTexture("Assets/Textures/6auraGrande.png");
 
+    rm.player.auraLeek = LoadTexture("Assets/Textures/auraLeek.png");
+    rm.player.auraLeekG = LoadTexture("Assets/Textures/auraLeekG.png");
+
     rm.player.ticketsRU1 = LoadTexture("Assets/Textures/ticketRU1.png");
     rm.player.ticketsRU2 = LoadTexture("Assets/Textures/ticketRU2.png");
     rm.player.ticketsRU1G = LoadTexture("Assets/Textures/ticketRU1G.png");
@@ -99,6 +105,9 @@ void loadResources()
     rm.player.playerJumping[1] = LoadTexture("Assets/Textures/playerJumping2.png");
     rm.player.playerFalling[0] = LoadTexture("Assets/Textures/playerFalling.png");
     rm.player.playerFalling[1] = LoadTexture("Assets/Textures/playerFalling2.png");
+    rm.player.playerDash = LoadTexture("Assets/Textures/playerDash.png");
+    rm.player.playerDoubleJump = LoadTexture("Assets/Textures/playerDoubleJump.png");
+    rm.player.playerChiclete = LoadTexture("Assets/Textures/playerChiclete.png");
 
 
 }
@@ -162,6 +171,8 @@ void unloadResouces()
     UnloadTexture(rm.player.twoHearts );
     UnloadTexture(rm.player.oneHearts );
 
+    UnloadTexture(rm.player.hit5Heart);
+
     UnloadTexture(rm.player.fiveHeartsG );
     UnloadTexture(rm.player.fourHeartsG );
     UnloadTexture(rm.player.treeHeartsG );
@@ -184,6 +195,9 @@ void unloadResouces()
     UnloadTexture(rm.player.fiveAuraG);
     UnloadTexture(rm.player.sixAuraG);
 
+    UnloadTexture(rm.player.auraLeek);
+    UnloadTexture(rm.player.auraLeekG);
+
     UnloadTexture(rm.player.ticketsRU1);
     UnloadTexture(rm.player.ticketsRU2);
 
@@ -199,5 +213,8 @@ void unloadResouces()
     UnloadTexture(rm.player.playerJumping[1]);
     UnloadTexture(rm.player.playerFalling[0]);
     UnloadTexture(rm.player.playerFalling[1]);
+    UnloadTexture(rm.player.playerDash);
+    UnloadTexture(rm.player.playerDoubleJump );
+    UnloadTexture(rm.player.playerChiclete);
 
 }

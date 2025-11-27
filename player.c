@@ -30,6 +30,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 .healing = false,
                 .healingTime = 1.5f,
                 .contHealingTime = 0.0,
+                .sufferingDamege = false,
                 .resting = false,
                 .ticketsRU = 0,
                 .defaultSpeed = 200.0,
@@ -72,9 +73,9 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 {
                     .defaultSword = true,
                 },
-                .teclaTab = false,
-                .doubleJump = false,
-                .chiclete = false,
+                .teclaTab = true,
+                .doubleJump = true,
+                .chiclete = true,
             },
 
 
@@ -593,12 +594,14 @@ void applyKnockbackToPlayer(Player *player)
     {
         player->speed.x = -500.0; //aplica as forças
         player->speed.y = -200.0;
+        player->status.sufferingDamege = true;
         player->knockbackStatus.knockbackTime = 0.5; // inicia o contador
     }
     else if (player->knockbackStatus.knockbackR)
     {
         player->speed.x = 500.0;
         player->speed.y = -200.0;
+        player->status.sufferingDamege = true;
         player->knockbackStatus.knockbackTime = 0.5;
     }
     else if (player->knockbackStatus.knockbackUn)
@@ -612,6 +615,7 @@ void applyKnockbackToPlayer(Player *player)
             player->speed.x = -200.0;
         }
         player->speed.y = 300.0;
+        player->status.sufferingDamege = true;
         player->knockbackStatus.knockbackTime = 0.5;
     }
     else if (player->knockbackStatus.knockbackUp)
@@ -625,6 +629,7 @@ void applyKnockbackToPlayer(Player *player)
             player->speed.x = -200.0;
         }
         player->speed.y = -300.0;
+        player->status.sufferingDamege = true;
         player->knockbackStatus.knockbackTime = 0.5;
     }
     else if (player->knockbackStatus.swordKnockbackL)
@@ -653,6 +658,9 @@ void applyKnockbackToPlayer(Player *player)
     player->knockbackStatus.swordKnockbackL = false;
     player->knockbackStatus.swordKnockbackR = false;
     player->knockbackStatus.swordKnockbackUp = false;
+
+    if(player->knockbackStatus.knockbackTime<=0.25)
+        player->status.sufferingDamege = false;
 
 }
 
@@ -700,7 +708,7 @@ void drawPlayer(Player *player)
                         (Vector2){16,16},
                          0.0f,
                          WHITE);
-        else if(player->speed.x!=0 && player->status.onFloor && player->dashStatus.canDash)
+        else if(player->speed.x!=0 && player->status.onFloor && player->dashStatus.dashTime<=0.0)
         {
             if(player->status.lookingAtR)
             {
@@ -721,7 +729,7 @@ void drawPlayer(Player *player)
                              WHITE);
             }
         }
-        else if(player->jumpStatus.isJumping)
+        else if(player->jumpStatus.isJumping && player->jumpStatus.canDoubleJump)
         {
 
             if(player->status.lookingAtR)
@@ -743,7 +751,7 @@ void drawPlayer(Player *player)
                          WHITE);
             }
         }
-        else if(player->status.onFloor==false && player->jumpStatus.isJumping==false && player->dashStatus.canDash)
+        else if(player->status.onFloor==false && player->jumpStatus.isJumping==false && player->dashStatus.dashTime<=0.0 && player->chiclete.canUseChiclete)
         {
 
             if(player->status.lookingAtR)
@@ -764,6 +772,72 @@ void drawPlayer(Player *player)
                          0.0f,
                          WHITE);
             }
+        }
+        else if(player->dashStatus.dashTime>=0.0)
+        {
+            if(player->status.lookingAtR)
+            {
+                 DrawTexturePro(rm.player.playerDash,
+                        (Rectangle){0,0,rm.player.playerDash.width,rm.player.playerDash.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerDash.width,rm.player.playerDash.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.playerDash,
+                        (Rectangle){0,0,-rm.player.playerDash.width,rm.player.playerDash.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerDash.width,rm.player.playerDash.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+
+        }
+        else if(player->chiclete.contChicleteTime<=0.5f && player->chiclete.canUseChiclete==false)
+        {
+            if(player->status.lookingAtR)
+            {
+                 DrawTexturePro(rm.player.playerChiclete,
+                        (Rectangle){0,0,-rm.player.playerChiclete.width,rm.player.playerChiclete.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerChiclete.width,rm.player.playerChiclete.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.playerChiclete,
+                        (Rectangle){0,0,rm.player.playerChiclete.width,rm.player.playerChiclete.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerChiclete.width,rm.player.playerDoubleJump.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+
+        }
+        else if(player->status.onFloor==false && player->jumpStatus.canJump==false && player->jumpStatus.canDoubleJump==false && player->jumpStatus.isJumping && player->chiclete.contChicleteTime==0.0)
+        {
+            if(player->status.lookingAtR)
+            {
+                 DrawTexturePro(rm.player.playerDoubleJump,
+                        (Rectangle){0,0,rm.player.playerDoubleJump.width,rm.player.playerDoubleJump.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerDoubleJump.width,rm.player.playerDoubleJump.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.playerDoubleJump,
+                        (Rectangle){0,0,-rm.player.playerDoubleJump.width,rm.player.playerDoubleJump.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerDoubleJump.width,rm.player.playerDoubleJump.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+
         }
 
     }
@@ -803,15 +877,27 @@ void drawHud (Player *player, bool isFullscreen)
 
     //DrawText(TextFormat("Aura: %02i", player->status.aura), 20,50,20, GREEN);
 
+
+
+
+
     if(isFullscreen==false)
     {
+
         switch(player->status.life)
         {
         case 5:
             DrawTexture(rm.player.fiveHearts, 20,20,WHITE);
             break;
         case 4:
-            DrawTexture(rm.player.fourHearts, 20,20,WHITE);
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit5Heart, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.fourHearts, 20,20,WHITE);
+            }
             break;
         case 3:
             DrawTexture(rm.player.treeHearts, 20,20,WHITE);
@@ -865,6 +951,9 @@ void drawHud (Player *player, bool isFullscreen)
 
 
          DrawText(TextFormat("%02i", player->status.ticketsRU), 128,87,18, BLACK);
+
+         if(player->powers.usingHorizontalPower)
+            DrawTexture(rm.player.auraLeek,10,60,WHITE);
 
     }
     else
@@ -966,6 +1055,15 @@ void drawHud (Player *player, bool isFullscreen)
             DrawTexture(rm.player.ticketsRU1G, 180, 65, WHITE);
 
         DrawText(TextFormat("%02i", player->status.ticketsRU), 320,113,30, BLACK);
+
+
+        if(player->powers.usingHorizontalPower)
+            DrawTexturePro(rm.player.auraLeekG,
+                        (Rectangle){0,0,rm.player.auraLeekG.width,rm.player.auraLeekG.height},
+                        (Rectangle){90,130,rm.player.auraLeekG.width,rm.player.auraLeekG.height},
+                        (Vector2){rm.player.auraLeekG.width/2.0f,rm.player.auraLeekG.height/2.0f},
+                         90.0f,
+                         WHITE);
     }
 
 
