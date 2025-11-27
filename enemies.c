@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "enemies.h"
 #include "collisions.h"
+#include "resourceManager.h"
 
 #define GRAVITY 20.0
 #define MAX_SPEED_FALL 400.0
@@ -114,6 +115,10 @@ AirBasicEnemy createAirBasicEnemies(Vector2 pos, int number)
         .dim = (Vector2) {20,20},
 
         .cor = GREEN,
+        .texture = 0,
+        .glitching = false,
+        .glitchTime = 0.25,
+        .contGlitchTime = 0.0,
 
         .collisionRecs = {{0}},
 
@@ -152,14 +157,31 @@ void updateAirBasicEnemies(AirBasicEnemy *enemy2, float delta)
     if (enemy2->knockbackStatus.knockbackTime<=0)
     {
         if(enemy2->pos.x<=xMin)
+        {
             enemy2->speed.x = -enemy2->speed.x;
+            enemy2->glitching =true;
+            if(enemy2->texture==1)
+                enemy2->texture = 0;
+            else enemy2->texture = 1;
+        }
         if(enemy2->pos.x>=xMax)
+        {
             enemy2->speed.x = -enemy2->speed.x;
-
+            enemy2->glitching =true;
+            if(enemy2->texture==1)
+                enemy2->texture = 0;
+            else enemy2->texture = 1;
+        }
         if(enemy2->pos.y<=yMin)
+        {
             enemy2->speed.y = -enemy2->speed.y;
+            enemy2->glitching =true;
+        }
         if(enemy2->pos.y>=yMax)
+        {
             enemy2->speed.y = -enemy2->speed.y;
+            enemy2->glitching =true;
+        }
 
     }
     else
@@ -168,6 +190,16 @@ void updateAirBasicEnemies(AirBasicEnemy *enemy2, float delta)
         enemy2->speed.x *= 0.9; // reduz a velocidade até o fim do tempo
     }
 
+    if(enemy2->glitching)
+    {
+        enemy2->contGlitchTime += delta;
+
+        if(enemy2->contGlitchTime>=enemy2->glitchTime)
+        {
+            enemy2->contGlitchTime=0.0;
+            enemy2->glitching = false;
+        }
+    }
 
     //=============UPDATE=POSITION================
 
@@ -350,7 +382,28 @@ void drawBasicEnemies(BasicEnemy *enemy1)
 
 void drawAirBasicEnemies (AirBasicEnemy *enemy2)
 {
-    DrawRectangleV(enemy2->pos,enemy2->dim,enemy2->cor);
+    //DrawRectangleV(enemy2->pos,enemy2->dim,enemy2->cor);
+    if(enemy2->glitching==false)
+    {
+        if(enemy2->texture==0)
+        {
+            DrawTexturePro(rm.gw.glitch1,
+                        (Rectangle){0,0,rm.gw.glitch1.width,rm.gw.glitch1.height},
+                        (Rectangle){enemy2->pos.x,enemy2->pos.y,rm.gw.glitch1.width,rm.gw.glitch1.height},
+                        (Vector2){8,8},
+                         0.0f,
+                         WHITE);
+        }
+        else
+        {
+            DrawTexturePro(rm.gw.glitch1,
+                        (Rectangle){0,0,-rm.gw.glitch1.width,rm.gw.glitch1.height},
+                        (Rectangle){enemy2->pos.x,enemy2->pos.y,rm.gw.glitch1.width,rm.gw.glitch1.height},
+                        (Vector2){8,8},
+                         0.0f,
+                         WHITE);
+        }
+    }
 }
 
 

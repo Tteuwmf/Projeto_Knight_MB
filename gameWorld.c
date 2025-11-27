@@ -263,7 +263,7 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
 
     makeCollisionPlayerCoinsSkillsAndCharms(gw);
 
-    if (gw->player->knockbackStatus.knockbackTime<=0 && gw->player->status.invulnerable==false)
+    if (gw->player->status.invulnerable==false)
         makeCollisionEnemiesPlayer(gw);
 
     if(gw->player->status.life<=0)

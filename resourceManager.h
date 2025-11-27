@@ -52,6 +52,7 @@ typedef struct PauseTextures
 typedef struct GameLobbyTextures
 {
     Texture2D bench;
+    Texture2D grass;
 
 }GameLobbyTextures;
 
@@ -64,6 +65,10 @@ typedef struct GameWorldTextures
 
     Texture2D ticketRU;
 
+
+    Texture2D glitch1;
+    Texture2D glitch2;
+
 }GameWorldTextures;
 
 typedef struct PlayerTextures
@@ -75,12 +80,20 @@ typedef struct PlayerTextures
     Texture2D oneHearts;
 
     Texture2D hit5Heart;
+    Texture2D hit4Heart;
+    Texture2D hit3Heart;
+    Texture2D hit2Heart;
 
     Texture2D fiveHeartsG;
     Texture2D fourHeartsG;
     Texture2D treeHeartsG;
     Texture2D twoHeartsG;
     Texture2D oneHeartsG;
+
+    Texture2D hit5HeartG;
+    Texture2D hit4HeartG;
+    Texture2D hit3HeartG;
+    Texture2D hit2HeartG;
 
     Texture2D zeroAura;
     Texture2D oneAura;
@@ -121,6 +134,7 @@ typedef struct PlayerTextures
     Texture2D playerAttackUp;
     Texture2D playerJumpAttackUp;
     Texture2D playerAttackDown;
+    Texture2D playerHealing;
 
     Texture2D swordAttack;
 

@@ -45,7 +45,10 @@ void loadResources()
     rm.pause.mouseLeaveButton = LoadTexture("Assets/Textures/BotaoSairMouse.png");
 
 
+
     rm.gl.bench = LoadTexture("Assets/Textures/Banch.png");
+    rm.gl.grass = LoadTexture("Assets/Textures/grassBlock.png");
+
 
 
     rm.gw.defaultTile = LoadTexture("Assets/Textures/DefaultTile.png");
@@ -54,6 +57,9 @@ void loadResources()
     rm.gw.horizontalPowerB = LoadTexture("Assets/Textures/HorizontalPowerB.png");
 
     rm.gw.ticketRU= LoadTexture("Assets/Textures/TicketRU.png");
+
+    rm.gw.glitch1 = LoadTexture("Assets/Textures/glitchA.png");
+    rm.gw.glitch2 = LoadTexture("Assets/Textures/glitchB.png");
 
 
 
@@ -64,13 +70,20 @@ void loadResources()
     rm.player.oneHearts = LoadTexture("Assets/Textures/1corações.png");
 
     rm.player.hit5Heart = LoadTexture("Assets/Textures/hit5heart.png");
-
+    rm.player.hit4Heart = LoadTexture("Assets/Textures/hit4heart.png");
+    rm.player.hit3Heart = LoadTexture("Assets/Textures/hit3heart.png");
+    rm.player.hit2Heart = LoadTexture("Assets/Textures/hit2heart.png");
 
     rm.player.fiveHeartsG = LoadTexture("Assets/Textures/5coraçõesG.png");
     rm.player.fourHeartsG = LoadTexture("Assets/Textures/4coraçõesG.png");
     rm.player.treeHeartsG = LoadTexture("Assets/Textures/3coraçõesG.png");
     rm.player.twoHeartsG = LoadTexture("Assets/Textures/2coraçõesG.png");
     rm.player.oneHeartsG = LoadTexture("Assets/Textures/1coraçõesG.png");
+
+    rm.player.hit5HeartG = LoadTexture("Assets/Textures/hit5heartG.png");
+    rm.player.hit4HeartG = LoadTexture("Assets/Textures/hit4heartG.png");
+    rm.player.hit3HeartG = LoadTexture("Assets/Textures/hit3heartG.png");
+    rm.player.hit2HeartG = LoadTexture("Assets/Textures/hit2heartG.png");
 
     rm.player.zeroAura = LoadTexture("Assets/Textures/0aura.png");
     rm.player.oneAura = LoadTexture("Assets/Textures/1aura.png");
@@ -112,6 +125,7 @@ void loadResources()
     rm.player.playerAttackUp = LoadTexture("Assets/Textures/playerAttackUp.png");
     rm.player.playerJumpAttackUp = LoadTexture("Assets/Textures/playerJumpAttackUp.png");
     rm.player.playerAttackDown = LoadTexture("Assets/Textures/playerAttackDown.png");
+    rm.player.playerHealing = LoadTexture("Assets/Textures/playerHealing.png");
 
     rm.player.swordAttack = LoadTexture("Assets/Textures/swordAttack.png");
 
@@ -160,6 +174,7 @@ void unloadResouces()
 
 
     UnloadTexture(rm.gl.bench);
+    UnloadTexture(rm.gl.grass);
 
 
     UnloadTexture(rm.gw.defaultTile);
@@ -168,6 +183,9 @@ void unloadResouces()
     UnloadTexture(rm.gw.horizontalPowerB);
 
     UnloadTexture(rm.gw.ticketRU);
+
+    UnloadTexture(rm.gw.glitch1);
+    UnloadTexture(rm.gw.glitch2);
 
 
 
@@ -226,6 +244,7 @@ void unloadResouces()
     UnloadTexture(rm.player.playerAttackUp);
     UnloadTexture(rm.player.playerJumpAttackUp);
     UnloadTexture(rm.player.playerAttackDown);
+    UnloadTexture(rm.player.playerHealing);
 
     UnloadTexture(rm.player.swordAttack);
 }

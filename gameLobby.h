@@ -12,6 +12,9 @@ typedef struct GameLobby
     Block blocks[3000];
     int numberOfBlocks;
 
+    Grass grass[1000];
+    int numberOfGrass;
+
     Rectangle Banch;
     bool nearBanch;
 
