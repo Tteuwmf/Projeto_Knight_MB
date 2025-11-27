@@ -63,6 +63,12 @@ void loadResources()
     rm.player.twoHearts = LoadTexture("Assets/Textures/2corações.png");
     rm.player.oneHearts = LoadTexture("Assets/Textures/1corações.png");
 
+    rm.player.fiveHeartsG = LoadTexture("Assets/Textures/5coraçõesG.png");
+    rm.player.fourHeartsG = LoadTexture("Assets/Textures/4coraçõesG.png");
+    rm.player.treeHeartsG = LoadTexture("Assets/Textures/3coraçõesG.png");
+    rm.player.twoHeartsG = LoadTexture("Assets/Textures/2coraçõesG.png");
+    rm.player.oneHeartsG = LoadTexture("Assets/Textures/1coraçõesG.png");
+
     rm.player.zeroAura = LoadTexture("Assets/Textures/0aura.png");
     rm.player.oneAura = LoadTexture("Assets/Textures/1aura.png");
     rm.player.twoAura = LoadTexture("Assets/Textures/2aura.png");
@@ -70,6 +76,31 @@ void loadResources()
     rm.player.fourAura = LoadTexture("Assets/Textures/4aura.png");
     rm.player.fiveAura = LoadTexture("Assets/Textures/5aura.png");
     rm.player.sixAura = LoadTexture("Assets/Textures/6aura.png");
+
+    rm.player.zeroAuraG = LoadTexture("Assets/Textures/0auraGrande.png");
+    rm.player.oneAuraG = LoadTexture("Assets/Textures/1auraGrande.png");
+    rm.player.twoAuraG = LoadTexture("Assets/Textures/2auraGrande.png");
+    rm.player.treeAuraG = LoadTexture("Assets/Textures/3auraGrande.png");
+    rm.player.fourAuraG = LoadTexture("Assets/Textures/4auraGrande.png");
+    rm.player.fiveAuraG = LoadTexture("Assets/Textures/5auraGrande.png");
+    rm.player.sixAuraG = LoadTexture("Assets/Textures/6auraGrande.png");
+
+    rm.player.ticketsRU1 = LoadTexture("Assets/Textures/ticketRU1.png");
+    rm.player.ticketsRU2 = LoadTexture("Assets/Textures/ticketRU2.png");
+    rm.player.ticketsRU1G = LoadTexture("Assets/Textures/ticketRU1G.png");
+    rm.player.ticketsRU2G = LoadTexture("Assets/Textures/ticketRU2G.png");
+
+    rm.player.restingPlayer[0] = LoadTexture("Assets/Textures/restingPlayer.png");
+    rm.player.restingPlayer[1] = LoadTexture("Assets/Textures/restingPlayer2.png");
+    rm.player.normalPlayer = LoadTexture("Assets/Textures/normalPlayer.png");
+    rm.player.playerRunning[0] = LoadTexture("Assets/Textures/playerRunning.png");
+    rm.player.playerRunning[1] = LoadTexture("Assets/Textures/playerRunning2.png");
+    rm.player.playerJumping[0] = LoadTexture("Assets/Textures/playerJumping.png");
+    rm.player.playerJumping[1] = LoadTexture("Assets/Textures/playerJumping2.png");
+    rm.player.playerFalling[0] = LoadTexture("Assets/Textures/playerFalling.png");
+    rm.player.playerFalling[1] = LoadTexture("Assets/Textures/playerFalling2.png");
+
+
 }
 
 void unloadResouces()
@@ -131,6 +162,12 @@ void unloadResouces()
     UnloadTexture(rm.player.twoHearts );
     UnloadTexture(rm.player.oneHearts );
 
+    UnloadTexture(rm.player.fiveHeartsG );
+    UnloadTexture(rm.player.fourHeartsG );
+    UnloadTexture(rm.player.treeHeartsG );
+    UnloadTexture(rm.player.twoHeartsG );
+    UnloadTexture(rm.player.oneHeartsG );
+
     UnloadTexture(rm.player.zeroAura);
     UnloadTexture(rm.player.oneAura);
     UnloadTexture(rm.player.twoAura);
@@ -139,5 +176,28 @@ void unloadResouces()
     UnloadTexture(rm.player.fiveAura);
     UnloadTexture(rm.player.sixAura);
 
+    UnloadTexture(rm.player.zeroAuraG);
+    UnloadTexture(rm.player.oneAuraG);
+    UnloadTexture(rm.player.twoAuraG);
+    UnloadTexture(rm.player.treeAuraG);
+    UnloadTexture(rm.player.fourAuraG);
+    UnloadTexture(rm.player.fiveAuraG);
+    UnloadTexture(rm.player.sixAuraG);
+
+    UnloadTexture(rm.player.ticketsRU1);
+    UnloadTexture(rm.player.ticketsRU2);
+
+    UnloadTexture(rm.player.ticketsRU1G);
+    UnloadTexture(rm.player.ticketsRU2G);
+
+    UnloadTexture(rm.player.restingPlayer[0]);
+    UnloadTexture(rm.player.restingPlayer[1]);
+    UnloadTexture(rm.player.normalPlayer);
+    UnloadTexture(rm.player.playerRunning[0]);
+    UnloadTexture(rm.player.playerRunning[1]);
+    UnloadTexture(rm.player.playerJumping[0]);
+    UnloadTexture(rm.player.playerJumping[1]);
+    UnloadTexture(rm.player.playerFalling[0]);
+    UnloadTexture(rm.player.playerFalling[1]);
 
 }

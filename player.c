@@ -131,6 +131,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
             .timeToTheNextFrame = 0.5f,
 
             .progress = 0,
+            .inLevel = false,
 
         };
 
@@ -166,7 +167,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
             else
             {
                 player->speed.x *= 0.8f;
-                if(player->speed.x<10.0f && player->speed.x>10.0f)
+                if(player->speed.x<10.0f && player->speed.x>-10.0f)
                     player->speed.x =0.0f; // se não esta se movendo velocidade é zero
             }
         }
@@ -660,12 +661,133 @@ void applyKnockbackToPlayer(Player *player)
 //---------------------DRAW-PLAYER-----------------------
 void drawPlayer(Player *player)
 {
+    //DrawRectangleV(player->pos,player->dim,player->cor);
+    player->contTime += GetFrameTime();
+    if(player->contTime>=player->timeToTheNextFrame)
+    {
+        player->contTime = 0.0;
+        if(player->currentFrame==0)
+            player->currentFrame =1;
+        else
+            player->currentFrame =0;
+    }
+
+
+
     if(player->powers.usingHorizontalPower)
-        DrawTextureV(rm.gw.horizontalPowerA,player->powers.horizontalPower.pos, player->powers.horizontalPower.cor);
+    {
+         if(player->status.lookingAtR)
+        {
+            DrawTextureV(rm.gw.horizontalPowerA,player->powers.horizontalPower.pos, player->powers.horizontalPower.cor);
+        }
+        else
+        {
+            DrawTexturePro(rm.gw.horizontalPowerA,
+                        (Rectangle){0,0,-rm.gw.horizontalPowerA.width,rm.gw.horizontalPowerA.height},
+                        (Rectangle){player->powers.horizontalPower.pos.x,player->powers.horizontalPower.pos.y,rm.gw.horizontalPowerA.width,rm.gw.horizontalPowerA.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+        }
+    }
 
     if(player->status.resting==false)
-        DrawRectangleV(player->pos,player->dim,player->cor);
-    else DrawRectangleV(player->pos,player->dim,YELLOW);
+    {
+        if(player->speed.x==0 && player->status.onFloor)
+            DrawTexturePro(rm.player.normalPlayer,
+                        (Rectangle){0,0,rm.player.normalPlayer.width,rm.player.normalPlayer.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.normalPlayer.width,rm.player.normalPlayer.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+        else if(player->speed.x!=0 && player->status.onFloor && player->dashStatus.canDash)
+        {
+            if(player->status.lookingAtR)
+            {
+                DrawTexturePro(rm.player.playerRunning[player->currentFrame],
+                            (Rectangle){0,0,rm.player.playerRunning[player->currentFrame].width,rm.player.playerRunning[player->currentFrame].height},
+                            (Rectangle){player->pos.x,player->pos.y,rm.player.playerRunning[player->currentFrame].width,rm.player.playerRunning[player->currentFrame].height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.playerRunning[player->currentFrame],
+                            (Rectangle){0,0,-rm.player.playerRunning[player->currentFrame].width,rm.player.playerRunning[player->currentFrame].height},
+                            (Rectangle){player->pos.x,player->pos.y,rm.player.playerRunning[player->currentFrame].width,rm.player.playerRunning[player->currentFrame].height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+            }
+        }
+        else if(player->jumpStatus.isJumping)
+        {
+
+            if(player->status.lookingAtR)
+            {
+                DrawTexturePro(rm.player.playerJumping[player->currentFrame],
+                        (Rectangle){0,0,rm.player.playerJumping[player->currentFrame].width,rm.player.playerJumping[player->currentFrame].height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerJumping[player->currentFrame].width,rm.player.playerJumping[player->currentFrame].height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.playerJumping[player->currentFrame],
+                        (Rectangle){0,0,-rm.player.playerJumping[player->currentFrame].width,rm.player.playerJumping[player->currentFrame].height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerJumping[player->currentFrame].width,rm.player.playerJumping[player->currentFrame].height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+        }
+        else if(player->status.onFloor==false && player->jumpStatus.isJumping==false && player->dashStatus.canDash)
+        {
+
+            if(player->status.lookingAtR)
+            {
+                DrawTexturePro(rm.player.playerFalling[0],
+                        (Rectangle){0,0,rm.player.playerFalling[0].width,rm.player.playerFalling[0].height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerFalling[0].width,rm.player.playerFalling[0].height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.playerFalling[0],
+                        (Rectangle){0,0,-rm.player.playerFalling[0].width,rm.player.playerFalling[0].height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerFalling[0].width,rm.player.playerFalling[0].height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+        }
+
+    }
+    else
+    {
+        if(player->status.lookingAtR)
+            {
+                DrawTexturePro(rm.player.restingPlayer[player->currentFrame],
+                            (Rectangle){0,0,rm.player.restingPlayer[player->currentFrame].width,rm.player.restingPlayer[player->currentFrame].height},
+                            (Rectangle){player->pos.x,player->pos.y-10,rm.player.restingPlayer[player->currentFrame].width,rm.player.restingPlayer[player->currentFrame].height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.restingPlayer[player->currentFrame],
+                            (Rectangle){0,0,-rm.player.restingPlayer[player->currentFrame].width,rm.player.restingPlayer[player->currentFrame].height},
+                            (Rectangle){player->pos.x,player->pos.y-10,rm.player.restingPlayer[player->currentFrame].width,rm.player.restingPlayer[player->currentFrame].height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+            }
+    }
 
     drawPlayerSword(player);
 
@@ -678,29 +800,30 @@ void drawHud (Player *player, bool isFullscreen)
 
     //DrawText(TextFormat("Lives: %02i", player->status.life), 20,20,20, GREEN);
 
-    switch(player->status.life)
-    {
-    case 5:
-        DrawTexture(rm.player.fiveHearts, 20,20,WHITE);
-        break;
-    case 4:
-        DrawTexture(rm.player.fourHearts, 20,20,WHITE);
-        break;
-    case 3:
-        DrawTexture(rm.player.treeHearts, 20,20,WHITE);
-        break;
-    case 2:
-        DrawTexture(rm.player.twoHearts, 20,20,WHITE);
-        break;
-    case 1:
-        DrawTexture(rm.player.oneHearts, 20,20,WHITE);
-        break;
-
-    }
 
     //DrawText(TextFormat("Aura: %02i", player->status.aura), 20,50,20, GREEN);
 
     if(isFullscreen==false)
+    {
+        switch(player->status.life)
+        {
+        case 5:
+            DrawTexture(rm.player.fiveHearts, 20,20,WHITE);
+            break;
+        case 4:
+            DrawTexture(rm.player.fourHearts, 20,20,WHITE);
+            break;
+        case 3:
+            DrawTexture(rm.player.treeHearts, 20,20,WHITE);
+            break;
+        case 2:
+            DrawTexture(rm.player.twoHearts, 20,20,WHITE);
+            break;
+        case 1:
+            DrawTexture(rm.player.oneHearts, 20,20,WHITE);
+            break;
+        }
+
         switch(player->status.aura)
         {
         case 0:
@@ -733,10 +856,121 @@ void drawHud (Player *player, bool isFullscreen)
             break;
         }
 
+        if(player->inLevel)
+        {
+            DrawTexture(rm.player.ticketsRU2, 60, 60, WHITE);
+        }
+        else
+            DrawTexture(rm.player.ticketsRU1, 60, 60, WHITE);
 
 
-    DrawText(TextFormat("Amuletos: "), 20,80,20, GREEN);
-    DrawText(TextFormat("TicketsRU: %02i", player->status.ticketsRU), 20,110,20, GREEN);
+         DrawText(TextFormat("%02i", player->status.ticketsRU), 128,87,18, BLACK);
+
+    }
+    else
+    {
+        switch(player->status.life)
+        {
+        case 5:
+            DrawTexture(rm.player.fiveHeartsG, 20,20,WHITE);
+            break;
+        case 4:
+            DrawTexture(rm.player.fourHeartsG, 20,20,WHITE);
+            break;
+        case 3:
+            DrawTexture(rm.player.treeHeartsG, 20,20,WHITE);
+            break;
+        case 2:
+            DrawTexture(rm.player.twoHeartsG, 20,20,WHITE);
+            break;
+        case 1:
+            DrawTexture(rm.player.oneHeartsG, 20,20,WHITE);
+            break;
+        }
+
+         switch(player->status.aura)
+        {
+        case 0:
+        case 1:
+            DrawTexturePro(rm.player.zeroAuraG,
+                        (Rectangle){0,0,rm.player.zeroAuraG.width,rm.player.zeroAuraG.height},
+                        (Rectangle){90,130,rm.player.zeroAuraG.width,rm.player.zeroAuraG.height},
+                        (Vector2){rm.player.zeroAuraG.width/2.0f,rm.player.zeroAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 2:
+        case 3:
+             DrawTexturePro(rm.player.oneAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 4:
+        case 5:
+             DrawTexturePro(rm.player.twoAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 6:
+        case 7:
+             DrawTexturePro(rm.player.treeAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 8:
+        case 9:
+             DrawTexturePro(rm.player.fourAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 10:
+        case 11:
+             DrawTexturePro(rm.player.fiveAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 12:
+        case 13:
+             DrawTexturePro(rm.player.sixAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        }
+
+
+
+
+        if(player->inLevel)
+        {
+            DrawTexture(rm.player.ticketsRU2G, 180, 65, WHITE);
+        }
+        else
+            DrawTexture(rm.player.ticketsRU1G, 180, 65, WHITE);
+
+        DrawText(TextFormat("%02i", player->status.ticketsRU), 320,113,30, BLACK);
+    }
+
+
+
+    //DrawText(TextFormat("Amuletos: "), 20,80,20, GREEN);
     DrawText(TextFormat("FPS: %03i",fps),20,140,20,GREEN);
 }
 
@@ -793,7 +1027,8 @@ void resetPlayer(Player *player)
     player->attackStatus.attackUp = false;
     player->attackStatus.attackTime = 0.35f;
     player->currentFrame = 0;
-    player->progress =0;;
+    player->progress =0;
+    player->inLevel = false;
 }
 
 
