@@ -95,6 +95,7 @@ typedef struct SpecialAttacks
 {
     bool horizontalPowerActive;
     bool usingHorizontalPower;
+    int direction;
     HorizontalPower horizontalPower;
 
 }SpecialAttacks;

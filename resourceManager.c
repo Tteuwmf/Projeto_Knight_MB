@@ -108,6 +108,9 @@ void loadResources()
     rm.player.playerDash = LoadTexture("Assets/Textures/playerDash.png");
     rm.player.playerDoubleJump = LoadTexture("Assets/Textures/playerDoubleJump.png");
     rm.player.playerChiclete = LoadTexture("Assets/Textures/playerChiclete.png");
+    rm.player.playerAttack = LoadTexture("Assets/Textures/playerAttacks.png");
+
+    rm.player.swordAttack = LoadTexture("Assets/Textures/swordAttack.png");
 
 
 }
@@ -216,5 +219,7 @@ void unloadResouces()
     UnloadTexture(rm.player.playerDash);
     UnloadTexture(rm.player.playerDoubleJump );
     UnloadTexture(rm.player.playerChiclete);
+    UnloadTexture(rm.player.playerAttack);
 
+    UnloadTexture(rm.player.swordAttack);
 }
