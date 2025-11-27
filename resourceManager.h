@@ -117,6 +117,9 @@ typedef struct PlayerTextures
     Texture2D playerDash;
     Texture2D playerDoubleJump;
     Texture2D playerChiclete;
+    Texture2D playerAttack;
+
+    Texture2D swordAttack;
 
 }PlayerTextures;
 
