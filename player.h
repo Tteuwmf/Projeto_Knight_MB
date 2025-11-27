@@ -15,6 +15,7 @@ typedef struct PlayerStatus
     bool healing;
     float healingTime;
     float contHealingTime;
+    bool sufferingDamege;
     bool resting;
     int ticketsRU;
     float defaultSpeed;

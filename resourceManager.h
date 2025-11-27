@@ -74,6 +74,8 @@ typedef struct PlayerTextures
     Texture2D twoHearts;
     Texture2D oneHearts;
 
+    Texture2D hit5Heart;
+
     Texture2D fiveHeartsG;
     Texture2D fourHeartsG;
     Texture2D treeHeartsG;
@@ -96,6 +98,9 @@ typedef struct PlayerTextures
     Texture2D fiveAuraG;
     Texture2D sixAuraG;
 
+    Texture2D auraLeek;
+    Texture2D auraLeekG;
+
     Texture2D ticketsRU1;
     Texture2D ticketsRU2;
 
@@ -110,6 +115,8 @@ typedef struct PlayerTextures
     Texture2D playerJumping[2];
     Texture2D playerFalling[2];
     Texture2D playerDash;
+    Texture2D playerDoubleJump;
+    Texture2D playerChiclete;
 
 }PlayerTextures;
 
