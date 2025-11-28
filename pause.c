@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "pause.h"
+#include "player.h"
 
 const int X_PAUSE_BUTTON = 354;
 const int Y_RETURN_BUTTON = 175;
@@ -113,8 +114,15 @@ void inputUpdateAndDrawConfirm(Game *game)
     {
         game->status = MENU;
         if(game->lastStatus==GAMEWORLD)
+        {
             destroysGameWorld(game->gw);
-        game->gameWorldInitiate = false;
+            game->gameWorldInitiate = false;
+        }
+        else if(game->lastStatus==GAMELOBBY)
+        {
+            resetGameLobby(&game->gl,game->playerLobbyFirstPos);
+        }
+        resetPlayer(&game->player);
     }
 
 

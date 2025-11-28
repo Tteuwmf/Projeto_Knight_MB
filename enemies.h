@@ -45,6 +45,8 @@ typedef struct BasicEnemy
     bool haveCoins;
 
     Color cor;
+    int texture;
+    float contTime;
 
     float defaultSpeed; //velocidade padrão de movimetno
 

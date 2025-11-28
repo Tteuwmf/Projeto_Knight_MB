@@ -69,6 +69,10 @@ typedef struct GameWorldTextures
     Texture2D glitch1;
     Texture2D glitch2;
 
+    Texture2D skullBug1;
+    Texture2D skullBug2;
+
+
 }GameWorldTextures;
 
 typedef struct PlayerTextures

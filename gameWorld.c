@@ -537,12 +537,20 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
                 {
                     enemy->pos.x = block->pos.x-enemy->dim.x;
                     enemy->defaultSpeed = -enemy->defaultSpeed;
+                    if(enemy->texture==0)
+                        enemy->texture=1;
+                    else
+                        enemy->texture=0;
                 }
 
                 if(checkBasicEnemiesBlockCollision_Left(collisionRec ,block))
                 {
                     enemy->pos.x=block->pos.x+block->dim.x;
                     enemy->defaultSpeed = -enemy->defaultSpeed;
+                    if(enemy->texture==0)
+                        enemy->texture=1;
+                    else
+                        enemy->texture=0;
                 }
         }
     }
@@ -573,12 +581,18 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
                 {
                     enemy->pos.x = block->pos.x-enemy->dim.x;
                     enemy->speed.x = -enemy->speed.x;
+                    if(enemy->texture==1)
+                        enemy->texture = 0;
+                    else enemy->texture = 1;
                 }
 
                 if(checkBasicEnemiesBlockCollision_Left(collisionRec ,block))
                 {
                     enemy->pos.x=block->pos.x+block->dim.x;
                     enemy->speed.x = -enemy->speed.x;
+                    if(enemy->texture==1)
+                        enemy->texture = 0;
+                    else enemy->texture = 1;
                 }
         }
     }
