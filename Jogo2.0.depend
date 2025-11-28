@@ -178,7 +178,7 @@
 	"enemies.h"
 	"coins.h"
 
-1764271604 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\player.h
+1764334268 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\player.h
 	"raylib.h"
 
 1762518410 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\weapons.h
@@ -228,7 +228,7 @@
 	"raylib.h"
 	"gameWindow.h"
 
-1764294440 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\player.c
+1764334268 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\player.c
 	"raylib.h"
 	"player.h"
 	"weapons.h"
@@ -274,7 +274,7 @@
 	"player.h"
 	"blocks.h"
 
-1764281638 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamelobby.c
+1764333507 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamelobby.c
 	"raylib.h"
 	"gameLobby.h"
 	"blocks.h"

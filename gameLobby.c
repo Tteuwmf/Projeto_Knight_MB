@@ -472,10 +472,10 @@ void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool
         }
         else if(roomCamera)
         {
-            camera->target= (Vector2) {3632,598};
+            camera->target= (Vector2) {3442,686};
             camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
             camera->rotation = 0.0f;
-            camera->zoom = 2.5f;
+            camera->zoom = 4.5f;
         }
     }
 }

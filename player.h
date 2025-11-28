@@ -122,6 +122,7 @@ typedef struct PlayerWeapons
 typedef struct PlayerCharms
 {
     bool goldTickets;
+    bool debugSword;
 
 }PlayerCharms;
 
