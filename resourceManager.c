@@ -60,6 +60,8 @@ void loadResources()
 
     rm.gw.glitch1 = LoadTexture("Assets/Textures/glitchA.png");
     rm.gw.glitch2 = LoadTexture("Assets/Textures/glitchB.png");
+    rm.gw.skullBug1 = LoadTexture ("Assets/Textures/skullBug1.png");
+    rm.gw.skullBug2 = LoadTexture ("Assets/Textures/skullBug2.png");
 
 
 
@@ -186,6 +188,8 @@ void unloadResouces()
 
     UnloadTexture(rm.gw.glitch1);
     UnloadTexture(rm.gw.glitch2);
+    UnloadTexture(rm.gw.skullBug1);
+    UnloadTexture(rm.gw.skullBug2);
 
 
 

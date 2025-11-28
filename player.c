@@ -438,7 +438,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
             }
         }
 
-        if (IsKeyPressed(KEY_SPACE)&&player->jumpStatus.canDoubleJump) //se pode pular e a tecla for acionada
+        if (IsKeyPressed(KEY_SPACE)&&player->jumpStatus.canDoubleJump && player->inventory.doubleJump) //se pode pular e a tecla for acionada
         {
             player->speed.y = -player->jumpStatus.defaultJumpForce; // realiza o pulo
             player->jumpStatus.isJumping = true;
@@ -457,10 +457,10 @@ void inputAndUpdatePlayer(Player *player, float delta)
             player->status.onFloor = false;
             player->jumpStatus.wasOnFloor = false;
 
-            if(player->inventory.doubleJump)
-            {
+
+
                 player->jumpStatus.canDoubleJump = true;
-            }
+
         }
 
         if(IsKeyDown(KEY_SPACE)&& player->jumpStatus.isJumping) //se esta pulamndo e atecla continua pressionada
@@ -533,12 +533,13 @@ void inputAndUpdatePlayer(Player *player, float delta)
                 }
             }
 
-            if(!player->chiclete.leftWall && !player->chiclete.rightWall)
+
+    }
+
+    if(!player->chiclete.leftWall && !player->chiclete.rightWall)
             {
                 player->chiclete.canUseChiclete = true;
             }
-
-    }
 
 
 //------------------------------------------------------------
@@ -813,7 +814,7 @@ void drawPlayer(Player *player)
                          WHITE);
             }
         }
-        else if(player->dashStatus.dashTime>=0.0 && player->attackStatus.attacking==false)
+        else if(player->dashStatus.dashTime>=0.0 && player->attackStatus.attacking==false && player->inventory.teclaTab)
         {
             if(player->status.lookingAtR)
             {
@@ -835,7 +836,7 @@ void drawPlayer(Player *player)
             }
 
         }
-        else if(player->chiclete.contChicleteTime<=0.5f && player->chiclete.canUseChiclete==false && player->attackStatus.attacking==false)
+        else if(player->chiclete.contChicleteTime<=0.5f && player->chiclete.canUseChiclete==false && player->attackStatus.attacking==false && player->inventory.chiclete)
         {
             if(player->status.lookingAtR)
             {
@@ -857,7 +858,7 @@ void drawPlayer(Player *player)
             }
 
         }
-        else if(player->status.onFloor==false && player->jumpStatus.canJump==false && player->jumpStatus.canDoubleJump==false && player->jumpStatus.isJumping && player->chiclete.contChicleteTime==0.0 && player->attackStatus.attacking==false)
+        else if(player->status.onFloor==false && player->jumpStatus.canJump==false && player->jumpStatus.canDoubleJump==false && player->jumpStatus.isJumping && player->chiclete.contChicleteTime==0.0 && player->attackStatus.attacking==false && player->inventory.doubleJump)
         {
             if(player->status.lookingAtR)
             {
