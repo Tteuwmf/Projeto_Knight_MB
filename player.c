@@ -57,18 +57,26 @@ Player createNewPlayer (Vector2 dim, Color cor)
                     .cor = WHITE,
                     .currentFrame = 0,
                     .numberOfFrames=0,
-                    .contTime=0,
+                    .contTime=0.0,
+                    .contTextureTime=0.0,
                     .attackTime = 4.0,
-                    .timeToTheNextFrame=0,
+                    .timeToTheNextFrame=0.25,
                 },
             },
 
             .inventory = (PlayerInventory)
             {
+                .colectedCharms = (PlayerCharms)
+                {
+                    .goldTickets = false,
+                    .debugSword = false,
+                    .maisEgo = false,
+                },
                 .equippedCharms = (PlayerCharms)
                 {
                     .goldTickets = false,
                     .debugSword = false,
+                    .maisEgo = false,
                 },
                 .equippedWeapons = (PlayerWeapons)
                 {
@@ -146,6 +154,16 @@ Player createNewPlayer (Vector2 dim, Color cor)
 
 void inputAndUpdatePlayer(Player *player, float delta)
 {
+    if(player->inventory.equippedCharms.maisEgo)
+    {
+        if(player->status.aura>=26)
+            player->status.aura=26;
+    }
+    else
+        if(player->status.aura>=13)
+            player->status.aura=13;
+
+
 
     //============MOVESET============
     //-------HORIZONTAL-MOVES--------
@@ -267,6 +285,8 @@ void inputAndUpdatePlayer(Player *player, float delta)
     if (IsKeyPressed(KEY_C)&& player->powers.horizontalPowerActive && player->powers.usingHorizontalPower==false && player->status.aura>=3 && player->status.healing==false)
     {
         player->powers.usingHorizontalPower=true;
+
+        player->powers.horizontalPower.contTextureTime = 0.0f;
 
         player->status.aura-=3;
 
@@ -691,13 +711,39 @@ void drawPlayer(Player *player)
 
     if(player->powers.usingHorizontalPower)
     {
+        player->powers.horizontalPower.contTextureTime += GetFrameTime();
+
+        if(player->powers.horizontalPower.contTextureTime>=player->powers.horizontalPower.timeToTheNextFrame)
+        {
+            if(player->powers.horizontalPower.currentFrame==0)
+                player->powers.horizontalPower.currentFrame = 1;
+            else
+            {
+                 player->powers.horizontalPower.currentFrame = 0;
+            }
+
+            player->powers.horizontalPower.contTextureTime=0.0;
+        }
+
+
         if(player->powers.direction==1)
         {
-            DrawTextureV(rm.gw.horizontalPowerA,player->powers.horizontalPower.pos, player->powers.horizontalPower.cor);
+            if(player->powers.horizontalPower.currentFrame==0)
+                DrawTextureV(rm.gw.horizontalPowerA,player->powers.horizontalPower.pos, player->powers.horizontalPower.cor);
+            else
+                DrawTextureV(rm.gw.horizontalPowerB,player->powers.horizontalPower.pos, player->powers.horizontalPower.cor);
         }
         else
         {
-            DrawTexturePro(rm.gw.horizontalPowerA,
+            if(player->powers.horizontalPower.currentFrame==0)
+                DrawTexturePro(rm.gw.horizontalPowerA,
+                        (Rectangle){0,0,-rm.gw.horizontalPowerA.width,rm.gw.horizontalPowerA.height},
+                        (Rectangle){player->powers.horizontalPower.pos.x,player->powers.horizontalPower.pos.y,rm.gw.horizontalPowerA.width,rm.gw.horizontalPowerA.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            else
+                DrawTexturePro(rm.gw.horizontalPowerB,
                         (Rectangle){0,0,-rm.gw.horizontalPowerA.width,rm.gw.horizontalPowerA.height},
                         (Rectangle){player->powers.horizontalPower.pos.x,player->powers.horizontalPower.pos.y,rm.gw.horizontalPowerA.width,rm.gw.horizontalPowerA.height},
                         (Vector2){16,16},
