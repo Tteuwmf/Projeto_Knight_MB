@@ -86,6 +86,7 @@ typedef struct HorizontalPower
     int currentFrame;
     int numberOfFrames;
     float contTime;
+    float contTextureTime;
     float attackTime;
     float timeToTheNextFrame;
 
@@ -123,12 +124,14 @@ typedef struct PlayerCharms
 {
     bool goldTickets;
     bool debugSword;
+    bool maisEgo;
 
 }PlayerCharms;
 
 typedef struct PlayerInventory
 {
     PlayerCharms equippedCharms;
+    PlayerCharms colectedCharms;
     PlayerWeapons equippedWeapons;
 
     bool doubleJump;

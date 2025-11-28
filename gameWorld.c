@@ -406,6 +406,9 @@ void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
                     case 0:
                         player->inventory.equippedCharms.goldTickets = true;
                         break;
+                    case 1:
+                        player->inventory.equippedCharms.debugSword = true;
+                        break;
                     default:
                         break;
                 }
