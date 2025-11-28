@@ -68,14 +68,15 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 .equippedCharms = (PlayerCharms)
                 {
                     .goldTickets = false,
+                    .debugSword = false,
                 },
                 .equippedWeapons = (PlayerWeapons)
                 {
                     .defaultSword = true,
                 },
-                .teclaTab = true,
-                .doubleJump = true,
-                .chiclete = true,
+                .teclaTab = false,
+                .doubleJump = false,
+                .chiclete = false,
             },
 
 

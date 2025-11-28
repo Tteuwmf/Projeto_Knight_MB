@@ -681,7 +681,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                 {
                     if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         enemy->knockbackStatus.knockbackR=true;
                         player->knockbackStatus.swordKnockbackL = true;
@@ -689,7 +693,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     }
                     else if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         enemy->knockbackStatus.knockbackL=true;
                         player->knockbackStatus.swordKnockbackR = true;
@@ -697,7 +705,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     }
                     else if(checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         player->knockbackStatus.swordKnockbackUp = true;
                         player->sword.activated = false;
@@ -707,7 +719,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                 {
                      if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         enemy->knockbackStatus.knockbackR=true;
                         player->knockbackStatus.swordKnockbackL = true;
@@ -715,7 +731,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     }
                     else if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         enemy->knockbackStatus.knockbackL=true;
                         player->knockbackStatus.swordKnockbackR = true;
@@ -723,7 +743,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     }
                     else if(checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         player->knockbackStatus.swordKnockbackUp = true;
                         player->sword.activated = false;
@@ -733,7 +757,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                 {
                     if (checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.x<=enemy->pos.x  && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         enemy->knockbackStatus.knockbackL=true;
                         player->knockbackStatus.swordKnockbackR = true;
@@ -741,7 +769,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     }
                     else if (checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.x>enemy->pos.x && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         enemy->knockbackStatus.knockbackR=true;
                         player->knockbackStatus.swordKnockbackL = true;
@@ -749,7 +781,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     }
                     else if(checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         player->knockbackStatus.swordKnockbackUp = true;
                         player->sword.activated = false;
@@ -773,7 +809,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                 {
                     if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         enemy->knockbackStatus.knockbackR=true;
                         player->knockbackStatus.swordKnockbackL = true;
@@ -781,7 +821,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     }
                     else if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         enemy->knockbackStatus.knockbackL=true;
                         player->knockbackStatus.swordKnockbackR = true;
@@ -789,7 +833,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     }
                     else if(checkAirBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         player->knockbackStatus.swordKnockbackUp = true;
                         player->sword.activated = false;
@@ -799,7 +847,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                 {
                      if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         enemy->knockbackStatus.knockbackR=true;
                         player->knockbackStatus.swordKnockbackL = true;
@@ -807,7 +859,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     }
                     else if (checkBasicEnemiesPlayerSwordCollision_Left(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         enemy->knockbackStatus.knockbackL=true;
                         player->knockbackStatus.swordKnockbackR = true;
@@ -815,7 +871,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     }
                     else if(checkAirBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         player->knockbackStatus.swordKnockbackUp = true;
                         player->sword.activated = false;
@@ -825,7 +885,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                 {
                     if (checkAirBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.x<=enemy->pos.x  && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         enemy->knockbackStatus.knockbackL=true;
                         player->knockbackStatus.swordKnockbackR = true;
@@ -833,7 +897,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     }
                     else if (checkAirBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.x>enemy->pos.x && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         enemy->knockbackStatus.knockbackR=true;
                         player->knockbackStatus.swordKnockbackL = true;
@@ -841,7 +909,11 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                     }
                     else if(checkAirBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.y+player->dim.y<enemy->pos.y)
                     {
-                        enemy->life-= 1;
+                        if(player->inventory.equippedCharms.debugSword)
+                            enemy->life-= 2;
+                        else
+                            enemy->life-= 1;
+
                         player->status.aura++;
                         player->knockbackStatus.swordKnockbackUp = true;
                         player->sword.activated = false;
@@ -881,7 +953,12 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                 }
 
                 player->status.aura++;
-                boss->life -= 1;
+
+                if(player->inventory.equippedCharms.debugSword)
+                    boss->life-= 2;
+                else
+                    boss->life-= 1;
+
                 boss->sufferingDamege = true;
                 boss->contDamegeTime = boss->limitDamegeTime;
             }
@@ -1037,24 +1114,36 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
             player->knockbackStatus.knockbackL = true;
             player->status.invulnerable=true;
             player->status.life--;
+            player->status.life--;
+            if(player->inventory.equippedCharms.debugSword)
+                player->status.life--;
         }
         else if (CheckCollisionRecs(collisionRec->left, bossRec))
         {
             player->knockbackStatus.knockbackR = true;
             player->status.invulnerable=true;
             player->status.life--;
+            player->status.life--;
+            if(player->inventory.equippedCharms.debugSword)
+                player->status.life--;
         }
         else if (CheckCollisionRecs(collisionRec->upper, bossRec))
         {
             player->knockbackStatus.knockbackUp= true;
             player->status.invulnerable=true;
             player->status.life--;
+            player->status.life--;
+            if(player->inventory.equippedCharms.debugSword)
+                player->status.life--;
         }
         else if (CheckCollisionRecs(collisionRec->under, bossRec))
         {
             player->knockbackStatus.knockbackUn = true;
             player->status.invulnerable=true;
             player->status.life--;
+            player->status.life--;
+            if(player->inventory.equippedCharms.debugSword)
+                player->status.life--;
         }
     }
 }
