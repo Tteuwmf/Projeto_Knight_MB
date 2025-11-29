@@ -5,4 +5,6 @@
 
 void inputUpdateAndDrawMenu(Game *game);
 
+void inputUpdateAndDrawLoad(Game *game);
+
 #endif // MENU_H

@@ -21,6 +21,8 @@ typedef struct GameLobby
     float contRestTime;
     float restTime;
 
+    bool gameIsSaved;
+
     Rectangle Room;
     bool nearRoom;
     bool roomCamera;

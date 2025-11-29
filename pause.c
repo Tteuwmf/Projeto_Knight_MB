@@ -113,6 +113,9 @@ void inputUpdateAndDrawConfirm(Game *game)
     if (mouseOnYesButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
         game->status = MENU;
+        game->saveSlot1 = false;
+        game->saveSlot2 = false;
+        game->saveSlot3 = false;
         if(game->lastStatus==GAMEWORLD)
         {
             destroysGameWorld(game->gw);
