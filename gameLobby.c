@@ -30,6 +30,9 @@ GameLobby createGameLobby(Player *player)
         .nearComputer = false,
         .roomCamera = false,
 
+        .contRestTime = 0.0f,
+        .restTime = 1.0f,
+
         .fadeScreenGL = 1.0f,
     };
 
@@ -184,9 +187,16 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 
     if(gl->player->status.resting)
     {
-        gl->player->status.life++;
-        if(gl->player->status.life>=5)
-            gl->player->status.life = 5;
+        gl->contRestTime+= GetFrameTime();
+
+        if(gl->contRestTime>=gl->restTime)
+        {
+            gl->player->status.life++;
+            gl->contRestTime = 0.0;
+        }
+
+        if(gl->player->status.life>=gl->player->status.maxLife)
+            gl->player->status.life = gl->player->status.maxLife;
     }
 
 

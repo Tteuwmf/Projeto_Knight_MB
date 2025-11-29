@@ -60,28 +60,36 @@ void loadResources()
 
     rm.gw.glitch1 = LoadTexture("Assets/Textures/glitchA.png");
     rm.gw.glitch2 = LoadTexture("Assets/Textures/glitchB.png");
-    rm.gw.skullBug1 = LoadTexture ("Assets/Textures/skullBug1.png");
-    rm.gw.skullBug2 = LoadTexture ("Assets/Textures/skullBug2.png");
+    rm.gw.skullBug[0] = LoadTexture ("Assets/Textures/skullBug1.png");
+    rm.gw.skullBug[1] = LoadTexture ("Assets/Textures/skullBug2.png");
 
 
 
+    rm.player.sevenHearts = LoadTexture("Assets/Textures/7corações.png");
+    rm.player.sixHearts = LoadTexture("Assets/Textures/6corações.png");
     rm.player.fiveHearts = LoadTexture("Assets/Textures/5corações.png");
     rm.player.fourHearts = LoadTexture("Assets/Textures/4corações.png");
     rm.player.treeHearts = LoadTexture("Assets/Textures/3corações.png");
     rm.player.twoHearts = LoadTexture("Assets/Textures/2corações.png");
     rm.player.oneHearts = LoadTexture("Assets/Textures/1corações.png");
 
+    rm.player.hit7Heart = LoadTexture("Assets/Textures/hit7heart.png");
+    rm.player.hit6Heart = LoadTexture("Assets/Textures/hit6heart.png");
     rm.player.hit5Heart = LoadTexture("Assets/Textures/hit5heart.png");
     rm.player.hit4Heart = LoadTexture("Assets/Textures/hit4heart.png");
     rm.player.hit3Heart = LoadTexture("Assets/Textures/hit3heart.png");
     rm.player.hit2Heart = LoadTexture("Assets/Textures/hit2heart.png");
 
+    rm.player.sevenHeartsG = LoadTexture("Assets/Textures/7coraçõesG.png");
+    rm.player.sixHeartsG = LoadTexture("Assets/Textures/6coraçõesG.png");
     rm.player.fiveHeartsG = LoadTexture("Assets/Textures/5coraçõesG.png");
     rm.player.fourHeartsG = LoadTexture("Assets/Textures/4coraçõesG.png");
     rm.player.treeHeartsG = LoadTexture("Assets/Textures/3coraçõesG.png");
     rm.player.twoHeartsG = LoadTexture("Assets/Textures/2coraçõesG.png");
     rm.player.oneHeartsG = LoadTexture("Assets/Textures/1coraçõesG.png");
 
+    rm.player.hit7HeartG = LoadTexture("Assets/Textures/hit7heartG.png");
+    rm.player.hit6HeartG = LoadTexture("Assets/Textures/hit6heartG.png");
     rm.player.hit5HeartG = LoadTexture("Assets/Textures/hit5heartG.png");
     rm.player.hit4HeartG = LoadTexture("Assets/Textures/hit4heartG.png");
     rm.player.hit3HeartG = LoadTexture("Assets/Textures/hit3heartG.png");
@@ -94,6 +102,13 @@ void loadResources()
     rm.player.fourAura = LoadTexture("Assets/Textures/4aura.png");
     rm.player.fiveAura = LoadTexture("Assets/Textures/5aura.png");
     rm.player.sixAura = LoadTexture("Assets/Textures/6aura.png");
+    rm.player.sevenAura = LoadTexture("Assets/Textures/7aura.png");
+    rm.player.eightAura = LoadTexture("Assets/Textures/8aura.png");
+    rm.player.nineAura = LoadTexture("Assets/Textures/9aura.png");
+    rm.player.tenAura = LoadTexture("Assets/Textures/10aura.png");
+    rm.player.elevenAura = LoadTexture("Assets/Textures/11aura.png");
+    rm.player.twelveAura = LoadTexture("Assets/Textures/12aura.png");
+
 
     rm.player.zeroAuraG = LoadTexture("Assets/Textures/0auraGrande.png");
     rm.player.oneAuraG = LoadTexture("Assets/Textures/1auraGrande.png");
@@ -102,6 +117,12 @@ void loadResources()
     rm.player.fourAuraG = LoadTexture("Assets/Textures/4auraGrande.png");
     rm.player.fiveAuraG = LoadTexture("Assets/Textures/5auraGrande.png");
     rm.player.sixAuraG = LoadTexture("Assets/Textures/6auraGrande.png");
+    rm.player.sevenAuraG = LoadTexture("Assets/Textures/7auraGrande.png");
+    rm.player.eightAuraG = LoadTexture("Assets/Textures/8auraGrande.png");
+    rm.player.nineAuraG = LoadTexture("Assets/Textures/9auraGrande.png");
+    rm.player.tenAuraG = LoadTexture("Assets/Textures/10auraGrande.png");
+    rm.player.elevenAuraG = LoadTexture("Assets/Textures/11auraGrande.png");
+    rm.player.twelveAuraG = LoadTexture("Assets/Textures/12auraGrande.png");
 
     rm.player.auraLeek = LoadTexture("Assets/Textures/auraLeek.png");
     rm.player.auraLeekG = LoadTexture("Assets/Textures/auraLeekG.png");
@@ -188,19 +209,34 @@ void unloadResouces()
 
     UnloadTexture(rm.gw.glitch1);
     UnloadTexture(rm.gw.glitch2);
-    UnloadTexture(rm.gw.skullBug1);
-    UnloadTexture(rm.gw.skullBug2);
+    UnloadTexture(rm.gw.skullBug[0]);
+    UnloadTexture(rm.gw.skullBug[1]);
 
 
-
+    UnloadTexture(rm.player.sevenHearts);
+    UnloadTexture(rm.player.sixHearts);
     UnloadTexture(rm.player.fiveHearts );
     UnloadTexture(rm.player.fourHearts );
     UnloadTexture(rm.player.treeHearts );
     UnloadTexture(rm.player.twoHearts );
     UnloadTexture(rm.player.oneHearts );
 
+    UnloadTexture(rm.player.hit7Heart);
+    UnloadTexture(rm.player.hit6Heart);
     UnloadTexture(rm.player.hit5Heart);
+    UnloadTexture(rm.player.hit4Heart);
+    UnloadTexture(rm.player.hit3Heart);
+    UnloadTexture(rm.player.hit2Heart);
 
+    UnloadTexture(rm.player.hit7HeartG);
+    UnloadTexture(rm.player.hit6HeartG);
+    UnloadTexture(rm.player.hit5HeartG);
+    UnloadTexture(rm.player.hit4HeartG);
+    UnloadTexture(rm.player.hit3HeartG);
+    UnloadTexture(rm.player.hit2HeartG);
+
+    UnloadTexture(rm.player.sevenHeartsG);
+    UnloadTexture(rm.player.sixHeartsG);
     UnloadTexture(rm.player.fiveHeartsG );
     UnloadTexture(rm.player.fourHeartsG );
     UnloadTexture(rm.player.treeHeartsG );
@@ -214,6 +250,12 @@ void unloadResouces()
     UnloadTexture(rm.player.fourAura);
     UnloadTexture(rm.player.fiveAura);
     UnloadTexture(rm.player.sixAura);
+    UnloadTexture(rm.player.sevenAura);
+    UnloadTexture(rm.player.eightAura);
+    UnloadTexture(rm.player.nineAura);
+    UnloadTexture(rm.player.tenAura);
+    UnloadTexture(rm.player.elevenAura);
+    UnloadTexture(rm.player.twelveAura);
 
     UnloadTexture(rm.player.zeroAuraG);
     UnloadTexture(rm.player.oneAuraG);
@@ -222,6 +264,12 @@ void unloadResouces()
     UnloadTexture(rm.player.fourAuraG);
     UnloadTexture(rm.player.fiveAuraG);
     UnloadTexture(rm.player.sixAuraG);
+    UnloadTexture(rm.player.sevenAuraG);
+    UnloadTexture(rm.player.eightAuraG);
+    UnloadTexture(rm.player.nineAuraG);
+    UnloadTexture(rm.player.tenAuraG);
+    UnloadTexture(rm.player.elevenAuraG);
+    UnloadTexture(rm.player.twelveAuraG);
 
     UnloadTexture(rm.player.auraLeek);
     UnloadTexture(rm.player.auraLeekG);

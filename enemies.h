@@ -47,6 +47,7 @@ typedef struct BasicEnemy
     Color cor;
     int texture;
     float contTime;
+    int currentFrame;
 
     float defaultSpeed; //velocidade padrão de movimetno
 

@@ -18,6 +18,9 @@ typedef struct GameLobby
     Rectangle Banch;
     bool nearBanch;
 
+    float contRestTime;
+    float restTime;
+
     Rectangle Room;
     bool nearRoom;
     bool roomCamera;

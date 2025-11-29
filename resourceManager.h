@@ -69,31 +69,39 @@ typedef struct GameWorldTextures
     Texture2D glitch1;
     Texture2D glitch2;
 
-    Texture2D skullBug1;
-    Texture2D skullBug2;
+    Texture2D skullBug[2];
 
 
 }GameWorldTextures;
 
 typedef struct PlayerTextures
 {
+
+    Texture2D sevenHearts;
+    Texture2D sixHearts;
     Texture2D fiveHearts;
     Texture2D fourHearts;
     Texture2D treeHearts;
     Texture2D twoHearts;
     Texture2D oneHearts;
 
+    Texture2D hit7Heart;
+    Texture2D hit6Heart;
     Texture2D hit5Heart;
     Texture2D hit4Heart;
     Texture2D hit3Heart;
     Texture2D hit2Heart;
 
+    Texture2D sevenHeartsG;
+    Texture2D sixHeartsG;
     Texture2D fiveHeartsG;
     Texture2D fourHeartsG;
     Texture2D treeHeartsG;
     Texture2D twoHeartsG;
     Texture2D oneHeartsG;
 
+    Texture2D hit7HeartG;
+    Texture2D hit6HeartG;
     Texture2D hit5HeartG;
     Texture2D hit4HeartG;
     Texture2D hit3HeartG;
@@ -106,6 +114,12 @@ typedef struct PlayerTextures
     Texture2D fourAura;
     Texture2D fiveAura;
     Texture2D sixAura;
+    Texture2D sevenAura;
+    Texture2D eightAura;
+    Texture2D nineAura;
+    Texture2D tenAura;
+    Texture2D elevenAura;
+    Texture2D twelveAura;
 
     Texture2D zeroAuraG;
     Texture2D oneAuraG;
@@ -114,6 +128,12 @@ typedef struct PlayerTextures
     Texture2D fourAuraG;
     Texture2D fiveAuraG;
     Texture2D sixAuraG;
+    Texture2D sevenAuraG;
+    Texture2D eightAuraG;
+    Texture2D nineAuraG;
+    Texture2D tenAuraG;
+    Texture2D elevenAuraG;
+    Texture2D twelveAuraG;
 
     Texture2D auraLeek;
     Texture2D auraLeekG;

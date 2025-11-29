@@ -124,7 +124,9 @@ typedef struct PlayerCharms
 {
     bool goldTickets;
     bool debugSword;
-    bool maisEgo;
+    bool plusEgo;
+    bool gamerHeart;
+    bool programmerHands;
 
 }PlayerCharms;
 

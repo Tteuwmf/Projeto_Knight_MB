@@ -20,6 +20,7 @@ BasicEnemy createBasicEnemies(Vector2 pos)
         .cor = RED,
         .texture = 0,
         .contTime = 0.0f,
+        .currentFrame = 0,
 
         .collisionRecs = {{0}},
 
@@ -369,6 +370,17 @@ void updateEnemies (Enemies *enemies, float delta)
         {
             updateBasicEnemies(enemy1, delta);
         }
+
+        enemy1->contTime+=delta;
+        if(enemy1->contTime>=0.75)
+        {
+            if(enemy1->currentFrame==0)
+                enemy1->currentFrame = 1;
+            else
+                enemy1->currentFrame = 0;
+
+            enemy1->contTime = 0.0f;
+        }
     }
 
     for(int a=0;a<enemies->numberOfAirBasicEnemies;a++)
@@ -381,6 +393,7 @@ void updateEnemies (Enemies *enemies, float delta)
         }
     }
 
+
 }
 
 //----------------------------------------------------------
@@ -391,18 +404,18 @@ void drawBasicEnemies(BasicEnemy *enemy1)
 {
     if(enemy1->texture==0)
         {
-            DrawTexturePro(rm.gw.skullBug1,
-                        (Rectangle){0,0,rm.gw.skullBug1.width,rm.gw.skullBug1.height},
-                        (Rectangle){enemy1->pos.x,enemy1->pos.y,rm.gw.skullBug1.width,rm.gw.skullBug1.height},
+            DrawTexturePro(rm.gw.skullBug[enemy1->currentFrame],
+                        (Rectangle){0,0,rm.gw.skullBug[enemy1->currentFrame].width,rm.gw.skullBug[enemy1->currentFrame].height},
+                        (Rectangle){enemy1->pos.x,enemy1->pos.y,rm.gw.skullBug[enemy1->currentFrame].width,rm.gw.skullBug[enemy1->currentFrame].height},
                         (Vector2){12,12},
                          0.0f,
                          WHITE);
         }
         else
         {
-            DrawTexturePro(rm.gw.skullBug1,
-                        (Rectangle){0,0,-rm.gw.skullBug1.width,rm.gw.skullBug1.height},
-                        (Rectangle){enemy1->pos.x,enemy1->pos.y,rm.gw.skullBug1.width,rm.gw.skullBug1.height},
+            DrawTexturePro(rm.gw.skullBug[enemy1->currentFrame],
+                        (Rectangle){0,0,-rm.gw.skullBug[enemy1->currentFrame].width,rm.gw.skullBug[enemy1->currentFrame].height},
+                        (Rectangle){enemy1->pos.x,enemy1->pos.y,rm.gw.skullBug[enemy1->currentFrame].width,rm.gw.skullBug[enemy1->currentFrame].height},
                         (Vector2){12,12},
                          0.0f,
                          WHITE);

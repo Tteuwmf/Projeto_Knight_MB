@@ -70,13 +70,17 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 {
                     .goldTickets = false,
                     .debugSword = false,
-                    .maisEgo = false,
+                    .plusEgo = false,
+                    .gamerHeart = false,
+                    .programmerHands = false,
                 },
                 .equippedCharms = (PlayerCharms)
                 {
                     .goldTickets = false,
                     .debugSword = false,
-                    .maisEgo = false,
+                    .plusEgo = false,
+                    .gamerHeart = false,
+                    .programmerHands = false,
                 },
                 .equippedWeapons = (PlayerWeapons)
                 {
@@ -154,14 +158,29 @@ Player createNewPlayer (Vector2 dim, Color cor)
 
 void inputAndUpdatePlayer(Player *player, float delta)
 {
-    if(player->inventory.equippedCharms.maisEgo)
+    if(player->inventory.equippedCharms.plusEgo)
     {
-        if(player->status.aura>=26)
-            player->status.aura=26;
+        if(player->status.aura>=25)
+            player->status.aura=25;
     }
     else
         if(player->status.aura>=13)
             player->status.aura=13;
+
+    if(player->inventory.equippedCharms.gamerHeart)
+    {
+        player->status.maxLife = 7;
+        if(player->status.life>=7)
+            player->status.life =7;
+    }
+    else
+    {
+        player->status.maxLife = 5;
+        if(player->status.life>=5)
+            player->status.life =5;
+    }
+
+
 
 
 
@@ -282,32 +301,66 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
             //-----ESPECIAL-ATTACKS-----
 
-    if (IsKeyPressed(KEY_C)&& player->powers.horizontalPowerActive && player->powers.usingHorizontalPower==false && player->status.aura>=3 && player->status.healing==false)
+    if (IsKeyPressed(KEY_C)&& player->powers.horizontalPowerActive && player->powers.usingHorizontalPower==false  && player->status.healing==false)
     {
-        player->powers.usingHorizontalPower=true;
-
-        player->powers.horizontalPower.contTextureTime = 0.0f;
-
-        player->status.aura-=3;
-
-        player->powers.horizontalPower.dim = (Vector2){32,32};
-
-        player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
-
-        if (player->status.lookingAtL)
+        if(player->inventory.equippedCharms.plusEgo)
         {
-            player->powers.horizontalPower.speed.x = -400;
-            player->powers.direction = 0;
-            player->powers.horizontalPower.pos = (Vector2){player->pos.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+            if(player->status.aura>=12)
+            {
+                player->status.aura-= 12;
 
+                player->powers.usingHorizontalPower=true;
+
+                player->powers.horizontalPower.contTextureTime = 0.0f;
+
+                player->powers.horizontalPower.dim = (Vector2){32,32};
+
+                player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+
+                if (player->status.lookingAtL)
+                {
+                    player->powers.horizontalPower.speed.x = -400;
+                    player->powers.direction = 0;
+                    player->powers.horizontalPower.pos = (Vector2){player->pos.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+
+                }
+                else
+                {
+                    player->powers.horizontalPower.speed.x = 400;
+                    player->powers.direction = 1;
+                    player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+                }
+            }
         }
         else
         {
-            player->powers.horizontalPower.speed.x = 400;
-            player->powers.direction = 1;
-            player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
-        }
+            if(player->status.aura>=3)
+            {
+                player->status.aura -= 3;
 
+                player->powers.usingHorizontalPower=true;
+
+                player->powers.horizontalPower.contTextureTime = 0.0f;
+
+                player->powers.horizontalPower.dim = (Vector2){32,32};
+
+                player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+
+                if (player->status.lookingAtL)
+                {
+                    player->powers.horizontalPower.speed.x = -400;
+                    player->powers.direction = 0;
+                    player->powers.horizontalPower.pos = (Vector2){player->pos.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+
+                }
+                else
+                {
+                    player->powers.horizontalPower.speed.x = 400;
+                    player->powers.direction = 1;
+                    player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+                }
+            }
+        }
     }
     else
     {
@@ -323,25 +376,50 @@ void inputAndUpdatePlayer(Player *player, float delta)
     }
 
     //--------------SKILLS--------------
-
-    if(player->status.onFloor && player->status.aura>=6 && IsKeyPressed(KEY_Q))
+    if(player->inventory.equippedCharms.plusEgo==false)
     {
-        player->status.healing = true;
-    }
-
-    if(player->status.healing && IsKeyDown(KEY_Q) && player->status.aura>=3)
-    {
-        player->status.contHealingTime += delta;
-
-        if(player->status.contHealingTime>=player->status.healingTime)
+        if(player->status.onFloor && player->status.aura>=6 && IsKeyPressed(KEY_Q))
         {
-                if(player->status.life<player->status.maxLife)
-                    player->status.life++;
-
-                player->status.aura-=3;
-                player->status.contHealingTime=0.0;
+            player->status.healing = true;
         }
 
+        if(player->status.healing && IsKeyDown(KEY_Q) && player->status.aura>=3)
+        {
+            player->status.contHealingTime += delta;
+
+            if(player->status.contHealingTime>=player->status.healingTime)
+            {
+                    if(player->status.life<player->status.maxLife)
+                        player->status.life++;
+
+                    player->status.aura-=3;
+                    player->status.contHealingTime=0.0;
+            }
+
+        }
+    }
+    else
+    {
+
+        if(player->status.onFloor && player->status.aura>=12 && IsKeyPressed(KEY_Q))
+        {
+            player->status.healing = true;
+        }
+
+        if(player->status.healing && IsKeyDown(KEY_Q) && player->status.aura>=12)
+        {
+            player->status.contHealingTime += delta;
+
+            if(player->status.contHealingTime>=player->status.healingTime*3)
+            {
+                    if(player->status.life<player->status.maxLife)
+                        player->status.life+=4;
+
+                    player->status.aura-=12;
+                    player->status.contHealingTime=0.0;
+            }
+
+        }
     }
 
     if (IsKeyReleased(KEY_Q)&& player->status.healing)
@@ -503,57 +581,88 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     if(player->inventory.chiclete)
     {
-        if(!player->chiclete.leftWall && !player->chiclete.rightWall && !IsKeyDown(KEY_A) && !IsKeyDown(KEY_D))
-                    player->chiclete.contChicleteTime = 0.0f;
-
-            if(player->chiclete.leftWall)
-            {
-
-                if(IsKeyDown(KEY_A)&& player->chiclete.contChicleteTime<=0.5)
-                {
-                    player->speed.y = 0.0f;
-
-                    //if do amuleto que melhora o chiclete = zera o timer sempre, fica na parede por tempoo ilim itado
-
-                    player->chiclete.contChicleteTime += delta;
-                    player->chiclete.canUseChiclete = false;
-                    player->jumpStatus.wasOnFloor = true;
-
-                }
-                else
-                {
-                    player->chiclete.leftWall = false;
-
-                    if(!player->chiclete.leftWall && !IsKeyDown(KEY_A))
+        if(player->inventory.equippedCharms.programmerHands==false)
+        {
+                if(!player->chiclete.leftWall && !player->chiclete.rightWall && !IsKeyDown(KEY_A) && !IsKeyDown(KEY_D))
                         player->chiclete.contChicleteTime = 0.0f;
 
-                }
-
-            }
-
-            if(player->chiclete.rightWall)
-            {
-
-                if(IsKeyDown(KEY_D)&& player->chiclete.contChicleteTime<=0.5)
+                if(player->chiclete.leftWall)
                 {
-                    player->speed.y = 0.0f;
 
-                    //if do amuleto que melhora o chiclete = zera o timer sempre, fica na parede por tempoo ilim itado
+                    if(IsKeyDown(KEY_A)&& player->chiclete.contChicleteTime<=0.5)
+                    {
+                        player->speed.y = 0.0f;
 
-                    player->chiclete.contChicleteTime += delta;
-                    player->chiclete.canUseChiclete = false;
-                    player->jumpStatus.wasOnFloor = true;
+                        player->chiclete.contChicleteTime += delta;
+                        player->chiclete.canUseChiclete = false;
+                        player->jumpStatus.wasOnFloor = true;
+
+                    }
+                    else
+                    {
+                        player->chiclete.leftWall = false;
+
+                        if(!player->chiclete.leftWall && !IsKeyDown(KEY_A))
+                            player->chiclete.contChicleteTime = 0.0f;
+
+                    }
 
                 }
-                else
+
+                if(player->chiclete.rightWall)
                 {
-                    player->chiclete.rightWall = false;
 
-                    if(!player->chiclete.rightWall && !IsKeyDown(KEY_D))
-                        player->chiclete.contChicleteTime = 0.0f;
+                    if(IsKeyDown(KEY_D)&& player->chiclete.contChicleteTime<=0.5)
+                    {
+                        player->speed.y = 0.0f;
+
+                        player->chiclete.contChicleteTime += delta;
+                        player->chiclete.canUseChiclete = false;
+                        player->jumpStatus.wasOnFloor = true;
+
+                    }
+                    else
+                    {
+                        player->chiclete.rightWall = false;
+
+                        if(!player->chiclete.rightWall && !IsKeyDown(KEY_D))
+                            player->chiclete.contChicleteTime = 0.0f;
+                    }
                 }
-            }
+        }
+        else
+        {
+                if(player->chiclete.leftWall)
+                {
 
+                    if(IsKeyDown(KEY_A))
+                    {
+                        player->speed.y = 0.0f;
+                        player->chiclete.canUseChiclete = false;
+                        player->jumpStatus.wasOnFloor = true;
+
+                    }
+                    else
+                    {
+                        player->chiclete.leftWall = false;
+                    }
+
+                }
+                else if (player->chiclete.rightWall)
+                {
+                    if(IsKeyDown(KEY_D))
+                    {
+                        player->speed.y = 0.0f;
+                        player->chiclete.canUseChiclete = false;
+                        player->jumpStatus.wasOnFloor = true;
+
+                    }
+                    else
+                    {
+                        player->chiclete.rightWall = false;
+                    }
+                }
+        }
 
     }
 
@@ -1100,8 +1209,28 @@ void drawHud (Player *player, bool isFullscreen)
 
         switch(player->status.life)
         {
+        case 7:
+            DrawTexture(rm.player.sevenHearts, 20,20,WHITE);
+            break;
+        case 6:
+             if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit7Heart, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.sixHearts, 20,20,WHITE);
+            }
+            break;
         case 5:
-            DrawTexture(rm.player.fiveHearts, 20,20,WHITE);
+             if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit6Heart, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.fiveHearts, 20,20,WHITE);
+            }
             break;
         case 4:
             if(player->status.sufferingDamege)
@@ -1143,6 +1272,8 @@ void drawHud (Player *player, bool isFullscreen)
                 DrawTexture(rm.player.oneHearts, 20,20,WHITE);
             }
             break;
+        default:
+            break;
         }
 
         switch(player->status.aura)
@@ -1175,6 +1306,32 @@ void drawHud (Player *player, bool isFullscreen)
         case 13:
             DrawTexture(rm.player.sixAura, 10,60,WHITE);
             break;
+        case 14:
+        case 15:
+            DrawTexture(rm.player.sevenAura, 10,60,WHITE);
+            break;
+        case 16:
+        case 17:
+            DrawTexture(rm.player.eightAura, 10,60,WHITE);
+            break;
+        case 18:
+        case 19:
+            DrawTexture(rm.player.nineAura, 10,60,WHITE);
+            break;
+        case 20:
+        case 21:
+            DrawTexture(rm.player.tenAura, 10,60,WHITE);
+            break;
+        case 22:
+        case 23:
+            DrawTexture(rm.player.elevenAura, 10,60,WHITE);
+            break;
+        case 24:
+        case 25:
+            DrawTexture(rm.player.twelveAura, 10,60,WHITE);
+            break;
+        default:
+            break;
         }
 
         if(player->inLevel)
@@ -1195,8 +1352,28 @@ void drawHud (Player *player, bool isFullscreen)
     {
         switch(player->status.life)
         {
+        case 7:
+            DrawTexture(rm.player.sevenHeartsG, 20,20,WHITE);
+            break;
+        case 6:
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit7HeartG, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.sixHeartsG, 20,20,WHITE);
+            }
+            break;
         case 5:
-            DrawTexture(rm.player.fiveHeartsG, 20,20,WHITE);
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit6HeartG, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.fiveHeartsG, 20,20,WHITE);
+            }
             break;
         case 4:
             if(player->status.sufferingDamege)
@@ -1304,6 +1481,62 @@ void drawHud (Player *player, bool isFullscreen)
                         (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
                          90.0f,
                          WHITE);
+            break;
+        case 14:
+        case 15:
+            DrawTexturePro(rm.player.sevenAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 16:
+        case 17:
+            DrawTexturePro(rm.player.eightAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 18:
+        case 19:
+            DrawTexturePro(rm.player.nineAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 20:
+        case 21:
+            DrawTexturePro(rm.player.tenAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 22:
+        case 23:
+            DrawTexturePro(rm.player.elevenAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 24:
+        case 25:
+            DrawTexturePro(rm.player.twelveAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        default:
             break;
         }
 
