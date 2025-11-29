@@ -29,6 +29,7 @@ GameLobby createGameLobby(Player *player)
         .nearRoom = false,
         .nearComputer = false,
         .roomCamera = false,
+        .gameIsSaved = false,
 
         .contRestTime = 0.0f,
         .restTime = 1.0f,
@@ -201,7 +202,11 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 
 
     if(gl->player->status.resting && (IsKeyPressed(KEY_A)||IsKeyPressed(KEY_D)))
-         gl->player->status.resting = false;
+    {
+        gl->player->status.resting = false;
+        gl->gameIsSaved = false;
+    }
+
 
 
     if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->Room))

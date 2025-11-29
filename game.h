@@ -42,6 +42,11 @@ typedef struct Game
 
     bool shouldClose;
 
+    bool saveSlot1;
+    bool saveSlot2;
+    bool saveSlot3;
+
+
 }Game;
 
 Game createGame();

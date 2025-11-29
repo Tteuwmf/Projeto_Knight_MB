@@ -86,7 +86,7 @@ typedef struct AirBasicEnemy
 typedef struct Enemies
 {
     BasicEnemy *enemy1;
-    AirBasicEnemy enemy2[10];
+    AirBasicEnemy enemy2[50];
 
     int numberOfAirBasicEnemies;
     int numberOfBasicEnemies;

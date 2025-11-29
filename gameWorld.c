@@ -1197,7 +1197,7 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
             player->knockbackStatus.knockbackL = true;
             player->status.invulnerable=true;
             player->status.life--;
-            player->status.life--;
+            //player->status.life--;
             if(player->inventory.equippedCharms.debugSword)
                 player->status.life--;
         }
@@ -1206,7 +1206,7 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
             player->knockbackStatus.knockbackR = true;
             player->status.invulnerable=true;
             player->status.life--;
-            player->status.life--;
+            //player->status.life--;
             if(player->inventory.equippedCharms.debugSword)
                 player->status.life--;
         }
@@ -1215,7 +1215,7 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
             player->knockbackStatus.knockbackUp= true;
             player->status.invulnerable=true;
             player->status.life--;
-            player->status.life--;
+           // player->status.life--;
             if(player->inventory.equippedCharms.debugSword)
                 player->status.life--;
         }
@@ -1224,7 +1224,7 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
             player->knockbackStatus.knockbackUn = true;
             player->status.invulnerable=true;
             player->status.life--;
-            player->status.life--;
+           // player->status.life--;
             if(player->inventory.equippedCharms.debugSword)
                 player->status.life--;
         }
