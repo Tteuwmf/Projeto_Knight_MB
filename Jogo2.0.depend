@@ -9,14 +9,14 @@
 	"raylib.h"
 	"gameWindow.h"
 
-1764344742 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.c
+1764368817 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.c
 	"raylib.h"
 	"player.h"
 	"weapons.h"
 	"collisions.h"
 	"resourceManager.h"
 
-1764351492 c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.h
+1764366701 c:\users\facci\onedrive\documents\github\projeto_knight_mb\player.h
 	"raylib.h"
 
 1764344742 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\blocks.c
@@ -35,13 +35,13 @@
 	"raylib.h"
 	"player.h"
 
-1764344742 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.c
+1764369377 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.c
 	"raylib.h"
 	"enemies.h"
 	"collisions.h"
 	"resourceManager.h"
 
-1764344742 c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.h
+1764369095 c:\users\facci\onedrive\documents\github\projeto_knight_mb\enemies.h
 	"raylib.h"
 	"player.h"
 
@@ -57,7 +57,7 @@
 	"enemies.h"
 	"coins.h"
 
-1764345590 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.c
+1764366310 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gameworld.c
 	<stdlib.h>
 	"raylib.h"
 	"gameWorld.h"
@@ -262,7 +262,7 @@
 	"raylib.h"
 	"enemies.h"
 
-1764344742 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamelobby.c
+1764368072 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamelobby.c
 	"raylib.h"
 	"gameLobby.h"
 	"blocks.h"
@@ -270,7 +270,7 @@
 	"gameWindow.h"
 	"resourceManager.h"
 
-1764344742 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamelobby.h
+1764367982 c:\users\facci\onedrive\documents\github\projeto_knight_mb\gamelobby.h
 	"raylib.h"
 	"player.h"
 	"blocks.h"
@@ -378,7 +378,7 @@
 	"resourceManager.h"
 	"game.h"
 
-1764344742 c:\users\facci\onedrive\documents\github\projeto_knight_mb\resourcemanager.h
+1764368993 c:\users\facci\onedrive\documents\github\projeto_knight_mb\resourcemanager.h
 	"raylib.h"
 
 1764000853 c:\users\facci\onedrive\documents\github\projeto_knight_mb\menu.h
@@ -399,7 +399,7 @@
 	"resourceManager.h"
 	"game.h"
 
-1764344742 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\resourcemanager.c
+1764369390 source:c:\users\facci\onedrive\documents\github\projeto_knight_mb\resourcemanager.c
 	"raylib.h"
 	"resourceManager.h"
 
