@@ -1,18 +1,32 @@
 #include "raylib.h"
 #include "pause.h"
+#include "player.h"
 
 const int X_PAUSE_BUTTON = 354;
 const int Y_RETURN_BUTTON = 175;
 const int Y_SAVE_BUTTON = 230;
 const int Y_LEAVE_BUTTON = 285;
 
-void inputUpdateAndDrawPause(Game *game)
+void inputUpdateAndDrawPause(Game *game, bool isFullscreen)
 {
     Vector2 mousePosition = GetMousePosition();
 
-    Rectangle returnArea = {X_PAUSE_BUTTON, Y_RETURN_BUTTON, (int) rm.pause.normalReturnButton.width, (int) rm.pause.normalReturnButton.height};
-    Rectangle saveArea = {X_PAUSE_BUTTON, Y_SAVE_BUTTON, (int) rm.pause.normalSaveButton.width, (int) rm.pause.normalSaveButton.height};
-    Rectangle leaveArea = {X_PAUSE_BUTTON, Y_LEAVE_BUTTON, (int) rm.pause.normalLeaveButton.width, (int) rm.pause.normalLeaveButton.height};
+    Rectangle returnArea = {0};
+    Rectangle saveArea = {0};
+    Rectangle leaveArea = {0};
+
+    if(isFullscreen==false)
+    {
+        returnArea = (Rectangle) {X_PAUSE_BUTTON, Y_RETURN_BUTTON, (int) rm.pause.normalReturnButton.width, (int) rm.pause.normalReturnButton.height};
+        saveArea = (Rectangle){X_PAUSE_BUTTON, Y_SAVE_BUTTON, (int) rm.pause.normalSaveButton.width, (int) rm.pause.normalSaveButton.height};
+        leaveArea = (Rectangle){X_PAUSE_BUTTON, Y_LEAVE_BUTTON, (int) rm.pause.normalLeaveButton.width, (int) rm.pause.normalLeaveButton.height};
+    }
+    else
+    {
+        returnArea = (Rectangle){X_PAUSE_BUTTON*2, Y_RETURN_BUTTON*2, (int) rm.pause.normalReturnButton.width, (int) rm.pause.normalReturnButton.height};
+        saveArea = (Rectangle){X_PAUSE_BUTTON*2, Y_SAVE_BUTTON*2, (int) rm.pause.normalSaveButton.width, (int) rm.pause.normalSaveButton.height};
+        leaveArea = (Rectangle){X_PAUSE_BUTTON*2, Y_LEAVE_BUTTON*2, (int) rm.pause.normalLeaveButton.width, (int) rm.pause.normalLeaveButton.height};
+    }
 
     bool mouseOnReturnButton = CheckCollisionPointRec(mousePosition, returnArea);
     bool mouseOnSaveButton = CheckCollisionPointRec(mousePosition, saveArea);
@@ -29,30 +43,58 @@ void inputUpdateAndDrawPause(Game *game)
     //---------------------------------------------------
 
     BeginDrawing();
-    ClearBackground(LIGHTGRAY);
+    //ClearBackground(LIGHTGRAY);
 
-    DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.6f));
-    DrawRectangle(266, 0, 266, 450, BLACK);
-    DrawText("JOGO PAUSADO!!", 300, 40, 25, WHITE);
+    if(isFullscreen==false)
+    {
+        DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.6f));
+        DrawRectangle(266, 0, 266, 450, BLACK);
+        DrawText("JOGO PAUSADO!!", 300, 40, 25, WHITE);
 
-    if (mouseOnReturnButton)
-        DrawTexture(rm.pause.mouseReturnButton, X_PAUSE_BUTTON, Y_RETURN_BUTTON, WHITE);
+        if (mouseOnReturnButton)
+            DrawTexture(rm.pause.mouseReturnButton, X_PAUSE_BUTTON, Y_RETURN_BUTTON, WHITE);
+        else
+            DrawTexture(rm.pause.normalReturnButton, X_PAUSE_BUTTON, Y_RETURN_BUTTON, WHITE);
+
+
+        if (mouseOnSaveButton)
+            DrawTexture(rm.pause.mouseSaveButton, X_PAUSE_BUTTON, Y_SAVE_BUTTON, WHITE);
+        else
+            DrawTexture(rm.pause.normalSaveButton, X_PAUSE_BUTTON, Y_SAVE_BUTTON, WHITE);
+
+
+        if (mouseOnLeaveButton)
+            DrawTexture(rm.pause.mouseLeaveButton, X_PAUSE_BUTTON, Y_LEAVE_BUTTON, WHITE);
+        else
+            DrawTexture(rm.pause.normalLeaveButton, X_PAUSE_BUTTON, Y_LEAVE_BUTTON, WHITE);
+    }
     else
-        DrawTexture(rm.pause.normalReturnButton, X_PAUSE_BUTTON, Y_RETURN_BUTTON, WHITE);
+    {
+        DrawRectangle(0, 0, 1920, 1080, Fade(BLACK, 0.6f));
+        DrawRectangle(266*2, 0, 266*2, 450*2, BLACK);
+        DrawText("JOGO PAUSADO!!", 300*2, 40*2, 25*2, WHITE);
+
+        if (mouseOnReturnButton)
+            DrawTexture(rm.pause.mouseReturnButton, X_PAUSE_BUTTON*2, Y_RETURN_BUTTON*2, WHITE);
+        else
+            DrawTexture(rm.pause.normalReturnButton, X_PAUSE_BUTTON*2, Y_RETURN_BUTTON*2, WHITE);
 
 
-    if (mouseOnSaveButton)
-        DrawTexture(rm.pause.mouseSaveButton, X_PAUSE_BUTTON, Y_SAVE_BUTTON, WHITE);
-    else
-        DrawTexture(rm.pause.normalSaveButton, X_PAUSE_BUTTON, Y_SAVE_BUTTON, WHITE);
+        if (mouseOnSaveButton)
+            DrawTexture(rm.pause.mouseSaveButton, X_PAUSE_BUTTON*2, Y_SAVE_BUTTON*2, WHITE);
+        else
+            DrawTexture(rm.pause.normalSaveButton, X_PAUSE_BUTTON*2, Y_SAVE_BUTTON*2, WHITE);
 
 
-    if (mouseOnLeaveButton)
-        DrawTexture(rm.pause.mouseLeaveButton, X_PAUSE_BUTTON, Y_LEAVE_BUTTON, WHITE);
-    else
-        DrawTexture(rm.pause.normalLeaveButton, X_PAUSE_BUTTON, Y_LEAVE_BUTTON, WHITE);
+        if (mouseOnLeaveButton)
+            DrawTexture(rm.pause.mouseLeaveButton, X_PAUSE_BUTTON*2, Y_LEAVE_BUTTON*2, WHITE);
+        else
+            DrawTexture(rm.pause.normalLeaveButton, X_PAUSE_BUTTON*2, Y_LEAVE_BUTTON*2, WHITE);
+    }
+
 
     EndDrawing();
+
 }
 
 void inputUpdateAndDrawConfirm(Game *game)
@@ -71,8 +113,19 @@ void inputUpdateAndDrawConfirm(Game *game)
     if (mouseOnYesButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
         game->status = MENU;
-        destroysGameWorld(game->gw);
-        game->gameWorldInitiate = false;
+        game->saveSlot1 = false;
+        game->saveSlot2 = false;
+        game->saveSlot3 = false;
+        if(game->lastStatus==GAMEWORLD)
+        {
+            destroysGameWorld(game->gw);
+            game->gameWorldInitiate = false;
+        }
+        else if(game->lastStatus==GAMELOBBY)
+        {
+            resetGameLobby(&game->gl,game->playerLobbyFirstPos);
+        }
+        resetPlayer(&game->player);
     }
 
 

@@ -5,7 +5,7 @@
 #include "resourceManager.h"
 #include "game.h"
 
-void inputUpdateAndDrawPause(Game *game);
+void inputUpdateAndDrawPause(Game *game, bool isFullscreen);
 
 void inputUpdateAndDrawConfirm(Game *game);
 

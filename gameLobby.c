@@ -5,6 +5,12 @@
 #include "gameWindow.h"
 #include "resourceManager.h"
 
+void makeLobbyCollisionPlayerGrass(GameLobby *gl);
+bool checkPlayerGrassCollision_Upper(PlayerCollisionRec *collisionRecs, Grass *grass);
+bool checkPlayerGrassCollision_Under(PlayerCollisionRec *collisionRecs, Grass *grass);
+bool  checkPlayerGrassCollision_Left(PlayerCollisionRec *collisionRecs, Grass *grass);
+bool  checkPlayerGrassCollision_Right(PlayerCollisionRec *collisionRecs, Grass *grass);
+
 GameLobby createGameLobby(Player *player)
 {
     GameLobby gl = (GameLobby)
@@ -23,6 +29,10 @@ GameLobby createGameLobby(Player *player)
         .nearRoom = false,
         .nearComputer = false,
         .roomCamera = false,
+        .gameIsSaved = false,
+
+        .contRestTime = 0.0f,
+        .restTime = 1.0f,
 
         .fadeScreenGL = 1.0f,
     };
@@ -43,6 +53,7 @@ void loadLobby(GameLobby *gl, const char* arquivo)
     int contLines = 0;
     int contColumn = 0;
     int contBlocks = 0;
+    int contGrass = 0;
 
     while(*atual != '\0')
     {
@@ -69,6 +80,15 @@ void loadLobby(GameLobby *gl, const char* arquivo)
                 contColumn++;
                 contBlocks++;
                 gl->numberOfBlocks++;
+                break;
+
+            case 'G':
+                gl->grass[contGrass] = createGrass(
+                    (Vector2){contColumn*32,contLines*32}
+                );
+                contColumn++;
+                contGrass++;
+                gl->numberOfGrass++;
                 break;
 
             case 'B':
@@ -168,14 +188,25 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 
     if(gl->player->status.resting)
     {
-        gl->player->status.life++;
-        if(gl->player->status.life>=5)
-            gl->player->status.life = 5;
+        gl->contRestTime+= GetFrameTime();
+
+        if(gl->contRestTime>=gl->restTime)
+        {
+            gl->player->status.life++;
+            gl->contRestTime = 0.0;
+        }
+
+        if(gl->player->status.life>=gl->player->status.maxLife)
+            gl->player->status.life = gl->player->status.maxLife;
     }
 
 
     if(gl->player->status.resting && (IsKeyPressed(KEY_A)||IsKeyPressed(KEY_D)))
-         gl->player->status.resting = false;
+    {
+        gl->player->status.resting = false;
+        gl->gameIsSaved = false;
+    }
+
 
 
     if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->Room))
@@ -217,6 +248,7 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
         else gl->nearComputer = false;
 
     makeLobbyCollisionPlayerBlock(gl);
+    makeLobbyCollisionPlayerGrass(gl);
 
     updateLobbyCamera(&gl->camera, gl->player, isFullscreen, gl->roomCamera);
 }
@@ -257,6 +289,48 @@ void makeLobbyCollisionPlayerBlock(GameLobby *gl)
             if(checkPlayerBlockCollision_Left(collisionRec ,block))
             {
                 player->pos.x=block->pos.x+block->dim.x;
+                player->chiclete.leftWall = true;
+            }
+    }
+
+}
+
+void makeLobbyCollisionPlayerGrass(GameLobby *gl)
+{
+    Player *player = gl->player;
+    PlayerCollisionRec *collisionRec = &gl->player->collisionRecs;
+
+    for(int i =0; i<gl->numberOfGrass; i++)
+    {
+        Grass *grass = &gl->grass[i];
+
+            //colisão por cima
+
+            if(checkPlayerGrassCollision_Under(collisionRec ,grass))
+            {
+                player->pos.y = grass->pos.y-player->dim.y;
+                player->status.onFloor = true;
+                player->speed.y = 0.0f;
+            }
+            else if ( player->speed.y>0.0f)
+                player->status.onFloor = false;
+
+
+            if(checkPlayerGrassCollision_Upper(collisionRec ,grass))
+            {
+                player->pos.y = grass->pos.y + grass->dim.y;
+                player->speed.y = 0.0f;
+            }
+
+            if(checkPlayerGrassCollision_Right(collisionRec ,grass))
+            {
+                player->pos.x = grass->pos.x-player->dim.x;
+                player->chiclete.rightWall = true;
+            }
+
+            if(checkPlayerGrassCollision_Left(collisionRec ,grass))
+            {
+                player->pos.x=grass->pos.x+grass->dim.x;
                 player->chiclete.leftWall = true;
             }
     }
@@ -413,10 +487,10 @@ void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool
         }
         else if(roomCamera)
         {
-            camera->target= (Vector2) {3632,598};
+            camera->target= (Vector2) {3442,686};
             camera->offset = (Vector2) {GetScreenWidth()/2,GetScreenHeight()/2};
             camera->rotation = 0.0f;
-            camera->zoom = 2.5f;
+            camera->zoom = 4.5f;
         }
     }
 }
@@ -424,7 +498,7 @@ void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool
 
 
 
-void drawGameLobby (GameLobby *gl)
+void drawGameLobby (GameLobby *gl, bool isFullscreen)
 {
 
     BeginDrawing();
@@ -442,7 +516,7 @@ void drawGameLobby (GameLobby *gl)
 
     drawPlayer(gl->player);
 
-    if(gl->nearBanch)
+    if(gl->nearBanch && gl->player->status.resting==false)
         DrawText(TextFormat("DESCANSAR: W"), gl->Banch.x,gl->Banch.y-16,15, WHITE);
 
     if(gl->nearRoom)
@@ -458,10 +532,14 @@ void drawGameLobby (GameLobby *gl)
     {
         drawBlock(&gl->blocks[i]);
     }
+    for (int g =0; g<gl->numberOfGrass; g++)
+    {
+        drawGrass(&gl->grass[g]);
+    }
 
     EndMode2D();
 
-    drawHud(gl->player);
+    drawHud(gl->player, isFullscreen);
 
         gl->fadeScreenGL -= 0.2f*GetFrameTime();
         if(gl->fadeScreenGL<0.0f) gl->fadeScreenGL = 0.0f;
@@ -501,6 +579,27 @@ void resetGameLobby(GameLobby *gl, Vector2 startPos)
     gl->camera.target = gl->player->pos; // Foca imediatamente no player
 }
 
+    //============PLAYER-GRASS==============
 
+//------------UPPERplayer-COLLISION-------------
+bool checkPlayerGrassCollision_Upper(PlayerCollisionRec *collisionRecs, Grass *grass)
+{
+    return CheckCollisionRecs(collisionRecs->upper,(Rectangle){.x = grass->pos.x, .y = grass->pos.y, .width = grass->dim.x, .height = grass->dim.y});
+}
+//------------UNDERplayer-COLLISION-------------
+bool checkPlayerGrassCollision_Under(PlayerCollisionRec *collisionRecs, Grass *grass)
+{
+    return CheckCollisionRecs(collisionRecs->under,(Rectangle){.x = grass->pos.x, .y = grass->pos.y, .width = grass->dim.x, .height = grass->dim.y});
+}
+//-----------LEFTplayer-COLLISION---------------
+bool  checkPlayerGrassCollision_Left(PlayerCollisionRec *collisionRecs, Grass *grass)
+{
+    return CheckCollisionRecs(collisionRecs->left,(Rectangle){.x = grass->pos.x, .y = grass->pos.y, .width = grass->dim.x, .height = grass->dim.y});
+}
+//-----------RIGHTplayer-COLLISION--------------
+bool  checkPlayerGrassCollision_Right(PlayerCollisionRec *collisionRecs, Grass *grass)
+{
+    return CheckCollisionRecs(collisionRecs->right,(Rectangle){.x = grass->pos.x, .y = grass->pos.y, .width = grass->dim.x, .height = grass->dim.y});
+}
 
 

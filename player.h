@@ -15,6 +15,7 @@ typedef struct PlayerStatus
     bool healing;
     float healingTime;
     float contHealingTime;
+    bool sufferingDamege;
     bool resting;
     int ticketsRU;
     float defaultSpeed;
@@ -85,6 +86,7 @@ typedef struct HorizontalPower
     int currentFrame;
     int numberOfFrames;
     float contTime;
+    float contTextureTime;
     float attackTime;
     float timeToTheNextFrame;
 
@@ -94,6 +96,7 @@ typedef struct SpecialAttacks
 {
     bool horizontalPowerActive;
     bool usingHorizontalPower;
+    int direction;
     HorizontalPower horizontalPower;
 
 }SpecialAttacks;
@@ -120,12 +123,17 @@ typedef struct PlayerWeapons
 typedef struct PlayerCharms
 {
     bool goldTickets;
+    bool debugSword;
+    bool plusEgo;
+    bool gamerHeart;
+    bool programmerHands;
 
 }PlayerCharms;
 
 typedef struct PlayerInventory
 {
     PlayerCharms equippedCharms;
+    PlayerCharms colectedCharms;
     PlayerWeapons equippedWeapons;
 
     bool doubleJump;
@@ -203,6 +211,7 @@ typedef struct Player
     float timeToTheNextFrame;
 
     int progress;
+    bool inLevel;
 
 }Player;
 
@@ -218,7 +227,7 @@ void applyKnockbackToPlayer (Player *player);
 
 void drawPlayer (Player *player);
 
-void drawHud (Player *player);
+void drawHud (Player *player, bool isFullscreen);
 
 void resetPlayer(Player *Player);
 

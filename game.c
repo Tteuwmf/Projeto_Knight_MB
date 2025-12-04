@@ -6,6 +6,7 @@
 #include "resourceManager.h"
 #include "menu.h"
 #include "pause.h"
+#include "save.h"
 
 Game createGame()
 {
@@ -17,6 +18,11 @@ Game createGame()
         .gameWorldInitiate = false,
         .fadeScreenMenus = 0.0,
         .timeToCode = 0.0,
+
+
+        .saveSlot1 = false,
+        .saveSlot2 = false,
+        .saveSlot3 = false,
 
         .playerLobbyFirstPos = (Vector2){0,0},
         .playerLobbyReturnPos = (Vector2){0,0},
@@ -42,13 +48,14 @@ void initGame(Game *game, bool isFullScreen)
             break;
 
         case LOAD:
+            inputUpdateAndDrawLoad(game);
             break;
 
         case HELP:
             break;
 
         case PAUSE:
-            inputUpdateAndDrawPause(game);
+            inputUpdateAndDrawPause(game, isFullScreen);
             break;
 
         case CONFIRM:
@@ -64,6 +71,7 @@ void initGame(Game *game, bool isFullScreen)
             if(IsKeyPressed(KEY_ENTER) && game->gl.nearComputer && game->timeToCode==0.0)
             {
                 game->status = GAMEWORLD;
+                game->player.inLevel = true;
 
                 if(game->gameWorldInitiate)
                 {
@@ -71,7 +79,7 @@ void initGame(Game *game, bool isFullScreen)
                 }
             }
 
-            if(IsKeyPressed(KEY_I))
+            if(IsKeyPressed(KEY_ESCAPE))
             {
                 game->lastStatus = game->status;
                 game->status = PAUSE;
@@ -80,7 +88,22 @@ void initGame(Game *game, bool isFullScreen)
 
             inputAndUpdateGameLobby(&game->gl, isFullScreen);
 
-            drawGameLobby(&game->gl);
+            drawGameLobby(&game->gl, isFullScreen);
+
+
+           if(game->gl.player->status.resting && game->gl.gameIsSaved==false)
+           {
+                if(game->saveSlot1)
+                    saveGame("save1", game->player);
+                else if(game->saveSlot2)
+                    saveGame("save2", game->player);
+                else if (game->saveSlot3)
+                    saveGame("save3", game->player);
+
+
+                game->gl.gameIsSaved=true;
+           }
+
             break;
 
         case GAMEWORLD:
@@ -103,7 +126,7 @@ void initGame(Game *game, bool isFullScreen)
 
             //---------PAUSE---------
 
-            if(IsKeyPressed(KEY_I))
+            if(IsKeyPressed(KEY_ESCAPE))
             {
                 game->lastStatus = game->status;
                 game->status = PAUSE;
@@ -114,26 +137,32 @@ void initGame(Game *game, bool isFullScreen)
             if(game->gw->player->status.dead && GetKeyPressed() && game->gw->fadeScreenGW>=1)
             {
                 game->status = MENU;
+                game->saveSlot1=false;
+                game->saveSlot2=false;
+                game->saveSlot3=false;
                 resetPlayer(game->gw->player);
                 resetGameLobby(&game->gl, game->playerLobbyFirstPos);
                 destroysGameWorld(game->gw);
                 game->gameWorldInitiate = false;
             }
             else
-
+            {
             //-----------UPDATE MUNDO--------
 
             inputAndUpdateGameWorld(game->gw, isFullScreen);
 
             //---------DESENHA MUNDO--------
 
-            drawGameWorld(game->gw);
+            drawGameWorld(game->gw, isFullScreen);
+            }
 
             //--------TROCA MUNDO--------
 
             if(IsKeyPressed(KEY_ENTER)&& game->gw->canLeaveFase)
             {
                 game->status = GAMELOBBY;
+                game->player.inLevel = false;
+                game->lastStatus = GAMEWORLD;
 
                 if(game->playerLobbyReturnPos.x != 0 || game->playerLobbyReturnPos.y != 0) {
                     game->gl.player->pos = game->playerLobbyReturnPos;
@@ -157,6 +186,7 @@ void initGame(Game *game, bool isFullScreen)
 
 
         case LEAVE:
+            game->shouldClose = true;
             break;
     }
 }

@@ -14,6 +14,7 @@ typedef struct GameWindow
     Game game;
 
     bool initiate;
+    //bool shouldClose;
 
     bool endFase;
 
