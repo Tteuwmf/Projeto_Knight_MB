@@ -6,10 +6,15 @@
 #include "resourceManager.h"
 
 void makeLobbyCollisionPlayerGrass(GameLobby *gl);
+void makeLobbyCollisionPlayerStoreBlock(GameLobby *gl);
 bool checkPlayerGrassCollision_Upper(PlayerCollisionRec *collisionRecs, Grass *grass);
 bool checkPlayerGrassCollision_Under(PlayerCollisionRec *collisionRecs, Grass *grass);
 bool  checkPlayerGrassCollision_Left(PlayerCollisionRec *collisionRecs, Grass *grass);
 bool  checkPlayerGrassCollision_Right(PlayerCollisionRec *collisionRecs, Grass *grass);
+bool checkPlayerStoreBlockCollision_Upper(PlayerCollisionRec *collisionRecs, StoreBlock *block);
+bool checkPlayerStoreBlockCollision_Under(PlayerCollisionRec *collisionRecs, StoreBlock *block);
+bool  checkPlayerStoreBlockCollision_Left(PlayerCollisionRec *collisionRecs, StoreBlock *block);
+bool  checkPlayerStoreBlockCollision_Right(PlayerCollisionRec *collisionRecs, StoreBlock *block);
 
 GameLobby createGameLobby(Player *player)
 {
@@ -54,6 +59,7 @@ void loadLobby(GameLobby *gl, const char* arquivo)
     int contColumn = 0;
     int contBlocks = 0;
     int contGrass = 0;
+    int contStoreBlocks = 0;
 
     while(*atual != '\0')
     {
@@ -70,8 +76,24 @@ void loadLobby(GameLobby *gl, const char* arquivo)
                 contColumn++;
                 break;
 
-            case 'O':
+            case 'F':
+                gl->StoreWall = (Rectangle)
+                {
+                    .x = (contColumn-1)*32,
+                    .y = (contLines-1)*32,
+                    .width = 352,
+                    .height = 192,
+                };
+                contColumn++;
+                break;
             case 'C':
+                gl->storeBlocks[contStoreBlocks] = createStoreBlock(
+                        (Vector2){contColumn*32, contLines*32}
+                    );
+                 contColumn++;
+                 contStoreBlocks++;
+                 gl->numberOfStoreBlocks++;
+                 break;
             case 'p':
             case 'P':
                 gl->blocks[contBlocks] = createBlock(
@@ -249,6 +271,7 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 
     makeLobbyCollisionPlayerBlock(gl);
     makeLobbyCollisionPlayerGrass(gl);
+    makeLobbyCollisionPlayerStoreBlock(gl);
 
     updateLobbyCamera(&gl->camera, gl->player, isFullscreen, gl->roomCamera);
 }
@@ -331,6 +354,47 @@ void makeLobbyCollisionPlayerGrass(GameLobby *gl)
             if(checkPlayerGrassCollision_Left(collisionRec ,grass))
             {
                 player->pos.x=grass->pos.x+grass->dim.x;
+                player->chiclete.leftWall = true;
+            }
+    }
+}
+
+void makeLobbyCollisionPlayerStoreBlock(GameLobby *gl)
+{
+    Player *player = gl->player;
+    PlayerCollisionRec *collisionRec = &gl->player->collisionRecs;
+
+    for(int i =0; i<gl->numberOfStoreBlocks; i++)
+    {
+        StoreBlock *block = &gl->storeBlocks[i];
+
+            //colisão por cima
+
+            if(checkPlayerStoreBlockCollision_Under(collisionRec ,block))
+            {
+                player->pos.y = block->pos.y-player->dim.y;
+                player->status.onFloor = true;
+                player->speed.y = 0.0f;
+            }
+            else if ( player->speed.y>0.0f)
+                player->status.onFloor = false;
+
+
+            if(checkPlayerStoreBlockCollision_Upper(collisionRec ,block))
+            {
+                player->pos.y = block->pos.y + block->dim.y;
+                player->speed.y = 0.0f;
+            }
+
+            if(checkPlayerStoreBlockCollision_Right(collisionRec ,block))
+            {
+                player->pos.x = block->pos.x-player->dim.x;
+                player->chiclete.rightWall = true;
+            }
+
+            if(checkPlayerStoreBlockCollision_Left(collisionRec ,block))
+            {
+                player->pos.x=block->pos.x+block->dim.x;
                 player->chiclete.leftWall = true;
             }
     }
@@ -508,7 +572,12 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
     BeginMode2D(gl->camera);
 
     DrawTexture(rm.gl.bench,gl->Banch.x,gl->Banch.y, WHITE);
-    //DrawRectangleRec(gl->Banch, WHITE);
+    DrawTexture(rm.gl.storeWall,gl->StoreWall.x,gl->StoreWall.y, WHITE);
+    for (int s =0; s<gl->numberOfStoreBlocks; s++)
+    {
+        drawStoreBlock(&gl->storeBlocks[s]);
+    }
+
     DrawRectangleRec(gl->Room, WHITE);
     DrawRectangleRec(gl->Store, RED);
     DrawRectangleRec(gl->DoorR, WHITE);
@@ -602,4 +671,25 @@ bool  checkPlayerGrassCollision_Right(PlayerCollisionRec *collisionRecs, Grass *
     return CheckCollisionRecs(collisionRecs->right,(Rectangle){.x = grass->pos.x, .y = grass->pos.y, .width = grass->dim.x, .height = grass->dim.y});
 }
 
+     //============PLAYER-STOREBLOCKS==============
 
+//------------UPPERplayer-COLLISION-------------
+bool checkPlayerStoreBlockCollision_Upper(PlayerCollisionRec *collisionRecs, StoreBlock *block)
+{
+    return CheckCollisionRecs(collisionRecs->upper,(Rectangle){.x = block->pos.x, .y = block->pos.y, .width = block->dim.x, .height = block->dim.y});
+}
+//------------UNDERplayer-COLLISION-------------
+bool checkPlayerStoreBlockCollision_Under(PlayerCollisionRec *collisionRecs, StoreBlock *block)
+{
+    return CheckCollisionRecs(collisionRecs->under,(Rectangle){.x = block->pos.x, .y = block->pos.y, .width = block->dim.x, .height = block->dim.y});
+}
+//-----------LEFTplayer-COLLISION---------------
+bool  checkPlayerStoreBlockCollision_Left(PlayerCollisionRec *collisionRecs, StoreBlock *block)
+{
+    return CheckCollisionRecs(collisionRecs->left,(Rectangle){.x = block->pos.x, .y = block->pos.y, .width = block->dim.x, .height = block->dim.y});
+}
+//-----------RIGHTplayer-COLLISION--------------
+bool  checkPlayerStoreBlockCollision_Right(PlayerCollisionRec *collisionRecs, StoreBlock *block)
+{
+    return CheckCollisionRecs(collisionRecs->right,(Rectangle){.x = block->pos.x, .y = block->pos.y, .width = block->dim.x, .height = block->dim.y});
+}

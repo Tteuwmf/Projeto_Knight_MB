@@ -10,15 +10,30 @@ const int Y_LOAD_BUTTON = 160;
 const int Y_HELP_BUTTON = 220;
 const int Y_CLOSE_BUTTON = 280;
 
-void inputUpdateAndDrawMenu(Game *game)
+void inputUpdateAndDrawMenu(Game *game, bool isFullscreen)
 {
 
     Vector2 mousePosition = GetMousePosition();
 
-    Rectangle startArea = {X_MENU_BUTTON, Y_START_BUTTON, (int) rm.menu.bigNormalStartButton.width, (int) rm.menu.bigNormalStartButton.height};
-    Rectangle loadArea = {X_MENU_BUTTON, Y_LOAD_BUTTON, (int) rm.menu.bigNormalLoadButton.width, (int) rm.menu.bigNormalLoadButton.height};
-    Rectangle helpArea = {X_MENU_BUTTON, Y_HELP_BUTTON, (int) rm.menu.bigNormalHelpButton.width, (int) rm.menu.bigNormalHelpButton.height};
-    Rectangle closeArea = {X_MENU_BUTTON, Y_CLOSE_BUTTON, (int) rm.menu.bigNormalCloseButton.width, (int) rm.menu.bigNormalCloseButton.height};
+    Rectangle startArea = {0};
+    Rectangle loadArea = {0};
+    Rectangle helpArea = {0};
+    Rectangle closeArea = {0};
+
+    if(isFullscreen==false)
+    {
+        startArea = (Rectangle) {X_MENU_BUTTON, Y_START_BUTTON, (int) rm.menu.bigNormalStartButton.width, (int) rm.menu.bigNormalStartButton.height};
+        loadArea = (Rectangle) {X_MENU_BUTTON, Y_LOAD_BUTTON, (int) rm.menu.bigNormalLoadButton.width, (int) rm.menu.bigNormalLoadButton.height};
+        helpArea = (Rectangle) {X_MENU_BUTTON, Y_HELP_BUTTON, (int) rm.menu.bigNormalHelpButton.width, (int) rm.menu.bigNormalHelpButton.height};
+        closeArea = (Rectangle) {X_MENU_BUTTON, Y_CLOSE_BUTTON, (int) rm.menu.bigNormalCloseButton.width, (int) rm.menu.bigNormalCloseButton.height};
+    }
+    else
+    {
+        startArea = (Rectangle){X_MENU_BUTTON*3+140, Y_START_BUTTON, (int) rm.menu.bigNormalStartButton.width, (int) rm.menu.bigNormalStartButton.height};
+        loadArea = (Rectangle){X_MENU_BUTTON*3+140, Y_LOAD_BUTTON, (int) rm.menu.bigNormalLoadButton.width, (int) rm.menu.bigNormalLoadButton.height};
+        helpArea = (Rectangle){X_MENU_BUTTON*3+140, Y_HELP_BUTTON, (int) rm.menu.bigNormalHelpButton.width, (int) rm.menu.bigNormalHelpButton.height};
+        closeArea = (Rectangle) {X_MENU_BUTTON*3+140, Y_CLOSE_BUTTON, (int) rm.menu.bigNormalCloseButton.width, (int) rm.menu.bigNormalCloseButton.height};
+    }
 
     bool mouseOnStartButton = CheckCollisionPointRec(mousePosition, startArea);
     bool mouseOnLoadButton = CheckCollisionPointRec(mousePosition, loadArea);
@@ -63,53 +78,96 @@ void inputUpdateAndDrawMenu(Game *game)
     BeginDrawing();
     ClearBackground(BLACK);
 
-    if (mouseOnStartButton)
+    if(isFullscreen==false)
     {
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-            DrawTexture(rm.menu.clickStartButton, X_MENU_BUTTON, Y_START_BUTTON, WHITE);
-        else
-            DrawTexture(rm.menu.bigMouseStartButton, X_MENU_BUTTON, Y_START_BUTTON, WHITE);
-    }
-    else
-        DrawTexture(rm.menu.bigNormalStartButton, X_MENU_BUTTON, Y_START_BUTTON, WHITE);
-            // Botao de Carregar jogo
-    if (mouseOnLoadButton)
-    {
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-            DrawTexture(rm.menu.clickLoadButton, X_MENU_BUTTON, Y_LOAD_BUTTON, WHITE);
-        else
-            DrawTexture(rm.menu.bigMouseLoadButton, X_MENU_BUTTON, Y_LOAD_BUTTON, WHITE);
-    }
-    else
-        DrawTexture(rm.menu.bigNormalLoadButton, X_MENU_BUTTON, Y_LOAD_BUTTON, WHITE);
-            // Botao de Ajuda
-    if (mouseOnHelpButton)
-    {
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
-            DrawTexture(rm.menu.clickHelpButton, X_MENU_BUTTON, Y_HELP_BUTTON, WHITE);
-        else
-            DrawTexture(rm.menu.bigMouseHelpButton, X_MENU_BUTTON, Y_HELP_BUTTON, WHITE);
-    }
-    else
-        DrawTexture(rm.menu.bigNormalHelpButton, X_MENU_BUTTON, Y_HELP_BUTTON, WHITE);
-
-
-
-
-    // Botao de Fechar jogo
-    if (mouseOnCloseButton)
-    {
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+        if (mouseOnStartButton)
         {
-            DrawTexture(rm.menu.clickCloseButton, X_MENU_BUTTON, Y_CLOSE_BUTTON, WHITE);
-            //if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                DrawTexture(rm.menu.clickStartButton, X_MENU_BUTTON, Y_START_BUTTON, WHITE);
+            else
+                DrawTexture(rm.menu.bigMouseStartButton, X_MENU_BUTTON, Y_START_BUTTON, WHITE);
         }
         else
-            DrawTexture(rm.menu.bigMouseCloseButton, X_MENU_BUTTON, Y_CLOSE_BUTTON, WHITE);
+            DrawTexture(rm.menu.bigNormalStartButton, X_MENU_BUTTON, Y_START_BUTTON, WHITE);
+                // Botao de Carregar jogo
+        if (mouseOnLoadButton)
+        {
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                DrawTexture(rm.menu.clickLoadButton, X_MENU_BUTTON, Y_LOAD_BUTTON, WHITE);
+            else
+                DrawTexture(rm.menu.bigMouseLoadButton, X_MENU_BUTTON, Y_LOAD_BUTTON, WHITE);
+        }
+        else
+            DrawTexture(rm.menu.bigNormalLoadButton, X_MENU_BUTTON, Y_LOAD_BUTTON, WHITE);
+                // Botao de Ajuda
+        if (mouseOnHelpButton)
+        {
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                DrawTexture(rm.menu.clickHelpButton, X_MENU_BUTTON, Y_HELP_BUTTON, WHITE);
+            else
+                DrawTexture(rm.menu.bigMouseHelpButton, X_MENU_BUTTON, Y_HELP_BUTTON, WHITE);
+        }
+        else
+            DrawTexture(rm.menu.bigNormalHelpButton, X_MENU_BUTTON, Y_HELP_BUTTON, WHITE);
+        // Botao de Fechar jogo
+        if (mouseOnCloseButton)
+        {
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+            {
+                DrawTexture(rm.menu.clickCloseButton, X_MENU_BUTTON, Y_CLOSE_BUTTON, WHITE);
+                //if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+            }
+            else
+                DrawTexture(rm.menu.bigMouseCloseButton, X_MENU_BUTTON, Y_CLOSE_BUTTON, WHITE);
+        }
+        else
+            DrawTexture(rm.menu.bigNormalCloseButton, X_MENU_BUTTON, Y_CLOSE_BUTTON, WHITE);
     }
-
     else
-        DrawTexture(rm.menu.bigNormalCloseButton, X_MENU_BUTTON, Y_CLOSE_BUTTON, WHITE);
+    {
+        if (mouseOnStartButton)
+        {
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                DrawTexture(rm.menu.clickStartButton, X_MENU_BUTTON, Y_START_BUTTON, WHITE);
+            else
+                DrawTexture(rm.menu.bigMouseStartButton, X_MENU_BUTTON*3+140, Y_START_BUTTON, WHITE);
+        }
+        else
+            DrawTexture(rm.menu.bigNormalStartButton, X_MENU_BUTTON*3+140, Y_START_BUTTON, WHITE);
+                // Botao de Carregar jogo
+        if (mouseOnLoadButton)
+        {
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                DrawTexture(rm.menu.clickLoadButton, X_MENU_BUTTON, Y_LOAD_BUTTON, WHITE);
+            else
+                DrawTexture(rm.menu.bigMouseLoadButton, X_MENU_BUTTON*3+140, Y_LOAD_BUTTON, WHITE);
+        }
+        else
+            DrawTexture(rm.menu.bigNormalLoadButton, X_MENU_BUTTON*3+140, Y_LOAD_BUTTON, WHITE);
+                // Botao de Ajuda
+        if (mouseOnHelpButton)
+        {
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+                DrawTexture(rm.menu.clickHelpButton, X_MENU_BUTTON, Y_HELP_BUTTON, WHITE);
+            else
+                DrawTexture(rm.menu.bigMouseHelpButton, X_MENU_BUTTON*3+140, Y_HELP_BUTTON, WHITE);
+        }
+        else
+            DrawTexture(rm.menu.bigNormalHelpButton, X_MENU_BUTTON*3+140, Y_HELP_BUTTON, WHITE);
+        // Botao de Fechar jogo
+        if (mouseOnCloseButton)
+        {
+            if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+            {
+                DrawTexture(rm.menu.clickCloseButton, X_MENU_BUTTON, Y_CLOSE_BUTTON, WHITE);
+                //if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
+            }
+            else
+                DrawTexture(rm.menu.bigMouseCloseButton, X_MENU_BUTTON*3+140, Y_CLOSE_BUTTON, WHITE);
+        }
+        else
+            DrawTexture(rm.menu.bigNormalCloseButton, X_MENU_BUTTON*3+140, Y_CLOSE_BUTTON, WHITE);
+    }
 
     EndDrawing();
 }
@@ -122,7 +180,7 @@ const int Y_SLOT2_BUTTON = 160;
 const int Y_SLOT3_BUTTON = 220;
 const int Y_GOTOMENU_BUTTON = 280;
 
-void inputUpdateAndDrawLoad(Game *game)
+void inputUpdateAndDrawLoad(Game *game, bool isFullscreen)
 {
 
     Vector2 mousePosition = GetMousePosition();

@@ -44,10 +44,21 @@ void loadResources()
     rm.pause.normalLeaveButton = LoadTexture("Assets/Textures/BotaoSairNormal.png");
     rm.pause.mouseLeaveButton = LoadTexture("Assets/Textures/BotaoSairMouse.png");
 
+    rm.pause.normalReturnButtonG = LoadTexture("Assets/Textures/BotaoRetomarNormalGrande.png");
+    rm.pause.mouseReturnButtonG = LoadTexture("Assets/Textures/BotaoRetomarMouseGrande.png");
+
+    rm.pause.normalSaveButtonG = LoadTexture("Assets/Textures/BotaoSalvarNormalGrande.png");
+    rm.pause.mouseSaveButtonG = LoadTexture("Assets/Textures/BotaoSalvarMouseGrande.png");
+
+    rm.pause.normalLeaveButtonG = LoadTexture("Assets/Textures/BotaoSairNormalGrande.png");
+    rm.pause.mouseLeaveButtonG = LoadTexture("Assets/Textures/BotaoSairMouseGrande.png");
+
 
 
     rm.gl.bench = LoadTexture("Assets/Textures/Banch.png");
     rm.gl.grass = LoadTexture("Assets/Textures/grassBlock.png");
+    rm.gl.storeWall = LoadTexture ("Assets/Textures/FundoLoja.png");
+    rm.gl.storeBlock = LoadTexture ("Assets/Textures/BlocoLoja.png");
 
 
 
@@ -195,9 +206,21 @@ void unloadResouces()
     UnloadTexture(rm.pause.normalLeaveButton);
     UnloadTexture(rm.pause.mouseLeaveButton);
 
+    UnloadTexture(rm.pause.normalReturnButtonG);
+    UnloadTexture(rm.pause.mouseReturnButtonG);
+
+    UnloadTexture(rm.pause.normalSaveButtonG);
+    UnloadTexture(rm.pause.mouseSaveButtonG);
+
+    UnloadTexture(rm.pause.normalLeaveButtonG);
+    UnloadTexture(rm.pause.mouseLeaveButtonG);
+
+
 
     UnloadTexture(rm.gl.bench);
     UnloadTexture(rm.gl.grass);
+    UnloadTexture(rm.gl.storeWall);
+    UnloadTexture(rm.gl.storeBlock);
 
 
     UnloadTexture(rm.gw.defaultTile);

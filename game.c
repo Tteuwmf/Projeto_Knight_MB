@@ -44,11 +44,11 @@ void initGame(Game *game, bool isFullScreen)
     switch(game->status)
     {
         case MENU:
-            inputUpdateAndDrawMenu(game);
+            inputUpdateAndDrawMenu(game, isFullScreen);
             break;
 
         case LOAD:
-            inputUpdateAndDrawLoad(game);
+            inputUpdateAndDrawLoad(game, isFullScreen);
             break;
 
         case HELP:

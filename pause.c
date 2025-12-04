@@ -23,9 +23,9 @@ void inputUpdateAndDrawPause(Game *game, bool isFullscreen)
     }
     else
     {
-        returnArea = (Rectangle){X_PAUSE_BUTTON*2, Y_RETURN_BUTTON*2, (int) rm.pause.normalReturnButton.width, (int) rm.pause.normalReturnButton.height};
-        saveArea = (Rectangle){X_PAUSE_BUTTON*2, Y_SAVE_BUTTON*2, (int) rm.pause.normalSaveButton.width, (int) rm.pause.normalSaveButton.height};
-        leaveArea = (Rectangle){X_PAUSE_BUTTON*2, Y_LEAVE_BUTTON*2, (int) rm.pause.normalLeaveButton.width, (int) rm.pause.normalLeaveButton.height};
+        returnArea = (Rectangle){X_PAUSE_BUTTON*2+140, Y_RETURN_BUTTON*2, (int) rm.pause.normalReturnButtonG.width, (int) rm.pause.normalReturnButtonG.height};
+        saveArea = (Rectangle){X_PAUSE_BUTTON*2+140, Y_SAVE_BUTTON*2, (int) rm.pause.normalSaveButtonG.width, (int) rm.pause.normalSaveButtonG.height};
+        leaveArea = (Rectangle){X_PAUSE_BUTTON*2+140, Y_LEAVE_BUTTON*2, (int) rm.pause.normalLeaveButtonG.width, (int) rm.pause.normalLeaveButtonG.height};
     }
 
     bool mouseOnReturnButton = CheckCollisionPointRec(mousePosition, returnArea);
@@ -72,24 +72,24 @@ void inputUpdateAndDrawPause(Game *game, bool isFullscreen)
     {
         DrawRectangle(0, 0, 1920, 1080, Fade(BLACK, 0.6f));
         DrawRectangle(266*2, 0, 266*2, 450*2, BLACK);
-        DrawText("JOGO PAUSADO!!", 300*2, 40*2, 25*2, WHITE);
+        DrawText("JOGO PAUSADO!!", 300*2+140, 40*2, 25*2, WHITE);
 
         if (mouseOnReturnButton)
-            DrawTexture(rm.pause.mouseReturnButton, X_PAUSE_BUTTON*2, Y_RETURN_BUTTON*2, WHITE);
+            DrawTexture(rm.pause.mouseReturnButton, X_PAUSE_BUTTON*2+140, Y_RETURN_BUTTON*2, WHITE);
         else
-            DrawTexture(rm.pause.normalReturnButton, X_PAUSE_BUTTON*2, Y_RETURN_BUTTON*2, WHITE);
+            DrawTexture(rm.pause.normalReturnButton, X_PAUSE_BUTTON*2+140, Y_RETURN_BUTTON*2, WHITE);
 
 
         if (mouseOnSaveButton)
-            DrawTexture(rm.pause.mouseSaveButton, X_PAUSE_BUTTON*2, Y_SAVE_BUTTON*2, WHITE);
+            DrawTexture(rm.pause.mouseSaveButton, X_PAUSE_BUTTON*2+140, Y_SAVE_BUTTON*2, WHITE);
         else
-            DrawTexture(rm.pause.normalSaveButton, X_PAUSE_BUTTON*2, Y_SAVE_BUTTON*2, WHITE);
+            DrawTexture(rm.pause.normalSaveButton, X_PAUSE_BUTTON*2+140, Y_SAVE_BUTTON*2, WHITE);
 
 
         if (mouseOnLeaveButton)
-            DrawTexture(rm.pause.mouseLeaveButton, X_PAUSE_BUTTON*2, Y_LEAVE_BUTTON*2, WHITE);
+            DrawTexture(rm.pause.mouseLeaveButton, X_PAUSE_BUTTON*2+140, Y_LEAVE_BUTTON*2, WHITE);
         else
-            DrawTexture(rm.pause.normalLeaveButton, X_PAUSE_BUTTON*2, Y_LEAVE_BUTTON*2, WHITE);
+            DrawTexture(rm.pause.normalLeaveButton, X_PAUSE_BUTTON*2+140, Y_LEAVE_BUTTON*2, WHITE);
     }
 
 

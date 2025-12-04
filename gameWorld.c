@@ -682,7 +682,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
 
             if(enemy->dead==false && (player->attackStatus.attackLeft || player->attackStatus.attackRight || player->attackStatus.attackDown || player->attackStatus.attackUp)&& player->sword.activated)
             {
-                if(player->pos.x-enemy->pos.x>50 )
+                if(player->pos.x-enemy->pos.x>60 )
                 {
                     if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
@@ -732,7 +732,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                         player->sword.activated = false;
                     }
                 }
-                else if (enemy->pos.x-player->pos.x>50)
+                else if (enemy->pos.x-player->pos.x>60)
                 {
                      if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
@@ -782,7 +782,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                         player->sword.activated = false;
                     }
                 }
-                else if(enemy->pos.x-player->pos.x<50 || player->pos.x-enemy->pos.x<50 )
+                else if(enemy->pos.x-player->pos.x<60 || player->pos.x-enemy->pos.x<60 )
                 {
                     if (checkBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.x<=enemy->pos.x  && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
@@ -846,7 +846,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
 
             if(enemy->dead==false && (player->attackStatus.attackLeft || player->attackStatus.attackRight || player->attackStatus.attackDown || player->attackStatus.attackUp)&& player->sword.activated)
             {
-                if(player->pos.x-enemy->pos.x>50 )
+                if(player->pos.x-enemy->pos.x>60 )
                 {
                     if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
@@ -896,7 +896,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                         player->sword.activated = false;
                     }
                 }
-                else if (enemy->pos.x-player->pos.x>50)
+                else if (enemy->pos.x-player->pos.x>60)
                 {
                      if (checkBasicEnemiesPlayerSwordCollision_Right(collisionRec, defaultSword) && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {
@@ -946,7 +946,7 @@ void makeCollisionEnemiesWeapons(GameWorld *gw)
                         player->sword.activated = false;
                     }
                 }
-                else if(enemy->pos.x-player->pos.x<50 || player->pos.x-enemy->pos.x<50 )
+                else if(enemy->pos.x-player->pos.x<60 || player->pos.x-enemy->pos.x<60 )
                 {
                     if (checkAirBasicEnemiesPlayerSwordCollision_default(enemy,defaultSword)&& player->pos.x<=enemy->pos.x  && (player->pos.y+player->dim.y<enemy->pos.y)==false)
                     {

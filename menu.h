@@ -3,8 +3,8 @@
 
 #include "game.h"
 
-void inputUpdateAndDrawMenu(Game *game);
+void inputUpdateAndDrawMenu(Game *game, bool isFullscreen);
 
-void inputUpdateAndDrawLoad(Game *game);
+void inputUpdateAndDrawLoad(Game *game, bool isFullscreen);
 
 #endif // MENU_H
