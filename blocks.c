@@ -15,3 +15,17 @@ void drawBlock(Block *block)
 {
     DrawTextureV(rm.gw.defaultTile,block->pos,WHITE);
 }
+
+Grass createGrass (Vector2 pos)
+{
+    return (Grass){
+        .pos = pos,
+        .dim = (Vector2){32,32},
+        .cor = BLACK,
+    };
+}
+
+void drawGrass(Grass *grass)
+{
+    DrawTextureV(rm.gl.grass,grass->pos,WHITE);
+}

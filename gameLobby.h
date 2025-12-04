@@ -12,8 +12,16 @@ typedef struct GameLobby
     Block blocks[3000];
     int numberOfBlocks;
 
+    Grass grass[1000];
+    int numberOfGrass;
+
     Rectangle Banch;
     bool nearBanch;
+
+    float contRestTime;
+    float restTime;
+
+    bool gameIsSaved;
 
     Rectangle Room;
     bool nearRoom;
@@ -45,7 +53,7 @@ void makeLobbyCollisionPlayerBlock (GameLobby *gl);
 
 void makeLobbyCollisionBlocksPowersAndWeapons (GameLobby *gl);
 
-void drawGameLobby (GameLobby *gl);
+void drawGameLobby (GameLobby *gl, bool isFullscreen);
 
 void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool roomCamera);
 

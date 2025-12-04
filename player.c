@@ -30,6 +30,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 .healing = false,
                 .healingTime = 1.5f,
                 .contHealingTime = 0.0,
+                .sufferingDamege = false,
                 .resting = false,
                 .ticketsRU = 0,
                 .defaultSpeed = 200.0,
@@ -56,17 +57,30 @@ Player createNewPlayer (Vector2 dim, Color cor)
                     .cor = WHITE,
                     .currentFrame = 0,
                     .numberOfFrames=0,
-                    .contTime=0,
+                    .contTime=0.0,
+                    .contTextureTime=0.0,
                     .attackTime = 4.0,
-                    .timeToTheNextFrame=0,
+                    .timeToTheNextFrame=0.25,
                 },
             },
 
             .inventory = (PlayerInventory)
             {
+                .colectedCharms = (PlayerCharms)
+                {
+                    .goldTickets = false,
+                    .debugSword = false,
+                    .plusEgo = false,
+                    .gamerHeart = false,
+                    .programmerHands = false,
+                },
                 .equippedCharms = (PlayerCharms)
                 {
                     .goldTickets = false,
+                    .debugSword = false,
+                    .plusEgo = false,
+                    .gamerHeart = false,
+                    .programmerHands = false,
                 },
                 .equippedWeapons = (PlayerWeapons)
                 {
@@ -131,6 +145,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
             .timeToTheNextFrame = 0.5f,
 
             .progress = 0,
+            .inLevel = false,
 
         };
 
@@ -143,6 +158,31 @@ Player createNewPlayer (Vector2 dim, Color cor)
 
 void inputAndUpdatePlayer(Player *player, float delta)
 {
+    if(player->inventory.equippedCharms.plusEgo)
+    {
+        if(player->status.aura>=25)
+            player->status.aura=25;
+    }
+    else
+        if(player->status.aura>=13)
+            player->status.aura=13;
+
+    if(player->inventory.equippedCharms.gamerHeart)
+    {
+        player->status.maxLife = 7;
+        if(player->status.life>=7)
+            player->status.life =7;
+    }
+    else
+    {
+        player->status.maxLife = 5;
+        if(player->status.life>=5)
+            player->status.life =5;
+    }
+
+
+
+
 
     //============MOVESET============
     //-------HORIZONTAL-MOVES--------
@@ -166,7 +206,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
             else
             {
                 player->speed.x *= 0.8f;
-                if(player->speed.x<10.0f && player->speed.x>10.0f)
+                if(player->speed.x<10.0f && player->speed.x>-10.0f)
                     player->speed.x =0.0f; // se não esta se movendo velocidade é zero
             }
         }
@@ -261,28 +301,66 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
             //-----ESPECIAL-ATTACKS-----
 
-    if (IsKeyPressed(KEY_C)&& player->powers.horizontalPowerActive && player->powers.usingHorizontalPower==false && player->status.aura>=3 && player->status.healing==false)
+    if (IsKeyPressed(KEY_C)&& player->powers.horizontalPowerActive && player->powers.usingHorizontalPower==false  && player->status.healing==false)
     {
-        player->powers.usingHorizontalPower=true;
-
-        player->status.aura-=3;
-
-        player->powers.horizontalPower.dim = (Vector2){32,32};
-
-        player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
-
-        if (player->status.lookingAtL)
+        if(player->inventory.equippedCharms.plusEgo)
         {
-            player->powers.horizontalPower.speed.x = -400;
-            player->powers.horizontalPower.pos = (Vector2){player->pos.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+            if(player->status.aura>=12)
+            {
+                player->status.aura-= 12;
 
+                player->powers.usingHorizontalPower=true;
+
+                player->powers.horizontalPower.contTextureTime = 0.0f;
+
+                player->powers.horizontalPower.dim = (Vector2){32,32};
+
+                player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+
+                if (player->status.lookingAtL)
+                {
+                    player->powers.horizontalPower.speed.x = -400;
+                    player->powers.direction = 0;
+                    player->powers.horizontalPower.pos = (Vector2){player->pos.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+
+                }
+                else
+                {
+                    player->powers.horizontalPower.speed.x = 400;
+                    player->powers.direction = 1;
+                    player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+                }
+            }
         }
         else
         {
-            player->powers.horizontalPower.speed.x = 400;
-            player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
-        }
+            if(player->status.aura>=3)
+            {
+                player->status.aura -= 3;
 
+                player->powers.usingHorizontalPower=true;
+
+                player->powers.horizontalPower.contTextureTime = 0.0f;
+
+                player->powers.horizontalPower.dim = (Vector2){32,32};
+
+                player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+
+                if (player->status.lookingAtL)
+                {
+                    player->powers.horizontalPower.speed.x = -400;
+                    player->powers.direction = 0;
+                    player->powers.horizontalPower.pos = (Vector2){player->pos.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+
+                }
+                else
+                {
+                    player->powers.horizontalPower.speed.x = 400;
+                    player->powers.direction = 1;
+                    player->powers.horizontalPower.pos = (Vector2){player->pos.x+player->dim.x, player->pos.y-player->powers.horizontalPower.dim.y/2};
+                }
+            }
+        }
     }
     else
     {
@@ -298,25 +376,50 @@ void inputAndUpdatePlayer(Player *player, float delta)
     }
 
     //--------------SKILLS--------------
-
-    if(player->status.onFloor && player->status.aura>=6 && IsKeyPressed(KEY_Q))
+    if(player->inventory.equippedCharms.plusEgo==false)
     {
-        player->status.healing = true;
-    }
-
-    if(player->status.healing && IsKeyDown(KEY_Q) && player->status.aura>=3)
-    {
-        player->status.contHealingTime += delta;
-
-        if(player->status.contHealingTime>=player->status.healingTime)
+        if(player->status.onFloor && player->status.aura>=6 && IsKeyPressed(KEY_Q))
         {
-                if(player->status.life<player->status.maxLife)
-                    player->status.life++;
-
-                player->status.aura-=3;
-                player->status.contHealingTime=0.0;
+            player->status.healing = true;
         }
 
+        if(player->status.healing && IsKeyDown(KEY_Q) && player->status.aura>=3)
+        {
+            player->status.contHealingTime += delta;
+
+            if(player->status.contHealingTime>=player->status.healingTime)
+            {
+                    if(player->status.life<player->status.maxLife)
+                        player->status.life++;
+
+                    player->status.aura-=3;
+                    player->status.contHealingTime=0.0;
+            }
+
+        }
+    }
+    else
+    {
+
+        if(player->status.onFloor && player->status.aura>=12 && IsKeyPressed(KEY_Q))
+        {
+            player->status.healing = true;
+        }
+
+        if(player->status.healing && IsKeyDown(KEY_Q) && player->status.aura>=12)
+        {
+            player->status.contHealingTime += delta;
+
+            if(player->status.contHealingTime>=player->status.healingTime*3)
+            {
+                    if(player->status.life<player->status.maxLife)
+                        player->status.life+=4;
+
+                    player->status.aura-=12;
+                    player->status.contHealingTime=0.0;
+            }
+
+        }
     }
 
     if (IsKeyReleased(KEY_Q)&& player->status.healing)
@@ -434,7 +537,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
             }
         }
 
-        if (IsKeyPressed(KEY_SPACE)&&player->jumpStatus.canDoubleJump) //se pode pular e a tecla for acionada
+        if (IsKeyPressed(KEY_SPACE)&&player->jumpStatus.canDoubleJump && player->inventory.doubleJump) //se pode pular e a tecla for acionada
         {
             player->speed.y = -player->jumpStatus.defaultJumpForce; // realiza o pulo
             player->jumpStatus.isJumping = true;
@@ -453,10 +556,10 @@ void inputAndUpdatePlayer(Player *player, float delta)
             player->status.onFloor = false;
             player->jumpStatus.wasOnFloor = false;
 
-            if(player->inventory.doubleJump)
-            {
+
+
                 player->jumpStatus.canDoubleJump = true;
-            }
+
         }
 
         if(IsKeyDown(KEY_SPACE)&& player->jumpStatus.isJumping) //se esta pulamndo e atecla continua pressionada
@@ -478,60 +581,95 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     if(player->inventory.chiclete)
     {
-        if(player->chiclete.canUseChiclete && (!IsKeyDown(KEY_A)))
-                    player->chiclete.contChicleteTime = 0.0f;
+        if(player->inventory.equippedCharms.programmerHands==false)
+        {
+                if(!player->chiclete.leftWall && !player->chiclete.rightWall && !IsKeyDown(KEY_A) && !IsKeyDown(KEY_D))
+                        player->chiclete.contChicleteTime = 0.0f;
 
-            if(player->chiclete.leftWall)
-            {
-
-                if(IsKeyDown(KEY_A)&& player->chiclete.contChicleteTime<=0.5)
+                if(player->chiclete.leftWall)
                 {
-                    player->speed.y = 0.0f;
 
-                    //if do amuleto que melhora o chiclete = zera o timer sempre, fica na parede por tempoo ilim itado
+                    if(IsKeyDown(KEY_A)&& player->chiclete.contChicleteTime<=0.5)
+                    {
+                        player->speed.y = 0.0f;
 
-                    player->chiclete.contChicleteTime += delta;
-                    player->chiclete.canUseChiclete = false;
-                    player->jumpStatus.wasOnFloor = true;
+                        player->chiclete.contChicleteTime += delta;
+                        player->chiclete.canUseChiclete = false;
+                        player->jumpStatus.wasOnFloor = true;
 
-                }
-                else
-                {
-                    player->chiclete.leftWall = false;
+                    }
+                    else
+                    {
+                        player->chiclete.leftWall = false;
 
-                }
+                        if(!player->chiclete.leftWall && !IsKeyDown(KEY_A))
+                            player->chiclete.contChicleteTime = 0.0f;
 
-            }
-            else if(player->chiclete.rightWall==false)
-                player->chiclete.canUseChiclete = true;
-
-
-
-        if(player->chiclete.rightWall)
-            {
-
-                if(IsKeyDown(KEY_D)&& player->chiclete.contChicleteTime<=0.5)
-                {
-                    player->speed.y = 0.0f;
-
-                    //if do amuleto que melhora o chiclete = zera o timer sempre, fica na parede por tempoo ilim itado
-
-                    player->chiclete.contChicleteTime += delta;
-                    player->chiclete.canUseChiclete = false;
-                    player->jumpStatus.wasOnFloor = true;
-
-                }
-                else
-                {
-                    player->chiclete.rightWall = false;
+                    }
 
                 }
 
-            }
-            else if(player->chiclete.leftWall==false)
-                player->chiclete.canUseChiclete = true;
+                if(player->chiclete.rightWall)
+                {
+
+                    if(IsKeyDown(KEY_D)&& player->chiclete.contChicleteTime<=0.5)
+                    {
+                        player->speed.y = 0.0f;
+
+                        player->chiclete.contChicleteTime += delta;
+                        player->chiclete.canUseChiclete = false;
+                        player->jumpStatus.wasOnFloor = true;
+
+                    }
+                    else
+                    {
+                        player->chiclete.rightWall = false;
+
+                        if(!player->chiclete.rightWall && !IsKeyDown(KEY_D))
+                            player->chiclete.contChicleteTime = 0.0f;
+                    }
+                }
+        }
+        else
+        {
+                if(player->chiclete.leftWall)
+                {
+
+                    if(IsKeyDown(KEY_A))
+                    {
+                        player->speed.y = 0.0f;
+                        player->chiclete.canUseChiclete = false;
+                        player->jumpStatus.wasOnFloor = true;
+
+                    }
+                    else
+                    {
+                        player->chiclete.leftWall = false;
+                    }
+
+                }
+                else if (player->chiclete.rightWall)
+                {
+                    if(IsKeyDown(KEY_D))
+                    {
+                        player->speed.y = 0.0f;
+                        player->chiclete.canUseChiclete = false;
+                        player->jumpStatus.wasOnFloor = true;
+
+                    }
+                    else
+                    {
+                        player->chiclete.rightWall = false;
+                    }
+                }
+        }
 
     }
+
+    if(!player->chiclete.leftWall && !player->chiclete.rightWall)
+            {
+                player->chiclete.canUseChiclete = true;
+            }
 
 
 //------------------------------------------------------------
@@ -592,12 +730,14 @@ void applyKnockbackToPlayer(Player *player)
     {
         player->speed.x = -500.0; //aplica as forças
         player->speed.y = -200.0;
+        player->status.sufferingDamege = true;
         player->knockbackStatus.knockbackTime = 0.5; // inicia o contador
     }
     else if (player->knockbackStatus.knockbackR)
     {
         player->speed.x = 500.0;
         player->speed.y = -200.0;
+        player->status.sufferingDamege = true;
         player->knockbackStatus.knockbackTime = 0.5;
     }
     else if (player->knockbackStatus.knockbackUn)
@@ -611,6 +751,7 @@ void applyKnockbackToPlayer(Player *player)
             player->speed.x = -200.0;
         }
         player->speed.y = 300.0;
+        player->status.sufferingDamege = true;
         player->knockbackStatus.knockbackTime = 0.5;
     }
     else if (player->knockbackStatus.knockbackUp)
@@ -624,6 +765,7 @@ void applyKnockbackToPlayer(Player *player)
             player->speed.x = -200.0;
         }
         player->speed.y = -300.0;
+        player->status.sufferingDamege = true;
         player->knockbackStatus.knockbackTime = 0.5;
     }
     else if (player->knockbackStatus.swordKnockbackL)
@@ -653,6 +795,9 @@ void applyKnockbackToPlayer(Player *player)
     player->knockbackStatus.swordKnockbackR = false;
     player->knockbackStatus.swordKnockbackUp = false;
 
+    if(player->knockbackStatus.knockbackTime<=0.25)
+        player->status.sufferingDamege = false;
+
 }
 
 //-------------------------------------------------------
@@ -660,27 +805,767 @@ void applyKnockbackToPlayer(Player *player)
 //---------------------DRAW-PLAYER-----------------------
 void drawPlayer(Player *player)
 {
+    //DrawRectangleV(player->pos,player->dim,player->cor);
+    player->contTime += GetFrameTime();
+    if(player->contTime>=player->timeToTheNextFrame)
+    {
+        player->contTime = 0.0;
+        if(player->currentFrame==0)
+            player->currentFrame =1;
+        else
+            player->currentFrame =0;
+    }
+
+
+
     if(player->powers.usingHorizontalPower)
-        DrawTextureV(rm.gw.horizontalPowerA,player->powers.horizontalPower.pos, player->powers.horizontalPower.cor);
+    {
+        player->powers.horizontalPower.contTextureTime += GetFrameTime();
 
-    if(player->status.resting==false)
-        DrawRectangleV(player->pos,player->dim,player->cor);
-    else DrawRectangleV(player->pos,player->dim,YELLOW);
+        if(player->powers.horizontalPower.contTextureTime>=player->powers.horizontalPower.timeToTheNextFrame)
+        {
+            if(player->powers.horizontalPower.currentFrame==0)
+                player->powers.horizontalPower.currentFrame = 1;
+            else
+            {
+                 player->powers.horizontalPower.currentFrame = 0;
+            }
 
-    drawPlayerSword(player);
+            player->powers.horizontalPower.contTextureTime=0.0;
+        }
+
+
+        if(player->powers.direction==1)
+        {
+            if(player->powers.horizontalPower.currentFrame==0)
+                DrawTextureV(rm.gw.horizontalPowerA,player->powers.horizontalPower.pos, player->powers.horizontalPower.cor);
+            else
+                DrawTextureV(rm.gw.horizontalPowerB,player->powers.horizontalPower.pos, player->powers.horizontalPower.cor);
+        }
+        else
+        {
+            if(player->powers.horizontalPower.currentFrame==0)
+                DrawTexturePro(rm.gw.horizontalPowerA,
+                        (Rectangle){0,0,-rm.gw.horizontalPowerA.width,rm.gw.horizontalPowerA.height},
+                        (Rectangle){player->powers.horizontalPower.pos.x,player->powers.horizontalPower.pos.y,rm.gw.horizontalPowerA.width,rm.gw.horizontalPowerA.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            else
+                DrawTexturePro(rm.gw.horizontalPowerB,
+                        (Rectangle){0,0,-rm.gw.horizontalPowerA.width,rm.gw.horizontalPowerA.height},
+                        (Rectangle){player->powers.horizontalPower.pos.x,player->powers.horizontalPower.pos.y,rm.gw.horizontalPowerA.width,rm.gw.horizontalPowerA.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+        }
+    }
+
+    if(player->status.healing)
+    {
+        if(player->status.lookingAtR)
+        {
+             DrawTexturePro(rm.player.playerHealing,
+                    (Rectangle){0,0,rm.player.playerHealing.width,rm.player.playerHealing.height},
+                    (Rectangle){player->pos.x,player->pos.y,rm.player.playerHealing.width,rm.player.playerHealing.height},
+                    (Vector2){16,16},
+                     0.0f,
+                     WHITE);
+        }
+        else
+        {
+             DrawTexturePro(rm.player.playerHealing,
+                    (Rectangle){0,0,-rm.player.playerHealing.width,rm.player.playerHealing.height},
+                    (Rectangle){player->pos.x,player->pos.y,rm.player.playerHealing.width,rm.player.playerHealing.height},
+                    (Vector2){16,16},
+                     0.0f,
+                     WHITE);
+        }
+    }
+    else if(player->status.resting==false)
+    {
+        if(player->speed.x==0 && player->status.onFloor && player->attackStatus.attacking==false)
+        {
+            if(player->status.lookingAtR)
+            {
+                DrawTexturePro(rm.player.normalPlayer,
+                        (Rectangle){0,0,rm.player.normalPlayer.width,rm.player.normalPlayer.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.normalPlayer.width,rm.player.normalPlayer.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+            else
+            {
+                DrawTexturePro(rm.player.normalPlayer,
+                        (Rectangle){0,0,-rm.player.normalPlayer.width,rm.player.normalPlayer.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.normalPlayer.width,rm.player.normalPlayer.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+        }
+        else if(player->speed.x!=0 && player->status.onFloor && player->dashStatus.dashTime<=0.0 && player->attackStatus.attacking==false)
+        {
+            if(player->status.lookingAtR)
+            {
+                DrawTexturePro(rm.player.playerRunning[player->currentFrame],
+                            (Rectangle){0,0,rm.player.playerRunning[player->currentFrame].width,rm.player.playerRunning[player->currentFrame].height},
+                            (Rectangle){player->pos.x,player->pos.y,rm.player.playerRunning[player->currentFrame].width,rm.player.playerRunning[player->currentFrame].height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.playerRunning[player->currentFrame],
+                            (Rectangle){0,0,-rm.player.playerRunning[player->currentFrame].width,rm.player.playerRunning[player->currentFrame].height},
+                            (Rectangle){player->pos.x,player->pos.y,rm.player.playerRunning[player->currentFrame].width,rm.player.playerRunning[player->currentFrame].height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+            }
+        }
+        else if(player->jumpStatus.isJumping && player->jumpStatus.canDoubleJump && player->attackStatus.attacking==false)
+        {
+
+            if(player->status.lookingAtR)
+            {
+                DrawTexturePro(rm.player.playerJumping[player->currentFrame],
+                        (Rectangle){0,0,rm.player.playerJumping[player->currentFrame].width,rm.player.playerJumping[player->currentFrame].height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerJumping[player->currentFrame].width,rm.player.playerJumping[player->currentFrame].height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.playerJumping[player->currentFrame],
+                        (Rectangle){0,0,-rm.player.playerJumping[player->currentFrame].width,rm.player.playerJumping[player->currentFrame].height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerJumping[player->currentFrame].width,rm.player.playerJumping[player->currentFrame].height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+        }
+        else if(player->status.onFloor==false && player->jumpStatus.isJumping==false && player->dashStatus.dashTime<=0.0 && player->chiclete.canUseChiclete && player->attackStatus.attacking==false)
+        {
+
+            if(player->status.lookingAtR)
+            {
+                DrawTexturePro(rm.player.playerFalling[0],
+                        (Rectangle){0,0,rm.player.playerFalling[0].width,rm.player.playerFalling[0].height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerFalling[0].width,rm.player.playerFalling[0].height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.playerFalling[0],
+                        (Rectangle){0,0,-rm.player.playerFalling[0].width,rm.player.playerFalling[0].height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerFalling[0].width,rm.player.playerFalling[0].height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+        }
+        else if(player->dashStatus.dashTime>=0.0 && player->attackStatus.attacking==false && player->inventory.teclaTab)
+        {
+            if(player->status.lookingAtR)
+            {
+                 DrawTexturePro(rm.player.playerDash,
+                        (Rectangle){0,0,rm.player.playerDash.width,rm.player.playerDash.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerDash.width,rm.player.playerDash.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.playerDash,
+                        (Rectangle){0,0,-rm.player.playerDash.width,rm.player.playerDash.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerDash.width,rm.player.playerDash.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+
+        }
+        else if(player->chiclete.contChicleteTime<=0.5f && player->chiclete.canUseChiclete==false && player->attackStatus.attacking==false && player->inventory.chiclete)
+        {
+            if(player->status.lookingAtR)
+            {
+                 DrawTexturePro(rm.player.playerChiclete,
+                        (Rectangle){0,0,-rm.player.playerChiclete.width,rm.player.playerChiclete.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerChiclete.width,rm.player.playerChiclete.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.playerChiclete,
+                        (Rectangle){0,0,rm.player.playerChiclete.width,rm.player.playerChiclete.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerChiclete.width,rm.player.playerChiclete.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+
+        }
+        else if(player->status.onFloor==false && player->jumpStatus.canJump==false && player->jumpStatus.canDoubleJump==false && player->jumpStatus.isJumping && player->chiclete.contChicleteTime==0.0 && player->attackStatus.attacking==false && player->inventory.doubleJump)
+        {
+            if(player->status.lookingAtR)
+            {
+                 DrawTexturePro(rm.player.playerDoubleJump,
+                        (Rectangle){0,0,rm.player.playerDoubleJump.width,rm.player.playerDoubleJump.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerDoubleJump.width,rm.player.playerDoubleJump.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.playerDoubleJump,
+                        (Rectangle){0,0,-rm.player.playerDoubleJump.width,rm.player.playerDoubleJump.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerDoubleJump.width,rm.player.playerDoubleJump.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+            }
+
+        }
+         else if(player->attackStatus.attacking)
+        {
+            if(player->status.lookingAtR)
+            {
+                if(player->status.lookingUp)
+                {
+                    if(player->status.onFloor==false)
+                    {
+                        DrawTexturePro(rm.player.playerJumpAttackUp,
+                            (Rectangle){0,0,rm.player.playerJumpAttackUp.width,rm.player.playerJumpAttackUp.height},
+                            (Rectangle){player->pos.x,player->pos.y,rm.player.playerJumpAttackUp.width,rm.player.playerJumpAttackUp.height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+                    }
+                    else
+                    {
+                        DrawTexturePro(rm.player.playerAttackUp,
+                            (Rectangle){0,0,rm.player.playerAttackUp.width,rm.player.playerAttackUp.height},
+                            (Rectangle){player->pos.x,player->pos.y,rm.player.playerAttackUp.width,rm.player.playerAttackUp.height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+                    }
+                }
+                else if (player->status.lookingDown)
+                {
+                    DrawTexturePro(rm.player.playerAttackDown,
+                            (Rectangle){0,0,rm.player.playerAttackDown.width,rm.player.playerAttackDown.height},
+                            (Rectangle){player->pos.x,player->pos.y,rm.player.playerAttackDown.width,rm.player.playerAttackDown.height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+                }
+                else
+                {
+                    DrawTexturePro(rm.player.playerAttack,
+                        (Rectangle){0,0,rm.player.playerAttack.width,rm.player.playerAttack.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerAttack.width,rm.player.playerAttack.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+                }
+            }
+            else if (player->status.lookingAtL)
+            {
+                if(player->status.lookingUp)
+                {
+                    if(player->status.onFloor==false)
+                    {
+                        DrawTexturePro(rm.player.playerJumpAttackUp,
+                            (Rectangle){0,0,-rm.player.playerJumpAttackUp.width,rm.player.playerJumpAttackUp.height},
+                            (Rectangle){player->pos.x,player->pos.y,rm.player.playerJumpAttackUp.width,rm.player.playerJumpAttackUp.height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+                    }
+                    else
+                    {
+                        DrawTexturePro(rm.player.playerAttackUp,
+                            (Rectangle){0,0,-rm.player.playerAttackUp.width,rm.player.playerAttackUp.height},
+                            (Rectangle){player->pos.x,player->pos.y,rm.player.playerAttackUp.width,rm.player.playerAttackUp.height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+                    }
+                }
+                else if (player->status.lookingDown)
+                {
+                    DrawTexturePro(rm.player.playerAttackDown,
+                            (Rectangle){0,0,-rm.player.playerAttackDown.width,rm.player.playerAttackDown.height},
+                            (Rectangle){player->pos.x,player->pos.y,rm.player.playerAttackDown.width,rm.player.playerAttackDown.height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+                }
+                else
+                {
+                    DrawTexturePro(rm.player.playerAttack,
+                        (Rectangle){0,0,-rm.player.playerAttack.width,rm.player.playerAttack.height},
+                        (Rectangle){player->pos.x,player->pos.y,rm.player.playerAttack.width,rm.player.playerAttack.height},
+                        (Vector2){16,16},
+                         0.0f,
+                         WHITE);
+                }
+            }
+
+
+            if(player->attackStatus.attackRight)
+            {
+                 DrawTexturePro(rm.player.swordAttack,
+                        (Rectangle){0,0,rm.player.swordAttack.width,rm.player.swordAttack.height},
+                        (Rectangle){player->sword.pos.x+5,player->sword.pos.y-24,rm.player.swordAttack.width,rm.player.swordAttack.height},
+                        (Vector2){16,8},
+                         0.0f,
+                         WHITE);
+            }
+            else if(player->attackStatus.attackLeft)
+            {
+                 DrawTexturePro(rm.player.swordAttack,
+                        (Rectangle){0,0,-rm.player.swordAttack.width,rm.player.swordAttack.height},
+                        (Rectangle){player->sword.pos.x+5,player->sword.pos.y-24,rm.player.swordAttack.width,rm.player.swordAttack.height},
+                        (Vector2){16,8},
+                         0.0f,
+                         WHITE);
+            }
+            else if(player->attackStatus.attackUp)
+            {
+                 DrawTexturePro(rm.player.swordAttack,
+                        (Rectangle){0,0,rm.player.swordAttack.width,rm.player.swordAttack.height},
+                        (Rectangle){player->sword.pos.x-24,player->sword.pos.y+36,rm.player.swordAttack.width,rm.player.swordAttack.height},
+                        (Vector2){16,8},
+                         270.0f,
+                         WHITE);
+            }
+            else if(player->attackStatus.attackDown)
+            {
+                 DrawTexturePro(rm.player.swordAttack,
+                        (Rectangle){0,0,rm.player.swordAttack.width,rm.player.swordAttack.height},
+                        (Rectangle){player->sword.pos.x+32,player->sword.pos.y+5,rm.player.swordAttack.width,rm.player.swordAttack.height},
+                        (Vector2){16,8},
+                         90.0f,
+                         WHITE);
+            }
+
+        }
+
+    }
+    else
+    {
+        if(player->status.lookingAtR)
+            {
+                DrawTexturePro(rm.player.restingPlayer[player->currentFrame],
+                            (Rectangle){0,0,rm.player.restingPlayer[player->currentFrame].width,rm.player.restingPlayer[player->currentFrame].height},
+                            (Rectangle){player->pos.x,player->pos.y-10,rm.player.restingPlayer[player->currentFrame].width,rm.player.restingPlayer[player->currentFrame].height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+            }
+            else
+            {
+                 DrawTexturePro(rm.player.restingPlayer[player->currentFrame],
+                            (Rectangle){0,0,-rm.player.restingPlayer[player->currentFrame].width,rm.player.restingPlayer[player->currentFrame].height},
+                            (Rectangle){player->pos.x,player->pos.y-10,rm.player.restingPlayer[player->currentFrame].width,rm.player.restingPlayer[player->currentFrame].height},
+                            (Vector2){16,16},
+                             0.0f,
+                             WHITE);
+            }
+    }
+
+    //drawPlayerSword(player);
 
 }
 
 
-void drawHud (Player *player)
+void drawHud (Player *player, bool isFullscreen)
 {
     int fps = GetFPS();
 
-    DrawText(TextFormat("Lives: %02i", player->status.life), 20,20,20, GREEN);
-    DrawText(TextFormat("Aura: %02i", player->status.aura), 20,50,20, GREEN);
-    DrawText(TextFormat("Amuletos: "), 20,80,20, GREEN);
-    DrawText(TextFormat("TicketsRU: %02i", player->status.ticketsRU), 20,110,20, GREEN);
-    DrawText(TextFormat("FPS: %03i",fps),20,140,20,GREEN);
+    //DrawText(TextFormat("Lives: %02i", player->status.life), 20,20,20, GREEN);
+
+
+    //DrawText(TextFormat("Aura: %02i", player->status.aura), 20,50,20, GREEN);
+
+
+
+
+
+    if(isFullscreen==false)
+    {
+
+        switch(player->status.life)
+        {
+        case 7:
+            DrawTexture(rm.player.sevenHearts, 20,20,WHITE);
+            break;
+        case 6:
+             if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit7Heart, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.sixHearts, 20,20,WHITE);
+            }
+            break;
+        case 5:
+             if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit6Heart, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.fiveHearts, 20,20,WHITE);
+            }
+            break;
+        case 4:
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit5Heart, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.fourHearts, 20,20,WHITE);
+            }
+            break;
+        case 3:
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit4Heart, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.treeHearts, 20,20,WHITE);
+            }
+            break;
+        case 2:
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit3Heart, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.twoHearts, 20,20,WHITE);
+            }
+            break;
+        case 1:
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit2Heart, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.oneHearts, 20,20,WHITE);
+            }
+            break;
+        default:
+            break;
+        }
+
+        switch(player->status.aura)
+        {
+        case 0:
+        case 1:
+            DrawTexture(rm.player.zeroAura, 10,60,WHITE);
+            break;
+        case 2:
+        case 3:
+            DrawTexture(rm.player.oneAura, 10,60,WHITE);
+            break;
+        case 4:
+        case 5:
+            DrawTexture(rm.player.twoAura, 10,60,WHITE);
+            break;
+        case 6:
+        case 7:
+            DrawTexture(rm.player.treeAura, 10,60,WHITE);
+            break;
+        case 8:
+        case 9:
+            DrawTexture(rm.player.fourAura, 10,60,WHITE);
+            break;
+        case 10:
+        case 11:
+            DrawTexture(rm.player.fiveAura, 10,60,WHITE);
+            break;
+        case 12:
+        case 13:
+            DrawTexture(rm.player.sixAura, 10,60,WHITE);
+            break;
+        case 14:
+        case 15:
+            DrawTexture(rm.player.sevenAura, 10,60,WHITE);
+            break;
+        case 16:
+        case 17:
+            DrawTexture(rm.player.eightAura, 10,60,WHITE);
+            break;
+        case 18:
+        case 19:
+            DrawTexture(rm.player.nineAura, 10,60,WHITE);
+            break;
+        case 20:
+        case 21:
+            DrawTexture(rm.player.tenAura, 10,60,WHITE);
+            break;
+        case 22:
+        case 23:
+            DrawTexture(rm.player.elevenAura, 10,60,WHITE);
+            break;
+        case 24:
+        case 25:
+            DrawTexture(rm.player.twelveAura, 10,60,WHITE);
+            break;
+        default:
+            break;
+        }
+
+        if(player->inLevel)
+        {
+            DrawTexture(rm.player.ticketsRU2, 60, 60, WHITE);
+        }
+        else
+            DrawTexture(rm.player.ticketsRU1, 60, 60, WHITE);
+
+
+         DrawText(TextFormat("%02i", player->status.ticketsRU), 128,87,18, BLACK);
+
+         if(player->powers.usingHorizontalPower)
+            DrawTexture(rm.player.auraLeek,10,60,WHITE);
+
+    }
+    else
+    {
+        switch(player->status.life)
+        {
+        case 7:
+            DrawTexture(rm.player.sevenHeartsG, 20,20,WHITE);
+            break;
+        case 6:
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit7HeartG, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.sixHeartsG, 20,20,WHITE);
+            }
+            break;
+        case 5:
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit6HeartG, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.fiveHeartsG, 20,20,WHITE);
+            }
+            break;
+        case 4:
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit5HeartG, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.fourHeartsG, 20,20,WHITE);
+            }
+            break;
+        case 3:
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit4HeartG, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.treeHeartsG, 20,20,WHITE);
+            }
+            break;
+        case 2:
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit3HeartG, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.twoHeartsG, 20,20,WHITE);
+            }
+            break;
+        case 1:
+            if(player->status.sufferingDamege)
+            {
+                DrawTexture(rm.player.hit2HeartG, 20,20,WHITE);
+            }
+            else
+            {
+                DrawTexture(rm.player.oneHeartsG, 20,20,WHITE);
+            }
+            break;
+        }
+
+         switch(player->status.aura)
+        {
+        case 0:
+        case 1:
+            DrawTexturePro(rm.player.zeroAuraG,
+                        (Rectangle){0,0,rm.player.zeroAuraG.width,rm.player.zeroAuraG.height},
+                        (Rectangle){90,130,rm.player.zeroAuraG.width,rm.player.zeroAuraG.height},
+                        (Vector2){rm.player.zeroAuraG.width/2.0f,rm.player.zeroAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 2:
+        case 3:
+             DrawTexturePro(rm.player.oneAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 4:
+        case 5:
+             DrawTexturePro(rm.player.twoAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 6:
+        case 7:
+             DrawTexturePro(rm.player.treeAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 8:
+        case 9:
+             DrawTexturePro(rm.player.fourAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 10:
+        case 11:
+             DrawTexturePro(rm.player.fiveAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 12:
+        case 13:
+             DrawTexturePro(rm.player.sixAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 14:
+        case 15:
+            DrawTexturePro(rm.player.sevenAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 16:
+        case 17:
+            DrawTexturePro(rm.player.eightAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 18:
+        case 19:
+            DrawTexturePro(rm.player.nineAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 20:
+        case 21:
+            DrawTexturePro(rm.player.tenAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 22:
+        case 23:
+            DrawTexturePro(rm.player.elevenAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        case 24:
+        case 25:
+            DrawTexturePro(rm.player.twelveAuraG,
+                        (Rectangle){0,0,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Rectangle){90,130,rm.player.oneAuraG.width,rm.player.oneAuraG.height},
+                        (Vector2){rm.player.oneAuraG.width/2.0f,rm.player.oneAuraG.height/2.0f},
+                         90.0f,
+                         WHITE);
+            break;
+        default:
+            break;
+        }
+
+
+
+
+        if(player->inLevel)
+        {
+            DrawTexture(rm.player.ticketsRU2G, 180, 65, WHITE);
+        }
+        else
+            DrawTexture(rm.player.ticketsRU1G, 180, 65, WHITE);
+
+        DrawText(TextFormat("%02i", player->status.ticketsRU), 320,115,35, BLACK);
+
+
+        if(player->powers.usingHorizontalPower)
+            DrawTexturePro(rm.player.auraLeekG,
+                        (Rectangle){0,0,rm.player.auraLeekG.width,rm.player.auraLeekG.height},
+                        (Rectangle){90,130,rm.player.auraLeekG.width,rm.player.auraLeekG.height},
+                        (Vector2){rm.player.auraLeekG.width/2.0f,rm.player.auraLeekG.height/2.0f},
+                         90.0f,
+                         WHITE);
+    }
+
+
+
+    //DrawText(TextFormat("Amuletos: "), 20,80,20, GREEN);
+    DrawText(TextFormat("FPS: %03i",fps),20,5,20,GREEN);
 }
 
 //---------------------------------------------------------
@@ -736,7 +1621,8 @@ void resetPlayer(Player *player)
     player->attackStatus.attackUp = false;
     player->attackStatus.attackTime = 0.35f;
     player->currentFrame = 0;
-    player->progress =0;;
+    player->progress =0;
+    player->inLevel = false;
 }
 
 

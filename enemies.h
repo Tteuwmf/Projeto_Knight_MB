@@ -45,6 +45,9 @@ typedef struct BasicEnemy
     bool haveCoins;
 
     Color cor;
+    int texture;
+    float contTime;
+    int currentFrame;
 
     float defaultSpeed; //velocidade padrão de movimetno
 
@@ -70,6 +73,10 @@ typedef struct AirBasicEnemy
     bool haveCoins;
 
     Color cor;
+    int texture;
+    bool glitching;
+    float glitchTime;
+    float contGlitchTime;
 
     float defaultSpeed;
 
@@ -79,7 +86,7 @@ typedef struct AirBasicEnemy
 typedef struct Enemies
 {
     BasicEnemy *enemy1;
-    AirBasicEnemy enemy2[10];
+    AirBasicEnemy enemy2[50];
 
     int numberOfAirBasicEnemies;
     int numberOfBasicEnemies;
