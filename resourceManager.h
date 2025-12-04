@@ -47,12 +47,23 @@ typedef struct PauseTextures
     Texture2D normalLeaveButton;
     Texture2D mouseLeaveButton;
 
+    Texture2D normalReturnButtonG;
+    Texture2D mouseReturnButtonG;
+
+    Texture2D normalSaveButtonG;
+    Texture2D mouseSaveButtonG;
+
+    Texture2D normalLeaveButtonG;
+    Texture2D mouseLeaveButtonG;
+
 }PauseTextures;
 
 typedef struct GameLobbyTextures
 {
     Texture2D bench;
     Texture2D grass;
+    Texture2D storeWall;
+    Texture2D storeBlock;
 
 }GameLobbyTextures;
 

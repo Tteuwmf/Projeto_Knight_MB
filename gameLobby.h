@@ -15,6 +15,9 @@ typedef struct GameLobby
     Grass grass[1000];
     int numberOfGrass;
 
+    StoreBlock storeBlocks[100];
+    int numberOfStoreBlocks;
+
     Rectangle Banch;
     bool nearBanch;
 
@@ -26,6 +29,7 @@ typedef struct GameLobby
     Rectangle Room;
     bool nearRoom;
     bool roomCamera;
+    Rectangle StoreWall;
 
     Rectangle Computer;
     bool nearComputer;

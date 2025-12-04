@@ -29,3 +29,17 @@ void drawGrass(Grass *grass)
 {
     DrawTextureV(rm.gl.grass,grass->pos,WHITE);
 }
+
+StoreBlock createStoreBlock (Vector2 pos)
+{
+    return (StoreBlock){
+        .pos = pos,
+        .dim = (Vector2){32,32},
+        .cor = BLACK,
+    };
+}
+
+void drawStoreBlock(StoreBlock *storeBlock)
+{
+    DrawTextureV(rm.gl.storeBlock,storeBlock->pos,WHITE);
+}
