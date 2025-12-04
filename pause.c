@@ -75,21 +75,21 @@ void inputUpdateAndDrawPause(Game *game, bool isFullscreen)
         DrawText("JOGO PAUSADO!!", 300*2+140, 40*2, 25*2, WHITE);
 
         if (mouseOnReturnButton)
-            DrawTexture(rm.pause.mouseReturnButton, X_PAUSE_BUTTON*2+140, Y_RETURN_BUTTON*2, WHITE);
+            DrawTexture(rm.pause.mouseReturnButtonG, X_PAUSE_BUTTON*2+140, Y_RETURN_BUTTON*2, WHITE);
         else
-            DrawTexture(rm.pause.normalReturnButton, X_PAUSE_BUTTON*2+140, Y_RETURN_BUTTON*2, WHITE);
+            DrawTexture(rm.pause.normalReturnButtonG, X_PAUSE_BUTTON*2+140, Y_RETURN_BUTTON*2, WHITE);
 
 
         if (mouseOnSaveButton)
-            DrawTexture(rm.pause.mouseSaveButton, X_PAUSE_BUTTON*2+140, Y_SAVE_BUTTON*2, WHITE);
+            DrawTexture(rm.pause.mouseSaveButtonG, X_PAUSE_BUTTON*2+140, Y_SAVE_BUTTON*2, WHITE);
         else
-            DrawTexture(rm.pause.normalSaveButton, X_PAUSE_BUTTON*2+140, Y_SAVE_BUTTON*2, WHITE);
+            DrawTexture(rm.pause.normalSaveButtonG, X_PAUSE_BUTTON*2+140, Y_SAVE_BUTTON*2, WHITE);
 
 
         if (mouseOnLeaveButton)
-            DrawTexture(rm.pause.mouseLeaveButton, X_PAUSE_BUTTON*2+140, Y_LEAVE_BUTTON*2, WHITE);
+            DrawTexture(rm.pause.mouseLeaveButtonG, X_PAUSE_BUTTON*2+140, Y_LEAVE_BUTTON*2, WHITE);
         else
-            DrawTexture(rm.pause.normalLeaveButton, X_PAUSE_BUTTON*2+140, Y_LEAVE_BUTTON*2, WHITE);
+            DrawTexture(rm.pause.normalLeaveButtonG, X_PAUSE_BUTTON*2+140, Y_LEAVE_BUTTON*2, WHITE);
     }
 
 
