@@ -52,11 +52,6 @@ void initGameWindow(GameWindow *gameWindow)
         {
             //----FULL-SCREEN-CONFIG----
 
-            if(IsKeyPressed(KEY_F))
-            {
-                isFullScreen = !isFullScreen;
-            }
-
             if(isFullScreen)
             {
                     SetWindowSize(1920,1080);
