@@ -205,11 +205,11 @@ void initGame(Game *game, bool* isFullScreen)
             {
             //-----------UPDATE MUNDO--------
 
-            inputAndUpdateGameWorld(game->gw, isFullScreen);
+            inputAndUpdateGameWorld(game->gw, *isFullScreen);
 
             //---------DESENHA MUNDO--------
 
-            drawGameWorld(game->gw, isFullScreen);
+            drawGameWorld(game->gw, *isFullScreen);
             }
 
             //--------TROCA MUNDO--------
