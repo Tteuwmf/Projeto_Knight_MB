@@ -55,25 +55,25 @@ void initGameWindow(GameWindow *gameWindow)
             if(IsKeyPressed(KEY_F))
             {
                 isFullScreen = !isFullScreen;
+            }
 
-                if(isFullScreen)
-                {
+            if(isFullScreen)
+            {
                     SetWindowSize(1920,1080);
                     SetWindowPosition(0,0);
-                }
-                else
-                {
-                    SetWindowSize(gameWindow->width, gameWindow->height);
-                    SetWindowPosition(
-                        (1920-gameWindow->width)/2,
-                        (1080-gameWindow->height)/2
-                    );
-                }
+            }
+            else
+            {
+                SetWindowSize(gameWindow->width, gameWindow->height);
+                SetWindowPosition(
+                    (1920-gameWindow->width)/2,
+                    (1080-gameWindow->height)/2
+                );
             }
 
             //-----------------------------
 
-            initGame(&gameWindow->game, isFullScreen);
+            initGame(&gameWindow->game, &isFullScreen);
 
         }
         CloseWindow();
