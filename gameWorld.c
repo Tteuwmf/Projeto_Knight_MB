@@ -372,7 +372,7 @@ void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
                 skill->playerNext = true;
             else skill->playerNext = false;
 
-            if(checkSkillsPlayer(skill, player)&& IsKeyPressed(KEY_W))
+            if(checkSkillsPlayer(skill, player)&& IsKeyPressed(KEY_UP))
             {
                 switch(number)
                 {
@@ -401,7 +401,7 @@ void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
                 charm->playerNext = true;
             else charm->playerNext = false;
 
-            if(checkCharmsPlayer(charm, player)&& IsKeyPressed(KEY_W))
+            if(checkCharmsPlayer(charm, player)&& IsKeyPressed(KEY_UP))
             {
                 switch(number)
                 {
@@ -439,7 +439,7 @@ void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
                 lostItem->playerNext = true;
             else lostItem->playerNext = false;
 
-            if(CheckCollisionRecs(lostItem->posXdim, playerRec) && IsKeyPressed(KEY_W))
+            if(CheckCollisionRecs(lostItem->posXdim, playerRec) && IsKeyPressed(KEY_UP))
             {
                  switch(number)
                 {

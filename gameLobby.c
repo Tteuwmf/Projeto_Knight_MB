@@ -245,7 +245,7 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
     }
 
 
-    if(gl->player->status.resting && (IsKeyPressed(KEY_A)||IsKeyPressed(KEY_D)))
+    if(gl->player->status.resting && (IsKeyPressed(KEY_LEFT)||IsKeyPressed(KEY_RIGHT)))
     {
         gl->player->status.resting = false;
         gl->gameIsSaved = false;
@@ -255,7 +255,7 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 
     if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->Room))
         {
-            if(IsKeyPressed(KEY_W) && controlTP==0)
+            if(IsKeyPressed(KEY_UP) && controlTP==0)
             {
                 gl->player->speed.y = 0.0;
                 gl->player->pos.x = gl->DoorR.x;
@@ -271,7 +271,7 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 
     if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->DoorR))
         {
-            if(IsKeyPressed(KEY_W)&& controlTP==0)
+            if(IsKeyPressed(KEY_UP)&& controlTP==0)
             {
                 gl->player->speed.y = 0.0;
                 gl->player->pos.x = gl->Room.x;
