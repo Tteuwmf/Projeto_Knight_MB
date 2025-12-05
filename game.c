@@ -38,7 +38,7 @@ Game createGame()
 }
 
 
-void initGame(Game *game, bool isFullScreen)
+void initGame(Game *game, bool* isFullScreen)
 {
 
     game->gl.player = &game->player;
@@ -79,15 +79,15 @@ void initGame(Game *game, bool isFullScreen)
     switch(game->status)
     {
         case MENU:
-            inputUpdateAndDrawMenu(game, isFullScreen);
+            inputUpdateAndDrawMenu(game, *isFullScreen);
             break;
 
         case LOAD:
-            inputUpdateAndDrawLoad(game, isFullScreen);
+            inputUpdateAndDrawLoad(game, *isFullScreen);
             break;
 
         case HELP:
-            inputUpdateAndDrawHelp(game, isFullScreen);
+            inputUpdateAndDrawHelp(game, *isFullScreen);
             break;
 
         case PAUSE:
@@ -140,9 +140,9 @@ void initGame(Game *game, bool isFullScreen)
             }
             else
             {
-                inputAndUpdateGameLobby(&game->gl, isFullScreen);
+                inputAndUpdateGameLobby(&game->gl, *isFullScreen);
 
-                drawGameLobby(&game->gl, isFullScreen);
+                drawGameLobby(&game->gl, *isFullScreen);
             }
 
 
