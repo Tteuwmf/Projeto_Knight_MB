@@ -74,6 +74,8 @@ void loadResources()
     rm.gl.store = LoadTexture("Assets/Textures/store.png");
     rm.gl.storeWall = LoadTexture ("Assets/Textures/FundoLoja.png");
     rm.gl.storeBlock = LoadTexture ("Assets/Textures/BlocoLoja.png");
+    rm.gl.SpriteComputer = LoadTexture ("Assets/Textures/Computador.png");
+
 
 
 
@@ -268,6 +270,7 @@ void unloadResouces()
     UnloadTexture(rm.gl.grass);
     UnloadTexture(rm.gl.storeWall);
     UnloadTexture(rm.gl.storeBlock);
+    UnloadTexture(rm.gl.SpriteComputer);
 
 
     UnloadTexture(rm.gw.defaultTile);

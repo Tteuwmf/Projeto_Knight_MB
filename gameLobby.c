@@ -667,7 +667,9 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
 
     //DrawRectangleRec(gl->Store, RED);
     //DrawRectangleRec(gl->DoorR, WHITE);
-    DrawRectangleRec(gl->Computer, BLACK);
+    //DrawRectangleRec(gl->Computer, BLACK);
+
+    DrawTexture(rm.gl.SpriteComputer,gl->Computer.x,gl->Computer.y, WHITE);
 
     for(int h=0;h<gl->numberOfStoreCharms;h++)
     {
@@ -685,8 +687,8 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
     if(gl->nearRoomDoor)
         DrawText(TextFormat("SAIR"), gl->DoorR.x,gl->DoorR.y-16,15, WHITE);
 
-    if(gl->nearComputer)
-        DrawText(TextFormat("CODAR: ENTER"), gl->Computer.x-32,gl->Computer.y-16,15, GREEN);
+    //if(gl->nearComputer)
+        //DrawText(TextFormat("CODAR: ENTER"), gl->Computer.x-32,gl->Computer.y-16,15, GREEN);
 
     for (int i =0; i<gl->numberOfBlocks; i++)
     {
