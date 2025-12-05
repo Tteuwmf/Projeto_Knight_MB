@@ -10,12 +10,12 @@ void makeLobbyCollisionPlayerGrass(GameLobby *gl);
 void makeLobbyCollisionPlayerStoreBlock(GameLobby *gl);
 bool checkPlayerGrassCollision_Upper(PlayerCollisionRec *collisionRecs, Grass *grass);
 bool checkPlayerGrassCollision_Under(PlayerCollisionRec *collisionRecs, Grass *grass);
-bool  checkPlayerGrassCollision_Left(PlayerCollisionRec *collisionRecs, Grass *grass);
-bool  checkPlayerGrassCollision_Right(PlayerCollisionRec *collisionRecs, Grass *grass);
+bool checkPlayerGrassCollision_Left(PlayerCollisionRec *collisionRecs, Grass *grass);
+bool checkPlayerGrassCollision_Right(PlayerCollisionRec *collisionRecs, Grass *grass);
 bool checkPlayerStoreBlockCollision_Upper(PlayerCollisionRec *collisionRecs, StoreBlock *block);
 bool checkPlayerStoreBlockCollision_Under(PlayerCollisionRec *collisionRecs, StoreBlock *block);
-bool  checkPlayerStoreBlockCollision_Left(PlayerCollisionRec *collisionRecs, StoreBlock *block);
-bool  checkPlayerStoreBlockCollision_Right(PlayerCollisionRec *collisionRecs, StoreBlock *block);
+bool checkPlayerStoreBlockCollision_Left(PlayerCollisionRec *collisionRecs, StoreBlock *block);
+bool checkPlayerStoreBlockCollision_Right(PlayerCollisionRec *collisionRecs, StoreBlock *block);
 
 GameLobby createGameLobby(Player *player)
 {
@@ -218,7 +218,7 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 
     if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->Banch))
         {
-            if(IsKeyPressed(KEY_W) && gl->player->status.resting==false)
+            if(IsKeyPressed(KEY_UP) && gl->player->status.resting==false)
             {
                 gl->player->status.resting = true;
                 gl->player->pos.x = gl->Banch.x+16;
@@ -245,7 +245,7 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
     }
 
 
-    if(gl->player->status.resting && (IsKeyPressed(KEY_A)||IsKeyPressed(KEY_D)))
+    if(gl->player->status.resting && (IsKeyPressed(KEY_LEFT)||IsKeyPressed(KEY_RIGHT)))
     {
         gl->player->status.resting = false;
         gl->gameIsSaved = false;
@@ -255,7 +255,7 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 
     if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->Room))
         {
-            if(IsKeyPressed(KEY_W) && controlTP==0)
+            if(IsKeyPressed(KEY_UP) && controlTP==0)
             {
                 gl->player->speed.y = 0.0;
                 gl->player->pos.x = gl->DoorR.x;
@@ -271,7 +271,7 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 
     if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->DoorR))
         {
-            if(IsKeyPressed(KEY_W)&& controlTP==0)
+            if(IsKeyPressed(KEY_UP)&& controlTP==0)
             {
                 gl->player->speed.y = 0.0;
                 gl->player->pos.x = gl->Room.x;
@@ -493,7 +493,7 @@ void takeCharms(GameLobby *gl)
                 charm->playerNext = true;
             else charm->playerNext = false;
 
-            if(checkCharmsPlayer(charm, player)&& IsKeyPressed(KEY_W))
+            if(checkCharmsPlayer(charm, player)&& IsKeyPressed(KEY_UP))
             {
                 switch(number)
                 {
@@ -667,7 +667,9 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
 
     //DrawRectangleRec(gl->Store, RED);
     //DrawRectangleRec(gl->DoorR, WHITE);
-    DrawRectangleRec(gl->Computer, BLACK);
+    //DrawRectangleRec(gl->Computer, BLACK);
+
+    DrawTexture(rm.gl.SpriteComputer,gl->Computer.x,gl->Computer.y, WHITE);
 
     for(int h=0;h<gl->numberOfStoreCharms;h++)
     {
@@ -685,8 +687,8 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
     if(gl->nearRoomDoor)
         DrawText(TextFormat("SAIR"), gl->DoorR.x,gl->DoorR.y-16,15, WHITE);
 
-    if(gl->nearComputer)
-        DrawText(TextFormat("CODAR: ENTER"), gl->Computer.x-32,gl->Computer.y-16,15, GREEN);
+    //if(gl->nearComputer)
+        //DrawText(TextFormat("CODAR: ENTER"), gl->Computer.x-32,gl->Computer.y-16,15, GREEN);
 
     for (int i =0; i<gl->numberOfBlocks; i++)
     {

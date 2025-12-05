@@ -192,13 +192,13 @@ void inputAndUpdatePlayer(Player *player, float delta)
     {
         if(player->dashStatus.dashTime<=0)
         {
-            if(IsKeyDown(KEY_D)) //indo para a direita
+            if(IsKeyDown(KEY_RIGHT)) //indo para a direita
             {
                 player->speed.x = player->status.defaultSpeed; //começa o movimento
                 player->status.lookingAtR = true; //esta olhando para a direita
                 player->status.lookingAtL = false; // não esta olhando para a esquerda
             }
-            else if (IsKeyDown(KEY_A))// indo para a esquerda
+            else if (IsKeyDown(KEY_LEFT))// indo para a esquerda
             {
                 player->speed.x = -player->status.defaultSpeed; //começa o movimento negativo
                 player->status.lookingAtR = false; // não esta olhando para a direita
@@ -302,7 +302,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
             //-----ESPECIAL-ATTACKS-----
 
-    if (IsKeyPressed(KEY_C)&& player->powers.horizontalPowerActive && player->powers.usingHorizontalPower==false  && player->status.healing==false)
+    if (IsKeyPressed(KEY_F)&& player->powers.horizontalPowerActive && player->powers.usingHorizontalPower==false  && player->status.healing==false)
     {
         if(player->inventory.equippedCharms.plusEgo)
         {
@@ -379,12 +379,12 @@ void inputAndUpdatePlayer(Player *player, float delta)
     //--------------SKILLS--------------
     if(player->inventory.equippedCharms.plusEgo==false)
     {
-        if(player->status.onFloor && player->status.aura>=6 && IsKeyPressed(KEY_Q))
+        if(player->status.onFloor && player->status.aura>=6 && IsKeyPressed(KEY_A))
         {
             player->status.healing = true;
         }
 
-        if(player->status.healing && IsKeyDown(KEY_Q) && player->status.aura>=3)
+        if(player->status.healing && IsKeyDown(KEY_A) && player->status.aura>=3)
         {
             player->status.contHealingTime += delta;
 
@@ -402,12 +402,12 @@ void inputAndUpdatePlayer(Player *player, float delta)
     else
     {
 
-        if(player->status.onFloor && player->status.aura>=12 && IsKeyPressed(KEY_Q))
+        if(player->status.onFloor && player->status.aura>=12 && IsKeyPressed(KEY_A))
         {
             player->status.healing = true;
         }
 
-        if(player->status.healing && IsKeyDown(KEY_Q) && player->status.aura>=12)
+        if(player->status.healing && IsKeyDown(KEY_A) && player->status.aura>=12)
         {
             player->status.contHealingTime += delta;
 
@@ -423,7 +423,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
         }
     }
 
-    if (IsKeyReleased(KEY_Q)&& player->status.healing)
+    if (IsKeyReleased(KEY_A)&& player->status.healing)
     {
         player->status.healing = false;
         player->status.contHealingTime = 0.0f;
@@ -437,20 +437,20 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     //----------VERTICAL-MOVES----------
 
-    if(IsKeyDown(KEY_S))
+    if(IsKeyDown(KEY_DOWN))
     {
         player->status.lookingDown=true;
     }
-    else if(IsKeyDown(KEY_W))
+    else if(IsKeyDown(KEY_UP))
     {
         player->status.lookingUp=true;
     }
 
-    if(IsKeyReleased(KEY_S))
+    if(IsKeyReleased(KEY_DOWN))
     {
         player->status.lookingDown=false;
     }
-    else if(IsKeyReleased(KEY_W))
+    else if(IsKeyReleased(KEY_UP))
     {
         player->status.lookingUp=false;
     }
@@ -538,7 +538,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
             }
         }
 
-        if (IsKeyPressed(KEY_SPACE)&&player->jumpStatus.canDoubleJump && player->inventory.doubleJump) //se pode pular e a tecla for acionada
+        if (IsKeyPressed(KEY_Z)&&player->jumpStatus.canDoubleJump && player->inventory.doubleJump) //se pode pular e a tecla for acionada
         {
             player->speed.y = -player->jumpStatus.defaultJumpForce; // realiza o pulo
             player->jumpStatus.isJumping = true;
@@ -548,7 +548,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
             player->jumpStatus.wasOnFloor = false;
         }
 
-        if (IsKeyPressed(KEY_SPACE)&&player->jumpStatus.canJump) //se pode pular e a tecla for acionada
+        if (IsKeyPressed(KEY_Z)&&player->jumpStatus.canJump) //se pode pular e a tecla for acionada
         {
             player->speed.y += -player->jumpStatus.defaultJumpForce; // realiza o pulo
             player->jumpStatus.isJumping = true; //  pulando
@@ -563,7 +563,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
         }
 
-        if(IsKeyDown(KEY_SPACE)&& player->jumpStatus.isJumping) //se esta pulamndo e atecla continua pressionada
+        if(IsKeyDown(KEY_Z)&& player->jumpStatus.isJumping) //se esta pulamndo e atecla continua pressionada
         {
             player->jumpStatus.jumpTime += delta; // conta um tempo max do bonus
 
@@ -573,7 +573,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
             }
         }
 
-        if(IsKeyReleased(KEY_SPACE))// Se a tecla for solta
+        if(IsKeyReleased(KEY_Z))// Se a tecla for solta
         {
             player->jumpStatus.isJumping=false;  //não esta mais pulando
             player->jumpStatus.jumpTime =  0.0f; //zera o timer
@@ -590,7 +590,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
                 if(player->chiclete.leftWall)
                 {
 
-                    if(IsKeyDown(KEY_A)&& player->chiclete.contChicleteTime<=0.5)
+                    if(IsKeyDown(KEY_LEFT)&& player->chiclete.contChicleteTime<=0.5)
                     {
                         player->speed.y = 0.0f;
 
@@ -613,7 +613,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
                 if(player->chiclete.rightWall)
                 {
 
-                    if(IsKeyDown(KEY_D)&& player->chiclete.contChicleteTime<=0.5)
+                    if(IsKeyDown(KEY_RIGHT)&& player->chiclete.contChicleteTime<=0.5)
                     {
                         player->speed.y = 0.0f;
 
@@ -636,7 +636,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
                 if(player->chiclete.leftWall)
                 {
 
-                    if(IsKeyDown(KEY_A))
+                    if(IsKeyDown(KEY_LEFT))
                     {
                         player->speed.y = 0.0f;
                         player->chiclete.canUseChiclete = false;
@@ -651,7 +651,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
                 }
                 else if (player->chiclete.rightWall)
                 {
-                    if(IsKeyDown(KEY_D))
+                    if(IsKeyDown(KEY_RIGHT))
                     {
                         player->speed.y = 0.0f;
                         player->chiclete.canUseChiclete = false;
