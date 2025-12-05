@@ -517,7 +517,7 @@ Boss createBoss(Vector2 pos)
        .collisionRecs = {{0}},
        .visionRecs = {{0}},
 
-       .life = 20,
+       .life = 12,
        .dead = false,
        .haveCoins = true,
 
@@ -652,7 +652,7 @@ void updateBoss (Boss *boss, float delta)
             }
         }
 
-        if(boss->life == 20)
+        if(boss->life == 12)
         {
              boss->speed.x = 0;
              boss->speed.y = 0;
@@ -674,7 +674,7 @@ void updateBoss (Boss *boss, float delta)
 
     boss->collisionRecs  = createAndUpdateBossCollisionRec(boss);
 
-    if (boss->dead==false && boss->life != 20)
+    if (boss->dead==false && boss->life != 12)
         boss->visionRecs = createAndUpdateBossVisionRec(boss);
 
     //===============UPDATE=STATS=================
@@ -797,7 +797,7 @@ void selectBossAttack(Boss *boss, Player *player)
 void drawBoss(Boss *boss)
 {
 
-    if(boss->life==20)
+    if(boss->life==12)
     {
         DrawTextureV(rm.gw.sleepingBoss, boss->pos, WHITE);
     }

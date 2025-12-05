@@ -145,7 +145,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
             .contTime = 0.0f,
             .timeToTheNextFrame = 0.5f,
 
-            .progress = 0,
+            .progress = 3,
             .inLevel = false,
 
         };
@@ -1785,6 +1785,15 @@ void resetPlayer(Player *player)
     player->inventory.doubleJump = false;
     player->inventory.teclaTab = false;
     player->inventory.equippedCharms.goldTickets = false;
+    player->inventory.equippedCharms.debugSword = false;
+    player->inventory.equippedCharms.plusEgo = false;
+    player->inventory.equippedCharms.programmerHands = false;
+    player->inventory.equippedCharms.gamerHeart = false;
+    player->inventory.colectedCharms.goldTickets = false;
+    player->inventory.colectedCharms.debugSword = false;
+    player->inventory.colectedCharms.plusEgo = false;
+    player->inventory.colectedCharms.programmerHands = false;
+    player->inventory.colectedCharms.gamerHeart = false;
     player->inventory.equippedWeapons.defaultSword = true;
     player->knockbackStatus.swordKnockbackR = false;
     player->knockbackStatus.swordKnockbackL = false;
