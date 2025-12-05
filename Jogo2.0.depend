@@ -425,3 +425,150 @@
 	"raylib.h"
 	"player.h"
 
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\blocks.c
+	"raylib.h"
+	"blocks.h"
+	"resourceManager.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\blocks.h
+	"raylib.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\resourcemanager.h
+	"raylib.h"
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\coins.c
+	<stdlib.h>
+	<time.h>
+	"raylib.h"
+	"coins.h"
+	"resourceManager.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\coins.h
+	"raylib.h"
+	"enemies.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\enemies.h
+	"raylib.h"
+	"player.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\player.h
+	"raylib.h"
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\collisions.c
+	"raylib.h"
+	"collisions.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\collisions.h
+	"raylib.h"
+	"player.h"
+	"blocks.h"
+	"weapons.h"
+	"enemies.h"
+	"coins.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\weapons.h
+	"raylib.h"
+	"player.h"
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\enemies.c
+	"raylib.h"
+	"enemies.h"
+	"collisions.h"
+	"resourceManager.h"
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\gamelobby.c
+	"raylib.h"
+	"gameLobby.h"
+	"blocks.h"
+	"collisions.h"
+	"gameWindow.h"
+	"resourceManager.h"
+	"coins.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\gamelobby.h
+	"raylib.h"
+	"player.h"
+	"blocks.h"
+	"coins.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\gamewindow.h
+	"raylib.h"
+	"gameWorld.h"
+	"gameLobby.h"
+	"game.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\gameworld.h
+	"raylib.h"
+	"player.h"
+	"enemies.h"
+	"blocks.h"
+	"collisions.h"
+	"coins.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\game.h
+	"raylib.h"
+	"player.h"
+	"gameLobby.h"
+	"gameWorld.h"
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\gamewindow.c
+	<stdlib.h>
+	<stdio.h>
+	"raylib.h"
+	"gameWindow.h"
+	"resourceManager.h"
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\gameworld.c
+	<stdlib.h>
+	"raylib.h"
+	"gameWorld.h"
+	"pause.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\pause.h
+	"raylib.h"
+	"resourceManager.h"
+	"game.h"
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\main.c
+	<stdio.h>
+	<stdlib.h>
+	"raylib.h"
+	"gameWindow.h"
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\menu.c
+	<stdio.h>
+	"raylib.h"
+	"menu.h"
+	"resourceManager.h"
+	"save.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\menu.h
+	"game.h"
+
+1764896217 c:\users\bruno\documents\github\projeto_knight_mb\save.h
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\pause.c
+	"raylib.h"
+	"pause.h"
+	"player.h"
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\player.c
+	"raylib.h"
+	"player.h"
+	"weapons.h"
+	"collisions.h"
+	"resourceManager.h"
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\resourcemanager.c
+	"raylib.h"
+	"resourceManager.h"
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\save.c
+	<stdio.h>
+	"raylib.h"
+	"player.h"
+
+1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\weapons.c
+	"raylib.h"
+	"weapons.h"
+
