@@ -502,6 +502,7 @@ void takeCharms(GameLobby *gl)
                         {
                              player->inventory.colectedCharms.goldTickets = true;
                              charm->available=false;
+                             player->status.ticketsRU -= 50;
                         }
                         break;
                     case 4:
@@ -509,6 +510,7 @@ void takeCharms(GameLobby *gl)
                         {
                             player->inventory.colectedCharms.debugSword = true;
                             charm->available=false;
+                            player->status.ticketsRU -= 100;
                         }
 
 
@@ -638,7 +640,7 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
 
     BeginDrawing();
 
-    ClearBackground (DARKGRAY);
+    ClearBackground (SKYBLUE);
 
     BeginMode2D(gl->camera);
 
@@ -669,7 +671,7 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
     //DrawRectangleRec(gl->DoorR, WHITE);
     //DrawRectangleRec(gl->Computer, BLACK);
 
-    DrawTexture(rm.gl.SpriteComputer,gl->Computer.x,gl->Computer.y, WHITE);
+    DrawTexture(rm.gl.SpriteComputer,gl->Computer.x,gl->Computer.y-32, WHITE);
 
     for(int h=0;h<gl->numberOfStoreCharms;h++)
     {
@@ -687,8 +689,8 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
     if(gl->nearRoomDoor)
         DrawText(TextFormat("SAIR"), gl->DoorR.x,gl->DoorR.y-16,15, WHITE);
 
-    //if(gl->nearComputer)
-        //DrawText(TextFormat("CODAR: ENTER"), gl->Computer.x-32,gl->Computer.y-16,15, GREEN);
+    if(gl->nearComputer)
+        DrawText(TextFormat("PRESS ENTER"), gl->Computer.x-32,gl->Computer.y-48,15, GREEN);
 
     for (int i =0; i<gl->numberOfBlocks; i++)
     {
@@ -736,6 +738,7 @@ void resetGameLobby(GameLobby *gl, Vector2 startPos)
     // 3. Reseta Câmera e Visualização
     gl->roomCamera = false; // Garante que sai do modo "quarto"
     gl->fadeScreenGL = 1.0f; // Reinicia o fade preto para clarear suavemente
+    gl->fadeScreenGL2 = 1.0f;
 
     // Reseta valores padrão da câmera
     gl->camera.zoom = 1.0f;

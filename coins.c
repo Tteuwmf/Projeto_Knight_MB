@@ -11,7 +11,7 @@ Skill createSkill(Vector2 pos, int number)
     {
         .pos = pos,
         .dim = (Vector2){16,16},
-        .cor = PINK,
+        .cor = BLUE,
         .skilNumber = number,
         .available = true,
         .playerNext = false,

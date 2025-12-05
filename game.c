@@ -47,7 +47,7 @@ void initGame(Game *game, bool* isFullScreen)
 
     if (game->gw != NULL)
     {
-        if (game->gw->boss.life < 20 && game->gw->boss.dead == false && !game->player.status.dead)
+        if (game->gw->boss.life < 12 && game->gw->boss.dead == false && !game->player.status.dead && game->status==GAMEWORLD)
         {
             bossBattleActive = true;
         }
@@ -122,7 +122,7 @@ void initGame(Game *game, bool* isFullScreen)
             }
 
 
-            if(game->player.progress>=3)
+            if(game->player.progress>=3 && IsKeyPressed(KEY_ENTER) && game->gl.nearComputer)
             {
                 drawEndGame(game);
 
@@ -134,7 +134,7 @@ void initGame(Game *game, bool* isFullScreen)
                     game->saveSlot3=false;
                     resetPlayer(game->gw->player);
                     resetGameLobby(&game->gl, game->playerLobbyFirstPos);
-                    destroysGameWorld(game->gw);
+                    //destroysGameWorld(game->gw);
                     game->gameWorldInitiate = false;
                 }
             }

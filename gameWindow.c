@@ -27,7 +27,7 @@ void initGameWindow(GameWindow *gameWindow)
 
         //======FULL-SCREEN-CONFIG======
 
-        bool isFullScreen = false;
+        bool isFullScreen = true;
 
         //-------------------------------
 
