@@ -56,6 +56,7 @@ void initGame(Game *game, bool isFullScreen)
             break;
 
         case HELP:
+            inputUpdateAndDrawHelp(game, isFullScreen);
             break;
 
         case PAUSE:
