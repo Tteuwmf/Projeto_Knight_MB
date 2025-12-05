@@ -95,11 +95,11 @@ void drawCharms(Charm *charm)
         }
         else if (charm->playerNext && charm->charmNumber==3)
         {
-             DrawText(TextFormat("COMPRAR:\n50 ticketsRU"), charm->pos.x-16,charm->pos.y-16,5, GREEN);
+             DrawText(TextFormat("COMPRAR:\n50 ticketsRU"), charm->pos.x-32,charm->pos.y-16,5, GREEN);
         }
         else if (charm->playerNext && charm->charmNumber==4)
         {
-             DrawText(TextFormat("COMPRAR:\n100 ticketsRU"), charm->pos.x-16,charm->pos.y-16,5, GREEN);
+             DrawText(TextFormat("COMPRAR:\n100 ticketsRU"), charm->pos.x-32,charm->pos.y-16,5, GREEN);
         }
     }
 }

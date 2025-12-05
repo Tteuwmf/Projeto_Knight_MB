@@ -76,9 +76,6 @@ void initGameWindow(GameWindow *gameWindow)
             initGame(&gameWindow->game, isFullScreen);
 
         }
-
-        CloseAudioDevice();
-
         CloseWindow();
         unloadResouces();
         CloseAudioDevice();
