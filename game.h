@@ -16,6 +16,7 @@ typedef enum GameStatus
     CONFIRM,
     GAMELOBBY,
     GAMEWORLD,
+    ENDGAME,
 
 } GameStatus;
 

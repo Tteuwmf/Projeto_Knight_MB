@@ -104,7 +104,7 @@ void initGame(Game *game, bool* isFullScreen)
             if(game->timeToCode<=0)
                 game->timeToCode = 0.0;
 
-            if(IsKeyPressed(KEY_ENTER) && game->gl.nearComputer && game->timeToCode==0.0)
+            if(IsKeyPressed(KEY_ENTER) && game->gl.nearComputer && game->timeToCode==0.0 && game->player.progress<3)
             {
                 game->status = GAMEWORLD;
                 game->player.inLevel = true;
@@ -124,9 +124,9 @@ void initGame(Game *game, bool* isFullScreen)
 
             if(game->player.progress>=3 && IsKeyPressed(KEY_ENTER) && game->gl.nearComputer)
             {
-                drawEndGame(game);
+                game->status = ENDGAME;
 
-                if(game->gl.fadeScreenGL2<=0)
+                /*if(game->gl.fadeScreenGL2<=0)
                 {
                     game->status = MENU;
                     game->saveSlot1=false;
@@ -136,7 +136,7 @@ void initGame(Game *game, bool* isFullScreen)
                     resetGameLobby(&game->gl, game->playerLobbyFirstPos);
                     //destroysGameWorld(game->gw);
                     game->gameWorldInitiate = false;
-                }
+                }*/
             }
             else
             {
@@ -200,6 +200,7 @@ void initGame(Game *game, bool* isFullScreen)
                 resetGameLobby(&game->gl, game->playerLobbyFirstPos);
                 destroysGameWorld(game->gw);
                 game->gameWorldInitiate = false;
+                game->gw = NULL;
             }
             else
             {
@@ -235,12 +236,27 @@ void initGame(Game *game, bool* isFullScreen)
                 destroysGameWorld(game->gw);
 
                 game->gameWorldInitiate = false;
+                game->gw = NULL;
 
             }
 
             break;
 
+        case ENDGAME:
+            {
+                drawEndGame(game);
 
+                if(GetKeyPressed() && game->gl.fadeScreenGL2>=1)
+                {
+                    game->status = MENU;
+                    game->saveSlot1=false;
+                    game->saveSlot2=false;
+                    game->saveSlot3=false;
+                    resetPlayer(&game->player);
+                    resetGameLobby(&game->gl, game->playerLobbyFirstPos);
+                }
+            }
+            break;
         case LEAVE:
             game->shouldClose = true;
             break;
@@ -251,11 +267,17 @@ void initGame(Game *game, bool* isFullScreen)
 void drawEndGame (Game *game)
 {
 
-    game->gl.fadeScreenGL2 -= 0.5f*GetFrameTime();
+    BeginDrawing();
 
-        if(game->gl.fadeScreenGL2<=0.0f) game->gl.fadeScreenGL2 = 0.0f;
+    ClearBackground (SKYBLUE);
+
+    game->gl.fadeScreenGL2 += 0.2f*GetFrameTime();
+
+        if(game->gl.fadeScreenGL2>=1.0f) game->gl.fadeScreenGL2 = 1.0f;
 
         DrawRectangle(0,0,1920, 1080, (Color){0,0,0,(unsigned char)(game->gl.fadeScreenGL2*200)});
 
-        DrawText("COMPILAÇÃO CONCLUÍDA", ((GetScreenWidth()/2) - 240), ((GetScreenHeight()/2) - 34), 64, GREEN);
+        DrawText("COMPILACAO CONCLUIDA\n\tFIM DE JOGO", ((GetScreenWidth()/2) - 400), ((GetScreenHeight()/2) - 34), 64, GREEN);
+
+    EndDrawing();
 }

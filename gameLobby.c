@@ -41,10 +41,10 @@ GameLobby createGameLobby(Player *player)
         .restTime = 1.0f,
 
         .fadeScreenGL = 1.0f,
-        .fadeScreenGL2 = 1.0f,
+        .fadeScreenGL2 = 0.0f,
     };
 
-    loadLobby(&gl,"maps/mapLobby.txt");
+    loadLobby(&gl,"maps/Vila.txt");
 
     return gl;
 
