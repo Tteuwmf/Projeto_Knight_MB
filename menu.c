@@ -319,3 +319,86 @@ void inputUpdateAndDrawLoad(Game *game, bool isFullscreen)
 
     EndDrawing();
 }
+
+
+
+void inputUpdateAndDrawHelp(Game *game, bool isFullscreen)
+{
+
+    if (IsKeyPressed(KEY_BACKSPACE))
+        {
+            game->status = MENU;
+        }
+
+    //------------------------------------------------------------------
+
+    BeginDrawing();
+    ClearBackground(LIGHTGRAY);
+
+    if (isFullscreen){
+        DrawText("SEJA BEM VINDO(A) AO CODE KNIGHT!!", 10 * 2.4, 10 * 2.4, (int)(35 * 2.4), DARKPURPLE);
+
+        DrawText("Uma breve historia:", 10 * 2.4, 45 * 2.4, (int)(10 * 2.4), DARKPURPLE);
+        DrawText("Voce eh um programador que esta desenvolvendo um programa que ira revolucionar completamente a", 10 * 2.4, 55 * 2.4, (int)(15 * 2.4), PURPLE);
+        DrawText("industria, porem voce ficou de saco cheio de corrigir os bugs no seu codigo por vias normais.", 10 * 2.4, 70 * 2.4, (int)(15 * 2.4), PURPLE);
+        DrawText("Agora, com determinacao e coragem, voce vai CORRIGIR os bugs e erros... NA MARRA!!!", 10 * 2.4, 85 * 2.4, (int)(15 * 2.4), PURPLE);
+
+
+        DrawText("Um guia rapido de como jogar:", 10 * 2.4, 105 * 2.4, (int)(10 * 2.4), GRAY);
+
+
+        DrawText("Use as setas (<-  ->) para movimentacao horizontal", 10 * 2.4, 115 * 2.4, (int)(20 * 2.4), BLACK);
+        DrawText("Use 'Z' para saltar", 10 * 2.4, 135 * 2.4, (int)(20 * 2.4), BLACK);
+        DrawText("Use 'X' para atacar", 10 * 2.4, 155 * 2.4, (int)(20 * 2.4), BLACK);
+        DrawText("Use a seta para cima para interagir", 10 * 2.4, 175 * 2.4, (int)(20 * 2.4), BLACK);
+        DrawText("Combine as setas verticais com o ataque para direciona-lo", 10 * 2.4, 195 * 2.4, (int)(20 * 2.4), BLACK);
+        DrawText("Segure 'A' para curar sua vida", 10 * 2.4, 215 * 2.4, (int)(20 * 2.4), BLACK);
+        DrawText("Use 'F' para usar sua habilidade", 10 * 2.4, 235 * 2.4, (int)(20 * 2.4), BLACK);
+        DrawText("Aperte 'Tab' para acessar seu inventario", 10 * 2.4, 255 * 2.4, (int)(20 * 2.4), BLACK);
+
+        DrawText("Aperte 'Esc' para pausar seu jogo", 10 * 2.4, 275 * 2.4, (int)(20 * 2.4), BLACK);
+
+        DrawText("JOGABILIDADE", 10 * 2.4, 300 * 2.4, (int)(25 * 2.4), MAROON);
+        DrawText("Por mais que voce tenha coragem, eh preciso estrategia! Dentro de um codigo, os bugs batem de volta,", 10 * 2.4, 325 * 2.4, (int)(15 * 2.4), RED);
+        DrawText("entao tome cuidado! Se os inimigos te baterem demais, voce morre! (Ta achando que a vida eh um jogo?)", 10 * 2.4, 340 * 2.4, (int)(15 * 2.4), RED);
+        DrawText("Mas nao se preoupe, voce pode usar sua Aura para se curar e usar habilidades poderosas. Ao derrotar", 10 * 2.4, 355 * 2.4, (int)(15 * 2.4), RED);
+        DrawText("inimigos, voce 'farma' Aura e ganha Tickets (do RU), use-os com sabedoria! Alem disso, amuletos e", 10 * 2.4, 370 * 2.4, (int)(15 * 2.4), RED);
+        DrawText("itens tambem estao espalhados por ai, pegue-os e experimente, os efeitos sao surpreendentes.", 10 * 2.4, 385 * 2.4, (int)(15 * 2.4), RED);
+        DrawText("Por ultimo,no final de cada fase, ha um poderoso chefe. Decore seus padroes, desvie com velocidade", 10 * 2.4, 400 * 2.4, (int)(15 * 2.4), RED);
+        DrawText("e venca-o para retornar a tranquilidade da vila. La voce salva seu progresso, compra e maneja", 10 * 2.4, 415 * 2.4, (int)(15 * 2.4), RED);
+        DrawText("amuletos e tira um descanso merecido!", 10 * 2.4, 430 * 2.4, (int)(15 * 2.4), RED);
+    }
+    else {
+
+        DrawText("SEJA BEM VINDO(A) AO CODE KNIGHT!!", 10 , 10 , (int)(35 ), DARKPURPLE);
+
+        DrawText("Uma breve historia:", 10 , 45 , (int)(10 ), DARKPURPLE);
+        DrawText("Voce eh um programador que esta desenvolvendo um programa que ira revolucionar completamente a", 10 , 55 , (int)(15 ), PURPLE);
+        DrawText("industria, porem voce ficou de saco cheio de corrigir os bugs no seu codigo por vias normais.", 10 , 70 , (int)(15 ), PURPLE);
+        DrawText("Agora, com determinacao e coragem, voce vai CORRIGIR os bugs e erros... NA MARRA!!!", 10 , 85 , (int)(15 ), PURPLE);
+
+        DrawText("Um guia rapido de como jogar:", 10 , 105 , (int)(10 ), GRAY);
+
+        DrawText("Use as setas (<-  ->) para movimentacao horizontal", 10 , 115 , (int)(20 ), BLACK);
+        DrawText("Use 'Z' para saltar", 10 , 135 , (int)(20 ), BLACK);
+        DrawText("Use 'X' para atacar", 10 , 155 , (int)(20 ), BLACK);
+        DrawText("Use a seta para cima para interagir", 10 , 175 , (int)(20 ), BLACK);
+        DrawText("Combine as setas verticais com o ataque para direciona-lo", 10 , 195 , (int)(20 ), BLACK);
+        DrawText("Segure 'A' para curar sua vida", 10 , 215 , (int)(20 ), BLACK);
+        DrawText("Use 'F' para usar sua habilidade", 10 , 235 , (int)(20 ), BLACK);
+        DrawText("Aperte 'Tab' para acessar seu inventario", 10 , 255 , (int)(20 ), BLACK);
+
+        DrawText("Aperte 'Esc' para pausar seu jogo", 10 , 275 , (int)(20 ), BLACK);
+
+        DrawText("JOGABILIDADE", 10 , 300 , (int)(25 ), MAROON);
+        DrawText("Por mais que voce tenha coragem, eh preciso estrategia! Dentro de um codigo, os bugs batem de volta,", 10 , 325 , (int)(15 ), RED);
+        DrawText("entao tome cuidado! Se os inimigos te baterem demais, voce morre! (Ta achando que a vida eh um jogo?)", 10 , 340 , (int)(15 ), RED);
+        DrawText("Mas nao se preoupe, voce pode usar sua Aura para se curar e usar habilidades poderosas. Ao derrotar", 10 , 355 , (int)(15 ), RED);
+        DrawText("inimigos, voce 'farma' Aura e ganha Tickets (do RU), use-os com sabedoria! Alem disso, amuletos e", 10 , 370 , (int)(15 ), RED);
+        DrawText("itens tambem estao espalhados por ai, pegue-os e experimente, os efeitos sao surpreendentes.", 10 , 385 , (int)(15 ), RED);
+        DrawText("Por ultimo,no final de cada fase, ha um poderoso chefe. Decore seus padroes, desvie com velocidade", 10 , 400 , (int)(15 ), RED);
+        DrawText("e venca-o para retornar a tranquilidade da vila. La voce salva seu progresso, compra e maneja", 10 , 415 , (int)(15 ), RED);
+        DrawText("amuletos e tira um descanso merecido!", 10 , 430 , (int)(15 ), RED);
+
+    EndDrawing();
+}
