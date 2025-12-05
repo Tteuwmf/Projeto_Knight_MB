@@ -216,6 +216,9 @@ typedef struct ResourceManager
     PlayerTextures player;
     CharmsTextures charm;
 
+    Music defaultMusic;
+    Music bossMusic;
+
 }ResourceManager;
 
 extern ResourceManager rm;
