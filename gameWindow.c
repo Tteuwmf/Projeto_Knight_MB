@@ -35,6 +35,8 @@ void initGameWindow(GameWindow *gameWindow)
 
         SetExitKey(KEY_NULL);
 
+        InitAudioDevice();
+
         gameWindow->game = createGame();
 
         SetTextureFilter(rm.gl.storeWall, TEXTURE_FILTER_POINT);
@@ -45,7 +47,9 @@ void initGameWindow(GameWindow *gameWindow)
 
         SetTargetFPS(60);
 
-        //InitAudioDevice();
+
+        PlayMusicStream(rm.defaultMusic);
+        SetMusicVolume(rm.defaultMusic, 0.8f);
 
         while (!WindowShouldClose() && gameWindow->game.shouldClose==false)
         {
@@ -76,8 +80,11 @@ void initGameWindow(GameWindow *gameWindow)
 
         }
 
+        CloseAudioDevice();
+
         CloseWindow();
         unloadResouces();
+        CloseAudioDevice();
         if(gameWindow->game.gameWorldInitiate)
             destroysGameWorld(gameWindow->game.gw);
 
