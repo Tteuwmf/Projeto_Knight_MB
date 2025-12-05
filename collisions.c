@@ -213,7 +213,7 @@ bool checkSkillsPlayerClose(Skill *skill, Player *player)
 
 bool checkCharmsPlayerClose(Charm *charms, Player *player)
 {
-    return CheckCollisionRecs((Rectangle){.x = charms->pos.x - 32, .y = charms->pos.y - 32, .width = charms->dim.x + 32, .height = charms->dim.y + 32},(Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y} );
+    return CheckCollisionRecs((Rectangle){.x = charms->pos.x - 32, .y = charms->pos.y - 32, .width = charms->dim.x + 32, .height = charms->dim.y + 48},(Rectangle){.x = player->pos.x, .y = player->pos.y, .width = player->dim.x, .height = player->dim.y} );
 }
 
 
