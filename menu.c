@@ -399,6 +399,7 @@ void inputUpdateAndDrawHelp(Game *game, bool isFullscreen)
         DrawText("Por ultimo,no final de cada fase, ha um poderoso chefe. Decore seus padroes, desvie com velocidade", 10 , 400 , (int)(15 ), RED);
         DrawText("e venca-o para retornar a tranquilidade da vila. La voce salva seu progresso, compra e maneja", 10 , 415 , (int)(15 ), RED);
         DrawText("amuletos e tira um descanso merecido!", 10 , 430 , (int)(15 ), RED);
+    }
 
     EndDrawing();
 }

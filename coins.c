@@ -89,9 +89,17 @@ void drawCharms(Charm *charm)
         }
 
 
-        if (charm->playerNext)
+        if (charm->playerNext && charm->charmNumber<3)
         {
-            DrawText(TextFormat("PEGAR: W"), charm->pos.x-16,charm->pos.y-16,5, GREEN);
+            DrawText(TextFormat("PEGAR"), charm->pos.x-16,charm->pos.y-16,5, GREEN);
+        }
+        else if (charm->playerNext && charm->charmNumber==3)
+        {
+             DrawText(TextFormat("COMPRAR:\n50 ticketsRU"), charm->pos.x-16,charm->pos.y-16,5, GREEN);
+        }
+        else if (charm->playerNext && charm->charmNumber==4)
+        {
+             DrawText(TextFormat("COMPRAR:\n100 ticketsRU"), charm->pos.x-16,charm->pos.y-16,5, GREEN);
         }
     }
 }
@@ -103,7 +111,7 @@ void drawLostItens(LostItens *lostItem)
         DrawRectangleRec(lostItem->posXdim, lostItem->cor);
         if(lostItem->playerNext)
         {
-            DrawText(TextFormat("PEGAR: W"), lostItem->posXdim.x-16,lostItem->posXdim.y-16,5, SKYBLUE);
+            DrawText(TextFormat("PEGAR"), lostItem->posXdim.x-16,lostItem->posXdim.y-16,5, SKYBLUE);
         }
     }
 }
