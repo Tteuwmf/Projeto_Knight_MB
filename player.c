@@ -1670,26 +1670,83 @@ void drawInventory(Player *player, bool isFullscreen)
                     WHITE);
         }
     }
-        //Desenha textura no retangulo 0
-    if (player->inventory.colectedCharms.goldTickets)
-        //Desenha textura no retangulo 1
-    {
 
+    if (player->inventory.colectedCharms.goldTickets)
+    {
+        if(player->inventory.equippedCharms.goldTickets)
+            DrawTexturePro(rm.charm.goldTickets,
+                    (Rectangle){0,0,rm.charm.goldTickets.width, rm.charm.goldTickets.height},
+                    (Rectangle) {200,10,rm.charm.goldTickets.width+64,rm.charm.goldTickets.height+64},
+                    (Vector2){0.0f,0.0f},
+                    0.0f,
+                    GREEN);
+        else
+        {
+           DrawTexturePro(rm.charm.goldTickets,
+                    (Rectangle){0,0,rm.charm.goldTickets.width, rm.charm.goldTickets.height},
+                    (Rectangle) {200,10,rm.charm.goldTickets.width+64,rm.charm.goldTickets.height+64},
+                    (Vector2){0.0f,0.0f},
+                    0.0f,
+                    WHITE);
+        }
     }
     if (player->inventory.colectedCharms.plusEgo)
-        //Desenha textura no retangulo 2
     {
-
+        if(player->inventory.equippedCharms.plusEgo)
+            DrawTexturePro(rm.charm.plusEgo,
+                    (Rectangle){0,0,rm.charm.plusEgo.width, rm.charm.plusEgo.height},
+                    (Rectangle) {360,10,rm.charm.plusEgo.width+64,rm.charm.plusEgo.height+64},
+                    (Vector2){0.0f,0.0f},
+                    0.0f,
+                    GREEN);
+        else
+        {
+           DrawTexturePro(rm.charm.plusEgo,
+                    (Rectangle){0,0,rm.charm.plusEgo.width, rm.charm.plusEgo.height},
+                    (Rectangle) {360,10,rm.charm.plusEgo.width+64,rm.charm.plusEgo.height+64},
+                    (Vector2){0.0f,0.0f},
+                    0.0f,
+                    WHITE);
+        }
     }
-    if (player->inventory.colectedCharms.programmerHands)
-         //Desenha textura no retangulo 3
-    {
 
+    if (player->inventory.colectedCharms.programmerHands)
+    {
+        if(player->inventory.equippedCharms.programmerHands)
+            DrawTexturePro(rm.charm.programmerHands,
+                    (Rectangle){0,0,rm.charm.programmerHands.width, rm.charm.programmerHands.height},
+                    (Rectangle) {520,10,rm.charm.programmerHands.width+64,rm.charm.programmerHands.height+64},
+                    (Vector2){0.0f,0.0f},
+                    0.0f,
+                    GREEN);
+        else
+        {
+           DrawTexturePro(rm.charm.programmerHands,
+                    (Rectangle){0,0,rm.charm.programmerHands.width, rm.charm.programmerHands.height},
+                    (Rectangle) {520,10,rm.charm.programmerHands.width+64,rm.charm.programmerHands.height+64},
+                    (Vector2){0.0f,0.0f},
+                    0.0f,
+                    WHITE);
+        }
     }
     if (player->inventory.colectedCharms.debugSword)
-        //Desenha textura no retangulo 4
     {
-
+         if(player->inventory.equippedCharms.debugSword)
+            DrawTexturePro(rm.charm.debugSword,
+                    (Rectangle){0,0,rm.charm.debugSword.width, rm.charm.debugSword.height},
+                    (Rectangle) {680,10,rm.charm.debugSword.width+64,rm.charm.debugSword.height+64},
+                    (Vector2){0.0f,0.0f},
+                    0.0f,
+                    GREEN);
+        else
+        {
+           DrawTexturePro(rm.charm.debugSword,
+                    (Rectangle){0,0,rm.charm.debugSword.width, rm.charm.debugSword.height},
+                    (Rectangle) {680,10,rm.charm.debugSword.width+64,rm.charm.debugSword.height+64},
+                    (Vector2){0.0f,0.0f},
+                    0.0f,
+                    WHITE);
+        }
     }
 
 }

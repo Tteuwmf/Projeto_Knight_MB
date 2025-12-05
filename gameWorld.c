@@ -240,6 +240,8 @@ void inputAndUpdateGameWorld(GameWorld *gw, bool isFullscreen)
     {
         inputAndUpdatePlayer(gw->player, delta);
 
+        updateInventory(gw->player);
+
         updateEnemies (gw->enemies,delta);
 
         updateBoss(&gw->boss, delta);
@@ -1429,7 +1431,7 @@ void drawGameWorld (GameWorld *gw, bool isFullscreen)
     }
 
     if(gw->canLeaveFase)
-        DrawText("VOLTAR: ENTER",gw->boss.pos.x, gw->boss.pos.y - 16, 15, GREEN);
+        DrawText("VOLTAR: ENTER",gw->boss.pos.x-32, gw->boss.pos.y - 16, 15, GREEN);
 
     EndMode2D();
 
@@ -1437,6 +1439,8 @@ void drawGameWorld (GameWorld *gw, bool isFullscreen)
     {
         gw->fadeScreenGW = 0.0f;
         drawHud(gw->player, isFullscreen);
+        if(gw->player->status.openInventory)
+            drawInventory(gw->player, isFullscreen);
     }
 
     if(gw->player->status.dead)
