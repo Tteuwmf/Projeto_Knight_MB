@@ -433,10 +433,10 @@
 1764896217 c:\users\bruno\documents\github\projeto_knight_mb\blocks.h
 	"raylib.h"
 
-1764900788 c:\users\bruno\documents\github\projeto_knight_mb\resourcemanager.h
+1764905453 c:\users\bruno\documents\github\projeto_knight_mb\resourcemanager.h
 	"raylib.h"
 
-1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\coins.c
+1764903108 source:c:\users\bruno\documents\github\projeto_knight_mb\coins.c
 	<stdlib.h>
 	<time.h>
 	"raylib.h"
@@ -454,7 +454,7 @@
 1764896217 c:\users\bruno\documents\github\projeto_knight_mb\player.h
 	"raylib.h"
 
-1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\collisions.c
+1764903108 source:c:\users\bruno\documents\github\projeto_knight_mb\collisions.c
 	"raylib.h"
 	"collisions.h"
 
@@ -476,7 +476,7 @@
 	"collisions.h"
 	"resourceManager.h"
 
-1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\gamelobby.c
+1764902900 source:c:\users\bruno\documents\github\projeto_knight_mb\gamelobby.c
 	"raylib.h"
 	"gameLobby.h"
 	"blocks.h"
@@ -511,14 +511,14 @@
 	"gameLobby.h"
 	"gameWorld.h"
 
-1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\gamewindow.c
+1764903108 source:c:\users\bruno\documents\github\projeto_knight_mb\gamewindow.c
 	<stdlib.h>
 	<stdio.h>
 	"raylib.h"
 	"gameWindow.h"
 	"resourceManager.h"
 
-1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\gameworld.c
+1764902900 source:c:\users\bruno\documents\github\projeto_knight_mb\gameworld.c
 	<stdlib.h>
 	"raylib.h"
 	"gameWorld.h"
@@ -535,14 +535,14 @@
 	"raylib.h"
 	"gameWindow.h"
 
-1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\menu.c
+1764902900 source:c:\users\bruno\documents\github\projeto_knight_mb\menu.c
 	<stdio.h>
 	"raylib.h"
 	"menu.h"
 	"resourceManager.h"
 	"save.h"
 
-1764896217 c:\users\bruno\documents\github\projeto_knight_mb\menu.h
+1764902900 c:\users\bruno\documents\github\projeto_knight_mb\menu.h
 	"game.h"
 
 1764896217 c:\users\bruno\documents\github\projeto_knight_mb\save.h
@@ -552,7 +552,7 @@
 	"pause.h"
 	"player.h"
 
-1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\player.c
+1764902900 source:c:\users\bruno\documents\github\projeto_knight_mb\player.c
 	"raylib.h"
 	"player.h"
 	"weapons.h"
@@ -571,4 +571,15 @@
 1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\weapons.c
 	"raylib.h"
 	"weapons.h"
+
+1764902900 source:c:\users\bruno\documents\github\projeto_knight_mb\game.c
+	<string.h>
+	<stdio.h>
+	"raylib.h"
+	"game.h"
+	"player.h"
+	"resourceManager.h"
+	"menu.h"
+	"pause.h"
+	"save.h"
 

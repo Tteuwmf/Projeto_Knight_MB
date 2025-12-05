@@ -79,6 +79,7 @@ typedef struct GameLobbyTextures
     Texture2D store;
     Texture2D storeWall;
     Texture2D storeBlock;
+    Texture2D SpriteComputer;
 
 }GameLobbyTextures;
 
