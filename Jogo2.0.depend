@@ -507,26 +507,26 @@
 	"collisions.h"
 	"coins.h"
 
-1764896217 c:\users\bruno\documents\github\projeto_knight_mb\game.h
+1764905711 c:\users\bruno\documents\github\projeto_knight_mb\game.h
 	"raylib.h"
 	"player.h"
 	"gameLobby.h"
 	"gameWorld.h"
 
-1764903108 source:c:\users\bruno\documents\github\projeto_knight_mb\gamewindow.c
+1764905711 source:c:\users\bruno\documents\github\projeto_knight_mb\gamewindow.c
 	<stdlib.h>
 	<stdio.h>
 	"raylib.h"
 	"gameWindow.h"
 	"resourceManager.h"
 
-1764902900 source:c:\users\bruno\documents\github\projeto_knight_mb\gameworld.c
+1764906599 source:c:\users\bruno\documents\github\projeto_knight_mb\gameworld.c
 	<stdlib.h>
 	"raylib.h"
 	"gameWorld.h"
 	"pause.h"
 
-1764896217 c:\users\bruno\documents\github\projeto_knight_mb\pause.h
+1764905711 c:\users\bruno\documents\github\projeto_knight_mb\pause.h
 	"raylib.h"
 	"resourceManager.h"
 	"game.h"
@@ -537,7 +537,7 @@
 	"raylib.h"
 	"gameWindow.h"
 
-1764902900 source:c:\users\bruno\documents\github\projeto_knight_mb\menu.c
+1764905711 source:c:\users\bruno\documents\github\projeto_knight_mb\menu.c
 	<stdio.h>
 	"raylib.h"
 	"menu.h"
@@ -549,19 +549,19 @@
 
 1764896217 c:\users\bruno\documents\github\projeto_knight_mb\save.h
 
-1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\pause.c
+1764905711 source:c:\users\bruno\documents\github\projeto_knight_mb\pause.c
 	"raylib.h"
 	"pause.h"
 	"player.h"
 
-1764902900 source:c:\users\bruno\documents\github\projeto_knight_mb\player.c
+1764906599 source:c:\users\bruno\documents\github\projeto_knight_mb\player.c
 	"raylib.h"
 	"player.h"
 	"weapons.h"
 	"collisions.h"
 	"resourceManager.h"
 
-1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\resourcemanager.c
+1764905453 source:c:\users\bruno\documents\github\projeto_knight_mb\resourcemanager.c
 	"raylib.h"
 	"resourceManager.h"
 
@@ -574,7 +574,7 @@
 	"raylib.h"
 	"weapons.h"
 
-1764902900 source:c:\users\bruno\documents\github\projeto_knight_mb\game.c
+1764905711 source:c:\users\bruno\documents\github\projeto_knight_mb\game.c
 	<string.h>
 	<stdio.h>
 	"raylib.h"

@@ -10,12 +10,12 @@ void makeLobbyCollisionPlayerGrass(GameLobby *gl);
 void makeLobbyCollisionPlayerStoreBlock(GameLobby *gl);
 bool checkPlayerGrassCollision_Upper(PlayerCollisionRec *collisionRecs, Grass *grass);
 bool checkPlayerGrassCollision_Under(PlayerCollisionRec *collisionRecs, Grass *grass);
-bool  checkPlayerGrassCollision_Left(PlayerCollisionRec *collisionRecs, Grass *grass);
-bool  checkPlayerGrassCollision_Right(PlayerCollisionRec *collisionRecs, Grass *grass);
+bool checkPlayerGrassCollision_Left(PlayerCollisionRec *collisionRecs, Grass *grass);
+bool checkPlayerGrassCollision_Right(PlayerCollisionRec *collisionRecs, Grass *grass);
 bool checkPlayerStoreBlockCollision_Upper(PlayerCollisionRec *collisionRecs, StoreBlock *block);
 bool checkPlayerStoreBlockCollision_Under(PlayerCollisionRec *collisionRecs, StoreBlock *block);
-bool  checkPlayerStoreBlockCollision_Left(PlayerCollisionRec *collisionRecs, StoreBlock *block);
-bool  checkPlayerStoreBlockCollision_Right(PlayerCollisionRec *collisionRecs, StoreBlock *block);
+bool checkPlayerStoreBlockCollision_Left(PlayerCollisionRec *collisionRecs, StoreBlock *block);
+bool checkPlayerStoreBlockCollision_Right(PlayerCollisionRec *collisionRecs, StoreBlock *block);
 
 GameLobby createGameLobby(Player *player)
 {
@@ -218,7 +218,7 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
 
     if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->Banch))
         {
-            if(IsKeyPressed(KEY_W) && gl->player->status.resting==false)
+            if(IsKeyPressed(KEY_UP) && gl->player->status.resting==false)
             {
                 gl->player->status.resting = true;
                 gl->player->pos.x = gl->Banch.x+16;
@@ -493,7 +493,7 @@ void takeCharms(GameLobby *gl)
                 charm->playerNext = true;
             else charm->playerNext = false;
 
-            if(checkCharmsPlayer(charm, player)&& IsKeyPressed(KEY_W))
+            if(checkCharmsPlayer(charm, player)&& IsKeyPressed(KEY_UP))
             {
                 switch(number)
                 {
