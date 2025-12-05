@@ -13,6 +13,11 @@ typedef struct MenuTextures
     Texture2D mouseLoadButton;
     Texture2D clickLoadButton;
 
+    Texture2D Save1LoadButton;
+    Texture2D Save2LoadButton;
+    Texture2D Save3LoadButton;
+    Texture2D BackMenuButton;
+
     Texture2D normalHelpButton;
     Texture2D mouseHelpButton;
     Texture2D clickHelpButton;
@@ -27,6 +32,11 @@ typedef struct MenuTextures
 
     Texture2D bigNormalLoadButton;
     Texture2D bigMouseLoadButton;
+
+    Texture2D bigSave1LoadButton;
+    Texture2D bigSave2LoadButton;
+    Texture2D bigSave3LoadButton;
+    Texture2D bigBackMenuButton;
 
     Texture2D bigNormalHelpButton;
     Texture2D bigMouseHelpButton;
@@ -47,6 +57,8 @@ typedef struct PauseTextures
     Texture2D normalLeaveButton;
     Texture2D mouseLeaveButton;
 
+    Texture2D FullscreenButton;
+
     Texture2D normalReturnButtonG;
     Texture2D mouseReturnButtonG;
 
@@ -55,6 +67,8 @@ typedef struct PauseTextures
 
     Texture2D normalLeaveButtonG;
     Texture2D mouseLeaveButtonG;
+
+    Texture2D MinimizeButton;
 
 }PauseTextures;
 
