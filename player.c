@@ -89,6 +89,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 .teclaTab = false,
                 .doubleJump = false,
                 .chiclete = false,
+
             },
 
 
@@ -1567,6 +1568,134 @@ void drawHud (Player *player, bool isFullscreen)
     //DrawText(TextFormat("Amuletos: "), 20,80,20, GREEN);
     DrawText(TextFormat("FPS: %03i",fps),20,5,20,GREEN);
 }
+
+void updateInventory (Player *player)
+{
+    if( IsKeyPressed(KEY_TAB))
+    {
+        player->status.openInventory = !player->status.openInventory;
+    }
+
+    if(player->status.resting)
+    {
+        if(player->status.openInventory)
+        {
+            if(player->inventory.colectedCharms.gamerHeart && IsKeyPressed(KEY_ONE))
+            {
+                player->inventory.equippedCharms.gamerHeart = true;
+                player->inventory.equippedCharms.goldTickets = false;
+                player->inventory.equippedCharms.plusEgo = false;
+                player->inventory.equippedCharms.programmerHands = false;
+                player->inventory.equippedCharms.debugSword = false;
+            }
+
+            if(player->inventory.colectedCharms.goldTickets && IsKeyPressed(KEY_TWO))
+            {
+                player->inventory.equippedCharms.gamerHeart = false;
+                player->inventory.equippedCharms.goldTickets = true;
+                player->inventory.equippedCharms.plusEgo = false;
+                player->inventory.equippedCharms.programmerHands = false;
+                player->inventory.equippedCharms.debugSword = false;
+            }
+
+            if(player->inventory.colectedCharms.plusEgo && IsKeyPressed(KEY_THREE))
+            {
+                player->inventory.equippedCharms.gamerHeart = false;
+                player->inventory.equippedCharms.goldTickets = false;
+                player->inventory.equippedCharms.plusEgo = true;
+                player->inventory.equippedCharms.programmerHands = false;
+                player->inventory.equippedCharms.debugSword = false;
+            }
+
+            if(player->inventory.colectedCharms.programmerHands && IsKeyPressed(KEY_FOUR))
+            {
+                player->inventory.equippedCharms.gamerHeart = false;
+                player->inventory.equippedCharms.goldTickets = false;
+                player->inventory.equippedCharms.plusEgo = false;
+                player->inventory.equippedCharms.programmerHands = true;
+                player->inventory.equippedCharms.debugSword = false;
+            }
+
+            if(player->inventory.colectedCharms.debugSword && IsKeyPressed(KEY_FIVE))
+            {
+                player->inventory.equippedCharms.gamerHeart = false;
+                player->inventory.equippedCharms.goldTickets = false;
+                player->inventory.equippedCharms.plusEgo = false;
+                player->inventory.equippedCharms.programmerHands = false;
+                player->inventory.equippedCharms.debugSword = true;
+            }
+        }
+    }
+
+}
+
+
+void drawInventory(Player *player, bool isFullscreen)
+{
+    const Rectangle RETANGULOS_SLOTS[5] =
+    {
+        {40, 10, 80, 80},
+        {200, 10, 80, 80},
+        {360, 10, 80, 80},
+        {520, 10, 80, 80},
+        {680, 10, 80, 80}
+    };
+
+    DrawRectangle(0, 0, GetScreenWidth(), 120, BLACK);
+
+    for (int i = 0; i < 5; i++)
+    {
+        Rectangle slot_retangulo = RETANGULOS_SLOTS[i];
+
+        // Desenha o Slot Branco
+        DrawRectangleRec(slot_retangulo, WHITE);
+    }
+
+    if (player->inventory.colectedCharms.gamerHeart)
+    {
+        if(player->inventory.equippedCharms.gamerHeart)
+            DrawTexturePro(rm.charm.gamerHeart,
+                    (Rectangle){0,0,rm.charm.gamerHeart.width, rm.charm.gamerHeart.height},
+                    (Rectangle) {40,10,rm.charm.gamerHeart.width+64,rm.charm.gamerHeart.height+64},
+                    (Vector2){0.0f,0.0f},
+                    0.0f,
+                    GREEN);
+        else
+        {
+           DrawTexturePro(rm.charm.gamerHeart,
+                    (Rectangle){0,0,rm.charm.gamerHeart.width, rm.charm.gamerHeart.height},
+                    (Rectangle) {40,10,rm.charm.gamerHeart.width+64,rm.charm.gamerHeart.height+64},
+                    (Vector2){0.0f,0.0f},
+                    0.0f,
+                    WHITE);
+        }
+    }
+        //Desenha textura no retangulo 0
+    if (player->inventory.colectedCharms.goldTickets)
+        //Desenha textura no retangulo 1
+    {
+
+    }
+    if (player->inventory.colectedCharms.plusEgo)
+        //Desenha textura no retangulo 2
+    {
+
+    }
+    if (player->inventory.colectedCharms.programmerHands)
+         //Desenha textura no retangulo 3
+    {
+
+    }
+    if (player->inventory.colectedCharms.debugSword)
+        //Desenha textura no retangulo 4
+    {
+
+    }
+
+}
+
+
+
 
 //---------------------------------------------------------
 //=========================================================

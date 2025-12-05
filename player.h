@@ -17,6 +17,7 @@ typedef struct PlayerStatus
     float contHealingTime;
     bool sufferingDamege;
     bool resting;
+    bool openInventory;
     int ticketsRU;
     float defaultSpeed;
     bool onFloor;
@@ -223,11 +224,15 @@ Player createNewPlayer (Vector2 dim, Color cor);
 
 void inputAndUpdatePlayer (Player *player, float delta);
 
+void updateInventory (Player *player);
+
 void applyKnockbackToPlayer (Player *player);
 
 void drawPlayer (Player *player);
 
 void drawHud (Player *player, bool isFullscreen);
+
+void drawInventory (Player *player, bool isFullscreen);
 
 void resetPlayer(Player *Player);
 

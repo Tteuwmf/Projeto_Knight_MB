@@ -4,6 +4,7 @@
 #include "collisions.h"
 #include "gameWindow.h"
 #include "resourceManager.h"
+#include "coins.h"
 
 void makeLobbyCollisionPlayerGrass(GameLobby *gl);
 void makeLobbyCollisionPlayerStoreBlock(GameLobby *gl);
@@ -40,6 +41,7 @@ GameLobby createGameLobby(Player *player)
         .restTime = 1.0f,
 
         .fadeScreenGL = 1.0f,
+        .fadeScreenGL2 = 1.0f,
     };
 
     loadLobby(&gl,"maps/mapLobby.txt");
@@ -60,6 +62,7 @@ void loadLobby(GameLobby *gl, const char* arquivo)
     int contBlocks = 0;
     int contGrass = 0;
     int contStoreBlocks = 0;
+    int contCharms =0;
 
     while(*atual != '\0')
     {
@@ -75,12 +78,11 @@ void loadLobby(GameLobby *gl, const char* arquivo)
                 gl->player->pos = (Vector2){contColumn*32,contLines*32};
                 contColumn++;
                 break;
-
             case 'F':
                 gl->StoreWall = (Rectangle)
                 {
                     .x = (contColumn-1)*32,
-                    .y = (contLines-1)*32,
+                    .y = (contLines-2)*32,
                     .width = 352,
                     .height = 192,
                 };
@@ -94,6 +96,23 @@ void loadLobby(GameLobby *gl, const char* arquivo)
                  contStoreBlocks++;
                  gl->numberOfStoreBlocks++;
                  break;
+            case 'c': //charms
+                if(contCharms==0)
+                {
+                    gl->storeCharms[contCharms] = createCharm(
+                        (Vector2){contColumn*32+10, contLines*32}, contCharms+3
+                    );
+                }
+                else
+                {
+                    gl->storeCharms[contCharms] = createCharm(
+                            (Vector2){contColumn*32, contLines*32}, contCharms+3
+                        );
+                }
+                contColumn++;
+                contCharms++;
+                gl->numberOfStoreCharms++;
+                break;
             case 'p':
             case 'P':
                 gl->blocks[contBlocks] = createBlock(
@@ -193,6 +212,9 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
     if(gl->player->status.resting==false)
         inputAndUpdatePlayer(gl->player, delta);
 
+    updateInventory (gl->player);
+
+
 
     if(CheckCollisionRecs((Rectangle){.x = gl->player->pos.x,  .y = gl->player->pos.y, .width = gl->player->dim.x, .height = gl->player->dim.y}, gl->Banch))
         {
@@ -272,6 +294,7 @@ void inputAndUpdateGameLobby(GameLobby *gl, bool isFullscreen)
     makeLobbyCollisionPlayerBlock(gl);
     makeLobbyCollisionPlayerGrass(gl);
     makeLobbyCollisionPlayerStoreBlock(gl);
+    takeCharms(gl);
 
     updateLobbyCamera(&gl->camera, gl->player, isFullscreen, gl->roomCamera);
 }
@@ -453,6 +476,54 @@ void makeLobbyCollisionBlocksPowersAndWeapons(GameLobby *gl)
 
 }
 
+
+void takeCharms(GameLobby *gl)
+{
+    Player *player = gl->player;
+
+    for(int h=0;h<gl->numberOfStoreCharms;h++)
+    {
+        Charm *charm = &gl->storeCharms[h];
+
+        if(charm->available)
+        {
+            int number = charm->charmNumber;
+
+            if(checkCharmsPlayerClose(charm, player))
+                charm->playerNext = true;
+            else charm->playerNext = false;
+
+            if(checkCharmsPlayer(charm, player)&& IsKeyPressed(KEY_W))
+            {
+                switch(number)
+                {
+                    case 3:
+                        if(player->status.ticketsRU>=50)
+                        {
+                             player->inventory.colectedCharms.goldTickets = true;
+                             charm->available=false;
+                        }
+                        break;
+                    case 4:
+                        if(player->status.ticketsRU>=100)
+                        {
+                            player->inventory.colectedCharms.debugSword = true;
+                            charm->available=false;
+                        }
+
+
+                        break;
+                    default:
+                        break;
+                }
+
+
+            }
+        }
+    }
+
+}
+
 void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool roomCamera)
 {
     if(isFullscreen==false)
@@ -572,7 +643,14 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
     BeginMode2D(gl->camera);
 
     DrawTexture(rm.gl.bench,gl->Banch.x,gl->Banch.y, WHITE);
-    DrawTexture(rm.gl.storeWall,gl->StoreWall.x,gl->StoreWall.y, WHITE);
+
+    DrawTexturePro(rm.gl.storeWall,
+                    (Rectangle){0,0,rm.gl.storeWall.width, rm.gl.storeWall.height},
+                    (Rectangle) {gl->StoreWall.x,gl->StoreWall.y+10,rm.gl.storeWall.width+64,rm.gl.storeWall.height+64},
+                    (Vector2){0.0f,0.0f},
+                    0.0f,
+                    WHITE);
+
     for (int s =0; s<gl->numberOfStoreBlocks; s++)
     {
         drawStoreBlock(&gl->storeBlocks[s]);
@@ -582,6 +660,11 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
     DrawRectangleRec(gl->Store, RED);
     DrawRectangleRec(gl->DoorR, WHITE);
     DrawRectangleRec(gl->Computer, BLACK);
+
+    for(int h=0;h<gl->numberOfStoreCharms;h++)
+    {
+        drawCharms(&gl->storeCharms[h]);
+    }
 
     drawPlayer(gl->player);
 
@@ -617,6 +700,9 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
 
         if(gl->fadeScreenGL>0.0f)
             DrawText("NOME DO JOGO", ((GetScreenWidth()/2) - 240), ((GetScreenHeight()/2) - 34), 64, GREEN);
+
+    if(gl->player->status.openInventory)
+        drawInventory(gl->player,isFullscreen);
 
     EndDrawing();
 }

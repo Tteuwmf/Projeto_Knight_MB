@@ -62,6 +62,7 @@ typedef struct GameLobbyTextures
 {
     Texture2D bench;
     Texture2D grass;
+    Texture2D store;
     Texture2D storeWall;
     Texture2D storeBlock;
 
@@ -81,6 +82,11 @@ typedef struct GameWorldTextures
     Texture2D glitch2;
 
     Texture2D skullBug[2];
+
+    Texture2D sleepingBoss;
+    Texture2D bossActive;
+
+    Texture2D portal;
 
 
 }GameWorldTextures;
@@ -173,7 +179,19 @@ typedef struct PlayerTextures
 
     Texture2D swordAttack;
 
+
+
 }PlayerTextures;
+
+typedef struct CharmsTextures
+{
+    Texture2D gamerHeart;
+    Texture2D programmerHands;
+    Texture2D goldTickets;
+    Texture2D debugSword;
+    Texture2D plusEgo;
+
+}CharmsTextures;
 
 typedef struct ResourceManager
 {
@@ -182,6 +200,7 @@ typedef struct ResourceManager
     GameLobbyTextures gl;
     GameWorldTextures gw;
     PlayerTextures player;
+    CharmsTextures charm;
 
 }ResourceManager;
 

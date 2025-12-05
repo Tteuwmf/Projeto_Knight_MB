@@ -63,9 +63,32 @@ void drawSkills(Skill *skill)
 
 void drawCharms(Charm *charm)
 {
+    Vector2 updatePos = (Vector2){charm->pos.x-11,charm->pos.y-11};
+
     if(charm->available)
     {
-        DrawRectangleV(charm->pos, charm->dim,charm->cor);
+        //DrawRectangleV(charm->pos, charm->dim,charm->cor);
+
+        switch(charm->charmNumber)
+        {
+        case 0:
+            DrawTextureV(rm.charm.gamerHeart,updatePos,charm->cor );
+            break;
+        case 1:
+            DrawTextureV(rm.charm.programmerHands,updatePos,charm->cor );
+            break;
+        case 2:
+            DrawTextureV(rm.charm.plusEgo, updatePos,charm->cor );
+            break;
+        case 3:
+            DrawTextureV(rm.charm.goldTickets, updatePos,charm->cor );
+            break;
+        case 4:
+            DrawTextureV(rm.charm.debugSword,updatePos,charm->cor );
+            break;
+        }
+
+
         if (charm->playerNext)
         {
             DrawText(TextFormat("PEGAR: W"), charm->pos.x-16,charm->pos.y-16,5, GREEN);

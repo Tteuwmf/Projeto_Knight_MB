@@ -57,6 +57,7 @@ void loadResources()
 
     rm.gl.bench = LoadTexture("Assets/Textures/Banch.png");
     rm.gl.grass = LoadTexture("Assets/Textures/grassBlock.png");
+    rm.gl.store = LoadTexture("Assets/Textures/store.png");
     rm.gl.storeWall = LoadTexture ("Assets/Textures/FundoLoja.png");
     rm.gl.storeBlock = LoadTexture ("Assets/Textures/BlocoLoja.png");
 
@@ -73,6 +74,10 @@ void loadResources()
     rm.gw.glitch2 = LoadTexture("Assets/Textures/glitchB.png");
     rm.gw.skullBug[0] = LoadTexture ("Assets/Textures/skullBug1.png");
     rm.gw.skullBug[1] = LoadTexture ("Assets/Textures/skullBug2.png");
+    rm.gw.sleepingBoss = LoadTexture("Assets/Textures/sleepingBoss.png");
+    rm.gw.bossActive = LoadTexture("Assets/Textures/bossActive.png");
+
+    rm.gw.portal = LoadTexture("Assets/Textures/portal.png");
 
 
 
@@ -164,6 +169,13 @@ void loadResources()
     rm.player.swordAttack = LoadTexture("Assets/Textures/swordAttack.png");
 
 
+    rm.charm.gamerHeart = LoadTexture("Assets/Textures/gamerHeart.png");
+    rm.charm.programmerHands = LoadTexture("Assets/Textures/programmerHands.png");
+    rm.charm.goldTickets = LoadTexture("Assets/Textures/goldTickets.png");
+    rm.charm.debugSword = LoadTexture("Assets/Textures/debugSword.png");
+    rm.charm.plusEgo = LoadTexture("Assets/Textures/plusEgo.png");
+
+
 }
 
 void unloadResouces()
@@ -218,6 +230,7 @@ void unloadResouces()
 
 
     UnloadTexture(rm.gl.bench);
+    UnloadTexture(rm.gl.store);
     UnloadTexture(rm.gl.grass);
     UnloadTexture(rm.gl.storeWall);
     UnloadTexture(rm.gl.storeBlock);
@@ -234,6 +247,10 @@ void unloadResouces()
     UnloadTexture(rm.gw.glitch2);
     UnloadTexture(rm.gw.skullBug[0]);
     UnloadTexture(rm.gw.skullBug[1]);
+    UnloadTexture(rm.gw.bossActive);
+    UnloadTexture(rm.gw.sleepingBoss);
+    UnloadTexture(rm.gw.portal);
+
 
 
     UnloadTexture(rm.player.sevenHearts);
@@ -322,4 +339,11 @@ void unloadResouces()
     UnloadTexture(rm.player.playerHealing);
 
     UnloadTexture(rm.player.swordAttack);
+
+
+    UnloadTexture(rm.charm.gamerHeart);
+    UnloadTexture(rm.charm.programmerHands);
+    UnloadTexture(rm.charm.goldTickets);
+    UnloadTexture(rm.charm.plusEgo);
+    UnloadTexture(rm.charm.debugSword);
 }
