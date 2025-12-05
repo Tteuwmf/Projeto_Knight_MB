@@ -656,9 +656,17 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
         drawStoreBlock(&gl->storeBlocks[s]);
     }
 
-    DrawRectangleRec(gl->Room, WHITE);
-    DrawRectangleRec(gl->Store, RED);
-    DrawRectangleRec(gl->DoorR, WHITE);
+    //DrawRectangleRec(gl->Room, WHITE);
+
+    DrawTexturePro(rm.gl.store,
+                    (Rectangle){0,0,rm.gl.store.width, rm.gl.store.height},
+                    (Rectangle) {gl->Room.x-32,gl->Room.y-96,rm.gl.store.width,rm.gl.store.height},
+                    (Vector2){0.0f,0.0f},
+                    0.0f,
+                    WHITE);
+
+    //DrawRectangleRec(gl->Store, RED);
+    //DrawRectangleRec(gl->DoorR, WHITE);
     DrawRectangleRec(gl->Computer, BLACK);
 
     for(int h=0;h<gl->numberOfStoreCharms;h++)
@@ -669,16 +677,16 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
     drawPlayer(gl->player);
 
     if(gl->nearBanch && gl->player->status.resting==false)
-        DrawText(TextFormat("DESCANSAR: W"), gl->Banch.x,gl->Banch.y-16,15, WHITE);
+        DrawText(TextFormat("DESCANSAR"), gl->Banch.x,gl->Banch.y-16,15, WHITE);
 
     if(gl->nearRoom)
-        DrawText(TextFormat("ENTRAR: W"), gl->Room.x,gl->Room.y-16,15, WHITE);
+        DrawText(TextFormat("ENTRAR"), gl->Room.x,gl->Room.y-16,15, WHITE);
 
     if(gl->nearRoomDoor)
-        DrawText(TextFormat("SAIR: W"), gl->DoorR.x,gl->DoorR.y-16,15, WHITE);
+        DrawText(TextFormat("SAIR"), gl->DoorR.x,gl->DoorR.y-16,15, WHITE);
 
     if(gl->nearComputer)
-        DrawText(TextFormat("CODAR: ENTER"), gl->Computer.x,gl->Computer.y-16,15, GREEN);
+        DrawText(TextFormat("CODAR: ENTER"), gl->Computer.x-32,gl->Computer.y-16,15, GREEN);
 
     for (int i =0; i<gl->numberOfBlocks; i++)
     {
@@ -699,7 +707,7 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen)
         DrawRectangle(0,0,1920, 1080, (Color){0,0,0,(unsigned char)(gl->fadeScreenGL*255)});
 
         if(gl->fadeScreenGL>0.0f)
-            DrawText("NOME DO JOGO", ((GetScreenWidth()/2) - 240), ((GetScreenHeight()/2) - 34), 64, GREEN);
+            DrawText("CODEKNIGHT", ((GetScreenWidth()/2) - 240), ((GetScreenHeight()/2) - 34), 64, GREEN);
 
     if(gl->player->status.openInventory)
         drawInventory(gl->player,isFullscreen);
