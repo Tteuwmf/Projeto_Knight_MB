@@ -43,6 +43,39 @@ void initGame(Game *game, bool isFullScreen)
 
     game->gl.player = &game->player;
 
+        bool bossBattleActive = false;
+
+    if (game->gw != NULL)
+    {
+        if (game->gw->boss.life < 20 && game->gw->boss.dead == false)
+        {
+            bossBattleActive = true;
+        }
+        else if (game->gw->boss.dead == true)
+            bossBattleActive = false;
+
+    }
+
+    if (bossBattleActive)
+    {
+        if (IsMusicStreamPlaying(rm.defaultMusic)) StopMusicStream(rm.defaultMusic);
+
+        if (!IsMusicStreamPlaying(rm.bossMusic)) PlayMusicStream(rm.bossMusic);
+
+
+        SetMusicVolume(rm.bossMusic, 0.3f);
+        UpdateMusicStream(rm.bossMusic);
+    }
+    else
+    {
+        if (IsMusicStreamPlaying(rm.bossMusic)) StopMusicStream(rm.bossMusic);
+
+        if (!IsMusicStreamPlaying(rm.defaultMusic)) PlayMusicStream(rm.defaultMusic);
+
+        SetMusicVolume(rm.defaultMusic, 0.3f);
+        UpdateMusicStream(rm.defaultMusic);
+    }
+
     switch(game->status)
     {
         case MENU:

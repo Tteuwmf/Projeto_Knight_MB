@@ -48,9 +48,6 @@ void initGameWindow(GameWindow *gameWindow)
         SetTargetFPS(60);
 
 
-        PlayMusicStream(rm.defaultMusic);
-        SetMusicVolume(rm.defaultMusic, 0.8f);
-
         while (!WindowShouldClose() && gameWindow->game.shouldClose==false)
         {
             //----FULL-SCREEN-CONFIG----
