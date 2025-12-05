@@ -47,7 +47,7 @@ void initGame(Game *game, bool* isFullScreen)
 
     if (game->gw != NULL)
     {
-        if (game->gw->boss.life < 20 && game->gw->boss.dead == false)
+        if (game->gw->boss.life < 20 && game->gw->boss.dead == false && !game->player.status.dead)
         {
             bossBattleActive = true;
         }
