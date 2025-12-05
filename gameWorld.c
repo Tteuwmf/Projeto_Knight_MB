@@ -30,11 +30,11 @@ GameWorld* createGameWorld(Player *player)
     gw->canLeaveFase = false;
 
     if(player->progress==0)
-        loadMap(gw,"maps/mapLevel1.txt");
+        loadMap(gw,"maps/tunel1.txt");
     else if (player->progress==1)
-        loadMap(gw,"maps/mapLevel2.txt");
+        loadMap(gw,"maps/tunel2.txt");
     else if (player->progress==2)
-        loadMap(gw,"maps/mapLevel3.txt");
+        loadMap(gw,"maps/tunel3.txt");
 
     gw->camera = (Camera2D)
     {
@@ -1202,7 +1202,7 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
             player->knockbackStatus.knockbackL = true;
             player->status.invulnerable=true;
             player->status.life--;
-            //player->status.life--;
+            player->status.life--;
             if(player->inventory.equippedCharms.debugSword)
                 player->status.life--;
         }
@@ -1211,7 +1211,7 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
             player->knockbackStatus.knockbackR = true;
             player->status.invulnerable=true;
             player->status.life--;
-            //player->status.life--;
+            player->status.life--;
             if(player->inventory.equippedCharms.debugSword)
                 player->status.life--;
         }
@@ -1220,7 +1220,7 @@ void makeCollisionEnemiesPlayer(GameWorld *gw)
             player->knockbackStatus.knockbackUp= true;
             player->status.invulnerable=true;
             player->status.life--;
-           // player->status.life--;
+            player->status.life--;
             if(player->inventory.equippedCharms.debugSword)
                 player->status.life--;
         }

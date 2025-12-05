@@ -88,7 +88,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
                 },
                 .teclaTab = false,
                 .doubleJump = false,
-                .chiclete = false,
+                //.chiclete = true,
 
             },
 
