@@ -433,7 +433,7 @@
 1764896217 c:\users\bruno\documents\github\projeto_knight_mb\blocks.h
 	"raylib.h"
 
-1764900788 c:\users\bruno\documents\github\projeto_knight_mb\resourcemanager.h
+1764902302 c:\users\bruno\documents\github\projeto_knight_mb\resourcemanager.h
 	"raylib.h"
 
 1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\coins.c
@@ -511,7 +511,7 @@
 	"gameLobby.h"
 	"gameWorld.h"
 
-1764896217 source:c:\users\bruno\documents\github\projeto_knight_mb\gamewindow.c
+1764902111 source:c:\users\bruno\documents\github\projeto_knight_mb\gamewindow.c
 	<stdlib.h>
 	<stdio.h>
 	"raylib.h"

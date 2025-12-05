@@ -43,8 +43,6 @@ void initGame(Game *game, bool isFullScreen)
 
     game->gl.player = &game->player;
 
-    UpdateMusicStream(rm.defaultMusic);
-
     switch(game->status)
     {
         case MENU:
