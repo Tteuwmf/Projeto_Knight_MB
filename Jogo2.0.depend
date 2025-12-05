@@ -196,7 +196,7 @@
 	"collisions.h"
 	"resourceManager.h"
 
-1764883127 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamewindow.c
+1764897899 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\gamewindow.c
 	<stdlib.h>
 	<stdio.h>
 	"raylib.h"
@@ -340,7 +340,7 @@
 	"collisions.h"
 	"gameWindow.h"
 
-1764892245 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\game.c
+1764896530 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\game.c
 	<string.h>
 	<stdio.h>
 	"raylib.h"
@@ -357,14 +357,14 @@
 	"gameLobby.h"
 	"gameWorld.h"
 
-1764894360 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\resourcemanager.c
+1764897885 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\resourcemanager.c
 	"raylib.h"
 	"resourceManager.h"
 
-1764892748 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\resourcemanager.h
+1764896375 d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\resourcemanager.h
 	"raylib.h"
 
-1764876220 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\menu.c
+1764897890 source:d:\users\matheus\ufrgs.d\projetos da facul\projeto_knight\menu.c
 	<stdio.h>
 	"raylib.h"
 	"menu.h"

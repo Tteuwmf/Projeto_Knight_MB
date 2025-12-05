@@ -176,6 +176,12 @@ void loadResources()
     rm.charm.plusEgo = LoadTexture("Assets/Textures/plusEgo.png");
 
 
+
+
+    rm.defaultMusic = LoadMusicStream("assets/sounds/Crossroads.mp3");
+    rm.bossMusic = LoadMusicStream("assets/sounds/Decisive Battle.mp3");
+
+
 }
 
 void unloadResouces()
@@ -346,4 +352,7 @@ void unloadResouces()
     UnloadTexture(rm.charm.goldTickets);
     UnloadTexture(rm.charm.plusEgo);
     UnloadTexture(rm.charm.debugSword);
+
+    UnloadMusicStream(rm.defaultMusic);
+    UnloadMusicStream(rm.bossMusic);
 }
