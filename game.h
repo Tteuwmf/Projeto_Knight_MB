@@ -51,7 +51,7 @@ typedef struct Game
 
 Game createGame();
 
-void initGame(Game *game, bool isFullScreen);
+void initGame(Game *game, bool* isFullScreen);
 
 
 #endif // GAME_H

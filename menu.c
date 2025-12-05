@@ -274,30 +274,30 @@ void inputUpdateAndDrawLoad(Game *game, bool isFullscreen)
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
             DrawTexture(rm.menu.clickStartButton, X_SLOTS_BUTTON, Y_SLOT1_BUTTON, WHITE);
         else
-            DrawTexture(rm.menu.bigMouseStartButton, X_SLOTS_BUTTON, Y_SLOT1_BUTTON, WHITE);
+            DrawTexture(rm.menu.bigSave1LoadButton, X_SLOTS_BUTTON, Y_SLOT1_BUTTON, WHITE);
     }
     else
-        DrawTexture(rm.menu.bigNormalStartButton, X_SLOTS_BUTTON, Y_SLOT1_BUTTON, WHITE);
+        DrawTexture(rm.menu.bigSave1LoadButton, X_SLOTS_BUTTON, Y_SLOT1_BUTTON, WHITE);
             // Botao de Carregar jogo
     if (mouseOnLoadButton)
     {
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
             DrawTexture(rm.menu.clickLoadButton, X_SLOTS_BUTTON, Y_SLOT2_BUTTON, WHITE);
         else
-            DrawTexture(rm.menu.bigMouseLoadButton, X_SLOTS_BUTTON, Y_SLOT2_BUTTON, WHITE);
+            DrawTexture(rm.menu.bigSave2LoadButton, X_SLOTS_BUTTON, Y_SLOT2_BUTTON, WHITE);
     }
     else
-        DrawTexture(rm.menu.bigNormalLoadButton, X_SLOTS_BUTTON, Y_SLOT2_BUTTON, WHITE);
+        DrawTexture(rm.menu.bigSave2LoadButton, X_SLOTS_BUTTON, Y_SLOT2_BUTTON, WHITE);
             // Botao de Ajuda
     if (mouseOnHelpButton)
     {
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
             DrawTexture(rm.menu.clickHelpButton, X_SLOTS_BUTTON, Y_SLOT3_BUTTON, WHITE);
         else
-            DrawTexture(rm.menu.bigMouseHelpButton, X_SLOTS_BUTTON, Y_SLOT3_BUTTON, WHITE);
+            DrawTexture(rm.menu.bigSave3LoadButton, X_SLOTS_BUTTON, Y_SLOT3_BUTTON, WHITE);
     }
     else
-        DrawTexture(rm.menu.bigNormalHelpButton, X_SLOTS_BUTTON, Y_SLOT3_BUTTON, WHITE);
+        DrawTexture(rm.menu.bigSave3LoadButton, X_SLOTS_BUTTON, Y_SLOT3_BUTTON, WHITE);
 
 
 
@@ -311,11 +311,11 @@ void inputUpdateAndDrawLoad(Game *game, bool isFullscreen)
             //if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT))
         }
         else
-            DrawTexture(rm.menu.bigMouseCloseButton, X_SLOTS_BUTTON, Y_GOTOMENU_BUTTON, WHITE);
+            DrawTexture(rm.menu.bigBackMenuButton, X_SLOTS_BUTTON, Y_GOTOMENU_BUTTON, WHITE);
     }
 
     else
-        DrawTexture(rm.menu.bigNormalCloseButton, X_SLOTS_BUTTON, Y_GOTOMENU_BUTTON, WHITE);
+        DrawTexture(rm.menu.bigBackMenuButton, X_SLOTS_BUTTON, Y_GOTOMENU_BUTTON, WHITE);
 
     EndDrawing();
 }

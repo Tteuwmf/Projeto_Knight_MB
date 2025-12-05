@@ -6,31 +6,36 @@ const int X_PAUSE_BUTTON = 354;
 const int Y_RETURN_BUTTON = 175;
 const int Y_SAVE_BUTTON = 230;
 const int Y_LEAVE_BUTTON = 285;
+const int Y_FULLSCREEN_BUTTON = 340;
 
-void inputUpdateAndDrawPause(Game *game, bool isFullscreen)
+void inputUpdateAndDrawPause(Game *game, bool* isFullscreen)
 {
     Vector2 mousePosition = GetMousePosition();
 
     Rectangle returnArea = {0};
     Rectangle saveArea = {0};
     Rectangle leaveArea = {0};
+    Rectangle fullScreenArea = {0};
 
-    if(isFullscreen==false)
+    if(*isFullscreen==false)
     {
         returnArea = (Rectangle) {X_PAUSE_BUTTON, Y_RETURN_BUTTON, (int) rm.pause.normalReturnButton.width, (int) rm.pause.normalReturnButton.height};
         saveArea = (Rectangle){X_PAUSE_BUTTON, Y_SAVE_BUTTON, (int) rm.pause.normalSaveButton.width, (int) rm.pause.normalSaveButton.height};
         leaveArea = (Rectangle){X_PAUSE_BUTTON, Y_LEAVE_BUTTON, (int) rm.pause.normalLeaveButton.width, (int) rm.pause.normalLeaveButton.height};
+        fullScreenArea = (Rectangle){X_PAUSE_BUTTON+((int) rm.pause.normalLeaveButton.width/2),Y_FULLSCREEN_BUTTON,(int)rm.pause.FullscreenButton.width,(int)rm.pause.FullscreenButton.height};
     }
     else
     {
         returnArea = (Rectangle){X_PAUSE_BUTTON*2+140, Y_RETURN_BUTTON*2, (int) rm.pause.normalReturnButtonG.width, (int) rm.pause.normalReturnButtonG.height};
         saveArea = (Rectangle){X_PAUSE_BUTTON*2+140, Y_SAVE_BUTTON*2, (int) rm.pause.normalSaveButtonG.width, (int) rm.pause.normalSaveButtonG.height};
         leaveArea = (Rectangle){X_PAUSE_BUTTON*2+140, Y_LEAVE_BUTTON*2, (int) rm.pause.normalLeaveButtonG.width, (int) rm.pause.normalLeaveButtonG.height};
+        fullScreenArea = (Rectangle){X_PAUSE_BUTTON*2+100+((int) rm.pause.normalLeaveButton.width/2),Y_FULLSCREEN_BUTTON*2,(int)rm.pause.MinimizeButton.width,(int)rm.pause.MinimizeButton.height};
     }
 
     bool mouseOnReturnButton = CheckCollisionPointRec(mousePosition, returnArea);
     bool mouseOnSaveButton = CheckCollisionPointRec(mousePosition, saveArea);
     bool mouseOnLeaveButton = CheckCollisionPointRec(mousePosition, leaveArea);
+    bool mouseOnFullscreenButton = CheckCollisionPointRec(mousePosition, fullScreenArea);
 
     if(mouseOnReturnButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
     {
@@ -40,12 +45,15 @@ void inputUpdateAndDrawPause(Game *game, bool isFullscreen)
     if(mouseOnLeaveButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
         game->status = CONFIRM;
 
+    if(mouseOnFullscreenButton && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        *isFullscreen = !(*isFullscreen);
+
     //---------------------------------------------------
 
     BeginDrawing();
     //ClearBackground(LIGHTGRAY);
 
-    if(isFullscreen==false)
+    if(*isFullscreen==false)
     {
         DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), Fade(BLACK, 0.6f));
         DrawRectangle(266, 0, 266, 450, BLACK);
@@ -67,6 +75,11 @@ void inputUpdateAndDrawPause(Game *game, bool isFullscreen)
             DrawTexture(rm.pause.mouseLeaveButton, X_PAUSE_BUTTON, Y_LEAVE_BUTTON, WHITE);
         else
             DrawTexture(rm.pause.normalLeaveButton, X_PAUSE_BUTTON, Y_LEAVE_BUTTON, WHITE);
+
+        if (mouseOnFullscreenButton)
+            DrawTexture(rm.pause.FullscreenButton, X_PAUSE_BUTTON+((int) rm.pause.normalLeaveButton.width/2), Y_FULLSCREEN_BUTTON, WHITE);
+        else
+            DrawTexture(rm.pause.FullscreenButton, X_PAUSE_BUTTON+((int) rm.pause.normalLeaveButton.width/2), Y_FULLSCREEN_BUTTON, WHITE);
     }
     else
     {
@@ -90,6 +103,11 @@ void inputUpdateAndDrawPause(Game *game, bool isFullscreen)
             DrawTexture(rm.pause.mouseLeaveButtonG, X_PAUSE_BUTTON*2+140, Y_LEAVE_BUTTON*2, WHITE);
         else
             DrawTexture(rm.pause.normalLeaveButtonG, X_PAUSE_BUTTON*2+140, Y_LEAVE_BUTTON*2, WHITE);
+
+        if (mouseOnFullscreenButton)
+            DrawTexture(rm.pause.MinimizeButton, X_PAUSE_BUTTON*2+100+((int) rm.pause.normalLeaveButton.width/2), Y_FULLSCREEN_BUTTON*2, WHITE);
+        else
+            DrawTexture(rm.pause.MinimizeButton, X_PAUSE_BUTTON*2+100+((int) rm.pause.normalLeaveButton.width/2), Y_FULLSCREEN_BUTTON*2, WHITE);
     }
 
 
