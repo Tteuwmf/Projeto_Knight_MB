@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "player.h"
 #include "blocks.h"
+#include "coins.h"
 
 typedef struct GameLobby
 {
@@ -17,6 +18,9 @@ typedef struct GameLobby
 
     StoreBlock storeBlocks[100];
     int numberOfStoreBlocks;
+
+    Charm storeCharms[2];
+    int numberOfStoreCharms;
 
     Rectangle Banch;
     bool nearBanch;
@@ -44,6 +48,7 @@ typedef struct GameLobby
     Camera2D camera;
 
     float fadeScreenGL;
+    float fadeScreenGL2;
 
 }GameLobby;
 
@@ -62,6 +67,8 @@ void drawGameLobby (GameLobby *gl, bool isFullscreen);
 void updateLobbyCamera(Camera2D *camera, Player *player, bool isFullscreen, bool roomCamera);
 
 void resetGameLobby(GameLobby *gl, Vector2 startPos);
+
+void takeCharms (GameLobby *gl);
 
 
 #endif // GAMELOBBY_H

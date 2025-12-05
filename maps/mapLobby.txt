@@ -16,11 +16,11 @@ PPPPPPPPPPPPPP       PPPPPP                                                     
            PPP       PPPPPP                                                               P          
            PPP       PPPPPPGGGGGGGGGGGGGGGGGGPP                                           P          
            PPP       PPPPPPPPPPPPPPPPPPPPPPPP                                             P          CCCCCCCCCCCCC            
-           PPP        PPPPPPPPPPPPPPPPPP                                                  P          CF          C
-           PPP          PPPPPPPPPPPP                                                      P          C           C   
+           PPP        PPPPPPPPPPPPPPPPPP                                                  P          CCCCCCCCCCCCC
+           PPP          PPPPPPPPPPPP                                                      P          CF          C   
            PPP            P                                                               P          C           C      
            PPP            P                                                            M  P          C           C      
-           PPP            P                                                         PPPPPPP          C           C      
+           PPP            P                                                         PPPPPPP          C     c   c C      
            PPPGG                                                S           PPPPPPPPPPPPPPP          C D     s   C      
            PPPPPGGGG                       B         GGGGGGGGGGGGGGGGGGGGGGGPPPPPPPPPPPPPPP          CCCCCCCCCCCCC      
            PPPPPPPPPGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP          PPPPPPPPPPPPP

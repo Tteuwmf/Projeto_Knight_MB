@@ -404,13 +404,16 @@ void makeCollisionPlayerCoinsSkillsAndCharms(GameWorld *gw)
                 switch(number)
                 {
                     case 0:
-                        player->inventory.equippedCharms.plusEgo = true;
+                        player->inventory.colectedCharms.gamerHeart = true;
+
                         break;
                     case 1:
-                        player->inventory.equippedCharms.goldTickets = true;
+                        player->inventory.colectedCharms.programmerHands = true;
+
                         break;
                     case 2:
-                        player->inventory.equippedCharms.debugSword = true;
+                        player->inventory.colectedCharms.plusEgo = true;
+                        break;
                     default:
                         break;
                 }

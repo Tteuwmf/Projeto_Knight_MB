@@ -37,11 +37,15 @@ void initGameWindow(GameWindow *gameWindow)
 
         gameWindow->game = createGame();
 
+        SetTextureFilter(rm.gl.storeWall, TEXTURE_FILTER_POINT);
+
         printf("Posicao Retorno (M) -> X: %.2f, Y: %.2f\n",
                gameWindow->game.playerLobbyReturnPos.x,
                gameWindow->game.playerLobbyReturnPos.y);
 
         SetTargetFPS(60);
+
+        //InitAudioDevice();
 
         while (!WindowShouldClose() && gameWindow->game.shouldClose==false)
         {

@@ -797,16 +797,23 @@ void selectBossAttack(Boss *boss, Player *player)
 void drawBoss(Boss *boss)
 {
 
-    if(boss->dead==false)
+    if(boss->life==20)
     {
-        if(boss->sufferingDamege)
-            DrawRectangleV(boss->pos, boss->dim, ORANGE);
+        DrawTextureV(rm.gw.sleepingBoss, boss->pos, WHITE);
+    }
+    else
+    {
+        if(boss->dead==false)
+        {
+            if(boss->sufferingDamege)
+                DrawTextureV(rm.gw.bossActive,boss->pos, RED);
+            else
+                DrawTextureV(rm.gw.bossActive,boss->pos, WHITE);
+        }
         else
-            DrawRectangleV(boss->pos, boss->dim, boss->cor);
+            DrawTextureV(rm.gw.portal,boss->pos, WHITE);
     }
 
-    else
-        DrawRectangleV(boss->pos, boss->dim, DARKGRAY);
 
     /*
     if(boss->playerUnderZone)
