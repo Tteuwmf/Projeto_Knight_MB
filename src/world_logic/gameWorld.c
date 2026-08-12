@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "raylib.h"
-#include "gameWorld.h"
-#include "pause.h"
+#include "world_logic/gameWorld.h"
+#include "interface/pause.h"
 
 
 
@@ -56,7 +56,7 @@ void loadMap(GameWorld *gw, const char* arquivo)
     char *dados = LoadFileText(arquivo); // leio o arquivo e coloco em um array chamado dados
     if(!dados){return;}
 
-    char *atual = dados; // um ponteiro para o dado da posição do arraty
+    char *atual = dados; // um ponteiro para o dado da posiï¿½ï¿½o do arraty
 
     int contLines = 0;
     int contColumn = 0;
@@ -170,7 +170,7 @@ void loadMap(GameWorld *gw, const char* arquivo)
                 break;
 
             case 'P':
-            case 'p': //PAREDES E CHÃO
+            case 'p': //PAREDES E CHï¿½O
                 gw->blocks[contBlocks] = createBlock(
                     (Vector2){contColumn*32, contLines*32}
                 );
@@ -196,7 +196,7 @@ void loadMap(GameWorld *gw, const char* arquivo)
                 contSkills++;
                 break;
 
-            case 't': //CASO A ESPADA APAREÇA
+            case 't': //CASO A ESPADA APAREï¿½A
                 gw->item[1] = createLostItens(
                     (Vector2){contColumn*32+8, contLines*32+8}, 4
                 );
@@ -301,7 +301,7 @@ void makeCollisionPlayerBlock (GameWorld *gw)
     {
         Block *block = &gw->blocks[i];
 
-            //colisão por cima
+            //colisï¿½o por cima
 
             if(checkPlayerBlockCollision_Under(collisionRec ,block))
             {

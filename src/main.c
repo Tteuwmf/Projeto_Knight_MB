@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "raylib.h"
-#include "gameWindow.h"
+#include "game_atributes/gameWindow.h"
 
 
 int main()

@@ -1,0 +1,19 @@
+{
+    "cmake.cmakePath": "C:/msys64/ucrt64/bin/cmake.exe",
+
+    "cmake.generator": "Ninja",
+
+    "cmake.additionalCompilerSearchDirs": [
+        "C:/msys64/ucrt64/bin"
+    ],
+
+     "cmake.environment": {
+        "PATH": "C:/msys64/ucrt64/bin;${env:PATH}"
+    },
+
+    "cmake.buildDirectory": "${workspaceFolder}/build/${buildType}",
+
+    "cmake.configureOnOpen": true,
+
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools"
+}

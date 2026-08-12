@@ -1,6 +1,6 @@
 #include "raylib.h"
-#include "blocks.h"
-#include "resourceManager.h"
+#include "entities/blocks.h"
+#include "resources/resourceManager.h"
 
 Block createBlock (Vector2 pos)
 {

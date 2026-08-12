@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include "raylib.h"
-#include "coins.h"
-#include "resourceManager.h"
+#include "entities/coins.h"
+#include "resources/resourceManager.h"
 
 
 Skill createSkill(Vector2 pos, int number)

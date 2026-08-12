@@ -1,10 +1,10 @@
 #include "raylib.h"
-#include "gameLobby.h"
-#include "blocks.h"
-#include "collisions.h"
-#include "gameWindow.h"
-#include "resourceManager.h"
-#include "coins.h"
+#include "game_atributes/gameWindow.h"
+#include "world_logic/gameLobby.h"
+#include "world_logic/collisions.h"
+#include "entities/blocks.h"
+#include "entities/coins.h"
+#include "resources/resourceManager.h"
 
 void makeLobbyCollisionPlayerGrass(GameLobby *gl);
 void makeLobbyCollisionPlayerStoreBlock(GameLobby *gl);
@@ -308,7 +308,7 @@ void makeLobbyCollisionPlayerBlock(GameLobby *gl)
     {
         Block *block = &gl->blocks[i];
 
-            //colisão por cima
+            //colisï¿½o por cima
 
             if(checkPlayerBlockCollision_Under(collisionRec ,block))
             {
@@ -350,7 +350,7 @@ void makeLobbyCollisionPlayerGrass(GameLobby *gl)
     {
         Grass *grass = &gl->grass[i];
 
-            //colisão por cima
+            //colisï¿½o por cima
 
             if(checkPlayerGrassCollision_Under(collisionRec ,grass))
             {
@@ -391,7 +391,7 @@ void makeLobbyCollisionPlayerStoreBlock(GameLobby *gl)
     {
         StoreBlock *block = &gl->storeBlocks[i];
 
-            //colisão por cima
+            //colisï¿½o por cima
 
             if(checkPlayerStoreBlockCollision_Under(collisionRec ,block))
             {
@@ -723,24 +723,24 @@ void resetGameLobby(GameLobby *gl, Vector2 startPos)
 {
     if(!gl) return;
 
-    // 1. Reseta Posição e Estados do Player no Lobby
+    // 1. Reseta Posiï¿½ï¿½o e Estados do Player no Lobby
     gl->player->pos = startPos;
     gl->player->speed = (Vector2){0, 0};
-    gl->player->status.resting = false; // Garante que ele não nasça "sentado"
+    gl->player->status.resting = false; // Garante que ele nï¿½o nasï¿½a "sentado"
     gl->player->status.onFloor = false;
 
-    // 2. Reseta Flags de Interação
+    // 2. Reseta Flags de Interaï¿½ï¿½o
     gl->nearBanch = false;
     gl->nearRoom = false;
     gl->nearComputer = false;
     gl->nearRoomDoor = false;
 
-    // 3. Reseta Câmera e Visualização
+    // 3. Reseta Cï¿½mera e Visualizaï¿½ï¿½o
     gl->roomCamera = false; // Garante que sai do modo "quarto"
     gl->fadeScreenGL = 1.0f; // Reinicia o fade preto para clarear suavemente
     gl->fadeScreenGL2 = 1.0f;
 
-    // Reseta valores padrão da câmera
+    // Reseta valores padrï¿½o da cï¿½mera
     gl->camera.zoom = 1.0f;
     gl->camera.rotation = 0.0f;
     gl->camera.offset = (Vector2){GetScreenWidth()/2.0f, GetScreenHeight()/2.0f};
