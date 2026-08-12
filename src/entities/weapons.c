@@ -1,5 +1,5 @@
 #include "raylib.h"
-#include "weapons.h"
+#include "entities/weapons.h"
 
 //==========================================
 //---------------FUNCTIONS------------------
@@ -8,10 +8,10 @@ PlayerSword createPlayerSword () //inicia a espada
 {
     return (PlayerSword)
     {
-        .pos = {0}, //deixa a posição zerada por enquanto
+        .pos = {0}, //deixa a posiï¿½ï¿½o zerada por enquanto
         .dim = (Vector2){0,0}, //tamanho
         .cor = WHITE, //cor
-        .up = true, //booleanos que podem ser usados para determinar as direções possiveis do ataque
+        .up = true, //booleanos que podem ser usados para determinar as direï¿½ï¿½es possiveis do ataque
         .down = true,
         .left = true,
         .right = true,
@@ -26,7 +26,7 @@ PlayerSword createPlayerSword () //inicia a espada
     };
 }
 
-void updatePlayerSword (Player *player) // atualiza a posição da espada ao atacar
+void updatePlayerSword (Player *player) // atualiza a posiï¿½ï¿½o da espada ao atacar
 {
     if (player->attackStatus.attackRight)
     {

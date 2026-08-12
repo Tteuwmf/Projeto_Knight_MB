@@ -1,8 +1,8 @@
 #include "raylib.h"
-#include "player.h"
-#include "weapons.h"
-#include "collisions.h"
-#include "resourceManager.h"
+#include "entities/player.h"
+#include "entities/weapons.h"
+#include "world_logic/collisions.h"
+#include "resources/resourceManager.h"
 
 #define GRAVITY 1500.0
 #define MAX_SPEED_FALL 400.0
@@ -188,34 +188,34 @@ void inputAndUpdatePlayer(Player *player, float delta)
     //============MOVESET============
     //-------HORIZONTAL-MOVES--------
 
-    if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false ) // confere se não está sofrendo um knockback
+    if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false ) // confere se nï¿½o estï¿½ sofrendo um knockback
     {
         if(player->dashStatus.dashTime<=0)
         {
             if(IsKeyDown(KEY_RIGHT)) //indo para a direita
             {
-                player->speed.x = player->status.defaultSpeed; //começa o movimento
+                player->speed.x = player->status.defaultSpeed; //comeï¿½a o movimento
                 player->status.lookingAtR = true; //esta olhando para a direita
-                player->status.lookingAtL = false; // não esta olhando para a esquerda
+                player->status.lookingAtL = false; // nï¿½o esta olhando para a esquerda
             }
             else if (IsKeyDown(KEY_LEFT))// indo para a esquerda
             {
-                player->speed.x = -player->status.defaultSpeed; //começa o movimento negativo
-                player->status.lookingAtR = false; // não esta olhando para a direita
+                player->speed.x = -player->status.defaultSpeed; //comeï¿½a o movimento negativo
+                player->status.lookingAtR = false; // nï¿½o esta olhando para a direita
                 player->status.lookingAtL = true; // esta olhando para a esquerda
             }
             else
             {
                 player->speed.x *= 0.8f;
                 if(player->speed.x<10.0f && player->speed.x>-10.0f)
-                    player->speed.x =0.0f; // se não esta se movendo velocidade é zero
+                    player->speed.x =0.0f; // se nï¿½o esta se movendo velocidade ï¿½ zero
             }
         }
     }
     else // caso esteja sofrendo um knockback
     {
         player->knockbackStatus.knockbackTime -= delta; // conta o tempo
-        player->speed.x *= 0.9; // reduz a velocidade até o fim do tempo
+        player->speed.x *= 0.9; // reduz a velocidade atï¿½ o fim do tempo
     }
 
     if(player->inventory.teclaTab)
@@ -248,10 +248,10 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     //-----------ATTACKS-----------
 
-    if (IsKeyPressed(KEY_X) && player->status.lookingAtR && player->status.lookingUp==false && player->status.lookingDown==false && player->attackStatus.attacking==false && player->status.healing==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    if (IsKeyPressed(KEY_X) && player->status.lookingAtR && player->status.lookingUp==false && player->status.lookingDown==false && player->attackStatus.attacking==false && player->status.healing==false) // confere se a tecla do ataque foi acionada, a direï¿½ï¿½o, e se ja esta atacando
     {
         player->attackStatus.attackRight = true; //inicia o ataque
-        player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
+        player->attackStatus.contTimeToNextAttack = 0.0f; //recomeï¿½a o timer
         player->attackStatus.attacking = true; // esta atacando
 
         player->sword.activated =true;
@@ -260,7 +260,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
     {
         player->attackStatus.contTimeToNextAttack += delta; //conta tempo
 
-        if( player->attackStatus.contTimeToNextAttack >= player->attackStatus.attackTime) //confere se ja passou o tempo da animação
+        if( player->attackStatus.contTimeToNextAttack >= player->attackStatus.attackTime) //confere se ja passou o tempo da animaï¿½ï¿½o
         {
             player->attackStatus.attackRight = false; //encerra o ataque
             player->sword.activated =false;
@@ -268,13 +268,13 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
         if(player->attackStatus.contTimeToNextAttack >= player->attackStatus.timeToTheNextAttack) // ja pode dar o proximo ataque?
         {
-            player->attackStatus.attacking = false; //encerra por completo a ação
+            player->attackStatus.attacking = false; //encerra por completo a aï¿½ï¿½o
             player->attackStatus.contTimeToNextAttack = 0.0f; // zera o contador
         }
 
     }
 
-    if (IsKeyPressed(KEY_X) && player->status.lookingAtL && player->status.lookingUp==false && player->status.lookingDown==false && player->attackStatus.attacking==false && player->status.healing==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    if (IsKeyPressed(KEY_X) && player->status.lookingAtL && player->status.lookingUp==false && player->status.lookingDown==false && player->attackStatus.attacking==false && player->status.healing==false) // confere se a tecla do ataque foi acionada, a direï¿½ï¿½o, e se ja esta atacando
     {
         player->attackStatus.attackLeft = true;
         player->attackStatus.contTimeToNextAttack = 0.0f;
@@ -457,10 +457,10 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
     //---------ATTACKS---------
 
-    if (IsKeyPressed(KEY_X) && player->status.lookingUp && player->attackStatus.attacking==false && player->status.healing==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    if (IsKeyPressed(KEY_X) && player->status.lookingUp && player->attackStatus.attacking==false && player->status.healing==false) // confere se a tecla do ataque foi acionada, a direï¿½ï¿½o, e se ja esta atacando
     {
         player->attackStatus.attackUp = true; //inicia o ataque
-        player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
+        player->attackStatus.contTimeToNextAttack = 0.0f; //recomeï¿½a o timer
         player->attackStatus.attacking = true; // esta atacando
 
         player->sword.activated =true;
@@ -469,7 +469,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
     {
         player->attackStatus.contTimeToNextAttack += delta; //conta tempo
 
-        if( player->attackStatus.contTimeToNextAttack >= player->attackStatus.attackTime) //confere se ja passou o tempo da animação
+        if( player->attackStatus.contTimeToNextAttack >= player->attackStatus.attackTime) //confere se ja passou o tempo da animaï¿½ï¿½o
         {
             player->attackStatus.attackUp = false; //encerra o ataque
             player->sword.activated =false;
@@ -477,15 +477,15 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
         if(player->attackStatus.contTimeToNextAttack >= player->attackStatus.timeToTheNextAttack) // ja pode dar o proximo ataque?
         {
-            player->attackStatus.attacking = false; //encerra por completo a ação
+            player->attackStatus.attacking = false; //encerra por completo a aï¿½ï¿½o
             player->attackStatus.contTimeToNextAttack = 0.0f; // zera o contador
         }
     }
 
-    if (IsKeyPressed(KEY_X) && player->status.lookingDown && player->status.onFloor==false && player->attackStatus.attacking==false && player->status.healing==false) // confere se a tecla do ataque foi acionada, a direção, e se ja esta atacando
+    if (IsKeyPressed(KEY_X) && player->status.lookingDown && player->status.onFloor==false && player->attackStatus.attacking==false && player->status.healing==false) // confere se a tecla do ataque foi acionada, a direï¿½ï¿½o, e se ja esta atacando
     {
         player->attackStatus.attackDown = true; //inicia o ataque
-        player->attackStatus.contTimeToNextAttack = 0.0f; //recomeça o timer
+        player->attackStatus.contTimeToNextAttack = 0.0f; //recomeï¿½a o timer
         player->attackStatus.attacking = true; // esta atacando
 
         player->sword.activated =true;
@@ -494,7 +494,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
     {
         player->attackStatus.contTimeToNextAttack += delta; //conta tempo
 
-        if( player->attackStatus.contTimeToNextAttack >= player->attackStatus.attackTime) //confere se ja passou o tempo da animação
+        if( player->attackStatus.contTimeToNextAttack >= player->attackStatus.attackTime) //confere se ja passou o tempo da animaï¿½ï¿½o
         {
             player->attackStatus.attackDown = false; //encerra o ataque
             player->sword.activated =false;
@@ -502,7 +502,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
         if(player->attackStatus.contTimeToNextAttack >= player->attackStatus.timeToTheNextAttack) // ja pode dar o proximo ataque?
         {
-            player->attackStatus.attacking = false; //encerra por completo a ação
+            player->attackStatus.attacking = false; //encerra por completo a aï¿½ï¿½o
             player->attackStatus.contTimeToNextAttack = 0.0f; // zera o contador
         }
     }
@@ -513,14 +513,14 @@ void inputAndUpdatePlayer(Player *player, float delta)
     if(player->dashStatus.dashTime<=0)
         player->speed.y+=GRAVITY*delta; //soma sempre a gravidade na velocidade
 
-    if (player->speed.y>MAX_SPEED_FALL) // define uma velocidade max para o player n passar pelo chão
+    if (player->speed.y>MAX_SPEED_FALL) // define uma velocidade max para o player n passar pelo chï¿½o
         player->speed.y = MAX_SPEED_FALL;
 
     //---------JUUMPSET--------
 
     if (player->knockbackStatus.knockbackTime<=0 && player->status.healing==false)
     {
-        if(player->status.onFloor) // se o jogador esta no chão
+        if(player->status.onFloor) // se o jogador esta no chï¿½o
         {
             player->jumpStatus.canJump=true; // pode pular
             player->jumpStatus.isJumping = false; // nao esta pulando
@@ -529,7 +529,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
         }
         else
         {
-            player->jumpStatus.canJump=false; //se não, não pode pular
+            player->jumpStatus.canJump=false; //se nï¿½o, nï¿½o pode pular
             if(player->jumpStatus.wasOnFloor)
             {
                 if(player->inventory.doubleJump)
@@ -543,7 +543,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
             player->speed.y = -player->jumpStatus.defaultJumpForce; // realiza o pulo
             player->jumpStatus.isJumping = true;
             player->jumpStatus.jumpTime = 0.0f; //  pulando
-            player->jumpStatus.canDoubleJump = false; // e não pode pular enquanto esta pulando
+            player->jumpStatus.canDoubleJump = false; // e nï¿½o pode pular enquanto esta pulando
             player->status.onFloor = false;
             player->jumpStatus.wasOnFloor = false;
         }
@@ -553,7 +553,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
             player->speed.y += -player->jumpStatus.defaultJumpForce; // realiza o pulo
             player->jumpStatus.isJumping = true; //  pulando
             player->jumpStatus.jumpTime = 0.0f;
-            player->jumpStatus.canJump = false; // e não pode pular enquanto esta pulando
+            player->jumpStatus.canJump = false; // e nï¿½o pode pular enquanto esta pulando
             player->status.onFloor = false;
             player->jumpStatus.wasOnFloor = false;
 
@@ -575,7 +575,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
         if(IsKeyReleased(KEY_Z))// Se a tecla for solta
         {
-            player->jumpStatus.isJumping=false;  //não esta mais pulando
+            player->jumpStatus.isJumping=false;  //nï¿½o esta mais pulando
             player->jumpStatus.jumpTime =  0.0f; //zera o timer
         }
     }
@@ -677,7 +677,7 @@ void inputAndUpdatePlayer(Player *player, float delta)
 //============================================================
 //---------------------UPDATE-POSITION------------------------
 
-    player->pos.x += (player->speed.x * delta); // atualiza a posição de acordo com a velocidade (usa o delta para normalizar de acordo com o FPS)
+    player->pos.x += (player->speed.x * delta); // atualiza a posiï¿½ï¿½o de acordo com a velocidade (usa o delta para normalizar de acordo com o FPS)
 
     if(player->dashStatus.dashTime<=0)
         player->pos.y += (player->speed.y * delta);
@@ -727,9 +727,9 @@ void inputAndUpdatePlayer(Player *player, float delta)
 
 void applyKnockbackToPlayer(Player *player)
 {
-    if (player->knockbackStatus.knockbackL) //confere o tipo e direção
+    if (player->knockbackStatus.knockbackL) //confere o tipo e direï¿½ï¿½o
     {
-        player->speed.x = -500.0; //aplica as forças
+        player->speed.x = -500.0; //aplica as forï¿½as
         player->speed.y = -200.0;
         player->status.sufferingDamege = true;
         player->knockbackStatus.knockbackTime = 0.5; // inicia o contador
@@ -787,7 +787,7 @@ void applyKnockbackToPlayer(Player *player)
         player->knockbackStatus.knockbackTime = 0.5;
     }
 
-    //após aplicar qualquer knockback zera os status
+    //apï¿½s aplicar qualquer knockback zera os status
     player->knockbackStatus.knockbackL = false;
     player->knockbackStatus.knockbackR = false;
     player->knockbackStatus.knockbackUn = false;

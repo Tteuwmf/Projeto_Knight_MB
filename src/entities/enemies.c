@@ -1,7 +1,7 @@
 #include "raylib.h"
-#include "enemies.h"
-#include "collisions.h"
-#include "resourceManager.h"
+#include "entities/enemies.h"
+#include "world_logic/collisions.h"
+#include "resources/resourceManager.h"
 
 #define GRAVITY 20.0
 #define MAX_SPEED_FALL 400.0
@@ -77,7 +77,7 @@ void updateBasicEnemies(BasicEnemy *enemy1, float delta)
     else
     {
         enemy1->knockbackStatus.knockbackTime -= delta; // conta o tempo
-        enemy1->speed.x *= 0.9; // reduz a velocidade até o fim do tempo
+        enemy1->speed.x *= 0.9; // reduz a velocidade atï¿½ o fim do tempo
     }
 
 
@@ -200,7 +200,7 @@ void updateAirBasicEnemies(AirBasicEnemy *enemy2, float delta)
     else
     {
         enemy2->knockbackStatus.knockbackTime -= delta; // conta o tempo
-        enemy2->speed.x *= 0.9; // reduz a velocidade até o fim do tempo
+        enemy2->speed.x *= 0.9; // reduz a velocidade atï¿½ o fim do tempo
     }
 
     if(enemy2->glitching)
@@ -235,9 +235,9 @@ void updateAirBasicEnemies(AirBasicEnemy *enemy2, float delta)
 
 void applyKnockbackToBasicEnemies(BasicEnemy *enemy)
 {
-    if (enemy->knockbackStatus.knockbackR) //confere o tipo e direção
+    if (enemy->knockbackStatus.knockbackR) //confere o tipo e direï¿½ï¿½o
     {
-        enemy->speed.x = -500.0; //aplica as forças
+        enemy->speed.x = -500.0; //aplica as forï¿½as
         enemy->speed.y = -200.0;
         enemy->knockbackStatus.knockbackTime = 0.5; // inicia o contador
     }
@@ -282,9 +282,9 @@ void applyKnockbackToBasicEnemies(BasicEnemy *enemy)
 
 void applyKnockbackToAirBasicEnemies(AirBasicEnemy *enemy)
 {
-    if (enemy->knockbackStatus.knockbackR) //confere o tipo e direção
+    if (enemy->knockbackStatus.knockbackR) //confere o tipo e direï¿½ï¿½o
     {
-        enemy->speed.x = -250.0; //aplica as forças
+        enemy->speed.x = -250.0; //aplica as forï¿½as
         enemy->speed.y = -100.0;
         enemy->knockbackStatus.knockbackTime = 0.5; // inicia o contador
     }

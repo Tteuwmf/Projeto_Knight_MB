@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "raylib.h"
-#include "player.h"
+#include "entities/player.h"
 
 void saveGame (char saveName[6], Player player)
 {

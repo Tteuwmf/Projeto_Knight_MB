@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "raylib.h"
-#include "gameWindow.h"
-#include "resourceManager.h"
+#include "game_atributes/gameWindow.h"
+#include "resources/resourceManager.h"
 
 GameWindow* createGameWindow(int width, int height)
 {
@@ -19,7 +19,7 @@ GameWindow* createGameWindow(int width, int height)
 
 void initGameWindow(GameWindow *gameWindow)
 {
-    if(!gameWindow){return;} //checa para não dar crashs
+    if(!gameWindow){return;} //checa para nï¿½o dar crashs
 
     if(!gameWindow->initiate)
     {

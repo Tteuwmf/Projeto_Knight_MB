@@ -1,5 +1,5 @@
 #include "raylib.h"
-#include "resourceManager.h"
+#include "resources/resourceManager.h"
 
 ResourceManager rm = {0};
 
@@ -97,13 +97,13 @@ void loadResources()
 
 
 
-    rm.player.sevenHearts = LoadTexture("Assets/Textures/7corações.png");
-    rm.player.sixHearts = LoadTexture("Assets/Textures/6corações.png");
-    rm.player.fiveHearts = LoadTexture("Assets/Textures/5corações.png");
-    rm.player.fourHearts = LoadTexture("Assets/Textures/4corações.png");
-    rm.player.treeHearts = LoadTexture("Assets/Textures/3corações.png");
-    rm.player.twoHearts = LoadTexture("Assets/Textures/2corações.png");
-    rm.player.oneHearts = LoadTexture("Assets/Textures/1corações.png");
+    rm.player.sevenHearts = LoadTexture("Assets/Textures/7coraï¿½ï¿½es.png");
+    rm.player.sixHearts = LoadTexture("Assets/Textures/6coraï¿½ï¿½es.png");
+    rm.player.fiveHearts = LoadTexture("Assets/Textures/5coraï¿½ï¿½es.png");
+    rm.player.fourHearts = LoadTexture("Assets/Textures/4coraï¿½ï¿½es.png");
+    rm.player.treeHearts = LoadTexture("Assets/Textures/3coraï¿½ï¿½es.png");
+    rm.player.twoHearts = LoadTexture("Assets/Textures/2coraï¿½ï¿½es.png");
+    rm.player.oneHearts = LoadTexture("Assets/Textures/1coraï¿½ï¿½es.png");
 
     rm.player.hit7Heart = LoadTexture("Assets/Textures/hit7heart.png");
     rm.player.hit6Heart = LoadTexture("Assets/Textures/hit6heart.png");
@@ -112,13 +112,13 @@ void loadResources()
     rm.player.hit3Heart = LoadTexture("Assets/Textures/hit3heart.png");
     rm.player.hit2Heart = LoadTexture("Assets/Textures/hit2heart.png");
 
-    rm.player.sevenHeartsG = LoadTexture("Assets/Textures/7coraçõesG.png");
-    rm.player.sixHeartsG = LoadTexture("Assets/Textures/6coraçõesG.png");
-    rm.player.fiveHeartsG = LoadTexture("Assets/Textures/5coraçõesG.png");
-    rm.player.fourHeartsG = LoadTexture("Assets/Textures/4coraçõesG.png");
-    rm.player.treeHeartsG = LoadTexture("Assets/Textures/3coraçõesG.png");
-    rm.player.twoHeartsG = LoadTexture("Assets/Textures/2coraçõesG.png");
-    rm.player.oneHeartsG = LoadTexture("Assets/Textures/1coraçõesG.png");
+    rm.player.sevenHeartsG = LoadTexture("Assets/Textures/7coraï¿½ï¿½esG.png");
+    rm.player.sixHeartsG = LoadTexture("Assets/Textures/6coraï¿½ï¿½esG.png");
+    rm.player.fiveHeartsG = LoadTexture("Assets/Textures/5coraï¿½ï¿½esG.png");
+    rm.player.fourHeartsG = LoadTexture("Assets/Textures/4coraï¿½ï¿½esG.png");
+    rm.player.treeHeartsG = LoadTexture("Assets/Textures/3coraï¿½ï¿½esG.png");
+    rm.player.twoHeartsG = LoadTexture("Assets/Textures/2coraï¿½ï¿½esG.png");
+    rm.player.oneHeartsG = LoadTexture("Assets/Textures/1coraï¿½ï¿½esG.png");
 
     rm.player.hit7HeartG = LoadTexture("Assets/Textures/hit7heartG.png");
     rm.player.hit6HeartG = LoadTexture("Assets/Textures/hit6heartG.png");

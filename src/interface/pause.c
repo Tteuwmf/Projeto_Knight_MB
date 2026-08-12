@@ -1,6 +1,6 @@
 #include "raylib.h"
-#include "pause.h"
-#include "player.h"
+#include "interface/pause.h"
+#include "entities/player.h"
 
 const int X_PAUSE_BUTTON = 354;
 const int Y_RETURN_BUTTON = 175;
@@ -188,11 +188,11 @@ void inputUpdateDeathScreen(Game *game)
 void drawDeathScreen(GameWorld *gw)
 {
     Rectangle yesAreaDebug = {((GetScreenWidth()/2)-73), ((GetScreenHeight()/2)+15),32,15};
-    DrawRectangleLinesEx(yesAreaDebug, 1, RED); // Desenha a borda da área de clique em vermelho
+    DrawRectangleLinesEx(yesAreaDebug, 1, RED); // Desenha a borda da ï¿½rea de clique em vermelho
 
 
     //DrawRectangle(((GetScreenWidth()/2) - 200), ((GetScreenHeight()/2) - 50), 400, 100, BLACK);
-    DrawText("VOCÊ MORREU", ((GetScreenWidth()/2) - 62), ((GetScreenHeight()/2) - 34), 64, RED);
+    DrawText("VOCï¿½ MORREU", ((GetScreenWidth()/2) - 62), ((GetScreenHeight()/2) - 34), 64, RED);
     DrawText("Tentar novamente?", ((GetScreenWidth()/2) - 150), ((GetScreenHeight()/2) - 16), 15, WHITE);
     DrawText("SIM", ((GetScreenWidth()/2) - 71), ((GetScreenHeight()/2) + 15), 15, WHITE);
     DrawText("NAO", ((GetScreenWidth()/2) + 43), ((GetScreenHeight()/2) + 15), 15, WHITE);

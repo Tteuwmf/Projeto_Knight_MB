@@ -1,12 +1,13 @@
 #include <string.h>
 #include <stdio.h>
 #include "raylib.h"
-#include "game.h"
-#include "player.h"
-#include "resourceManager.h"
-#include "menu.h"
-#include "pause.h"
-#include "save.h"
+#include "game_atributes/game.h"
+#include "entities/player.h"
+#include "resources/resourceManager.h"
+#include "resources/save.h"
+#include "interface/menu.h"
+#include "interface/pause.h"
+
 
 void drawEndGame (Game *game);
 
@@ -173,7 +174,7 @@ void initGame(Game *game, bool* isFullScreen)
                 game->gameWorldInitiate = true;
             }
 
-            //---SALVA POSIÇÃO INICIAL---
+            //---SALVA POSIï¿½ï¿½O INICIAL---
 
             if (game->playerGameWorldFirstPos.x==0 && game->playerGameWorldFirstPos.y ==0 && game->gameWorldInitiate)
             {

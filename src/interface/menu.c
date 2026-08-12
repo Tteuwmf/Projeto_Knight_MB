@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "raylib.h"
-#include "menu.h"
-#include "resourceManager.h"
-#include "save.h"
+#include "interface/menu.h"
+#include "resources/resourceManager.h"
+#include "resources/save.h"
 
 const int X_MENU_BUTTON = 200;
 const int Y_START_BUTTON = 100;

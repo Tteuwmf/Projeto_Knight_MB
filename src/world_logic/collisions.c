@@ -1,5 +1,5 @@
 #include "raylib.h"
-#include "collisions.h"
+#include "world_logic/collisions.h"
 
 //===============================================
 //-----------PLAYER-COLLISION-FUNCTIONS----------
@@ -91,7 +91,7 @@ bool checkPlayerBasicEnemiesCollision_Upper(PlayerCollisionRec *collisionRec, Ba
 {
     return CheckCollisionRecs(collisionRec->upper,(Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y});
 }
-//------------COLISÃO POR BAIXO-------------
+//------------COLISï¿½O POR BAIXO-------------
 bool checkPlayerBasicEnemiesCollision_Under(PlayerCollisionRec *collisionRec, BasicEnemy *enemy)
 {
     return CheckCollisionRecs(collisionRec->under,(Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y});
@@ -113,7 +113,7 @@ bool checkPlayerBasicEnemiesCollision_Right(PlayerCollisionRec *collisionRec, Ba
 {
     return CheckCollisionRecs(collisionRec->upper,(Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y});
 }
-//------------COLISÃO POR BAIXO-------------
+//------------COLISï¿½O POR BAIXO-------------
 bool checkPlayerAirBasicEnemiesCollision_Under(PlayerCollisionRec *collisionRec, AirBasicEnemy *enemy)
 {
     return CheckCollisionRecs(collisionRec->under,(Rectangle){.x = enemy->pos.x, .y = enemy->pos.y, .width = enemy->dim.x, .height = enemy->dim.y});
@@ -320,12 +320,12 @@ void createAndUpdateEnemiesCollisionRecs(Enemies *enemies)
 
     //-----BASIC-ENEMIES-BLOCK-COLLISION-----
 
-//------------COLISÃO POR CIMA-------------
+//------------COLISï¿½O POR CIMA-------------
 bool checkBasicEnemiesBlockCollision_Upper(BasicEnemyCollisionRec *collisionRec, Block *block)
 {
     return CheckCollisionRecs(collisionRec->upper,(Rectangle){.x = block->pos.x, .y = block->pos.y, .width = block->dim.x, .height = block->dim.y});
 }
-//------------COLISÃO POR BAIXO-------------
+//------------COLISï¿½O POR BAIXO-------------
 bool checkBasicEnemiesBlockCollision_Under(BasicEnemyCollisionRec *collisionRec, Block *block)
 {
     return CheckCollisionRecs(collisionRec->under,(Rectangle){.x = block->pos.x, .y = block->pos.y, .width = block->dim.x, .height = block->dim.y});
