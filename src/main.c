@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include "raylib.h"
 #include "game_atributes/gameWindow.h"
+#include "resources/global.h"
 
 
 int main()
 {
-    GameWindow *gameWindow = createGameWindow (800, 450);
+    GameWindow *gameWindow = createGameWindow (INITWINDOW_WIDTH, INITWINDOW_HEIGHT);
 
     initGameWindow(gameWindow);
 

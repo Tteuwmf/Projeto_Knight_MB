@@ -7,6 +7,7 @@
 #include "resources/save.h"
 #include "interface/menu.h"
 #include "interface/pause.h"
+#include "resources/global.h"
 
 
 void drawEndGame (Game *game);
@@ -17,7 +18,7 @@ Game createGame()
     {
         .status = MENU,
         .lastStatus = MENU,
-        .player = createNewPlayer((Vector2){32,32}, BLUE),
+        .player = createNewPlayer((Vector2){PLAYER_SIZE,PLAYER_SIZE}, BLUE),
         .gameWorldInitiate = false,
         .fadeScreenMenus = 0.0,
         .timeToCode = 0.0,
@@ -48,7 +49,7 @@ void initGame(Game *game, bool* isFullScreen)
 
     if (game->gw != NULL)
     {
-        if (game->gw->boss.life < 12 && game->gw->boss.dead == false && !game->player.status.dead && game->status==GAMEWORLD)
+        if (game->gw->boss.life < BOSS_INIT_PV && game->gw->boss.dead == false && !game->player.status.dead && game->status==GAMEWORLD)
         {
             bossBattleActive = true;
         }

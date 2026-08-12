@@ -1,0 +1,24 @@
+#ifndef GLOBAL_H
+#define GLOBAL_H
+
+#define INITWINDOW_WIDTH 800
+#define INITWINDOW_HEIGHT 450
+
+#define TARGET_FPS 60
+#define FULLSCREEN_WIDTH 1920
+#define FULLSCREEN_HEIGHT 1080
+
+#define PLAYER_SIZE 32
+#define BOSS_INIT_PV 12
+
+#define BLOCK_SIZE 32
+
+#define SKILL_SIZE 16
+#define CHARM_SIZE 10
+#define LOST_ITENS_WIDTH 22
+#define LOST_ITENS_HEIGHT 16
+
+
+
+
+#endif
