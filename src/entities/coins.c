@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "entities/coins.h"
 #include "resources/resourceManager.h"
+#include "resources/global.h"
 
 
 Skill createSkill(Vector2 pos, int number)
@@ -10,7 +11,7 @@ Skill createSkill(Vector2 pos, int number)
     return (Skill)
     {
         .pos = pos,
-        .dim = (Vector2){16,16},
+        .dim = (Vector2){SKILL_SIZE, SKILL_SIZE},
         .cor = BLUE,
         .skilNumber = number,
         .available = true,
@@ -23,7 +24,7 @@ Charm createCharm(Vector2 pos, int number)
     return (Charm)
     {
         .pos = pos,
-        .dim = (Vector2){10,10},
+        .dim = (Vector2){CHARM_SIZE,CHARM_SIZE},
         .cor = VIOLET,
         .charmNumber = number,
         .available = true,
@@ -39,8 +40,8 @@ LostItens createLostItens(Vector2 pos, int number)
         {
             .x = pos.x,
             .y = pos.y,
-            .width = 22,
-            .height = 16,
+            .width = LOST_ITENS_WIDTH,
+            .height = LOST_ITENS_HEIGHT,
         },
         .cor = SKYBLUE,
         .itemNumber = number,
@@ -56,14 +57,14 @@ void drawSkills(Skill *skill)
         DrawRectangleV(skill->pos, skill->dim,skill->cor);
         if (skill->playerNext)
         {
-            DrawText(TextFormat("PEGAR: W"), skill->pos.x-16,skill->pos.y-16,5, GREEN);
+            DrawText(TextFormat("PEGAR: W"), skill->pos.x-SKILL_SIZE,skill->pos.y-SKILL_SIZE,5, GREEN);
         }
     }
 }
 
 void drawCharms(Charm *charm)
 {
-    Vector2 updatePos = (Vector2){charm->pos.x-11,charm->pos.y-11};
+    Vector2 updatePos = (Vector2){charm->pos.x-CHARM_SIZE,charm->pos.y-CHARM_SIZE};
 
     if(charm->available)
     {

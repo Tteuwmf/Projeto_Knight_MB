@@ -3,6 +3,7 @@
 #include "raylib.h"
 #include "game_atributes/gameWindow.h"
 #include "resources/resourceManager.h"
+#include "resources/global.h"
 
 GameWindow* createGameWindow(int width, int height)
 {
@@ -45,7 +46,7 @@ void initGameWindow(GameWindow *gameWindow)
                gameWindow->game.playerLobbyReturnPos.x,
                gameWindow->game.playerLobbyReturnPos.y);
 
-        SetTargetFPS(60);
+        SetTargetFPS(TARGET_FPS);
 
 
         while (!WindowShouldClose() && gameWindow->game.shouldClose==false)
@@ -54,15 +55,15 @@ void initGameWindow(GameWindow *gameWindow)
 
             if(isFullScreen)
             {
-                    SetWindowSize(1920,1080);
+                    SetWindowSize(FULLSCREEN_WIDTH,FULLSCREEN_HEIGHT);
                     SetWindowPosition(0,0);
             }
             else
             {
                 SetWindowSize(gameWindow->width, gameWindow->height);
                 SetWindowPosition(
-                    (1920-gameWindow->width)/2,
-                    (1080-gameWindow->height)/2
+                    (FULLSCREEN_WIDTH-gameWindow->width)/2,
+                    (FULLSCREEN_HEIGHT-gameWindow->height)/2
                 );
             }
 

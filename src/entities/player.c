@@ -145,7 +145,7 @@ Player createNewPlayer (Vector2 dim, Color cor)
             .contTime = 0.0f,
             .timeToTheNextFrame = 0.5f,
 
-            .progress = 3,
+            .progress = 0,
             .inLevel = false,
 
         };
