@@ -1,0 +1,195 @@
+================================================================================
+                    CODEKNIGHT (JOGO 2.0) - PRIMEIROS PASSOS
+================================================================================
+
+Este documento é o memorial histórico do primeiro grande projeto de programação
+de Matheus (Tteuwmf) e Bruno Gundlach Marquesan, desenvolvido em C utilizando a
+biblioteca Raylib como trabalho final da disciplina de Algoritmos do 1º Semestre.
+
+O código foi modernizado, otimizado e estruturado para seguir as melhores
+práticas de engenharia de software e Conventional Commits, mas este registro
+preserva para sempre a alma, os desabafos, as piadas internas e o espírito daquela
+época inesquecível.
+
+--------------------------------------------------------------------------------
+1. OS HERÓIS DO PROJETO (DIREITOS AUTORAIS E AUTORIA)
+--------------------------------------------------------------------------------
+Desenvolvedores e Autores Originais:
+- Matheus (@Tteuwmf - faccini0910@gmail.com)
+- Bruno Gundlach Marquesan (@bruno16mar - bruno16mar@gmail.com)
+
+Data de Início: 31 de Outubro de 2025
+Entrega Final: 05 de Dezembro de 2025 (Madrugada adentro!)
+Refatoração e Modernização: 2026
+
+--------------------------------------------------------------------------------
+2. A LENDÁRIA MADRUGADA DA ENTREGA (04 -> 05 DE DEZEMBRO DE 2025)
+--------------------------------------------------------------------------------
+Poucas coisas no mundo da computação se comparam à adrenalina de dois amigos da
+faculdade correndo contra o relógio para terminar um jogo antes do prazo.
+O Git Log registrou esse diálogo épico em tempo real:
+
+  [22:29] Bruno:   "Ajuda"
+  [22:30] Matheus: "musica"
+  [23:35] Bruno:   "Sprites botao saves"
+  [23:36] Matheus: "oie"
+  [23:39] Bruno:   "Commit doispontozero"
+  [23:40] Matheus: "aah"
+  [23:47] Bruno:   "tentai"
+  [23:51] Matheus: "oiii"
+  [23:57] Matheus: "the last ones"
+  [00:29] Matheus: "fullscreen"
+  [00:35] Bruno:   "Ai socorro"
+  [00:49] Matheus: "atualizando"
+  [00:58] Bruno:   "MUDEI UMAS TECLA"
+  [00:59] Matheus: "oi"
+  [01:09] Matheus: "oi"
+  [01:15] Matheus: "debug"
+  [02:08] Matheus: "ultimo"
+  [02:38] Matheus: "ULTIMO COMMIT PORRA"
+
+De "Ajuda" até o triunfante "ULTIMO COMMIT PORRA" às 02h38 da manhã, esse é o
+verdadeiro espírito do desenvolvedor de jogos independente!
+
+--------------------------------------------------------------------------------
+3. PÉROLAS E MARCAS REGISTRADAS NO CÓDIGO FONTE
+--------------------------------------------------------------------------------
+Durante a análise estática do código, os agentes catalogaram momentos geniais:
+
+* "checa para não dar crashs":
+  Linha 23 de gameWindow.c: `if(!gameWindow){return;} //checa para no dar crashs`
+  Uma das preces mais sinceras que um programador em C pode escrever.
+
+* A Mecânica do Chiclete:
+  A struct `ChicleteStatus` e o booleano `canUseChiclete` para a mecânica de
+  grudar na parede (Wall Jump/Slide)! Simplesmente genial e intuitivo.
+
+* O Restaurante Universitário (RU):
+  Moedas do jogo: `ticketsRU`, `goldTickets` e `rm.gw.ticketRU`.
+  Nada mais universitário do que arriscar a vida num calabouço digital para
+  coletar fichas do R.U.!
+
+* Os Charms e Skills Únicos:
+  - `gamerHeart` (Coração de Gamer)
+  - `programmerHands` (Mãos de Programador)
+  - `plusEgo` (Mais Ego)
+  - `debugSword` (Espada de Debug)
+  - `timeToCode` (Tempo para Codar)
+
+* O Clássico "treeHearts":
+  A textura dos corações carinhosamente nomeada `treeHearts` (em vez de three).
+  Uma árvore de corações que dá vida ao jogo!
+
+* O Comentário na Linha 128 de gameWorld.c:
+  `atual = dados; //reset do contadorc` (com um 'c' a mais na pura pressa!)
+
+* O Fim de Jogo Triunfal:
+  "COMPILACAO CONCLUIDA - FIM DE JOGO" em tela verde na função drawEndGame!
+
+--------------------------------------------------------------------------------
+4. CRONOLOGIA COMPLETA DOS 97 COMMITS ORIGINAIS
+--------------------------------------------------------------------------------
+Abaixo está o registro imutável de todos os 97 commits como foram escritos
+originalmente no repositório antes da padronização Conventional Commits:
+
+[01] da026bd (2025-10-31) | Tteuwmf                   | Initial commit
+[02] 12bf42d (2025-10-31) | Tteuwmf                   | começando a refazer o player
+[03] 107feb9 (2025-11-01) | Tteuwmf                   | falta gw e gw
+[04] fb77d1d (2025-11-02) | Tteuwmf                   | primeiro commit
+[05] 6309fa1 (2025-11-02) | Tteuwmf                   | colisão espada->bloco
+[06] 24e1404 (2025-11-03) | Tteuwmf                   | adicionando ataques complexos
+[07] 3d9fab4 (2025-11-04) | Tteuwmf                   | move set vertical de ataques adicionado
+[08] 6124aab (2025-11-05) | Tteuwmf                   | adicionado ataque especial 1
+[09] ff132ed (2025-11-06) | Tteuwmf                   | bug de ataques arrumados
+[10] 427e00d (2025-11-06) | Tteuwmf                   | hud e poder1 heatbox funcionabdo
+[11] 77db84a (2025-11-06) | Tteuwmf                   | mapa de exemplo e tela cheia
+[12] c482d5d (2025-11-06) | Tteuwmf                   | correção do ultimo commit
+[13] 26b4b4d (2025-11-06) | Tteuwmf                   | adicionado as coins
+[14] d576cae (2025-11-07) | Tteuwmf                   | Update Jogo2.0.layout
+[15] 86c4109 (2025-11-07) | Tteuwmf                   | tickets sao pegos agr
+[16] 9a5f02e (2025-11-07) | Tteuwmf                   | curar vida
+[17] 3bd5196 (2025-11-07) | Tteuwmf                   | charms and skills 1
+[18] 6ef8755 (2025-11-07) | Tteuwmf                   | amuleto1  e poder1 interação
+[19] 8b9cd31 (2025-11-08) | Tteuwmf                   | adicionado airEnemies
+[20] c5f6b48 (2025-11-09) | Tteuwmf                   | colisão air enemies e arrumando dinheiro
+[21] 6210250 (2025-11-10) | Tteuwmf                   | lobby adicionado parcialmente
+[22] b7df71a (2025-11-10) | Tteuwmf                   | oi
+[23] dac554d (2025-11-10) | Tteuwmf                   | lobby e player unico
+[24] fea4d00 (2025-11-10) | Tteuwmf                   | arrumado
+[25] 2b20e9d (2025-11-10) | Tteuwmf                   | começando a por o game
+[26] 4f5d9db (2025-11-11) | Tteuwmf                   | arrumando bugs
+[27] 318cdba (2025-11-12) | Tteuwmf                   | assets e resource manager
+[28] 51c7550 (2025-11-12) | Tteuwmf                   | menu pronto
+[29] da02743 (2025-11-13) | Tteuwmf                   | PAUSE E CONFIRM CRIADOS
+[30] cc83b5e (2025-11-13) | Tteuwmf                   | tileTexture, Dash
+[31] 1192bc1 (2025-11-13) | Tteuwmf                   | arrumando 2
+[32] f83f738 (2025-11-13) | Tteuwmf                   | algumas mudanças
+[33] 154436f (2025-11-14) | Tteuwmf                   | atualização de camera
+[34] 0e440de (2025-11-14) | Tteuwmf                   | grab
+[35] c3b732e (2025-11-14) | Tteuwmf                   | detalhes
+[36] d958284 (2025-11-14) | Tteuwmf                   | Merge branch 'Matheus' into Matheus
+[37] d1dc5b8 (2025-11-15) | Tteuwmf                   | ultima coisa feita, fade screen
+[38] cf4d87d (2025-11-16) | Tteuwmf                   | avanços
+[39] bf04c6b (2025-11-18) | Tteuwmf                   | destroy
+[40] f370537 (2025-11-18) | Tteuwmf                   | adicionando o boss e algumas correções
+[41] d742971 (2025-11-19) | Tteuwmf                   | mias coisa do boss
+[42] 761ae8c (2025-11-19) | Tteuwmf                   | boss quase pronto
+[43] 415f4e6 (2025-11-19) | Tteuwmf                   | boss QUASE pronto
+[44] a151e01 (2025-11-20) | Tteuwmf                   | deixando o codigo melhor
+[45] 05ce1ce (2025-11-20) | Tteuwmf                   | boss pronto (dificil)
+[46] 1bb4e7d (2025-11-21) | Tteuwmf                   | levls
+[47] e5b5f79 (2025-11-24) | Tteuwmf                   | final
+[48] dd924dd (2025-11-24) | Tteuwmf                   | novos png
+[49] a308112 (2025-11-25) | Tteuwmf                   | mexendo no menu
+[50] 2ce6bcd (2025-11-26) | Tteuwmf                   | algumas mudanças
+[51] c88459a (2025-11-26) | Tteuwmf                   | 5corações
+[52] c98297f (2025-11-26) | Tteuwmf                   | começando o hud
+[53] 610811f (2025-11-27) | Tteuwmf                   | mias texturas
+[54] 84692c0 (2025-11-27) | Tteuwmf                   | algumas mudanças
+[55] 9b8b0a2 (2025-11-27) | Tteuwmf                   | mais mudanças
+[56] ad719f9 (2025-11-27) | Tteuwmf                   | todas direções de ataques adicionadas
+[57] 7e8b0d7 (2025-11-27) | Tteuwmf                   | mais texturas
+[58] fb85ed2 (2025-11-27) | Tteuwmf                   | mais texturas!
+[59] 1403e50 (2025-11-28) | Tteuwmf                   | swordCharm
+[60] 48e884b (2025-11-28) | Tteuwmf                   | mais texturas
+[61] 8b641bd (2025-11-28) | Tteuwmf                   | amuletos prontos
+[62] 47e7d1e (2025-11-29) | Tteuwmf                   | SAVES E MAIS
+[63] 901ba98 (2025-12-04) | Tteuwmf                   | pronto?
+[64] f6769b6 (2025-12-04) | Tteuwmf                   | ok
+[65] 04849a9 (2025-12-04) | Tteuwmf                   | arrumando
+[66] 4fd237c (2025-12-04) | Tteuwmf                   | oioi
+[67] f485f94 (2025-12-04) | Tteuwmf                   | ok
+[68] 81e8e08 (2025-12-04) | Tteuwmf                   | ultimos commits
+[69] 018ffa2 (2025-12-04) | Bruno Gundlach Marquesan  | Ajuda
+[70] f1ba4f8 (2025-12-04) | Tteuwmf                   | musica
+[71] f4544c7 (2025-12-04) | Tteuwmf                   | Merge branch 'main' of Projeto_Knight_MB
+[72] 3f870b9 (2025-12-04) | Bruno Gundlach Marquesan  | Sprites botao saves
+[73] e450f79 (2025-12-04) | Bruno Gundlach Marquesan  | Merge branch 'main' of Projeto_Knight_MB
+[74] 01e3571 (2025-12-04) | Tteuwmf                   | oie
+[75] 56cc1de (2025-12-04) | Tteuwmf                   | Merge branch 'main' of Projeto_Knight_MB
+[76] 0fc4d09 (2025-12-04) | Bruno Gundlach Marquesan  | Commit doispontozero
+[77] 009aa42 (2025-12-04) | Tteuwmf                   | aah
+[78] 2296f53 (2025-12-04) | Tteuwmf                   | Merge branch 'main' of Projeto_Knight_MB
+[79] 6c8641b (2025-12-04) | Bruno Gundlach Marquesan  | tentai
+[80] 18e8479 (2025-12-04) | Bruno Gundlach Marquesan  | Merge branch 'main' of Projeto_Knight_MB
+[81] 968ec47 (2025-12-04) | Tteuwmf                   | oiii
+[82] e89d453 (2025-12-04) | Tteuwmf                   | the last ones
+[83] e064cf3 (2025-12-05) | Tteuwmf                   | fullscreen
+[84] e36f822 (2025-12-05) | Bruno Gundlach Marquesan  | Ai socorro
+[85] f7bbc96 (2025-12-05) | Bruno Gundlach Marquesan  | Merge branch 'main' of Projeto_Knight_MB
+[86] 78b57cd (2025-12-05) | Tteuwmf                   | atualizando
+[87] 50478be (2025-12-05) | Bruno Gundlach Marquesan  | MUDEI UMAS TECLA
+[88] feb17e0 (2025-12-05) | Tteuwmf                   | oi
+[89] 6f8c65d (2025-12-05) | Tteuwmf                   | Merge branch 'main' of Projeto_Knight_MB
+[90] ddbdead (2025-12-05) | Tteuwmf                   | oi
+[91] ea4282f (2025-12-05) | Tteuwmf                   | debug
+[92] b700b1a (2025-12-05) | Tteuwmf                   | Merge branch 'main' of Projeto_Knight_MB
+[93] ce22f51 (2025-12-05) | Tteuwmf                   | ultimo
+[94] 42a8f40 (2025-12-05) | Tteuwmf                   | ULTIMO COMMIT PORRA
+[95] 736cb6e (2026-08-11) | Tteuwmf                   | refactor(achives): Cleaning and organization
+[96] 0703ca3 (2026-08-11) | Tteuwmf                   | refactor: cmake, build, debug
+[97] 590c21d (2026-08-12) | Tteuwmf                   | refactor(defines): add global defines
+
+================================================================================
+Fim do Registro Histórico - Guardado com orgulho e respeito à jornada!
+================================================================================
