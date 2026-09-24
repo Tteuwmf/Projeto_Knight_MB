@@ -1,1 +1,32 @@
+# Build directories
 build/
+bin/
+obj/
+
+# Compiladores e objetos
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+
+# Code::Blocks
+*.cbp
+*.layout
+*.depend
+*.cscope*
+
+# VS Code e IDEs
+.vscode/
+.idea/
+*.swp
+*.bak
+
+# Saves do jogo gerados em tempo de execução
+saves/*.bin
+!saves/.gitkeep
+
+# Logs do sistema
+*.log
