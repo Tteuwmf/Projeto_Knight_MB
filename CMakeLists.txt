@@ -5,6 +5,10 @@ project(CodeKnight LANGUAGES C)
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
 find_package(raylib CONFIG REQUIRED)
 
 add_executable(CodeKnight
@@ -27,7 +31,6 @@ add_executable(CodeKnight
 
 target_include_directories(CodeKnight PRIVATE 
     include
-
     include/entities
     include/game_atributes
     include/interface
@@ -38,3 +41,9 @@ target_include_directories(CodeKnight PRIVATE
 target_link_libraries(CodeKnight PRIVATE
     raylib
 )
+
+if(MSVC)
+    target_compile_options(CodeKnight PRIVATE /W4)
+else()
+    target_compile_options(CodeKnight PRIVATE -Wall -Wextra)
+endif()
