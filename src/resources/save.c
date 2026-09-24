@@ -1,58 +1,61 @@
 #include <stdio.h>
 #include "raylib.h"
 #include "entities/player.h"
+#include "resources/save.h"
 
-void saveGame (char saveName[6], Player player)
+void saveGame(const char *saveName, Player player)
 {
-    FILE *arq;
+    if (!saveName) return;
 
-    if(!(arq = fopen(TextFormat("saves/%s.bin", saveName), "wb")))
-        printf("Erro de abertura no save.\n");
-    else
+    FILE *arq = fopen(TextFormat("saves/%s.bin", saveName), "wb");
+    if (!arq)
     {
-        if(fwrite(&player,sizeof(Player), 1,arq)!= 1)
-            printf("Erro no save.\n");
+        printf("Erro de abertura no save.\n");
+        return;
     }
-    fclose(arq);
 
+    if (fwrite(&player, sizeof(Player), 1, arq) != 1)
+    {
+        printf("Erro no save.\n");
+    }
+
+    fclose(arq);
 }
 
-Player loadGame(char saveName[6])
+Player loadGame(const char *saveName)
 {
-    FILE *arq;
-    Player player;
+    Player player = {0};
+    if (!saveName) return player;
 
-    if(!(arq = fopen(TextFormat("saves/%s.bin", saveName), "rb")))
-        printf("Erro de abertura no save.\n");
-    else
+    FILE *arq = fopen(TextFormat("saves/%s.bin", saveName), "rb");
+    if (!arq)
     {
-        if(fread(&player,sizeof(Player), 1,arq)!= 1)
-            printf("Erro no save.\n");
+        printf("Erro de abertura no save.\n");
+        return player;
     }
-    fclose(arq);
 
+    if (fread(&player, sizeof(Player), 1, arq) != 1)
+    {
+        printf("Erro no save.\n");
+    }
+
+    fclose(arq);
     return player;
 }
 
-
-bool checkEmptySaveSlot (char saveName[6])
+bool checkEmptySaveSlot(const char *saveName)
 {
-    FILE *arq;
-    bool emptySlot;
+    if (!saveName) return true;
 
-    if(!(arq = fopen(TextFormat("saves/%s.bin", saveName), "rb")))
-        printf("Erro de abertura.\n");
-    else
+    FILE *arq = fopen(TextFormat("saves/%s.bin", saveName), "rb");
+    if (!arq)
     {
-        fseek(arq,0L, SEEK_END);
-        long int size = ftell(arq);
-
-        if (size==0)
-            emptySlot = true;
-        else
-            emptySlot = false;
+        return true;
     }
+
+    fseek(arq, 0L, SEEK_END);
+    long int size = ftell(arq);
     fclose(arq);
 
-    return emptySlot;
+    return (size <= 0);
 }

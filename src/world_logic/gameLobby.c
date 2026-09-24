@@ -68,6 +68,9 @@ void loadLobby(GameLobby *gl, const char* arquivo)
     {
         switch(*atual)
         {
+            case '\r':
+                break;
+
             case '\n':
                 contLines++;
                 contColumn=0;
@@ -89,47 +92,59 @@ void loadLobby(GameLobby *gl, const char* arquivo)
                 contColumn++;
                 break;
             case 'C':
-                gl->storeBlocks[contStoreBlocks] = createStoreBlock(
-                        (Vector2){contColumn*32, contLines*32}
-                    );
-                 contColumn++;
-                 contStoreBlocks++;
-                 gl->numberOfStoreBlocks++;
-                 break;
-            case 'c': //charms
-                if(contCharms==0)
+                if(contStoreBlocks < 100)
                 {
-                    gl->storeCharms[contCharms] = createCharm(
-                        (Vector2){contColumn*32+10, contLines*32}, contCharms+3
-                    );
-                }
-                else
-                {
-                    gl->storeCharms[contCharms] = createCharm(
-                            (Vector2){contColumn*32, contLines*32}, contCharms+3
+                    gl->storeBlocks[contStoreBlocks] = createStoreBlock(
+                            (Vector2){contColumn*32, contLines*32}
                         );
+                    contStoreBlocks++;
+                    gl->numberOfStoreBlocks++;
                 }
                 contColumn++;
-                contCharms++;
-                gl->numberOfStoreCharms++;
+                break;
+            case 'c': //charms
+                if(contCharms < 2)
+                {
+                    if(contCharms==0)
+                    {
+                        gl->storeCharms[contCharms] = createCharm(
+                            (Vector2){contColumn*32+10, contLines*32}, contCharms+3
+                        );
+                    }
+                    else
+                    {
+                        gl->storeCharms[contCharms] = createCharm(
+                                (Vector2){contColumn*32, contLines*32}, contCharms+3
+                            );
+                    }
+                    contCharms++;
+                    gl->numberOfStoreCharms++;
+                }
+                contColumn++;
                 break;
             case 'p':
             case 'P':
-                gl->blocks[contBlocks] = createBlock(
-                    (Vector2){contColumn*32,contLines*32}
-                );
+                if(contBlocks < 3000)
+                {
+                    gl->blocks[contBlocks] = createBlock(
+                        (Vector2){contColumn*32,contLines*32}
+                    );
+                    contBlocks++;
+                    gl->numberOfBlocks++;
+                }
                 contColumn++;
-                contBlocks++;
-                gl->numberOfBlocks++;
                 break;
 
             case 'G':
-                gl->grass[contGrass] = createGrass(
-                    (Vector2){contColumn*32,contLines*32}
-                );
+                if(contGrass < 1000)
+                {
+                    gl->grass[contGrass] = createGrass(
+                        (Vector2){contColumn*32,contLines*32}
+                    );
+                    contGrass++;
+                    gl->numberOfGrass++;
+                }
                 contColumn++;
-                contGrass++;
-                gl->numberOfGrass++;
                 break;
 
             case 'B':

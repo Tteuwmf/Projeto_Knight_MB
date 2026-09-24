@@ -1,10 +1,13 @@
 #ifndef SAVE_H
 #define SAVE_H
 
-void saveGame ( char saveName[6], Player player);
+#include "raylib.h"
+#include "entities/player.h"
 
-Player loadGame(char saveName[6]);
+void saveGame(const char *saveName, Player player);
 
-bool checkEmptySaveSlot (char saveName[6]);
+Player loadGame(const char *saveName);
+
+bool checkEmptySaveSlot(const char *saveName);
 
 #endif // SAVE_H
