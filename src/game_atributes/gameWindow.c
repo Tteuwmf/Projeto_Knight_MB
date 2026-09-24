@@ -20,7 +20,7 @@ GameWindow* createGameWindow(int width, int height)
 
 void initGameWindow(GameWindow *gameWindow)
 {
-    if(!gameWindow){return;} //checa para n�o dar crashs
+    if(!gameWindow){return;} //checa para não dar crashs
 
     if(!gameWindow->initiate)
     {
@@ -29,6 +29,7 @@ void initGameWindow(GameWindow *gameWindow)
         //======FULL-SCREEN-CONFIG======
 
         bool isFullScreen = true;
+        bool lastFullScreen = !isFullScreen; // Garante aplicacao inicial de tamanho
 
         //-------------------------------
 
@@ -48,23 +49,26 @@ void initGameWindow(GameWindow *gameWindow)
 
         SetTargetFPS(TARGET_FPS);
 
-
         while (!WindowShouldClose() && gameWindow->game.shouldClose==false)
         {
-            //----FULL-SCREEN-CONFIG----
+            //----FULL-SCREEN-CONFIG (Otimizado: atualiza somente ao alterar estado)----
 
-            if(isFullScreen)
+            if(isFullScreen != lastFullScreen)
             {
-                    SetWindowSize(FULLSCREEN_WIDTH,FULLSCREEN_HEIGHT);
-                    SetWindowPosition(0,0);
-            }
-            else
-            {
-                SetWindowSize(gameWindow->width, gameWindow->height);
-                SetWindowPosition(
-                    (FULLSCREEN_WIDTH-gameWindow->width)/2,
-                    (FULLSCREEN_HEIGHT-gameWindow->height)/2
-                );
+                if(isFullScreen)
+                {
+                    SetWindowSize(FULLSCREEN_WIDTH, FULLSCREEN_HEIGHT);
+                    SetWindowPosition(0, 0);
+                }
+                else
+                {
+                    SetWindowSize(gameWindow->width, gameWindow->height);
+                    SetWindowPosition(
+                        (FULLSCREEN_WIDTH - gameWindow->width) / 2,
+                        (FULLSCREEN_HEIGHT - gameWindow->height) / 2
+                    );
+                }
+                lastFullScreen = isFullScreen;
             }
 
             //-----------------------------
@@ -73,7 +77,7 @@ void initGameWindow(GameWindow *gameWindow)
 
         }
         CloseWindow();
-        unloadResouces();
+        unloadResources();
         CloseAudioDevice();
         if(gameWindow->game.gameWorldInitiate)
             destroysGameWorld(gameWindow->game.gw);
