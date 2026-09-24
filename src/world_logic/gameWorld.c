@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 #include "raylib.h"
 #include "world_logic/gameWorld.h"
 #include "interface/pause.h"
@@ -68,7 +69,11 @@ void loadMap(GameWorld *gw, const char* arquivo)
     int contSkills = 0;
 
     gw->enemies = (Enemies*) calloc(1, sizeof(Enemies));
-    if (!gw->enemies){free(gw->enemies); return;}
+    if (!gw->enemies)
+    {
+        UnloadFileText(dados);
+        return;
+    }
 
    while(*atual != '\0')
    {
@@ -106,7 +111,13 @@ void loadMap(GameWorld *gw, const char* arquivo)
     if(gw->numberOfBlocks>0)
     {
         gw->blocks = (Block*) malloc(gw->numberOfBlocks * sizeof(Block));
-        if(!gw->blocks){free(gw->blocks); return;}
+        if(!gw->blocks)
+        {
+            free(gw->enemies);
+            gw->enemies = NULL;
+            UnloadFileText(dados);
+            return;
+        }
     }
     else
         gw->blocks=NULL;
@@ -114,7 +125,15 @@ void loadMap(GameWorld *gw, const char* arquivo)
     if(gw->enemies->numberOfBasicEnemies>0)
     {
         gw->enemies->enemy1 = (BasicEnemy*) malloc (gw->enemies->numberOfBasicEnemies * sizeof (BasicEnemy));
-        if(!gw->enemies->enemy1){free(gw->enemies->enemy1); return;};
+        if(!gw->enemies->enemy1)
+        {
+            free(gw->blocks);
+            gw->blocks = NULL;
+            free(gw->enemies);
+            gw->enemies = NULL;
+            UnloadFileText(dados);
+            return;
+        }
     }
     else
         gw->enemies->enemy1 = NULL;
@@ -122,8 +141,6 @@ void loadMap(GameWorld *gw, const char* arquivo)
     //-----------------------------------------//
     //============== SELECT ITEM ==============//
     //-- Player  progress is the item number --//
-
-
 
     atual = dados; //reset do contadorc
 
@@ -133,6 +150,9 @@ void loadMap(GameWorld *gw, const char* arquivo)
     {
         switch (*atual)
         {
+            case '\r':
+                break;
+
             case '\n':
                 contLines++;
                 contColumn=0;
@@ -148,55 +168,69 @@ void loadMap(GameWorld *gw, const char* arquivo)
             case 'i': //BASIC ENEMY
                 if(basicEnemySelector==0)
                 {
-                    gw->enemies->enemy1[contBasicEnemies] = createBasicEnemies(
-                        (Vector2){contColumn*32, contLines*32}
-                    );
+                    if (contBasicEnemies < gw->enemies->numberOfBasicEnemies)
+                    {
+                        gw->enemies->enemy1[contBasicEnemies] = createBasicEnemies(
+                            (Vector2){contColumn*32, contLines*32}
+                        );
+                        gw->enemies->enemy1[contBasicEnemies].collisionRecs = createAndUpdateBasicEnemiesCollisionsRec(&gw->enemies->enemy1[contBasicEnemies]);
+                        contBasicEnemies++;
+                    }
                     contColumn++;
-                    gw->enemies->enemy1[contBasicEnemies].collisionRecs = createAndUpdateBasicEnemiesCollisionsRec(&gw->enemies->enemy1[contBasicEnemies]);
-                    contBasicEnemies++;
                     basicEnemySelector++;
-
                 }
                 else
                 {
-                     gw->enemies->enemy2[contAirBasicEnemies] = createAirBasicEnemies(
-                        (Vector2){contColumn*32, contLines*32}, contAirBasicEnemies
-                    );
+                    if (contAirBasicEnemies < 50)
+                    {
+                        gw->enemies->enemy2[contAirBasicEnemies] = createAirBasicEnemies(
+                            (Vector2){contColumn*32, contLines*32}, contAirBasicEnemies
+                        );
+                        gw->enemies->enemy2[contAirBasicEnemies].collisionRecs = createAndUpdateAirBasicEnemiesCollisionsRec(&gw->enemies->enemy2[contAirBasicEnemies]);
+                        contAirBasicEnemies++;
+                    }
                     contColumn++;
-                    gw->enemies->enemy2[contAirBasicEnemies].collisionRecs = createAndUpdateAirBasicEnemiesCollisionsRec(&gw->enemies->enemy2[contAirBasicEnemies]);
-                    contAirBasicEnemies++;
                     basicEnemySelector--;
                 }
                 break;
 
             case 'P':
-            case 'p': //PAREDES E CH�O
-                gw->blocks[contBlocks] = createBlock(
-                    (Vector2){contColumn*32, contLines*32}
-                );
+            case 'p': //PAREDES E CHAO
+                if (contBlocks < gw->numberOfBlocks)
+                {
+                    gw->blocks[contBlocks] = createBlock(
+                        (Vector2){contColumn*32, contLines*32}
+                    );
+                    contBlocks++;
+                }
                 contColumn++;
-                contBlocks++;
                 break;
 
             case 'A':
             case 'c': //charms
-                gw->charms[contCharms] = createCharm(
-                    (Vector2){contColumn*32, contLines*32+22}, gw->player->progress
-                );
+                if (contCharms < 5)
+                {
+                    gw->charms[contCharms] = createCharm(
+                        (Vector2){contColumn*32, contLines*32+22}, gw->player->progress
+                    );
+                    contCharms++;
+                }
                 contColumn++;
-                contCharms++;
                 break;
 
             case 'H':
             case 's': //skills
-                gw->skills[contSkills] = createSkill(
-                    (Vector2){contColumn*32+8, contLines*32+8}, gw->player->progress
-                );
+                if (contSkills < 5)
+                {
+                    gw->skills[contSkills] = createSkill(
+                        (Vector2){contColumn*32+8, contLines*32+8}, gw->player->progress
+                    );
+                    contSkills++;
+                }
                 contColumn++;
-                contSkills++;
                 break;
 
-            case 't': //CASO A ESPADA APARE�A
+            case 't': //CASO A ESPADA APARECA
                 gw->item[1] = createLostItens(
                     (Vector2){contColumn*32+8, contLines*32+8}, 4
                 );
@@ -297,9 +331,14 @@ void makeCollisionPlayerBlock (GameWorld *gw)
     Player *player = gw->player;
     PlayerCollisionRec *collisionRec = &gw->player->collisionRecs;
 
-    for(int i =0; i<gw->numberOfBlocks; i++)
+    for(int i = 0; i < gw->numberOfBlocks; i++)
     {
         Block *block = &gw->blocks[i];
+
+        if (fabsf(player->pos.x - block->pos.x) > 64.0f || fabsf(player->pos.y - block->pos.y) > 64.0f)
+        {
+            continue;
+        }
 
             //colis�o por cima
 
@@ -523,9 +562,14 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
         BasicEnemy *enemy = &gw->enemies->enemy1[i];
         BasicEnemyCollisionRec *collisionRec = &enemy->collisionRecs;
 
-        for(int i =0; i<gw->numberOfBlocks; i++)
+        for(int j = 0; j < gw->numberOfBlocks; j++)
         {
-            Block *block = &gw->blocks[i];
+            Block *block = &gw->blocks[j];
+
+            if (fabsf(enemy->pos.x - block->pos.x) > 64.0f || fabsf(enemy->pos.y - block->pos.y) > 64.0f)
+            {
+                continue;
+            }
 
                 if(checkBasicEnemiesBlockCollision_Under(collisionRec ,block))
                 {
@@ -572,9 +616,14 @@ void makeCollisionEnemiesBlock (GameWorld *gw)
         AirBasicEnemy *enemy = &gw->enemies->enemy2[a];
         BasicEnemyCollisionRec *collisionRec = &enemy->collisionRecs;
 
-        for(int b =0; b<gw->numberOfBlocks; b++)
+        for(int b = 0; b < gw->numberOfBlocks; b++)
         {
             Block *block = &gw->blocks[b];
+
+            if (fabsf(enemy->pos.x - block->pos.x) > 64.0f || fabsf(enemy->pos.y - block->pos.y) > 64.0f)
+            {
+                continue;
+            }
 
                 if(checkBasicEnemiesBlockCollision_Under(collisionRec ,block))
                 {
