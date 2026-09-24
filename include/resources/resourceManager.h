@@ -226,8 +226,7 @@ extern ResourceManager rm;
 
 void loadResources();
 
-void unloadResouces();
-
-
+void unloadResources();
+#define unloadResouces unloadResources
 
 #endif // RESOURCEMANAGER_H

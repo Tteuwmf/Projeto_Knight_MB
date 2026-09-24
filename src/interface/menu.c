@@ -182,6 +182,7 @@ const int Y_GOTOMENU_BUTTON = 280;
 
 void inputUpdateAndDrawLoad(Game *game, bool isFullscreen)
 {
+    (void)isFullscreen;
 
     Vector2 mousePosition = GetMousePosition();
 

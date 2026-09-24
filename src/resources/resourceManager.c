@@ -197,10 +197,11 @@ void loadResources()
     rm.defaultMusic = LoadMusicStream("assets/sounds/Crossroads.mp3");
     rm.bossMusic = LoadMusicStream("assets/sounds/Decisive Battle.mp3");
 
-
+    SetMusicVolume(rm.defaultMusic, 0.3f);
+    SetMusicVolume(rm.bossMusic, 0.3f);
 }
 
-void unloadResouces()
+void unloadResources()
 {
     UnloadTexture(rm.menu.normalStartButton);
     UnloadTexture(rm.menu.mouseStartButton);

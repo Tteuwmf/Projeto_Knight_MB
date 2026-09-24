@@ -1632,6 +1632,7 @@ void updateInventory (Player *player)
 
 void drawInventory(Player *player, bool isFullscreen)
 {
+    (void)isFullscreen;
     const Rectangle RETANGULOS_SLOTS[5] =
     {
         {40, 10, 80, 80},
